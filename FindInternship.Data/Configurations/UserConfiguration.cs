@@ -50,7 +50,7 @@ namespace FindInternship.Data.Configurations
             {
                 Id = "93418f37-da3b-4c78-b0ae-8f0022b09681",
                 UserName = "georgi",
-                NormalizedUserName = "ZDRAVKA",
+                NormalizedUserName = "GEORGI",
                 Email = "georgidimitov@abv.bg",
                 NormalizedEmail = "GEORGIDIMITROV@ABV.BG",
                 PhoneNumber = "0885789826",
@@ -60,7 +60,7 @@ namespace FindInternship.Data.Configurations
                 Address = "ул.Възраждане 6 ет.2 ап.8",
                 Gender = Gender.Мъж.ToString(),
                 RegisteredOn = DateTime.UtcNow,
-                BirthDate = DateTime.ParseExact("1968-02-8 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                BirthDate = DateTime.ParseExact("1968-02-08 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
                 ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1697608565/projectImages/mvorrsshjbw1e8bzfzgq.jpg"
             };
 
@@ -81,12 +81,35 @@ namespace FindInternship.Data.Configurations
                 Address = "ул. Стара планина 63",
                 Gender = null,
                 RegisteredOn = DateTime.UtcNow,
-                BirthDate = DateTime.ParseExact("20015-02-8 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
-                ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1697608565/projectImages/mvorrsshjbw1e8bzfzgq.jpg"
+                BirthDate = DateTime.ParseExact("2015-05-09 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1697617040/projectImages/n775bghppizokr5xifn4.png"
             };
 
             user3.PasswordHash = passwordHasher.HashPassword(user3, "techies123");
             users.Add(user3);
+
+            var user4 = new User()
+            {
+                Id = "20dcf707-dfd9-4aae-b8c3-f3b9844e09d8",
+                UserName = "Admin",
+                NormalizedUserName = "ADMIN",
+                Email = "admin@abv.bg",
+                NormalizedEmail = "ADMIN@ABV.BG",
+                PhoneNumber = "0889864842",
+                Name = "Admin",
+                City = "Енина",
+                Country = "България",
+                Address = "ул. Незабравка 3",
+                Gender = Gender.Мъж.ToString(),
+                RegisteredOn = DateTime.UtcNow,
+                BirthDate = DateTime.ParseExact("2015-07-18 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1697617373/projectImages/pyb6v86l6myou9h1sxca.jpg"
+            };
+
+            user4.PasswordHash = passwordHasher.HashPassword(user4, "admin123");
+
+            users.Add(user4);
+
 
             return users;
 

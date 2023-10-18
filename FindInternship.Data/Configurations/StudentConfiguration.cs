@@ -15,5 +15,17 @@ namespace FindInternship.Data.Configurations
         {
             throw new NotImplementedException();
         }
+
+        public List<Student> GetStudents()
+        {
+            var students = new List<Student>();
+
+            students.Add(new Student()
+            {
+                Id = "30b28597-2305-4f3b-a21a-95b287cae818", 
+                UserId = "080a469a-b5a2-44cc-a660-eea8e6fd05a5", 
+                ClassId = "", 
+            });
+        } 
     }
 }

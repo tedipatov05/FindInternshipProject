@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,9 +35,10 @@ namespace FindInternship.Data.Models
 
         public Teacher Teacher { get; set; } = null!;
 
+        [AllowNull]
         [ForeignKey(nameof(Company))]
-        public string CompanyId { get; set; } = null!;
-        public Company Company { get; set; } = null!;
+        public string? CompanyId { get; set; }
+        public Company? Company { get; set; }
 
         public ICollection<Student> Students { get; set; }
 

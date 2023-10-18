@@ -39,7 +39,6 @@ namespace FindInternship.Data.Configurations
 
             return userRoles;
 
-
         }
     }
 }

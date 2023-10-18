@@ -40,6 +40,13 @@ namespace FindInternship.Data.Configurations
                 NormalizedName = "TEACHER"
             });
 
+            roles.Add(new IdentityRole()
+            {
+                Id = "e2f6cb22-631b-47c7-9ac0-19f89455b2a5",
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            });
+
             return roles;
         }
     }

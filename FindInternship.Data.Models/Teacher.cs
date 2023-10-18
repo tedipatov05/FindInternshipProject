@@ -13,7 +13,6 @@ namespace FindInternship.Data.Models
         public Teacher()
         {
             this.Id = Guid.NewGuid().ToString();
-            
         }
 
         [Key]
