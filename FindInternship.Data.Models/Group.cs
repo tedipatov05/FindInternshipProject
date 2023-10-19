@@ -22,7 +22,7 @@ namespace FindInternship.Data.Models
         public string Id { get; set; }
 
         [MaxLength(GroupNameMaxLength)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         public ICollection<UserGroup> UsersGroups { get; set; } 
 

@@ -18,13 +18,14 @@ namespace FindInternship.Data.Models
             this.Requests = new List<Request>();
             this.Meetings = new HashSet<Meeting>();
         }
+
         [Key]
         public string Id { get; set; }
 
         [ForeignKey(nameof(User))]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
-        public User User { get; set; }
+        public User User { get; set; } = null!;
 
         [MaxLength(CompanyDescriptionMaxLength)]
         public string Description { get; set; } = null!;
@@ -34,7 +35,7 @@ namespace FindInternship.Data.Models
 
         public ICollection<Class> Classes { get; set; }
 
-        public ICollection<Request> Requests { get; set; } = null!;
+        public ICollection<Request> Requests { get; set; }
 
         public ICollection<Meeting> Meetings { get; set; }
 

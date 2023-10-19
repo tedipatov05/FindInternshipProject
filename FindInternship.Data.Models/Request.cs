@@ -21,22 +21,22 @@ namespace FindInternship.Data.Models
         public string Id { get; set; }
 
         [MaxLength(RequestTopicMaxLength)]
-        public string Topic { get; set; }
+        public string Topic { get; set; } = null!;
 
         [ForeignKey(nameof(Class))]
-        public string ClassId { get; set; }
+        public string ClassId { get; set; } = null!;
 
-        public Class Class { get; set; }
+        public Class Class { get; set; } = null!;
 
         [EnumDataType(typeof(RequestStatusEnum))]
-        public string Status { get; set; }
+        public string Status { get; set; } = null!;
 
         [MaxLength(RequestMessageMaxLength)]
         public string? Message { get; set; }
 
         [ForeignKey(nameof(Company))]
-        public string CompanyId { get; set; }
-        public Company Company { get; set; }
+        public string CompanyId { get; set; } = null!;
+        public Company Company { get; set; } = null!;
         public DateTime CreatedOn { get; set; }
 
         

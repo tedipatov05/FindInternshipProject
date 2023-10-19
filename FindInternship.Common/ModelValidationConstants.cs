@@ -13,6 +13,10 @@ namespace FindInternship.Common
             public const int UserNameMaxLength = 50;
             public const int UserNameMinLength = 2;
 
+            public const int EmailMaxLength = 50;
+            public const int EmailMinLength = 8;
+
+
             public const int AddressMaxLength = 100;
             public const int AddressMinLength = 5;
 
@@ -85,5 +89,7 @@ namespace FindInternship.Common
             public const int MeetingTitleMaxLength = 50;
             public const int MeetingTitleMinLength = 4;
         }
+
+        
     }
 }

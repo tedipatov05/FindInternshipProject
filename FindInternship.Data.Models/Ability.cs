@@ -14,6 +14,7 @@ namespace FindInternship.Data.Models
         {
             this.Students = new HashSet<StudentAbility>();
         }
+
         [Key]
         public int Id { get; set; }
 

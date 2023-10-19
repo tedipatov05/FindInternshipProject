@@ -37,6 +37,14 @@ namespace FindInternship.Web
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<FindInternshipDbContext>();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+
+
+            });
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
