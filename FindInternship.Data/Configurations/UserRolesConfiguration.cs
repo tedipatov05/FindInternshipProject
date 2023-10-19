@@ -34,6 +34,11 @@ namespace FindInternship.Data.Configurations
                 {
                     RoleId = "36ae84ad-bb53-48ad-9503-bfe33221785d",
                     UserId = "93418f37-da3b-4c78-b0ae-8f0022b09681"
+                }, 
+                new IdentityUserRole<string>()
+                {
+                    RoleId = "e2f6cb22-631b-47c7-9ac0-19f89455b2a5", 
+                    UserId = "20dcf707-dfd9-4aae-b8c3-f3b9844e09d8"
                 }
             };
 

@@ -13,7 +13,7 @@ namespace FindInternship.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Student> builder)
         {
-            throw new NotImplementedException();
+            builder.HasData(GetStudents());
         }
 
         public List<Student> GetStudents()
@@ -24,8 +24,10 @@ namespace FindInternship.Data.Configurations
             {
                 Id = "30b28597-2305-4f3b-a21a-95b287cae818", 
                 UserId = "080a469a-b5a2-44cc-a660-eea8e6fd05a5", 
-                ClassId = "", 
+                ClassId = "0edc45cb-b2f1-48a2-8f6b-17910e09a147", 
             });
+
+            return students;
         } 
     }
 }

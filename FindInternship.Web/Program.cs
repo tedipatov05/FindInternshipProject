@@ -1,5 +1,6 @@
 using FindInternship.Data;
 using FindInternship.Data.Models;
+using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,8 +20,23 @@ namespace FindInternship.Web
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.ConfigureServices();
+
+            builder.Services.AddDefaultIdentity<User>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 5;
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+            })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<FindInternshipDbContext>();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -45,9 +61,14 @@ namespace FindInternship.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllerRoute(
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            
             app.MapRazorPages();
 
             app.Run();

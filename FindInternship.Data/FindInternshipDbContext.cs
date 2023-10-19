@@ -1,4 +1,5 @@
-﻿using FindInternship.Data.Models;
+﻿using FindInternship.Data.Configurations;
+using FindInternship.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -41,7 +42,7 @@ namespace FindInternship.Data
                 .HasKey(sa => new { sa.StudentId, sa.AbilityId });
 
             builder.Entity<UserGroup>()
-                .HasKey(ug => new {ug.GroupId,  ug.UserId });
+                .HasKey(ug => new { ug.GroupId, ug.UserId });
 
             builder.Entity<Teacher>()
                 .HasOne(t => t.Class)
@@ -83,7 +84,18 @@ namespace FindInternship.Data
                 .WithOne(c => c.Company)
                 .OnDelete(DeleteBehavior.NoAction);
 
+
+
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new RolesConfiguration());
+            builder.ApplyConfiguration(new UserRolesConfiguration());
+            builder.ApplyConfiguration(new TeacherConfiguration());
+            builder.ApplyConfiguration(new ClassConfiguration());
+            builder.ApplyConfiguration(new StudentConfiguration());
+            builder.ApplyConfiguration(new CompanyConfiguration());
+
             base.OnModelCreating(builder);
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
