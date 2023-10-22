@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 using static FindInternship.Common.ModelValidationConstants.UserConstants;
 
-namespace FindInternship.Core.Models
+namespace FindInternship.Core.Models.Account
 {
     public class RegisterViewModel
     {

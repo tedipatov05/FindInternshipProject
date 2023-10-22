@@ -28,6 +28,8 @@ header {
     color: grey;
 }
 
+
+
 nav {
     color: orange;
     margin: 0px 0px 0px 0px;
@@ -38,6 +40,7 @@ nav {
     background: url(../img/bg-home.jpg);
     background-repeat: no-repeat;
     background-position: center;
+    height: 430px;
 }
 
 
@@ -94,13 +97,13 @@ nav {
 
 .container {
     margin-top: 100px;
-    margin: 100px 10px 20px 10px;
+    
     display: block;
     justify-content: center;
 }
 
 .py-5 {
-    padding-top: 3cm !important;
+    padding-top: 4cm !important;
     padding-bottom: 3cm !important;
 }
 

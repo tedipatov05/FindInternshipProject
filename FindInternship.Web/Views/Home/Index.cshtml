@@ -1,37 +1,44 @@
-﻿@{
+﻿@using FindInternship.Core.Models.Statistics;
+@{
     ViewData["Title"] = "Home Page";
 }
+@model StatisticViewModel;
+
 
 <div class="jumbotron bg-cover text-white">
     <div class="py-5 text-center">
-        <h1 class="display-4 font-weight-bold">FoodHome</h1>
-        <p class="font-italic mb-0">The best platform for delivering food.</p>
-       
+        <h1 class="display-4 font-weight-bold">FindInternship</h1>
+        <p class="font-italic mb-0">The best platform for finding a internship.</p>
+
 
     </div>
-    4
+
 </div>
 
-<section class="wow fadeIn animated" style="visibility: visible; animation-name: fadeIn;">
+
+
+<section class="wow fadeIn animated" style="visibility: visible; animation-name: fadeIn; justify-content: center">
     <div class="container">
+
+
         <div class="row">
 
-            <div class="col-md-3 col-sm-6 bottom-margin text-center counter-section wow fadeInUp sm-margin-bottom-ten animated" data-wow-duration="300ms" style="visibility: visible; animation-duration: 300ms; animation-name: fadeInUp;">
+            <div class="col-md-3 col-sm-3 bottom-margin text-center counter-section wow fadeInUp sm-margin-bottom-ten animated" data-wow-duration="300ms" style="visibility: visible; animation-duration: 300ms; animation-name: fadeInUp;">
                 <i class="fa-regular fa-building fa-xl"></i>
                 <span id="anim-number-pizza" class="counter-number"></span>
-                <span class="timer counter alt-font appear" data-to="980" data-speed="7000">2900</span>
+                <span class="timer counter alt-font appear" data-to="980" data-speed="7000">@Model.Internships</span>
                 <p class="counter-title text-dark">Internships found</p>
             </div>
 
-            <div class="col-md-3 col-sm-6 bottom-margin text-center counter-section wow fadeInUp sm-margin-bottom-ten animated" data-wow-duration="600ms" style="visibility: visible; animation-duration: 600ms; animation-name: fadeInUp;">
-                <i class="fa-regular fa-calendar-days fa-xl" ></i>
-                <span class="timer counter alt-font appear" data-to="980" data-speed="7000">980</span>
+            <div class="col-md-3 col-sm-3 bottom-margin text-center counter-section wow fadeInUp sm-margin-bottom-ten animated" data-wow-duration="600ms" style="visibility: visible; animation-duration: 600ms; animation-name: fadeInUp;">
+                <i class="fa-regular fa-calendar-days fa-xl"></i>
+                <span class="timer counter alt-font appear" data-to="980" data-speed="7000">@Model.Meetings</span>
                 <span class="counter-title text-dark">Meeting Arranged</span>
             </div>
 
-            <div class="col-md-3 col-sm-6 bottom-margin-small text-center counter-section wow fadeInUp xs-margin-bottom-ten animated" data-wow-duration="900ms" style="visibility: visible; animation-duration: 900ms; animation-name: fadeInUp;">
-                <i class="fa-solid fa-user fa-xl" ></i>
-                <span class="timer counter alt-font appear" data-to="810" data-speed="7000">810</span>
+            <div class="col-md-3 col-sm-3 bottom-margin-small text-center counter-section wow fadeInUp xs-margin-bottom-ten animated" data-wow-duration="900ms" style="visibility: visible; animation-duration: 900ms; animation-name: fadeInUp;">
+                <i class="fa-solid fa-user fa-xl"></i>
+                <span class="timer counter alt-font appear" data-to="810" data-speed="7000">@Model.HappyUsers</span>
                 <span class="counter-title text-dark">Happy Users</span>
             </div>
 

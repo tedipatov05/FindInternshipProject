@@ -1,4 +1,6 @@
-﻿using FindInternship.Web.Models;
+﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Statistics;
+using FindInternship.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +8,22 @@ namespace FindInternship.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        
+        private readonly IStatisticService statisticService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IStatisticService statisticService)
         {
-            _logger = logger;
+            this.statisticService = statisticService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            StatisticViewModel model = new StatisticViewModel();
+            model.Internships = await statisticService.GetInternshipsCountAsync();
+            model.Meetings = await statisticService.GetMeetingsArrangedCountAsync();
+            model.HappyUsers = await statisticService.GetHappyUsersCountAsync();
+
+            return View(model);
         }
 
         public IActionResult Privacy()

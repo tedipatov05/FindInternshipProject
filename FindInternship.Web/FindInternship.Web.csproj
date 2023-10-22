@@ -24,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FindInternship.Common\FindInternship.Common.csproj" />
+    <ProjectReference Include="..\FindInternship.Core\FindInternship.Core.csproj" />
     <ProjectReference Include="..\FindInternship.Data.Models\FindInternship.Data.Models.csproj" />
     <ProjectReference Include="..\FindInternship.Data\FindInternship.Data.csproj" />
   </ItemGroup>
