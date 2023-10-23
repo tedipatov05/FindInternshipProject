@@ -10,6 +10,10 @@ namespace FindInternship.Web.Extensions
         {
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IStatisticService, StatisticService>();
+            services.AddScoped<IUserService, UserService>();  
+            services.AddScoped<IClassService, ClassService>();
+            services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IStudentService, StudentService>();
 
             return services;
 

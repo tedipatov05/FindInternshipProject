@@ -19,6 +19,7 @@ namespace FindInternship.Data.Models
         [Key]
         public string Id { get; set; }
 
+
         [ForeignKey(nameof(User))]
         public string UserId { get; set; }
 

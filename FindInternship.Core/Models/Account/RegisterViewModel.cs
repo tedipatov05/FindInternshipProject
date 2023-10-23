@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +13,7 @@ namespace FindInternship.Core.Models.Account
 {
     public class RegisterViewModel
     {
+
         [Required]
         [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength)]
         public string Name { get; set; } = null!;
@@ -46,6 +48,16 @@ namespace FindInternship.Core.Models.Account
         [Required]
         [StringLength(AddressMaxLength, MinimumLength = AddressMinLength)]
         public string Address { get; set; } = null!;
+
+        [Required]
+        public string ClassId { get; set; } = null!;
+
+        [Required]
+        public DateTime BirthDate { get; set; }
+
+        public string Gender { get; set; } = null!;
+
+        public List<ClassViewModel> Classes { get; set; } = new List<ClassViewModel>();
 
         public IFormFile? ProfilePicture { get; set; }
 

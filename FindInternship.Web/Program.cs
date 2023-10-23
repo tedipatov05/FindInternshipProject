@@ -1,3 +1,4 @@
+using CloudinaryDotNet;
 using FindInternship.Data;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
@@ -21,6 +22,8 @@ namespace FindInternship.Web
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.ConfigureServices();
+
+            ConfigureCloudinaryService(builder.Services, builder.Configuration);
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
@@ -80,6 +83,21 @@ namespace FindInternship.Web
             app.MapRazorPages();
 
             app.Run();
+        }
+
+        private static void ConfigureCloudinaryService(IServiceCollection services, IConfiguration configuration)
+        {
+
+            var cloudName = configuration.GetValue<string>("AccountSettings:CloudName");
+            var apiKey = configuration.GetValue<string>("AccountSettings:ApiKey");
+            var apiSecret = configuration.GetValue<string>("AccountSettings:ApiSecret");
+
+            if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrWhiteSpace))
+            {
+                throw new ArgumentException("Please specify your Cloudinary account Information");
+            }
+
+            services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
         }
     }
 }
