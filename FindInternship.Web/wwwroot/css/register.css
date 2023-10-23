@@ -3,6 +3,7 @@
 *, body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
+    
     /*-webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;*/
@@ -11,11 +12,18 @@
 html, body {
     height: 100%;
     /*background-color: coral;*/
-    overflow: hidden;
+    overflow-y:auto;
+
+}
+
+
+.form-content{
+    margin-top: 40px;
 }
 
 
 .form-holder {
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,7 +38,6 @@ html, body {
 
 
     .form-holder .form-content {
-        position: absolute;
         text-align: center;
         display: -webkit-box;
         display: -moz-box;

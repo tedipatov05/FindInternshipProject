@@ -1,7 +1,10 @@
 ﻿@using FindInternship.Core.Models.Account;
 @model RegisterViewModel
 
+
+
 @{
+    var date = new DateOnly(2016, 1, 1);
     ViewData["Title"] = "Register";
 }
 
@@ -34,20 +37,20 @@
                             <h6 class="mb-0 me-4">Gender: </h6>
 
                             <div class="form-check form-check-inline mb-0 me-4">
-                                <input asp-for="@Model.Gender" value="Мъж" class="form-check-input" type="radio" name="Gender" id="maleGender"
+                                <input asp-for="@Model.Gender" value="Мъж" class="form-check-input text-dark" type="radio" name="Gender" id="maleGender"
                                        />
                                 <label class="form-check-label" for="maleGender">Мъж</label>
                             </div>
 
                             <div class="form-check form-check-inline mb-0 me-4">
-                                <input asp-for="@Model.Gender" value="Жена" class="form-check-input" type="radio" name="Gender" id="femaleGender"
+                                <input asp-for="@Model.Gender" value="Жена" class="form-check-input text-dark" type="radio" name="Gender" id="femaleGender"
                                        />
                                 <label class="form-check-label" for="femaleGender">Жена</label>
                             </div>
 
                         </div>
                         <div class="from-group">
-                            <input asp-for="BirthDate" type="date" class="form-control-color" placeholder="Birth date" />
+                            <input asp-for="BirthDate" type="date" class="form-control" placeholder="Birth date" value="@date" />
                             <span asp-validation-for="BirthDate" class="text-white" ></span>
 
                         </div>
