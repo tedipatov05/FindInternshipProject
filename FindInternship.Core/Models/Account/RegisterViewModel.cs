@@ -14,8 +14,8 @@ namespace FindInternship.Core.Models.Account
     public class RegisterViewModel
     {
 
-        [Required]
-        [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength)]
+        [Required(ErrorMessage="Името е задължително")]
+        [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength, ErrorMessage="Името трябва да бъде между {2} и {1}")]
         public string Name { get; set; } = null!;
 
         [Required]

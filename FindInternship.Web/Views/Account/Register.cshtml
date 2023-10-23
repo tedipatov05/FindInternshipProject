@@ -15,22 +15,22 @@
                 <div class="form-items">
                     <form class="requires-validation" id="registerForm" method="post" enctype="multipart/form-data">
                         <h2 class="text-center"><strong>@ViewData["Title"]</strong> an account.</h2>
-                        <div asp-validation-summary="ModelOnly" class="text-white"></div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <input asp-for="Email" class="form-control" placeholder="Email">
-                            <span asp-validation-for="Email" class="text-white"></span>
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input asp-for="Name" class="form-control" placeholder="Name">
-                            <span asp-validation-for="Name" class="text-white"></span>
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input asp-for="Password" class="form-control" placeholder="Password">
-                            <span asp-validation-for="Password" class="text-white"></span>
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input asp-for="PasswordRepeat" class="form-control" placeholder="Password (repeat)">
-                            <span asp-validation-for="PasswordRepeat" class="text-white"></span>
+                            <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
                         </div>
                         <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
 
@@ -39,36 +39,36 @@
                             <div class="form-check form-check-inline mb-0 me-4">
                                 <input asp-for="@Model.Gender" value="Мъж" class="form-check-input text-dark" type="radio" name="Gender" id="maleGender"
                                        />
-                                <label class="form-check-label" for="maleGender">Мъж</label>
+                                <label class="form-check-label text-dark" for="maleGender">Мъж</label>
                             </div>
 
                             <div class="form-check form-check-inline mb-0 me-4">
                                 <input asp-for="@Model.Gender" value="Жена" class="form-check-input text-dark" type="radio" name="Gender" id="femaleGender"
                                        />
-                                <label class="form-check-label" for="femaleGender">Жена</label>
+                                <label class="form-check-label text-dark" for="femaleGender">Жена</label>
                             </div>
 
                         </div>
                         <div class="from-group">
                             <input asp-for="BirthDate" type="date" class="form-control" placeholder="Birth date" value="@date" />
-                            <span asp-validation-for="BirthDate" class="text-white" ></span>
+                            <span asp-validation-for="BirthDate" class="text-danger" ></span>
 
                         </div>
                         <div class="form-group">
                             <input asp-for="PhoneNumber" class="form-control" placeholder="Phone number">
-                            <span asp-validation-for="PhoneNumber" class="text-white"></span>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input asp-for="Address" class="form-control" placeholder="Address">
-                            <span asp-validation-for="Address" class="text-white"></span>
+                            <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input asp-for="City" class="form-control" placeholder="City">
-                            <span asp-validation-for="City" class="text-white"></span>
+                            <span asp-validation-for="City" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input asp-for="Country" class="form-control" placeholder="Country">
-                            <span asp-validation-for="Country" class="text-white"></span>
+                            <span asp-validation-for="Country" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <select asp-for="@Model.ClassId" class="form-control" value="Class" aria-required="true">
@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label for="profilePicture">Upload Profile Picture</label>
                             <input asp-for="ProfilePicture" accept="image/gif, image/jpeg, image/png" class="text-white" id="profilePicture">
-                            <span asp-validation-for="ProfilePicture" class="text-white"></span>
+                            <span asp-validation-for="ProfilePicture" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <img alt="Uploaded Image" placeholder="Upload Profile Picture" accept="image/gif, image/jpeg, image/png" style="display:none;">
