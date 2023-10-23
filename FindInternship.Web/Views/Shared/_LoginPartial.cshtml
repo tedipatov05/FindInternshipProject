@@ -7,7 +7,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link scrollto" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+            <a class="nav-link scrollto" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-action="Logout" asp-controller="Account">
@@ -21,7 +21,7 @@
             <a class="nav-link scrollto" asp-action="Register" asp-controller="Account">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link scrollto" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link scrollto" asp-action="Login" asp-controller="Account">Login</a>
         </li>
     }
 </ul>

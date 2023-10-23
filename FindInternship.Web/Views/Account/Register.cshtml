@@ -45,7 +45,6 @@
                                 <label class="form-check-label" for="femaleGender">Жена</label>
                             </div>
 
-
                         </div>
                         <div class="from-group">
                             <input asp-for="BirthDate" type="date" class="form-control-color" placeholder="Birth date" />
@@ -97,6 +96,10 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
 
 @section Styles{
     <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />

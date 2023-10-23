@@ -98,6 +98,43 @@ namespace FindInternship.Web.Controllers
             model.Classes = await classService.AllClassesAsync();
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            LoginViewModel model = new LoginViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+
+            if (user != null)
+            {
+                if (user.IsActive)
+                {
+                    var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+
+                }
+            }
+
+            ModelState.AddModelError(nameof(model.Email), "Invalid login");
+
+            return View(model);
+        }
+
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
