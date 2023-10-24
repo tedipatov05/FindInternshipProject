@@ -9,5 +9,6 @@ namespace FindInternship.Core.Contracts
     public interface IStudentService
     {
         Task Create(string userId, string classId);
+        Task<string> GetStudentId(string userId);
     }
 }

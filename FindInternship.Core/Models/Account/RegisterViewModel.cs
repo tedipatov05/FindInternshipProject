@@ -1,4 +1,5 @@
 ﻿
+using FindInternship.Core.Models.Ability;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,10 @@ namespace FindInternship.Core.Models.Account
         public string Gender { get; set; } = null!;
 
         public List<ClassViewModel> Classes { get; set; } = new List<ClassViewModel>();
+
+        public List<AbilityViewModel> Abilities { get; set; } = new List<AbilityViewModel>();
+
+        public List<string> AbilitiesIds { get; set; } = new List<string>();
 
         public IFormFile? ProfilePicture { get; set; }
 

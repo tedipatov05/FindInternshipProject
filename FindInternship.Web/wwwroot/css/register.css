@@ -11,13 +11,25 @@
 
 html, body {
     height: 100%;
-    /*background-color: coral;*/
+    
     overflow-y:auto;
 
 }
+.chosen-container{
+    font-size: 16px;
+}
+.chosen-choices{
+    border-radius: 7px;
+    height:38px;
+}
+li.search-choice{
+    margin-top:8px;
+}
+li.search-field {
+    margin: 6px 0px 0px 4px;
+}
 
-
-.form-content{
+.form-content {
     margin-top: 40px;
 }
 

@@ -17,8 +17,9 @@ namespace FindInternship.Web.Controllers
         private IImageService imageService;
         private IStudentService studentService;
         private IClassService classService;
+        private IAbilityService abilityService;
 
-        public AccountController(IUserService userService, UserManager<User> userManager, SignInManager<User> singInManager, IImageService imageService, IStudentService studentService, IClassService classService)
+        public AccountController(IUserService userService, UserManager<User> userManager, SignInManager<User> singInManager, IImageService imageService, IStudentService studentService, IClassService classService, IAbilityService abilityService)
         {
             this.userService = userService;
             this.userManager = userManager;
@@ -26,12 +27,14 @@ namespace FindInternship.Web.Controllers
             this.imageService = imageService;
             this.studentService = studentService;
             this.classService = classService;
+            this.abilityService = abilityService;
         }
         [HttpGet]
         public async Task<IActionResult> Register()
         {
             RegisterViewModel model = new RegisterViewModel();
             model.Classes = await classService.AllClassesAsync();
+            model.Abilities = await abilityService.AllAbilitiesAsync();
             return View(model);
         }
 
@@ -75,6 +78,7 @@ namespace FindInternship.Web.Controllers
 
             };
 
+            
 
             var result = await userManager.CreateAsync(user, model.Password);
 
@@ -82,6 +86,8 @@ namespace FindInternship.Web.Controllers
             {
                 await userManager.AddToRoleAsync(user, "Student");
                 await studentService.Create(user.Id, model.ClassId);
+
+                await abilityService.AddAbilitiesToStudentAsync(model.AbilitiesIds, user.Id);
 
                 if (model.ProfilePicture != null)
                 {

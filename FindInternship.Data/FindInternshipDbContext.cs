@@ -93,6 +93,7 @@ namespace FindInternship.Data
             builder.ApplyConfiguration(new ClassConfiguration());
             builder.ApplyConfiguration(new StudentConfiguration());
             builder.ApplyConfiguration(new CompanyConfiguration());
+            builder.ApplyConfiguration(new AbilityConfiguration());
 
             base.OnModelCreating(builder);
 
