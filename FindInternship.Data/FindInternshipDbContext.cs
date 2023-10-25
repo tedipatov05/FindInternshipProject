@@ -34,6 +34,8 @@ namespace FindInternship.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<User>()
                 .Property(u => u.BirthDate)
                 .HasColumnType("DATE");
@@ -95,7 +97,7 @@ namespace FindInternship.Data
             builder.ApplyConfiguration(new CompanyConfiguration());
             builder.ApplyConfiguration(new AbilityConfiguration());
 
-            base.OnModelCreating(builder);
+            
 
         }
 

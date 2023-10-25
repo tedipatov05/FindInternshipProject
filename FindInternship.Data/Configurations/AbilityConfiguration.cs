@@ -1,4 +1,5 @@
-﻿using FindInternship.Data.Models;
+﻿using FindInternship.Common.Extensions;
+using FindInternship.Data.Models;
 using FindInternship.Data.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace FindInternship.Data.Configurations
 {
@@ -19,43 +21,22 @@ namespace FindInternship.Data.Configurations
 
         private List<Ability> GetAbilities()
         {
-            return new List<Ability>()
+            List<Ability> list = new List<Ability>();
+            int id = 1;
+            foreach(AbilityEnum abilityEnum in Enum.GetValues(typeof(AbilityEnum))) 
             {
-                new Ability()
+                list.Add(new Ability()
                 {
-                    Id = 1,
-                    AbilityText = AbilityEnum.C.ToString()
-                },
-                new Ability()
-                {
-                    Id = 2,
-                    AbilityText = AbilityEnum.CScharp.ToString()
-                },
-                new Ability()
-                {
-                    Id = 3,
-                    AbilityText = AbilityEnum.ASPNET.ToString()
-                },
-                new Ability()
-                {
-                    Id = 4,
-                    AbilityText = AbilityEnum.JS.ToString()
-                },
-                new Ability()
-                {
-                    Id = 5,
-                    AbilityText = AbilityEnum.NodeJs.ToString()
-                },
-                new Ability()
-                {
-                    Id = 6,
-                    AbilityText = AbilityEnum.Python.ToString()
-                },new Ability()
-                {
-                    Id = 7,
-                    AbilityText = AbilityEnum.EntityFramework.ToString()
-                },
-            };
+                    Id = id,
+                    AbilityText = abilityEnum.GetAbilityName()
+                });
+
+                id++;
+            }
+
+            return list;
+
+            
         }
     }
 }
