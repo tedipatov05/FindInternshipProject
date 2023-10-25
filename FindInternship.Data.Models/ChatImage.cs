@@ -15,6 +15,7 @@ namespace FindInternship.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
         }
+
         [Key]
         public string Id { get; set; }
 

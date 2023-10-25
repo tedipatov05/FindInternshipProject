@@ -59,6 +59,7 @@ namespace FindInternship.Web.Controllers
             if (!ModelState.IsValid)
             {
                 model.Classes = await classService.AllClassesAsync();
+                model.Abilities = await abilityService.AllAbilitiesAsync();
                 return View(model);
             }
 
@@ -104,7 +105,7 @@ namespace FindInternship.Web.Controllers
             {
                 ModelState.AddModelError("", error.Description);
             }
-
+            model.Abilities = await abilityService.AllAbilitiesAsync();
             model.Classes = await classService.AllClassesAsync();
             return View(model);
         }

@@ -12,5 +12,7 @@ namespace FindInternship.Core.Contracts
         Task<List<AbilityViewModel>> AllAbilitiesAsync();
 
         Task AddAbilitiesToStudentAsync(List<string> abilities, string userId);
+
+        
     }
 }
