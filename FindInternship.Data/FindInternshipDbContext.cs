@@ -31,10 +31,12 @@ namespace FindInternship.Data
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<Document> Documents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+
+           
 
             builder.Entity<User>()
                 .Property(u => u.BirthDate)
@@ -86,6 +88,11 @@ namespace FindInternship.Data
                 .WithOne(c => c.Company)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<Document>()
+                .HasOne(d => d.Student)
+                .WithMany(s => s.Documents)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
 
             builder.ApplyConfiguration(new UserConfiguration());
@@ -97,8 +104,8 @@ namespace FindInternship.Data
             builder.ApplyConfiguration(new CompanyConfiguration());
             builder.ApplyConfiguration(new AbilityConfiguration());
 
-            
 
+            base.OnModelCreating(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

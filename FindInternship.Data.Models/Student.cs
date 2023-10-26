@@ -14,6 +14,7 @@ namespace FindInternship.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.Abilities = new HashSet<StudentAbility>();
+            this.Documents = new HashSet<Document>();
         }
 
         [Key]
@@ -31,6 +32,8 @@ namespace FindInternship.Data.Models
         public Class Class { get; set; } = null!;
 
         public ICollection<StudentAbility> Abilities { get; set; }
+
+        public ICollection<Document> Documents { get; set; }
 
         
     }
