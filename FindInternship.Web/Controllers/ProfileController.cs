@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FindInternship.Core.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FindInternship.Web.Controllers
 {
     public class ProfileController : Controller
     {
-        public async Task<IActionResult> MyProfile()
+        private IProfileService profileService;
+        public ProfileController(IProfileService profileService)
         {
-            return await Task.Run(() => View());
+            this.profileService = profileService;
+        }
+
+        public async Task<IActionResult> MyProfile(string userId, string role)
+        {
+            var model = await profileService.GetProfileAsync(userId, role);
+            return View(model);
         }
     }
 }

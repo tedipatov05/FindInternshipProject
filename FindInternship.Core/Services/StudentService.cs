@@ -30,12 +30,30 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task<List<string>> GetStudentAbilitiesAsync(string studentId)
+        {
+             var abilitites = await repo.All<StudentAbility>()
+                .Where(a => a.StudentId == studentId)
+                .Select(s => s.Ability.AbilityText)
+                .ToListAsync();
+
+            return abilitites;
+        }
+
         public async Task<string> GetStudentId(string userId)
         {
             var student = await repo.All<Student>()
                 .FirstOrDefaultAsync(student => student.UserId == userId);
 
             return student!.Id;
+        }
+
+        public async Task<bool> IsStudent(string userId)
+        {
+            var isStudent = await repo.All<Student>()
+                .AnyAsync(s => s.UserId == userId);
+
+            return isStudent;
         }
     }
 }

@@ -12,22 +12,24 @@ namespace FindInternship.Core.Models.Profile
 
         public string Name { get; set; } = null!;
 
-        public string? Description { get; set; }
+        public string? ProfilePictureUrl { get; set; } 
 
-        public int MeetingsCount { get; set; }
+        public string Role {  get; set; } = null!;
 
-        public string Country { get; set; } = null!;
+        public List<string> Abilities { get; set; } = new List<string>();
+
+        public string Email { get; set; } = null!;
+
+        public string Phone { get; set; } = null!;
 
         public string City { get; set; } = null!;
 
-        public string Gender { get; set; } = null!;
+        public string Country { get; set; } = null!;
 
-        public string BirthDate { get; set; } = null!;
+        public string? Description { get; set; } 
 
-        public string? Services { get; set; }
+        public string? Services { get; set; } 
 
-        public bool IsCompany { get; set; }
-
-        
+       
     }
 }

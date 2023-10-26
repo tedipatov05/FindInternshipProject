@@ -15,6 +15,8 @@ namespace FindInternship.Web.Extensions
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IAbilityService, AbilityService>();
+            services.AddScoped<ITeacherService, TeacherService>();
+            services.AddScoped<IProfileService, ProfileService>();
 
             return services;
 
