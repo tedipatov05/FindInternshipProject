@@ -19,7 +19,12 @@ namespace FindInternship.Core.Services
             this.repo = repo;
         }
 
-        
+        public async Task<bool> IsExistsByIdAsync(string id)
+        {
+            var isExists = await repo.All<User>().AnyAsync(u => u.Id == id);
+
+            return isExists;
+        }
 
         public async Task<bool> IsUserExistsByEmailAsync(string email)
         {

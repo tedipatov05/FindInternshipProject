@@ -3,19 +3,16 @@
 @using Microsoft.AspNetCore.Identity;
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-
-    @{
-        string role = User.IsInRole("Student") ? "Student" : User.IsInRole("Company") ? "Company" : "Teacher";
-
-    }
-
+ 
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+       
         <li class="nav-item">
-            <a class="nav-link scrollto" asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@User.GetId()" asp-route-role="@role" title="Manage">Hello @User.Identity?.Name!</a>
+            <a class="nav-link scrollto" asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@User.GetId()" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
+       
         <li class="nav-item">
             <form class="form-inline" asp-action="Logout" asp-controller="Account">
                 <button type="submit" class="nav-link scrollto">Logout</button>

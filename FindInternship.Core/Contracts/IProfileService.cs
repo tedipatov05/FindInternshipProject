@@ -9,6 +9,8 @@ namespace FindInternship.Core.Contracts
 {
     public interface IProfileService
     {
-        Task<ProfileViewModel> GetProfileAsync(string userId, string role);
+        Task<StudentProfileViewModel> GetStudentProfileAsync(string studentId);
+
+        Task<TeacherProfileViewModel> GetTeacherProfileAsync(string teacherId);
     }
 }

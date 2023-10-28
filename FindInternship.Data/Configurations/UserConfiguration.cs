@@ -51,7 +51,7 @@ namespace FindInternship.Data.Configurations
                 Id = "93418f37-da3b-4c78-b0ae-8f0022b09681",
                 UserName = "georgi",
                 NormalizedUserName = "GEORGI",
-                Email = "georgidimitov@abv.bg",
+                Email = "georgidimitrov@abv.bg",
                 NormalizedEmail = "GEORGIDIMITROV@ABV.BG",
                 PhoneNumber = "0885789826",
                 Name = "Георги Димитров",
