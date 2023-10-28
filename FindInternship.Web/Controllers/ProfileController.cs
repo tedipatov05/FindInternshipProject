@@ -16,5 +16,10 @@ namespace FindInternship.Web.Controllers
             var model = await profileService.GetProfileAsync(userId, role);
             return View(model);
         }
+
+        public IActionResult Student()
+        {
+            return View();
+        }
     }
 }
