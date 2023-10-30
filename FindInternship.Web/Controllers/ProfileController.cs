@@ -43,7 +43,7 @@ namespace FindInternship.Web.Controllers
                 var teacherId = await teacherService.GetTeacherIdAsync(userId);
                 var teacherModel = await profileService.GetTeacherProfileAsync(teacherId);
 
-                return View(teacherModel);
+                return View("Teacher", teacherModel);
             }
 
 

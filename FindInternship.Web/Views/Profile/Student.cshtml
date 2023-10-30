@@ -1,13 +1,13 @@
-﻿@using FindInternship.Core.Models.Profile;
+﻿﻿@using FindInternship.Core.Models.Profile;
 @model StudentProfileViewModel;
 
 @{
     int percent = 30;
     percent = Model.Class.Split(" ")[0] switch
     {
-        "12" => 90, 
-        "11" => 75, 
-        "10" => 60, 
+        "12" => 90,
+        "11" => 75,
+        "10" => 60,
         "9" => 45
     };
 
@@ -87,14 +87,14 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <h6 class="d-flex align-items-center mb-3">Занания</h6>
-                                @foreach(var ability in Model.Abilities)
+                                @foreach (var ability in Model.Abilities)
                                 {
                                     <small>@ability</small>
                                     <div class="progress mb-3" style="height: 5px">
                                         <div class="progress-bar bg-primary" role="progressbar" style="width: @percent%" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 }
-                                
+
                             </div>
                         </div>
                     </div>

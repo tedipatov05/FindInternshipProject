@@ -10,14 +10,14 @@ namespace FindInternship.Core.Models.Account
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Имейла е задължителен")]
         [EmailAddress]
-        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength)]
+        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength, ErrorMessage = "Имейла трабва да бъде между {2} и {1} символа")]
         public string Email { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "Паролата е задължителна")]
         [DataType(DataType.Password)]
-        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength)]
+        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength, ErrorMessage = "Паролата трябва да бъде между {2} и {1} символа")]
         public string Password { get; set; } = null!;
     }
 }
