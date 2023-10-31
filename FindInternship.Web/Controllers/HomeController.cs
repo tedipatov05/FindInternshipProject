@@ -61,7 +61,8 @@ namespace FindInternship.Web.Controllers
                 return View(model);
             }
 
-            TempData[SuccessMessage] = "Successfully sended email";
+            TempData[SuccessMessage] = "Successfully sent email";
+
             return RedirectToAction("Index");
         }
 
