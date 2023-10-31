@@ -1,4 +1,5 @@
 using CloudinaryDotNet;
+using FindInternship.Common;
 using FindInternship.Data;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
@@ -22,6 +23,12 @@ namespace FindInternship.Web
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.ConfigureServices();
+
+            var emailConfig = builder.Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfig>();
+
+            builder.Services.AddSingleton(emailConfig);
 
             ConfigureCloudinaryService(builder.Services, builder.Configuration);
 
@@ -79,7 +86,7 @@ namespace FindInternship.Web
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            
+
             app.MapRazorPages();
 
             app.Run();
