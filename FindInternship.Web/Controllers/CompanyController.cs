@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FindInternship.Core.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FindInternship.Web.Controllers
 {
     public class CompanyController : Controller
     {
-        public IActionResult All()
+        private ICompanyService companyService;
+
+        public CompanyController(ICompanyService companyService)
         {
-            return View();
+            this.companyService = companyService;
+        }
+
+        public async Task<IActionResult> All()
+        {
+            var companies = await companyService.GetAllCompaniesAsync();
+            return View(companies);
         }
     }
 }

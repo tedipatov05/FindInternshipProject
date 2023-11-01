@@ -14,6 +14,7 @@ namespace FindInternship.Core.Services
 {
     public class EmailService : IEmailService
     {
+
         private readonly EmailConfig emailConfig;
 
         public EmailService(EmailConfig emailConfiguration)
