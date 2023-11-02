@@ -33,7 +33,7 @@ namespace FindInternship.Core.Services
 
             var model = new StudentProfileViewModel()
             {
-                Id = studentId,
+                Id = student.User.Id,
                 Name = student.User.Name,
                 Abilities = await studentService.GetStudentAbilitiesAsync(studentId),
                 ProfilePictureUrl = student.User.ProfilePictureUrl,
@@ -69,7 +69,7 @@ namespace FindInternship.Core.Services
 
             var model = new TeacherProfileViewModel()
             {
-                Id = teacherId,
+                Id = teacher.User.Id,
                 Name = teacher.User.Name,
                 Email = teacher.User.Email,
                 PhoneNumber = teacher.User.PhoneNumber,

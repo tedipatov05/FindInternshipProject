@@ -18,12 +18,12 @@ namespace FindInternship.Web.Controllers
             this.teacherService = teacherService;
         }
 
-        public async Task<IActionResult> MyProfile(string userId, string role)
+        public async Task<IActionResult> MyProfile(string userId)
         {
             bool isExists = await userService.IsExistsByIdAsync(userId);
             if(!isExists)
             {
-                TempData[ErrorMessage] = "Този потребител не съществува";
+                TempData[ErrorMessage] = "This user does not exists";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -47,7 +47,21 @@ namespace FindInternship.Web.Controllers
             }
 
 
+            TempData[InformationMessage] = "This user is neither Teacher nor Student";
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> Edit(string userId)
+        {
+            bool isExists = await userService.IsExistsByIdAsync(userId);
+            if (!isExists)
+            {
+                TempData[ErrorMessage] = "This user does not exists";
+                return RedirectToAction("Index", "Home");
+            }
+
+            return NotFound();
+           
         }
 
        
