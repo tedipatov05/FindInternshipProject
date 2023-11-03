@@ -12,5 +12,9 @@ namespace FindInternship.Core.Contracts
         Task<StudentProfileViewModel> GetStudentProfileAsync(string studentId);
 
         Task<TeacherProfileViewModel> GetTeacherProfileAsync(string teacherId);
+
+        Task<EditProfileModel> GetUserForEditAsync(string userId);
+
+        Task EditProfileAsync(string userId, EditProfileModel model);
     }
 }

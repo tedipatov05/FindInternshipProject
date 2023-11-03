@@ -16,11 +16,31 @@ namespace FindInternship.Core.Services
     {
         private IRepository repo;
         private IStudentService studentService;
+        private IImageService imageService;
        
-        public ProfileService(IRepository repo, IStudentService studentService)
+        public ProfileService(IRepository repo, IStudentService studentService, IImageService imageService)
         {
             this.repo = repo;
             this.studentService = studentService;
+            this.imageService = imageService;
+        }
+
+        public async Task EditProfileAsync(string userId, EditProfileModel model)
+        {
+            var user = await repo.GetByIdAsync<User>(userId);
+
+            user.Name = model.Name;
+            user.Email = model.Email;
+            user.Address = model.Address;
+            user.PhoneNumber = model.PhoneNumber;
+            user.City = model.City;
+            user.Country = model.Country;
+
+            if (model.ProfilePicture != null)
+                user.ProfilePictureUrl = await imageService.UploadImage(model.ProfilePicture, "projectImages", user);
+
+            await repo.SaveChangesAsync();
+                
         }
 
         public async Task<StudentProfileViewModel> GetStudentProfileAsync(string studentId)
@@ -83,6 +103,26 @@ namespace FindInternship.Core.Services
             };
 
             return model;
+        }
+
+        public async Task<EditProfileModel> GetUserForEditAsync(string userId)
+        {
+            var u = await repo.All<User>()
+                .FirstOrDefaultAsync(s => s.Id == userId);
+
+            var user = new EditProfileModel()
+            {
+                Name = u.Name,
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber,
+                City = u.City,
+                Country = u.Country,
+                Address = u.Address,
+
+            };
+                
+
+            return user;
         }
     }
 }

@@ -13,7 +13,6 @@ namespace FindInternship.Core.Models.Profile
     public class EditProfileModel
     {
 
-        public string Id { get; set; }
 
         [Required(ErrorMessage = "Името е задължително")]
         [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength, ErrorMessage = "Името трябва да бъде между {2} и {1} символа")]

@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Profile;
 using Microsoft.AspNetCore.Mvc;
 using static FindInternship.Common.NotificationConstants;
 
@@ -51,6 +52,7 @@ namespace FindInternship.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(string userId)
         {
             bool isExists = await userService.IsExistsByIdAsync(userId);
@@ -60,8 +62,46 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return NotFound();
+            var user = await profileService.GetUserForEditAsync(userId);
+
+            return View(user);
+
+            
            
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(string userId, EditProfileModel model)
+        {
+            bool isExists = await userService.IsExistsByIdAsync(userId);
+            if (!isExists)
+            {
+                TempData[ErrorMessage] = "This user does not exists";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                await profileService.EditProfileAsync(userId, model);
+                TempData[SuccessMessage] = "Successfully edited profile";
+
+                return RedirectToAction("MyProfile", "Profile", new { userId });
+            }
+            catch(Exception ex)
+            {
+                TempData[ErrorMessage] = ex.Message;
+                return RedirectToAction("Index", "Home");
+            }
+
+           
+
+            
+            
+
         }
 
        
