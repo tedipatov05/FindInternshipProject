@@ -2,7 +2,7 @@
 @model EditProfileModel
 
 @{
-    ViewData["Title"] = "Edit Profile";
+    ViewData["Title"] = "Промени профил";
 }
 
 <div class="form-body">
@@ -14,33 +14,33 @@
                         <h2 class="text-center"><strong>@ViewData["Title"]</strong></h2>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <input asp-for="Email" class="form-control" placeholder="Email">
+                            <input asp-for="Email" class="form-control" placeholder="Имейл">
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input asp-for="Name" class="form-control" placeholder="Name">
+                            <input asp-for="Name" class="form-control" placeholder="Име">
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                         
                         <div class="form-group">
-                            <input asp-for="PhoneNumber" class="form-control" placeholder="Phone number">
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="Телефон">
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input asp-for="Address" class="form-control" placeholder="Address">
+                            <input asp-for="Address" class="form-control" placeholder="Адрес">
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input asp-for="City" class="form-control" placeholder="City">
+                            <input asp-for="City" class="form-control" placeholder="Град">
                             <span asp-validation-for="City" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input asp-for="Country" class="form-control" placeholder="Country">
+                            <input asp-for="Country" class="form-control" placeholder="Държава">
                             <span asp-validation-for="Country" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="profilePicture">Upload Profile Picture</label>
+                            <label for="profilePicture">Качи профилна снимка</label>
                             <input asp-for="ProfilePicture" accept="image/gif, image/jpeg, image/png" class="text-white" id="profilePicture">
                             <span asp-validation-for="ProfilePicture" class="text-danger"></span>
                         </div>
@@ -48,7 +48,7 @@
                             <img alt="Uploaded Image" placeholder="Upload Profile Picture" accept="image/gif, image/jpeg, image/png" style="display:none;">
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary btn-block" type="submit">Edit</button>
+                            <button class="btn btn-primary btn-block" type="submit">Промени</button>
                         </div>
                         <br>
                         

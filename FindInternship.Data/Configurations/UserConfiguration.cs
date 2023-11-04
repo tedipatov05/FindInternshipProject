@@ -82,7 +82,7 @@ namespace FindInternship.Data.Configurations
                 Gender = null,
                 RegisteredOn = DateTime.UtcNow,
                 BirthDate = DateTime.ParseExact("2015-05-09 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
-                ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1697617040/projectImages/n775bghppizokr5xifn4.png"
+                ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1699129335/projectImages/d1bplska8t4sv6rlkkoa.png"
             };
 
             user3.PasswordHash = passwordHasher.HashPassword(user3, "techies123");
