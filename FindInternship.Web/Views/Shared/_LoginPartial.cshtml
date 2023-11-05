@@ -10,7 +10,7 @@
     {
        
         <li class="nav-item">
-            <a class="nav-link scrollto" asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@User.GetId()" title="Manage">Hello @User.Identity?.Name!</a>
+            <a class="nav-link scrollto" asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@User.GetId()" title="Manage">Здравей, @User.Identity?.Name!</a>
         </li>
        
         <li class="nav-item">
@@ -24,10 +24,10 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link scrollto" asp-action="Register" asp-controller="Account">Register</a>
+            <a class="nav-link scrollto" asp-action="Register" asp-controller="Account">Регистрирай се</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link scrollto" asp-action="Login" asp-controller="Account">Login</a>
+            <a class="nav-link scrollto" asp-action="Login" asp-controller="Account">Влез</a>
         </li>
     }
 </ul>

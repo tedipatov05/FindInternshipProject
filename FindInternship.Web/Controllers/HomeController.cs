@@ -30,6 +30,11 @@ namespace FindInternship.Web.Controllers
             return View(model);
         }
 
+        public IActionResult Teacher()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

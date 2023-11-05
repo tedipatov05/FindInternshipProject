@@ -1,0 +1,30 @@
+﻿@using FindInternship.Core.Models.Profile;
+@model TeacherProfileViewModel;
+
+
+
+<div class="container">
+    <div class="row">
+        @for(int i = 1; i<=5; i++)
+        {
+        <div class="col-xl-12">
+            <div class="card mb-3 card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <a href="#!.html">
+                            <img src="" class="width-90 rounded-3" alt="">
+                        </a>
+                    </div>
+                    <div class="col">
+                        <div class="overflow-hidden flex-nowrap">
+                            <h6 class="mb-1">
+                                <a href="#!" class="text-reset">student@i</a>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
