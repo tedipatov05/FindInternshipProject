@@ -5,7 +5,8 @@
 
 <div class="container">
     <div class="row">
-        @for(int i = 1; i<=5; i++)
+        <h2>12б</h2>
+        @foreach(var student in Model.StudentsNames)
         {
         <div class="col-xl-12">
             <div class="card mb-3 card-body">
@@ -18,7 +19,7 @@
                     <div class="col">
                         <div class="overflow-hidden flex-nowrap">
                             <h6 class="mb-1">
-                                <a href="#!" class="text-reset">student@i</a>
+                                <a href="#!" class="text-reset">@student</a>
                             </h6>
                         </div>
                     </div>
