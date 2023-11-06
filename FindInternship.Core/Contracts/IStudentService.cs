@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FindInternship.Core.Models.Student;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,7 @@ namespace FindInternship.Core.Contracts
         Task<bool> IsStudent(string userId);
 
         Task<List<string>> GetStudentAbilitiesAsync(string studentId);
+
+        Task<List<StudentViewModel>> GetTeacherStudentsAsync(string className);
     }
 }

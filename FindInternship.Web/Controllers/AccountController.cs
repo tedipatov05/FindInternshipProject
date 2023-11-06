@@ -136,7 +136,7 @@ namespace FindInternship.Web.Controllers
                     if (result.Succeeded)
                     {
                        
-                            return RedirectToAction("Teacher", "Home");
+                        return RedirectToAction("Teacher", "Home");
                        
                     }
 

@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Student;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,8 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
         }
 
+     
+
         public async Task<List<string>> GetStudentAbilitiesAsync(string studentId)
         {
              var abilitites = await repo.All<StudentAbility>()
@@ -46,6 +49,22 @@ namespace FindInternship.Core.Services
                 .FirstOrDefaultAsync(student => student.UserId == userId);
 
             return student!.Id;
+        }
+
+        public async Task<List<StudentViewModel>> GetTeacherStudentsAsync(string className)
+        {
+            var students = await repo.All<Student>()
+                .Where(s => s.Class.Grade == className)
+                .Select(s => new StudentViewModel()
+                {
+                    Id = s.Id, 
+                    Name = s.User.Name, 
+                    ProfilePictureUrl = s.User.ProfilePictureUrl
+                })
+                .ToListAsync();
+
+            return students;
+                
         }
 
         public async Task<bool> IsStudent(string userId)

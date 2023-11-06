@@ -1,6 +1,8 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.Email;
+using FindInternship.Core.Models.Profile;
 using FindInternship.Core.Models.Statistics;
+using FindInternship.Web.Extensions;
 using FindInternship.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -13,11 +15,13 @@ namespace FindInternship.Web.Controllers
         
         private readonly IStatisticService statisticService;
         private readonly IEmailService emailService;
+        private readonly ITeacherService teacherService;
 
-        public HomeController(IStatisticService statisticService, IEmailService emailService)
+        public HomeController(IStatisticService statisticService, IEmailService emailService, ITeacherService teacherService)
         {
             this.statisticService = statisticService;
             this.emailService = emailService;
+            this.teacherService = teacherService;
         }
 
         public async Task<IActionResult> Index()
@@ -30,9 +34,20 @@ namespace FindInternship.Web.Controllers
             return View(model);
         }
 
-        public IActionResult Teacher()
+        public async Task<IActionResult> Teacher()
         {
-            return View();
+            string userId = User.GetId();
+            bool isTeacher = await teacherService.IsTeacherAsync(userId);
+            if (!isTeacher)
+            {
+                TempData[ErrorMessage] = "You should be a teacher";
+                return RedirectToAction("Index", "Home");
+            }
+
+            string teacherId = await teacherService.GetTeacherIdAsync(userId);
+            var model = await teacherService.GetTeacherStudentsAsync(teacherId);
+
+            return View(model);
         }
 
         public IActionResult Privacy()

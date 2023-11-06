@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Teacher;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace FindInternship.Core.Services
     public class TeacherService : ITeacherService
     {
         private IRepository repo;
+        private IStudentService studentService;
 
-        public TeacherService(IRepository repo)
+        public TeacherService(IRepository repo, IStudentService studentService)
         {
             this.repo = repo;
+            this.studentService = studentService;
         }
 
         public async Task<string> GetTeacherIdAsync(string userId)
@@ -24,6 +27,22 @@ namespace FindInternship.Core.Services
             var teacher= await repo.All<Teacher>().FirstOrDefaultAsync(t => t.UserId == userId);
 
             return teacher!.Id;
+        }
+
+        public async Task<TeacherStudentsViewModel> GetTeacherStudentsAsync(string teacherId)
+        {
+            var teacher = await repo.All<Teacher>()
+                .Include(s => s.Class)
+                .FirstOrDefaultAsync(s => s.Id == teacherId);
+                
+            var model = new TeacherStudentsViewModel();
+            model.Id = teacher.Id;
+            model.Class = teacher.Class.Grade;
+
+            model.Students = await studentService.GetTeacherStudentsAsync(teacher.Class.Grade);
+
+            return model;
+                
         }
 
         public async Task<bool> IsTeacherAsync(string userId)

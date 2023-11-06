@@ -1,31 +1,31 @@
-﻿@using FindInternship.Core.Models.Profile;
-@model TeacherProfileViewModel;
+﻿@using FindInternship.Core.Models.Teacher;
+@model TeacherStudentsViewModel;
 
 
 
 <div class="container">
     <div class="row">
-        <h2>12б</h2>
-        @foreach(var student in Model.StudentsNames)
+        <h2>@Model.Class</h2>
+        @foreach (var student in Model.Students)
         {
-        <div class="col-xl-12">
-            <div class="card mb-3 card-body">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <a href="#!.html">
-                            <img src="" class="width-90 rounded-3" alt="">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <div class="overflow-hidden flex-nowrap">
-                            <h6 class="mb-1">
-                                <a href="#!" class="text-reset">@student</a>
-                            </h6>
+            <div class="col-xl-12">
+                <div class="card mb-3 card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <a href="#">
+                                <img src="@student.ProfilePictureUrl" class="width-90 rounded-3" alt="">
+                            </a>
+                        </div>
+                        <div class="col">
+                            <div class="overflow-hidden flex-nowrap">
+                                <h6 class="mb-1">
+                                    <a href="#!" class="text-reset">@student.Name</a>
+                                </h6>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     </div>
 </div>
