@@ -3,6 +3,7 @@ using FindInternship.Common;
 using FindInternship.Data;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
+using FindInternship.Web.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,7 @@ namespace FindInternship.Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("FindInternshipDbContextConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<FindInternshipDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -86,6 +87,7 @@ namespace FindInternship.Web
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            app.UseMiddleware<OnlineUserMiddleware>();
 
             app.MapRazorPages();
 

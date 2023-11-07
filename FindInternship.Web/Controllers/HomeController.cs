@@ -37,7 +37,9 @@ namespace FindInternship.Web.Controllers
         public async Task<IActionResult> Teacher()
         {
             string userId = User.GetId();
+
             bool isTeacher = await teacherService.IsTeacherAsync(userId);
+
             if (!isTeacher)
             {
                 TempData[ErrorMessage] = "You should be a teacher";

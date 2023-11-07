@@ -1,35 +1,59 @@
 ﻿@using FindInternship.Core.Models.Teacher;
+@using FindInternship.Web.Middlewares;
 @model TeacherStudentsViewModel;
 
 
 
-<div class="container">
-	<div class="row">
-		<h2>@Model.Class</h2>
-		@foreach (var student in Model.Students)
-		{
-			<div class="col-xl-12">
-				<div class="card mb-3 card-body">
-					<div class="row align-items-center">
-						<div class="col-auto">
-							<a href="#">
-								<img src="@student.ProfilePictureUrl" class="width-90 rounded-3" alt="">
-							</a>
-						</div>
-						<div class="col">
-							<div class="overflow-hidden flex-nowrap">
-								<h6 class="mb-1">
-									<a href="#!" class="text-reset">@student.Name</a>
-								</h6>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		}
-	</div>
+<h2 class="text-center text-dark">@Model.Class</h2>
+<div class="container profile-page">
+    <div class="row">
+        @foreach (var student in Model.Students)
+        {
+            <div class="col-xl-6 col-lg-7 col-md-12">
+                <div class="card profile-header">
+                    <div class="body">
+                        <div class="row">
+
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="profile-image float-md-right">
+                                    @if(student.ProfilePictureUrl != null)
+                                    {
+                                        <img src="@student.ProfilePictureUrl" alt="">
+
+                                    }
+                                    else
+                                    {
+                                        <img src="/img/blank-profile-picture.png" alt="">
+                                    }
+                                    @if (OnlineUserMiddleware.CheckIfUserIsOnline(student.Id))
+                                    {
+                                        <div class="green_icon"></div>
+                                    }
+
+                                </div>
+
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-12">
+                                <h4 class="m-t-0 m-b-0">@student.Name</h4>
+                                @*<span class="job_post">@user.Email</span>
+                                <p>@user.Address @user.City @user.Country</p>*@
+                                @*<div>
+                                    <a asp-area="Admin" asp-action="Edit" asp-controller="User" asp-route-id="@user.Id" class="btn btn-primary btn-round">Edit</a>
+                                    <a asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id" class="btn btn-danger btn-round btn-simple">Delete</a>
+                                </div>*@
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+
 </div>
 
 @section Styles{
-	<link rel="stylesheet" href="~/css/teacherView.css" />
+	<link rel="stylesheet" href="~/css/teacherStudents.css" />
 }

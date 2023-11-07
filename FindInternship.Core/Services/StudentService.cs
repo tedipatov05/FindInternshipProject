@@ -57,7 +57,7 @@ namespace FindInternship.Core.Services
                 .Where(s => s.Class.Grade == className)
                 .Select(s => new StudentViewModel()
                 {
-                    Id = s.Id, 
+                    Id = s.User.Id, 
                     Name = s.User.Name, 
                     ProfilePictureUrl = s.User.ProfilePictureUrl
                 })
