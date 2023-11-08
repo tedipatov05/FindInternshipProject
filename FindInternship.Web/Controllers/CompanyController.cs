@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Company;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace FindInternship.Web.Controllers
             this.teacherService = teacherService;
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]CompanyQueryModel model)
         {
             string userId = User.GetId();
 
@@ -28,8 +29,9 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            var companies = await companyService.GetAllCompaniesAsync();
-            return View(companies);
+            model.Companies = await companyService.GetAllCompaniesAsync(model);
+            
+            return View(model);
         }
     }
 }

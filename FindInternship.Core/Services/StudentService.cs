@@ -54,7 +54,7 @@ namespace FindInternship.Core.Services
         public async Task<List<StudentViewModel>> GetTeacherStudentsAsync(string className)
         {
             var students = await repo.All<Student>()
-                .Where(s => s.Class.Grade == className)
+                .Where(s => s.Class.Grade == className && s.User.IsActive == true)
                 .Select(s => new StudentViewModel()
                 {
                     Id = s.User.Id, 
@@ -70,7 +70,7 @@ namespace FindInternship.Core.Services
         public async Task<bool> IsStudent(string userId)
         {
             var isStudent = await repo.All<Student>()
-                .AnyAsync(s => s.UserId == userId);
+                .AnyAsync(s => s.UserId == userId && s.User.IsActive == true);
 
             return isStudent;
         }

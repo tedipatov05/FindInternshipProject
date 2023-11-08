@@ -10,18 +10,19 @@ namespace FindInternship.Core.Models.Company
 {
 	public class CompanyQueryModel
 	{
+        public CompanyQueryModel()
+        {
+            Companies = new List<CompanyViewModel>();
+        }
 
-		public string SearchString { get; set; } = null!;
+        public string? SearchString { get; set; }
 
-		public string City { get; set; } = null!;
+		//public string City { get; set; } = null!;
 
-		public AbilityEnum Technology { get; set; }
+		//public AbilityEnum Technology { get; set; }
 
-		public ICollection<CompanyViewModel> Companies { get; set; }
+		public List<CompanyViewModel> Companies { get; set; }
 
-		public CompanyQueryModel()
-		{
-			Companies = new HashSet<CompanyViewModel>();
-		}
+		
 	}
 }

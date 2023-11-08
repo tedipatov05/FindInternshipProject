@@ -136,7 +136,7 @@ namespace FindInternship.Web.Controllers
                     if (result.Succeeded)
                     {
                        
-                        return RedirectToAction("Teacher", "Home");
+                        return RedirectToAction("Index", "Home");
                        
                     }
 
@@ -151,8 +151,6 @@ namespace FindInternship.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-
-         
 
             return RedirectToAction("Index", "Home");
         }

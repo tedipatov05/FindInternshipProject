@@ -46,7 +46,7 @@ namespace FindInternship.Core.Services
         public async Task<StudentProfileViewModel> GetStudentProfileAsync(string studentId)
         {
             var student = await repo.All<Student>()
-                .Where(s => s.Id == studentId)
+                .Where(s => s.Id == studentId && s.User.IsActive == true)
                 .Include(s => s.User)
                 .Include(s => s.Class)
                 .FirstOrDefaultAsync();
@@ -74,15 +74,15 @@ namespace FindInternship.Core.Services
         public async Task<TeacherProfileViewModel> GetTeacherProfileAsync(string teacherId)
         {
             var teacher = await repo.All<Teacher>()
-                .Where(t => t.Id == teacherId)
                 .Include(t => t.User)
                 .Include(t => t.Class.Students)
-                .FirstOrDefaultAsync();
+				.Where(t => t.Id == teacherId && t.User.IsActive == true)
+				.FirstOrDefaultAsync();
 
             var students = await repo.All<Student>()
                 .Include(s => s.User)
                 .Include(s => s.Class)
-                .Where(s => s.Class.TeacherId ==  teacherId)
+                .Where(s => s.Class.TeacherId ==  teacherId && s.User.IsActive == true)
                 .Select(s => s.User.Name)
                 .ToListAsync();
 
@@ -108,7 +108,7 @@ namespace FindInternship.Core.Services
         public async Task<EditProfileModel> GetUserForEditAsync(string userId)
         {
             var u = await repo.All<User>()
-                .FirstOrDefaultAsync(s => s.Id == userId);
+                .FirstOrDefaultAsync(s => s.Id == userId && s.IsActive == true);
 
             var user = new EditProfileModel()
             {
