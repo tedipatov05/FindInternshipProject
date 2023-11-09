@@ -11,11 +11,13 @@ namespace FindInternship.Web.Controllers
     {
         private ICompanyService companyService;
         private ITeacherService teacherService;
+        private IAbilityService abilityService;
 
-        public CompanyController(ICompanyService companyService, ITeacherService teacherService)
+        public CompanyController(ICompanyService companyService, ITeacherService teacherService, IAbilityService abilityService)
         {
             this.companyService = companyService;
             this.teacherService = teacherService;
+            this.abilityService = abilityService;
         }
 
         public async Task<IActionResult> All([FromQuery]CompanyQueryModel model)
@@ -30,6 +32,7 @@ namespace FindInternship.Web.Controllers
             }
 
             model.Companies = await companyService.GetAllCompaniesAsync(model);
+            model.Technologies = await abilityService.AllAbilityNamesAsync();
             
             return View(model);
         }

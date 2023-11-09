@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FindInternship.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -281,6 +281,30 @@ namespace FindInternship.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Technologies",
+                columns: table => new
+                {
+                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AbilityId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Technologies", x => new { x.CompanyId, x.AbilityId });
+                    table.ForeignKey(
+                        name: "FK_Technologies_Abilities_AbilityId",
+                        column: x => x.AbilityId,
+                        principalTable: "Abilities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Technologies_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ChatImages",
                 columns: table => new
                 {
@@ -478,10 +502,10 @@ namespace FindInternship.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "03f3054b-c9a2-4198-a6c9-a96f3142ff53", "de243391-edc8-4fb6-8f16-5db9f9a4f5fa", "Student", "STUDENT" },
-                    { "36ae84ad-bb53-48ad-9503-bfe33221785d", "b1fe70d2-0a75-4f74-94db-9fd53db924e3", "Teacher", "TEACHER" },
-                    { "e2f6cb22-631b-47c7-9ac0-19f89455b2a5", "0bc505ab-c657-4940-8f24-0c0b4c51b354", "Admin", "ADMIN" },
-                    { "e6fc051f-3440-4f69-89e1-8a696c027fc2", "43c93096-de88-47ce-9270-ce8f9069fc35", "Company", "COMPANY" }
+                    { "03f3054b-c9a2-4198-a6c9-a96f3142ff53", "37823b69-02f1-452e-a35a-0e01f0d49859", "Student", "STUDENT" },
+                    { "36ae84ad-bb53-48ad-9503-bfe33221785d", "8e42d16d-6590-45cc-8b77-a37790bf81c6", "Teacher", "TEACHER" },
+                    { "e2f6cb22-631b-47c7-9ac0-19f89455b2a5", "e61fa67c-4b08-45a3-bc84-3eea8a2a670b", "Admin", "ADMIN" },
+                    { "e6fc051f-3440-4f69-89e1-8a696c027fc2", "494564ec-4ba1-4680-978c-8616086b5b52", "Company", "COMPANY" }
                 });
 
             migrationBuilder.InsertData(
@@ -489,10 +513,10 @@ namespace FindInternship.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "BirthDate", "City", "ConcurrencyStamp", "Country", "Email", "EmailConfirmed", "Gender", "IsActive", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfilePictureUrl", "RegisteredOn", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "080a469a-b5a2-44cc-a660-eea8e6fd05a5", 0, "ул. Ал. Стамболийски 30 ет.3 ап.11", new DateTime(2008, 4, 12, 13, 24, 0, 0, DateTimeKind.Unspecified), "Казанлък", "f67fb98c-4b29-46fc-8fca-6c99af233874", "България", "petarpetrov@abv.bg", false, "Мъж", true, false, null, "Петър Петров", "PETARPETROV@ABV.BG", "PETAR", "AQAAAAEAACcQAAAAEEpmOJRStleAYY/SK14htc2IVv5suIGp0A/6OecCzPuxv/ay4Jx4sN2NA2vroGr3Mg==", "0885763826", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697607303/projectImages/xbhwflepot9qpwmiiq6u.jpg", new DateTime(2023, 11, 5, 14, 46, 14, 562, DateTimeKind.Utc).AddTicks(717), "624c5c27-49b6-4ebb-81bc-6b677b98fa1d", false, "petar" },
-                    { "20dcf707-dfd9-4aae-b8c3-f3b9844e09d8", 0, "ул. Незабравка 3", new DateTime(2015, 7, 18, 11, 20, 0, 0, DateTimeKind.Unspecified), "Енина", "d27b1e24-45c2-4e3b-a020-8359abec5673", "България", "admin@abv.bg", false, "Мъж", true, false, null, "Admin", "ADMIN@ABV.BG", "ADMIN", "AQAAAAEAACcQAAAAEGJdrgT226AHzzxPNr3nqW+DApXrKt9CVDVRTSYHeCnDuox1BkQ9Ze1zIfGmyuAq2g==", "0889864842", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697617373/projectImages/pyb6v86l6myou9h1sxca.jpg", new DateTime(2023, 11, 5, 14, 46, 14, 570, DateTimeKind.Utc).AddTicks(8232), "17a671b9-40c4-433d-9d2f-c6e079b8b2b8", false, "Admin" },
-                    { "93418f37-da3b-4c78-b0ae-8f0022b09681", 0, "ул.Възраждане 6 ет.2 ап.8", new DateTime(1968, 2, 8, 11, 20, 0, 0, DateTimeKind.Unspecified), "Казанлък", "2b8e1d6d-1423-479e-a149-bef33063ec24", "България", "georgidimitrov@abv.bg", false, "Мъж", true, false, null, "Георги Димитров", "GEORGIDIMITROV@ABV.BG", "GEORGI", "AQAAAAEAACcQAAAAEL93NPkRIOje55udqrhCxMxtiRPhzVSkuqcoN2e/J5gBKiz9o6KcWfKeBKDlfmgKRg==", "0885789826", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697608565/projectImages/mvorrsshjbw1e8bzfzgq.jpg", new DateTime(2023, 11, 5, 14, 46, 14, 564, DateTimeKind.Utc).AddTicks(6624), "67f7c40e-cd09-4971-b5f4-0bfa80437be6", false, "georgi" },
-                    { "cb5ee792-90f6-4e50-8af1-da2f99d9f892", 0, "ул. Стара планина 63", new DateTime(2015, 5, 9, 11, 20, 0, 0, DateTimeKind.Unspecified), "Казанлък", "2faa9284-1448-4182-a329-cdea5c078f7e", "България", "newtechies@abv.bg", false, null, true, false, null, "New Techies", "NEWTECHIES@ABV.BG", "NEWTECHIES", "AQAAAAEAACcQAAAAENVb54YdiX9HXLxChLMkS7E1Pztq77qWNkNT8jJOA4lh+WSTiz0MrG1wheUyELTYHQ==", "0885789546", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1699129335/projectImages/d1bplska8t4sv6rlkkoa.png", new DateTime(2023, 11, 5, 14, 46, 14, 567, DateTimeKind.Utc).AddTicks(3818), "fc6a14aa-cb15-4f8f-94ab-48bc78abd617", false, "NewTechies" }
+                    { "080a469a-b5a2-44cc-a660-eea8e6fd05a5", 0, "ул. Ал. Стамболийски 30 ет.3 ап.11", new DateTime(2008, 4, 12, 13, 24, 0, 0, DateTimeKind.Unspecified), "Казанлък", "683d8a4d-b0d4-4271-9c99-c2a474729c09", "България", "petarpetrov@abv.bg", false, "Мъж", true, false, null, "Петър Петров", "PETARPETROV@ABV.BG", "PETAR", "AQAAAAEAACcQAAAAEAhFSJ/NwE/xMjZ4DDjwxDbOBY4yK6AxNAvJKxyFhE+ZMwOxT1ycL7ksP9wsQwkb0Q==", "0885763826", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697607303/projectImages/xbhwflepot9qpwmiiq6u.jpg", new DateTime(2023, 11, 9, 6, 58, 9, 547, DateTimeKind.Utc).AddTicks(3949), "555a5573-9819-4bde-9e2c-afb5f7a5cc9e", false, "petar" },
+                    { "20dcf707-dfd9-4aae-b8c3-f3b9844e09d8", 0, "ул. Незабравка 3", new DateTime(2015, 7, 18, 11, 20, 0, 0, DateTimeKind.Unspecified), "Енина", "386f5e6c-c206-4d69-8c55-e649ca24fdd1", "България", "admin@abv.bg", false, "Мъж", true, false, null, "Admin", "ADMIN@ABV.BG", "ADMIN", "AQAAAAEAACcQAAAAEE0d5MG96yl1D+6F8A4ao2eKNjv175LaDq/2M/yLKaQ9kS4y4E+xKAStW6FfOiA+VQ==", "0889864842", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697617373/projectImages/pyb6v86l6myou9h1sxca.jpg", new DateTime(2023, 11, 9, 6, 58, 9, 550, DateTimeKind.Utc).AddTicks(8658), "3cfe5cf5-b941-484f-8821-5e102583978b", false, "Admin" },
+                    { "93418f37-da3b-4c78-b0ae-8f0022b09681", 0, "ул.Възраждане 6 ет.2 ап.8", new DateTime(1968, 2, 8, 11, 20, 0, 0, DateTimeKind.Unspecified), "Казанлък", "31f9a865-71f9-4711-887d-62d336160841", "България", "georgidimitrov@abv.bg", false, "Мъж", true, false, null, "Георги Димитров", "GEORGIDIMITROV@ABV.BG", "GEORGI", "AQAAAAEAACcQAAAAEKqRzqxPcA55zHwJUvAoiF141sJzuOkUKgqmkuVWviMxeRgI/mQMO/CP77Z5QCrGAg==", "0885789826", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697608565/projectImages/mvorrsshjbw1e8bzfzgq.jpg", new DateTime(2023, 11, 9, 6, 58, 9, 548, DateTimeKind.Utc).AddTicks(5778), "df27ba18-6ef2-44f5-b0a8-3dd24da90e1c", false, "georgi" },
+                    { "cb5ee792-90f6-4e50-8af1-da2f99d9f892", 0, "ул. Стара планина 63", new DateTime(2015, 5, 9, 11, 20, 0, 0, DateTimeKind.Unspecified), "Казанлък", "67ec84fa-2258-434e-bdab-4f7b5299eaf4", "България", "newtechies@abv.bg", false, null, true, false, null, "New Techies", "NEWTECHIES@ABV.BG", "NEWTECHIES", "AQAAAAEAACcQAAAAEDOyT8+62lFb8G3aU1+/KHm8n9N+c9JnYc0H+wxNyKyMjq9K2U2+PKTgUGPc5YR9mw==", "0885789546", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1699129335/projectImages/d1bplska8t4sv6rlkkoa.png", new DateTime(2023, 11, 9, 6, 58, 9, 549, DateTimeKind.Utc).AddTicks(7381), "6f16af2e-6358-49a4-aa69-44062ea4f651", false, "NewTechies" }
                 });
 
             migrationBuilder.InsertData(
@@ -525,6 +549,21 @@ namespace FindInternship.Data.Migrations
                 table: "Teachers",
                 columns: new[] { "Id", "ClassId", "UserId" },
                 values: new object[] { "2644afb5-f916-4b3f-b451-9ff86c881de3", "0edc45cb-b2f1-48a2-8f6b-17910e09a147", "93418f37-da3b-4c78-b0ae-8f0022b09681" });
+
+            migrationBuilder.InsertData(
+                table: "Technologies",
+                columns: new[] { "AbilityId", "CompanyId" },
+                values: new object[] { 2, "e309dc7e-dad7-42cc-b83b-febb316cc49e" });
+
+            migrationBuilder.InsertData(
+                table: "Technologies",
+                columns: new[] { "AbilityId", "CompanyId" },
+                values: new object[] { 3, "e309dc7e-dad7-42cc-b83b-febb316cc49e" });
+
+            migrationBuilder.InsertData(
+                table: "Technologies",
+                columns: new[] { "AbilityId", "CompanyId" },
+                values: new object[] { 4, "e309dc7e-dad7-42cc-b83b-febb316cc49e" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -652,6 +691,11 @@ namespace FindInternship.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Technologies_AbilityId",
+                table: "Technologies",
+                column: "AbilityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserGroups_UserId",
                 table: "UserGroups",
                 column: "UserId");
@@ -693,6 +737,9 @@ namespace FindInternship.Data.Migrations
                 name: "Teachers");
 
             migrationBuilder.DropTable(
+                name: "Technologies");
+
+            migrationBuilder.DropTable(
                 name: "UserGroups");
 
             migrationBuilder.DropTable(
@@ -702,10 +749,10 @@ namespace FindInternship.Data.Migrations
                 name: "ChatMessages");
 
             migrationBuilder.DropTable(
-                name: "Abilities");
+                name: "Students");
 
             migrationBuilder.DropTable(
-                name: "Students");
+                name: "Abilities");
 
             migrationBuilder.DropTable(
                 name: "Groups");

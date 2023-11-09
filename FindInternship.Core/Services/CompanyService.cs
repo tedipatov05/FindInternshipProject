@@ -25,7 +25,7 @@ namespace FindInternship.Core.Services
             IQueryable<Company> companyQuery = repo.All<Company>()
                 .Where(c => c.User.IsActive == true);
 
-            if(model.SearchString != null)
+            if(!string.IsNullOrEmpty(model.SearchString))
             {
 
 				string wildCard = $"%{model.SearchString.ToLower()}%";
@@ -35,6 +35,12 @@ namespace FindInternship.Core.Services
                                 EF.Functions.Like(c.Description, wildCard) ||
                                 EF.Functions.Like(c.Services, wildCard));
 			}
+
+            if(!string.IsNullOrEmpty(model.Technology))
+            {
+                companyQuery = companyQuery
+                    .Where(c => c.Technologies.Select(t => t.Ability.AbilityText).Contains(model.Technology));
+            }
 
             var companies = await companyQuery
                 .Select(c => new CompanyViewModel()

@@ -19,7 +19,9 @@ namespace FindInternship.Core.Models.Company
 
 		//public string City { get; set; } = null!;
 
-		//public AbilityEnum Technology { get; set; }
+		public string Technology { get; set; }
+
+		public List<string> Technologies { get; set; }
 
 		public List<CompanyViewModel> Companies { get; set; }
 
