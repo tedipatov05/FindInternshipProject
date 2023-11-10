@@ -20,19 +20,40 @@ namespace FindInternship.Core.Services
             this.repo = repo;
         }
 
-        public async Task<List<CompanyViewModel>> GetAllCompaniesAsync()
+        public async Task<List<CompanyViewModel>> GetAllCompaniesAsync(CompanyQueryModel model)
         {
-            var companies = await repo.All<Company>()
+            IQueryable<Company> companyQuery = repo.All<Company>()
+                .Where(c => c.User.IsActive == true);
+
+            if(!string.IsNullOrEmpty(model.SearchString))
+            {
+
+				string wildCard = $"%{model.SearchString.ToLower()}%";
+
+                companyQuery = companyQuery
+                    .Where(c => EF.Functions.Like(c.User.Name, wildCard) ||
+                                EF.Functions.Like(c.Description, wildCard) ||
+                                EF.Functions.Like(c.Services, wildCard));
+			}
+
+            if(!string.IsNullOrEmpty(model.Technology))
+            {
+                companyQuery = companyQuery
+                    .Where(c => c.Technologies.Select(t => t.Ability.AbilityText).Contains(model.Technology));
+            }
+
+            var companies = await companyQuery
                 .Select(c => new CompanyViewModel()
                 {
                     Id = c.Id,
-                    Name = c.User.Name,
+                    Name = c.User.Name, 
                     ProfilePictureUrl = c.User.ProfilePictureUrl,
                     Address = c.User.Address
                 })
                 .ToListAsync();
 
             return companies;
+               
         }
     }
 }

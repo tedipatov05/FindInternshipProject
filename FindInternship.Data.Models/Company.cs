@@ -17,6 +17,7 @@ namespace FindInternship.Data.Models
             this.Classes = new HashSet<Class>();
             this.Requests = new List<Request>();
             this.Meetings = new HashSet<Meeting>();
+            this.Technologies = new HashSet<CompanyAbility>();
         }
 
         [Key]
@@ -32,6 +33,8 @@ namespace FindInternship.Data.Models
 
         [MaxLength(CompanyServicesMaxLength)]
         public string Services { get; set; } = null!;
+
+        public ICollection<CompanyAbility> Technologies { get; set; }
 
         public ICollection<Class> Classes { get; set; }
 

@@ -55,5 +55,14 @@ namespace FindInternship.Core.Services
 
             return abilities;
         }
+
+        public async Task<List<string>> AllAbilityNamesAsync()
+        {
+            var abilitites = await repo.All<Ability>()
+                .Select(a => a.AbilityText)
+                .ToListAsync();
+
+            return abilitites;
+        }
     }
 }

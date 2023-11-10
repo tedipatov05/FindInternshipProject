@@ -1,85 +1,104 @@
 ﻿@using FindInternship.Core.Models.Company;
 
-@model List<CompanyViewModel>
-@{
-	var first = Model.First();
-}
+@model CompanyQueryModel;
 
-
-
+<h1 class="text-black text-center">Фирми</h1>
 
 <form method="get">
-	<div class="row" style="margin-left: 140px;">
-		<div class="form-group col-md-3 d-flex justify-content-between">
+    <div class="row" style="margin-left: 140px; margin-top: 40px;">
+        <div class="form-group col-md-3 justify-content-between">
 
+            <div class="form-group">
+                <label asp-for="Technology"></label>
+                <select asp-for="Technology" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var category in Model.Technologies)
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
+            </div>
+        </div>
 
-			<div class="form-group col-md-9">
-				<label></label>
-				<input class="form-control" placeholder="Search" />
-			</div>
+        <div class="form-group col-md-4">
+            <label></label>
+            <input asp-for="@Model.SearchString" class="form-control" placeholder="Search" />
+        </div>
 
-			<div class="col-md-3">
-				<div class="form-group mt-3 p-2">
-					<button type="submit" class="btn btn-light">
-						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search text-black" viewBox="0 0 16 16">
-							<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-						</svg>
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="col-md-3">
+            <div class="form-group mt-3 p-2">
+                <button type="submit" class="btn btn-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search text-black" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+    </div>
 </form>
 
-<div id="carouselExampleControls" class="carousel">
-	<div class="carousel-inner">
+<div id="carouselExampleControls" style="margin-top: 70px" class="carousel">
+    <div class="carousel-inner">
+        @if (Model.Companies.Count != 0)
+        {
+            var first = Model.Companies.First();
 
-		<div class="carousel-item active">
-			<div class="card" style="width: fit-content">
-				<div class="img-wrapper">
-					<img src="@first.ProfilePictureUrl" class="d-block w-100" alt="...">
-				</div>
-				<div class="card-body">
-					<h5 class="card-title">@first.Name</h5>
-					<p class="card-text">
-						@first.Address
-					</p>
-					<a href="#" class="btn btn-primary">Повече</a>
-				</div>
-			</div>
-		</div>
+            <div class="carousel-item active">
+                <div class="card" style="width: fit-content">
+                    <div class="img-wrapper">
+                        <img src="@first.ProfilePictureUrl" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@first.Name</h5>
+                        <p class="card-text">
+                            @first.Address
+                        </p>
+                        <a href="#" class="btn btn-primary">Повече</a>
+                    </div>
+                </div>
+            </div>
 
-		@for (int i = 1; i < Model.Count; i++)
-		{
-			<div class="carousel-item">
-				<div class="card">
-					<div class="img-wrapper"><img src="@Model[i].ProfilePictureUrl" class="d-block w-100" alt="..."> </div>
-					<div class="card-body">
-						<h5 class="card-title">@Model[i].Name</h5>
-						<p class="card-text">
-							@Model[i].Address
-						</p>
-						<a href="#" class="btn btn-primary">Повече</a>
-					</div>
-				</div>
-			</div>
-		}
+            @for (int i = 1; i < Model.Companies.Count; i++)
+            {
+                <div class="carousel-item">
+                    <div class="card">
+                        <div class="img-wrapper"><img src="@Model.Companies[i].ProfilePictureUrl" class="d-block w-100" alt="..."> </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.Companies[i].Name</h5>
+                            <p class="card-text">
+                                @Model.Companies[i].Address
+                            </p>
+                            <a href="#" class="btn btn-primary">Повече</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
 
-	</div>
-	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="visually-hidden">Previous</span>
-	</button>
-	<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="visually-hidden">Next</span>
-	</button>
+            <h1 class="text-dark" style="margin: auto">Няма фирми съвпадащи с вашето търсене</h1>
+
+
+        }
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
 
 @section Styles{
-	<link rel="stylesheet" href="~/css/companies.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/companies.css" asp-append-version="true" />
 }
 
 @section Scripts{
-	<script src="~/js/carousel.js" asp-append-version="true"></script>
+    <script src="~/js/carousel.js" asp-append-version="true"></script>
 }

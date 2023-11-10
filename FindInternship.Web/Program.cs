@@ -3,7 +3,9 @@ using FindInternship.Common;
 using FindInternship.Data;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
+using FindInternship.Web.Middlewares;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FindInternship.Web
@@ -15,7 +17,7 @@ namespace FindInternship.Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("FindInternshipDbContextConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<FindInternshipDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -34,6 +36,7 @@ namespace FindInternship.Web
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
+
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -55,7 +58,20 @@ namespace FindInternship.Web
 
             });
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+            });
+
+
+
+            builder.Services
+                .AddControllersWithViews(options =>
+                {
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                });
+
+            builder.Services.AddResponseCaching();
 
             var app = builder.Build();
 
@@ -71,6 +87,8 @@ namespace FindInternship.Web
                 app.UseHsts();
             }
 
+            app.UseCors();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -79,6 +97,8 @@ namespace FindInternship.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseMiddleware<OnlineUserMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -86,6 +106,7 @@ namespace FindInternship.Web
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
+           
 
             app.MapRazorPages();
 

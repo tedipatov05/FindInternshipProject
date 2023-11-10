@@ -32,11 +32,11 @@ namespace FindInternship.Data
         public DbSet<Request> Requests { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<CompanyAbility> Technologies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-           
 
             builder.Entity<User>()
                 .Property(u => u.BirthDate)
@@ -47,6 +47,9 @@ namespace FindInternship.Data
 
             builder.Entity<UserGroup>()
                 .HasKey(ug => new { ug.GroupId, ug.UserId });
+
+            builder.Entity<CompanyAbility>()
+                .HasKey(ug => new { ug.CompanyId, ug.AbilityId });
 
             builder.Entity<Teacher>()
                 .HasOne(t => t.Class)
@@ -103,6 +106,7 @@ namespace FindInternship.Data
             builder.ApplyConfiguration(new StudentConfiguration());
             builder.ApplyConfiguration(new CompanyConfiguration());
             builder.ApplyConfiguration(new AbilityConfiguration());
+            builder.ApplyConfiguration(new CompanyTechnologiesConfiguration());
 
 
             base.OnModelCreating(builder);

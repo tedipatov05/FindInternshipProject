@@ -13,6 +13,7 @@ namespace FindInternship.Data.Models
         public Ability()
         {
             this.Students = new HashSet<StudentAbility>();
+            this.Companies = new HashSet<CompanyAbility>();
         }
 
         [Key]
@@ -22,5 +23,7 @@ namespace FindInternship.Data.Models
         public string AbilityText { get; set; } = null!;
 
         public ICollection<StudentAbility> Students { get; set; }
+
+        public ICollection<CompanyAbility> Companies { get; set; }
     }
 }

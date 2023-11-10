@@ -26,10 +26,22 @@ namespace FindInternship.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+
+            if (User.IsInRole("Teacher"))
+            {
+                return RedirectToAction("Teacher", "Home");
+            }
+            
             StatisticViewModel model = new StatisticViewModel();
             model.Internships = await statisticService.GetInternshipsCountAsync();
             model.Meetings = await statisticService.GetMeetingsArrangedCountAsync();
             model.HappyUsers = await statisticService.GetHappyUsersCountAsync();
+
+            if (User.IsInRole("Student"))
+            {
+                //TO DO: Change redirection when student view is ready
+                return View(model);
+            }
 
             return View(model);
         }
@@ -37,7 +49,9 @@ namespace FindInternship.Web.Controllers
         public async Task<IActionResult> Teacher()
         {
             string userId = User.GetId();
+
             bool isTeacher = await teacherService.IsTeacherAsync(userId);
+
             if (!isTeacher)
             {
                 TempData[ErrorMessage] = "You should be a teacher";

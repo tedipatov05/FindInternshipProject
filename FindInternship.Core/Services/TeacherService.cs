@@ -24,7 +24,7 @@ namespace FindInternship.Core.Services
 
         public async Task<string> GetTeacherIdAsync(string userId)
         {
-            var teacher= await repo.All<Teacher>().FirstOrDefaultAsync(t => t.UserId == userId);
+            var teacher= await repo.All<Teacher>().FirstOrDefaultAsync(t => t.UserId == userId && t.User.IsActive == true);
 
             return teacher!.Id;
         }
@@ -33,7 +33,7 @@ namespace FindInternship.Core.Services
         {
             var teacher = await repo.All<Teacher>()
                 .Include(s => s.Class)
-                .FirstOrDefaultAsync(s => s.Id == teacherId);
+                .FirstOrDefaultAsync(s => s.Id == teacherId && s.User.IsActive == true);
                 
             var model = new TeacherStudentsViewModel();
             model.Id = teacher.Id;
@@ -48,7 +48,7 @@ namespace FindInternship.Core.Services
         public async Task<bool> IsTeacherAsync(string userId)
         {
             var isTeacher = await repo.All<Teacher>()
-                .AnyAsync(t => t.UserId == userId);
+                .AnyAsync(t => t.UserId == userId && t.User.IsActive == true);
 
             return isTeacher;
         }

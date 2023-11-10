@@ -6,7 +6,15 @@
     <div class="row" style="height: 190px">
         <div class="col-md-4">
             <div class="profile-img">
-                <img src="@Model.ProfilePictureUrl" alt="" />
+                @if (Model.ProfilePictureUrl != null)
+                {
+                    <img src="@Model.ProfilePictureUrl" alt="" />
+                }
+                else
+                {
+                    <img src="/img/blank-profile-picture.png" alt="" />
+                }
+
             </div>
         </div>
         <div class="col-md-6">
