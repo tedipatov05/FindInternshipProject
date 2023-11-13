@@ -13,5 +13,7 @@ namespace FindInternship.Core.Models.Student
         public string? ProfilePictureUrl { get; set; } 
 
         public string Name { get; set; } = null!;
+
+        public List<string> Abilities { get; set; } = new List<string>();
     }
 }

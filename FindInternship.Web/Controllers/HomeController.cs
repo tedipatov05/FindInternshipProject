@@ -64,11 +64,6 @@ namespace FindInternship.Web.Controllers
             return View(model);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Contact()
         {

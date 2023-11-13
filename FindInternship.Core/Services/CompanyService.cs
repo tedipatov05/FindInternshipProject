@@ -48,7 +48,8 @@ namespace FindInternship.Core.Services
                     Id = c.Id,
                     Name = c.User.Name, 
                     ProfilePictureUrl = c.User.ProfilePictureUrl,
-                    Address = c.User.Address
+                    Address = c.User.Address, 
+                    Description = c.Description
                 })
                 .ToListAsync();
 

@@ -55,11 +55,13 @@ namespace FindInternship.Core.Services
         {
             var students = await repo.All<Student>()
                 .Where(s => s.Class.Grade == className && s.User.IsActive == true)
+                .Include(s => s.Abilities)
                 .Select(s => new StudentViewModel()
                 {
                     Id = s.User.Id, 
                     Name = s.User.Name, 
-                    ProfilePictureUrl = s.User.ProfilePictureUrl
+                    ProfilePictureUrl = s.User.ProfilePictureUrl, 
+                    Abilities = s.Abilities.Select(a => a.Ability.AbilityText).ToList()
                 })
                 .ToListAsync();
 

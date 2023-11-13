@@ -2,15 +2,15 @@
 
 @model CompanyQueryModel;
 
-<h1 class="text-black text-center">Фирми</h1>
-
 <form method="get">
-    <div class="row" style="margin-left: 140px; margin-top: 40px;">
+    <h1 class="text-black text-center">Фирми</h1>
+    <div class="row" style="margin-left: 180px; margin-top: 40px;">
+        
         <div class="form-group col-md-3 justify-content-between">
 
             <div class="form-group">
-                <label asp-for="Technology"></label>
-                <select asp-for="Technology" class="form-control">
+                <label asp-for="Technology" class="tech-label">Технологии</label>
+                <select asp-for="Technology" class="tech-select form-control">
                     <option value="">All</option>
                     @foreach (var category in Model.Technologies)
                     {
@@ -21,14 +21,14 @@
         </div>
 
         <div class="form-group col-md-4">
-            <label></label>
-            <input asp-for="@Model.SearchString" class="form-control" placeholder="Search" />
+            <label asp-for="SearchString" class="tech-label">Търсене</label>
+            <input asp-for="@Model.SearchString" class="tech-select form-control" placeholder="Търсене" />
         </div>
 
         <div class="col-md-3">
             <div class="form-group mt-3 p-2">
-                <button type="submit" class="btn btn-light">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search text-black" viewBox="0 0 16 16">
+                <button type="submit" class="btn btn-light mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search text-black" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg>
                 </button>
@@ -38,23 +38,58 @@
     </div>
 </form>
 
-<div id="carouselExampleControls" style="margin-top: 70px" class="carousel">
+<div id="carouselExampleControls" style="margin-top: 50px" class="carousel">
     <div class="carousel-inner">
         @if (Model.Companies.Count != 0)
         {
             var first = Model.Companies.First();
 
             <div class="carousel-item active">
-                <div class="card" style="width: fit-content">
-                    <div class="img-wrapper">
-                        <img src="@first.ProfilePictureUrl" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">@first.Name</h5>
-                        <p class="card-text">
-                            @first.Address
-                        </p>
-                        <a href="#" class="btn btn-primary">Повече</a>
+                <div class="css-14fb10c eu4oa1w0" style="margin-left: 50px;">
+                    <div class="css-a3jjuw esu7hk30">
+                        <div class="css-srfrud e1gufzzf0">
+                            <div class="css-rysa88 e1gufzzf0">
+                                <div aria-hidden="true" class="css-am5ke eu4oa1w0"></div>
+                            </div>
+                            <div class="css-153q778 e1gufzzf0">
+                                <div class="css-u74ql7 eu4oa1w0">
+                                    <div class="css-ugyq99 e37uo190">
+                                        <img alt="Studypool"
+                                             src="@first.ProfilePictureUrl"
+                                             sizes="(max-width: 62em) 64px, 80px" aria-hidden="true"
+                                             class="css-6h3541 eu4oa1w0">
+                                        <div class="css-1krrhbg eu4oa1w0">
+                                            <h2 class="css-auuv2u e1tiznh50">
+                                                <a href="/cmp/Studypool"
+                                                   class="css-2zpsa9 e19afand0">@first.Name</a>
+                                            </h2>
+
+                                        </div>
+                                    </div>
+                                    <div class="css-u74ql7 eu4oa1w0">
+                                        <span class="css-j3kgaw e1wnkr790">IT</span><span>
+                                            <span class="css-vqoc99 e1wnkr790">•</span><span class="css-j3kgaw e1wnkr790">
+                                                11 to 50
+                                                employees
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="css-1io73yq eu4oa1w0">
+                                    <span class="css-18p8mbl e1wnkr790">
+                                        @first.Description
+                                    </span>
+                                </div>
+                                <div class="css-11g2nnm e37uo190">
+                                    <a href="/cmp/Studypool" class="css-f7ljk3 e71d0lh0">
+                                       Explore
+                                    </a>
+                                    <a href="/cmp/Studypool/jobs" data-tn-link="true" class="css-1ag1fjx e71d0lh0">
+                                       See jobs
+                                     </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,8 +130,8 @@
 </div>
 
 @section Styles{
-
     <link rel="stylesheet" href="~/css/companies.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/companyCard.css" asp-append-version="true" />
 }
 
 @section Scripts{

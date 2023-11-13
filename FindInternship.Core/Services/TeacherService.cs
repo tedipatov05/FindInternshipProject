@@ -38,6 +38,8 @@ namespace FindInternship.Core.Services
             var model = new TeacherStudentsViewModel();
             model.Id = teacher.Id;
             model.Class = teacher.Class.Grade;
+            model.ClassSpeciality = teacher.Class.Speciality;
+            model.School = teacher.Class.School;
 
             model.Students = await studentService.GetTeacherStudentsAsync(teacher.Class.Grade);
 

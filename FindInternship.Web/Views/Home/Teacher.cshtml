@@ -2,60 +2,79 @@
 @using FindInternship.Web.Middlewares;
 @model TeacherStudentsViewModel;
 
+@{
+    Dictionary<string, string> abilityImage = new Dictionary<string, string>()
+    {
+        {"Entity Framework", "EntityFramework.png"},
+        {"C#", "CSharpIcon.png"},
+        {"ASP.NET", "ASPLogo.png"},
+    };
+
+    Dictionary<string, string> abilityIcon = new Dictionary<string, string>()
+    {
+        {"Pyton", "fa-brands fa-python"},
+        {"PHP", "fa-brands fa-php"},
+        {"JS", "fa-brands fa-js"},
+        {"Node.js", "fa-brands fa-node"}
+    };
+}
 
 
+<main id="main">
+    <section id="team" class="team section-bg">
+        <div class="container" style="margin-top:70px" data-aos="fade-up">
 
-<h2 class="text-center text-dark">@Model.Class</h2>
-<div class="container profile-page">
-    <div class="row">
-        @foreach (var student in Model.Students)
-        {
-            <div class="col-xl-6 col-lg-7 col-md-12">
-                <div class="card profile-header">
-                    <div class="body">
-                        <div class="row">
+            <div class="section-title">
+                <h2>@Model.Class </h2>
+                <h3>@Model.ClassSpeciality</h3>
+            </div>
 
-                            <div class="col-lg-4 col-md-4 col-12">
-                                <div class="profile-image float-md-right">
-                                    @if(student.ProfilePictureUrl != null)
+            <div class="row">
+                @foreach (var student in Model.Students)
+                {
+                    <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="@student.ProfilePictureUrl" width="180" height="240" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>@student.Name</h4>
+                                @if (OnlineUserMiddleware.CheckIfUserIsOnline(student.Id))
+                                {
+                                    <span class="online">Онлайн</span>
+                                }
+                                else
+                                {
+                                    <span class="offline">Офлайн</span>
+                                }
+
+                                <p>@Model.School</p>
+                                <div class="social">
+                                    @foreach (var ability in student.Abilities)
                                     {
-                                        <img src="@student.ProfilePictureUrl" alt="">
+                                        if (abilityImage.ContainsKey(ability))
+                                        {
 
-                                    }
-                                    else
-                                    {
-                                        <img src="/img/blank-profile-picture.png" alt="">
-                                    }
-                                    @if (OnlineUserMiddleware.CheckIfUserIsOnline(student.Id))
-                                    {
-                                        <div class="green_icon"></div>
+
+                                            <a href=""><img src="~/img/@abilityImage[ability]" width="24" height="24" alt=""></a>
+                                        }
+                                        else
+                                        {
+                                            <a href=""><i class="@abilityIcon[ability] fa-xl"></i></a>
+                                        }
                                     }
 
                                 </div>
-
-                            </div>
-                            <div class="col-lg-8 col-md-8 col-12">
-                                <h4 class="m-t-0 m-b-0">@student.Name</h4>
-                                @*<span class="job_post">@user.Email</span>
-                                <p>@user.Address @user.City @user.Country</p>*@
-                                @*<div>
-                                    <a asp-area="Admin" asp-action="Edit" asp-controller="User" asp-route-id="@user.Id" class="btn btn-primary btn-round">Edit</a>
-                                    <a asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id" class="btn btn-danger btn-round btn-simple">Delete</a>
-                                </div>*@
-
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+
+
             </div>
-        }
 
-
-    </div>
-
->>>>>>> 08c6243370a17bfc5f8d0d9001682039928f8eb1
-</div>
+        </div>
+    </section>
+</main>
 
 @section Styles{
-	<link rel="stylesheet" href="~/css/teacherStudents.css" />
+    <link rel="stylesheet" href="~/css/teacherStudents.css" asp-append-version="true" />
 }
