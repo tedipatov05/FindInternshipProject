@@ -10,6 +10,9 @@ namespace FindInternship.Core.Models.Profile
     {
         
         public string Class { get; set; } = null!;
+
+        public string School { get; set; } = null;
+
         public List<string> Abilities { get; set; } = new List<string>();
 
 

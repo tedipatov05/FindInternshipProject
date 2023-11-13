@@ -17,12 +17,14 @@ namespace FindInternship.Core.Services
         private IRepository repo;
         private IStudentService studentService;
         private IImageService imageService;
+        private IAbilityService abilityService;
        
-        public ProfileService(IRepository repo, IStudentService studentService, IImageService imageService)
+        public ProfileService(IRepository repo, IStudentService studentService, IImageService imageService, IAbilityService abilityService)
         {
             this.repo = repo;
             this.studentService = studentService;
             this.imageService = imageService;
+            this.abilityService = abilityService;
         }
 
         public async Task EditProfileAsync(string userId, EditProfileModel model)
@@ -41,6 +43,31 @@ namespace FindInternship.Core.Services
 
             await repo.SaveChangesAsync();
                 
+        }
+
+        public async Task<CompanyProfileViewModel> GetCompanyProfileAsync(string companyId)
+        {
+            var company = await repo.All<Company>()
+                .Where(c => c.Id == companyId)
+                .Select(c => new CompanyProfileViewModel()
+                {
+                    Id = companyId,
+                    Name = c.User.Name,
+                    Address = c.User.Address,
+                    City = c.User.City,
+                    Country = c.User.Country,
+                    Description = c.Description,
+                    Email = c.User.Email,
+                    PhoneNumber = c.User.PhoneNumber,
+                    ProfilePictureUrl = c.User.ProfilePictureUrl,
+                    Services = c.Services, 
+
+                })
+                .FirstOrDefaultAsync();
+
+            company!.Technologies = await abilityService.GetCompanyAbilityNamesAsync(companyId);
+
+            return company;
         }
 
         public async Task<StudentProfileViewModel> GetStudentProfileAsync(string studentId)
@@ -63,6 +90,7 @@ namespace FindInternship.Core.Services
                 City = student.User.City,
                 Country = student.User.Country,
                 Address = student.User.Address,
+                School = student.Class.School
 
             };
 

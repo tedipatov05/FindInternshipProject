@@ -64,5 +64,16 @@ namespace FindInternship.Core.Services
 
             return abilitites;
         }
+
+        public async Task<List<string>> GetCompanyAbilityNamesAsync(string companyId)
+        {
+            var abilities = await repo.All<CompanyAbility>()
+                .Where(c => c.CompanyId == companyId)
+                .Select(c => c.Ability.AbilityText)
+                .ToListAsync();
+
+            return abilities;
+
+        }
     }
 }

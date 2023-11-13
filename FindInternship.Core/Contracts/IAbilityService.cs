@@ -15,6 +15,8 @@ namespace FindInternship.Core.Contracts
 
         Task<List<string>> AllAbilityNamesAsync();
 
+        Task<List<string>> GetCompanyAbilityNamesAsync(string companyId);
+
         
     }
 }

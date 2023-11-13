@@ -56,5 +56,18 @@ namespace FindInternship.Core.Services
             return companies;
                
         }
+
+        public async Task<string> GetCompanyIdAsync(string userId)
+        {
+            var company = await repo.All<Company>()
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            return company!.Id;
+        }
+
+        public async Task<bool> IsCompanyAsync(string userId)
+        {
+            return await repo.All<Company>().AnyAsync(c => c.UserId == userId);
+        }
     }
 }

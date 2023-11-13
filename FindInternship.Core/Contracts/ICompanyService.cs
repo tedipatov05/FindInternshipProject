@@ -10,5 +10,7 @@ namespace FindInternship.Core.Contracts
     public interface ICompanyService
     {
         Task<List<CompanyViewModel>> GetAllCompaniesAsync(CompanyQueryModel model);
+        Task<bool> IsCompanyAsync(string userId);
+        Task<string> GetCompanyIdAsync(string userId);
     }
 }
