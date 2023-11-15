@@ -27,7 +27,7 @@ namespace FindInternship.Web.Controllers
             bool IsTeacher = await teacherService.IsTeacherAsync(userId);
             if(!IsTeacher) 
             {
-                TempData[ErrorMessage] = "You should be a teacher to see all companies";
+                TempData[ErrorMessage] = "Трябва да бъдете учител за да достъпите всички фирми";
                 return RedirectToAction("Index");
             }
 

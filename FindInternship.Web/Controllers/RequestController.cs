@@ -30,7 +30,7 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("All", "Company");
             }
 
-            bool isTeacher = await teacherService.IsTeacherAsync(User.GetId());
+            bool isTeacher = await teacherService.IsTeacherAsync(User.GetId()!);
             if(!isTeacher)
             {
                 TempData[ErrorMessage] = "Трябва да бъдеш учител за да узпращаш молби за практика ";
@@ -53,7 +53,7 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("All", "Company");
             }
 
-            bool isTeacher = await teacherService.IsTeacherAsync(User.GetId());
+            bool isTeacher = await teacherService.IsTeacherAsync(User.GetId()!);
             if (!isTeacher)
             {
                 TempData[ErrorMessage] = "Трябва да бъдеш учител за да узпращаш молби за практика ";

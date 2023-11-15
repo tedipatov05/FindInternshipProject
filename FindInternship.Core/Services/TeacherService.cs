@@ -27,7 +27,7 @@ namespace FindInternship.Core.Services
             var teacher = await repo.All<Teacher>()
                 .FirstOrDefaultAsync(t => t.UserId == userId);
 
-            return teacher.ClassId;
+            return teacher!.ClassId;
         }
 
         public async Task<string> GetTeacherIdAsync(string userId)
@@ -44,7 +44,7 @@ namespace FindInternship.Core.Services
                 .FirstOrDefaultAsync(s => s.Id == teacherId && s.User.IsActive == true);
                 
             var model = new TeacherStudentsViewModel();
-            model.Id = teacher.Id;
+            model.Id = teacher!.Id;
             model.Class = teacher.Class.Grade;
             model.ClassSpeciality = teacher.Class.Speciality;
             model.School = teacher.Class.School;

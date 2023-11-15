@@ -100,6 +100,8 @@ namespace FindInternship.Web.Controllers
                 
                 await signInManager.SignInAsync(user, isPersistent: false);
 
+                TempData[SuccessMessage] = "Успешна регистрация";
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -137,7 +139,7 @@ namespace FindInternship.Web.Controllers
 
                     if (result.Succeeded)
                     {
-                       
+                        TempData[SuccessMessage] = "Успешно влизане";
                         return RedirectToAction("Index", "Home");
                        
                     }

@@ -39,7 +39,7 @@ namespace FindInternship.Web.Controllers
 
             if (User.IsInRole("Student"))
             {
-                //TO DO: Change redirection when student view is ready
+                //TO DO: Change redirection when student schedule is ready
                 return View(model);
             }
 
@@ -48,13 +48,13 @@ namespace FindInternship.Web.Controllers
 
         public async Task<IActionResult> Teacher()
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
 
             bool isTeacher = await teacherService.IsTeacherAsync(userId);
 
             if (!isTeacher)
             {
-                TempData[ErrorMessage] = "You should be a teacher";
+                TempData[ErrorMessage] = "Трябва да бъдете учител";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -90,10 +90,11 @@ namespace FindInternship.Web.Controllers
                 return View(model);
             }
 
-            TempData[SuccessMessage] = "Successfully sent email";
+            TempData[SuccessMessage] = "Успешно изпратен имейл";
 
             return RedirectToAction("Index");
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

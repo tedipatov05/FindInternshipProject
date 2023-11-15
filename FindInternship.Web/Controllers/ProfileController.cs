@@ -27,7 +27,7 @@ namespace FindInternship.Web.Controllers
             bool isExists = await userService.IsExistsByIdAsync(userId);
             if(!isExists)
             {
-                TempData[ErrorMessage] = "This user does not exists";
+                TempData[ErrorMessage] = "Този потребител не съществува";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -59,7 +59,7 @@ namespace FindInternship.Web.Controllers
             }
              
 
-            TempData[InformationMessage] = "This user is neither Teacher nor Student";
+            TempData[InformationMessage] = "Този потребител не е нито учител нито ученик";
             return RedirectToAction("Index", "Home");
         }
 
@@ -69,12 +69,12 @@ namespace FindInternship.Web.Controllers
             bool isExists = await userService.IsExistsByIdAsync(userId);
             if (!isExists)
             {
-                TempData[ErrorMessage] = "This user does not exists";
+                TempData[ErrorMessage] = "Този потребител не съществува";
                 return RedirectToAction("Index", "Home");
             }
             if (userId != User.GetId())
             {
-                TempData[ErrorMessage] = "Invalid User";
+                TempData[ErrorMessage] = "Грешен потребител";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -93,12 +93,12 @@ namespace FindInternship.Web.Controllers
             bool isExists = await userService.IsExistsByIdAsync(userId);
             if (!isExists)
             {
-                TempData[ErrorMessage] = "This user does not exists";
+                TempData[ErrorMessage] = "Този потребител не съществува";
                 return RedirectToAction("Index", "Home");
             }
             if(userId != User.GetId())
             {
-                TempData[ErrorMessage] = "Invalid User";
+                TempData[ErrorMessage] = "Грешен потребител";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -110,7 +110,7 @@ namespace FindInternship.Web.Controllers
             try
             {
                 await profileService.EditProfileAsync(userId, model);
-                TempData[SuccessMessage] = "Successfully edited profile";
+                TempData[SuccessMessage] = "Успешно редактиран профил";
 
                 return RedirectToAction("MyProfile", "Profile", new { userId });
             }
