@@ -1,7 +1,8 @@
-﻿
+﻿@using FindInternship.Core.Models.Request;
+@model CreateRequestModel;
 
 @{
-    ViewData["Title"] = "Молба за практика";
+    ViewData["FormTitle"] = "Молба за практика";
 }
 
 
@@ -10,9 +11,13 @@
     <div class="wrapper wrapper--w900">
         <div class="card card-6" style="border: none; box-shadow: none;">
             <div class="card-heading">
-                <h2 class="title">@ViewData["Title"]</h2>
+                <h2 class="title">@ViewData["FormTitle"]</h2>
             </div>
-            
+            <partial name="_RequestFormPartial" model="@Model" />
         </div>
     </div>
 </div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/request.css" asp-append-version="true" />
+}

@@ -1,20 +1,23 @@
-﻿
+﻿@using FindInternship.Core.Models.Request;
+@model CreateRequestModel;
 
 
 
 <div class="card-body">
-    <form method="POST">
+    <form method="POST" class="requires-validation">
         <div class="form-row">
             <div class="name">Заглавие</div>
             <div class="value">
-                <input class="input--style-6" type="text" name="full_name">
+                <input asp-for="Topic" class="input--style-6" type="text">
+                <span asp-validation-for="Topic" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="name">Съобщение</div>
             <div class="value">
                 <div class="input-group">
-                    <textarea class="textarea--style-6" name="message" placeholder="Съобщение до фирмата"></textarea>
+                    <textarea asp-for="Message" class="textarea--style-6" placeholder="Съобщение до фирмата"></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
                 </div>
             </div>
         </div>

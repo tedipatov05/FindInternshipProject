@@ -45,68 +45,13 @@
             var first = Model.Companies.First();
 
             <div class="carousel-item active">
-                <div class="css-14fb10c eu4oa1w0" style="margin-left: 50px;">
-                    <div class="css-a3jjuw esu7hk30">
-                        <div class="css-srfrud e1gufzzf0">
-                            <div class="css-rysa88 e1gufzzf0">
-                                <div aria-hidden="true" class="css-am5ke eu4oa1w0"></div>
-                            </div>
-                            <div class="css-153q778 e1gufzzf0">
-                                <div class="css-u74ql7 eu4oa1w0">
-                                    <div class="css-ugyq99 e37uo190">
-                                        <img alt="Studypool"
-                                             src="@first.ProfilePictureUrl"
-                                             sizes="(max-width: 62em) 64px, 80px" aria-hidden="true"
-                                             class="css-6h3541 eu4oa1w0">
-                                        <div class="css-1krrhbg eu4oa1w0">
-                                            <h2 class="css-auuv2u e1tiznh50">
-                                                <a href="/cmp/Studypool"
-                                                   class="css-2zpsa9 e19afand0">@first.Name</a>
-                                            </h2>
-
-                                        </div>
-                                    </div>
-                                    <div class="css-u74ql7 eu4oa1w0">
-                                        <span class="css-j3kgaw e1wnkr790">IT</span><span>
-                                            <span class="css-vqoc99 e1wnkr790">•</span><span class="css-j3kgaw e1wnkr790">
-                                                11 to 50
-                                                employees
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="css-1io73yq eu4oa1w0">
-                                    <span class="css-18p8mbl e1wnkr790">
-                                        @first.Description
-                                    </span>
-                                </div>
-                                <div class="css-11g2nnm e37uo190">
-                                    <a asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@first.Id" class="css-f7ljk3 e71d0lh0">
-                                       Повече
-                                    </a>
-                                    <a href="/cmp/Studypool/jobs" data-tn-link="true" class="css-1ag1fjx e71d0lh0">
-                                       See jobs
-                                     </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <partial name="_CompanyCardPartial" model="@first" />
             </div>
 
             @for (int i = 1; i < Model.Companies.Count; i++)
             {
                 <div class="carousel-item">
-                    <div class="card">
-                        <div class="img-wrapper"><img src="@Model.Companies[i].ProfilePictureUrl" class="d-block w-100" alt="..."> </div>
-                        <div class="card-body">
-                            <h5 class="card-title">@Model.Companies[i].Name</h5>
-                            <p class="card-text">
-                                @Model.Companies[i].Address
-                            </p>
-                            <a asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@Model.Companies[i].Id" class="btn btn-primary">Повече</a>
-                        </div>
-                    </div>
+                    <partial name="_CompanyCardPartial" model="Model.Companies[i]" />
                 </div>
             }
         }

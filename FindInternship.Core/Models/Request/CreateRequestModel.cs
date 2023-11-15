@@ -9,14 +9,17 @@ using static FindInternship.Common.ErrorMessages;
 
 namespace FindInternship.Core.Models.Request
 {
-    public class RequestCreateModel
+    public class CreateRequestModel
     {
         [Required(ErrorMessage = RequiredErrorMessage)]
         [StringLength(RequestTopicMaxLength, MinimumLength = RequestTopicMinLength, ErrorMessage = InvalidLengthMessage)]
-        public string Title { get; set; } = null!;
+        public string Topic { get; set; } = null!;
 
         [Required(ErrorMessage = RequiredErrorMessage)]
         [StringLength(RequestMessageMaxLength, MinimumLength = RequestMessageMinLength, ErrorMessage = InvalidLengthMessage)]
         public string Message { get; set; } = null!;
+
+        public string? ClassId { get; set; }
+        public string? CompanyId { get; set; }
     }
 }

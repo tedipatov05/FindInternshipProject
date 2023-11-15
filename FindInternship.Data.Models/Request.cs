@@ -37,6 +37,7 @@ namespace FindInternship.Data.Models
         [ForeignKey(nameof(Company))]
         public string CompanyId { get; set; } = null!;
         public Company Company { get; set; } = null!;
+
         public DateTime CreatedOn { get; set; }
 
         

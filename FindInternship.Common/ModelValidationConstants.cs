@@ -35,7 +35,7 @@ namespace FindInternship.Common
         public static class RequestConstants
         {
             public const int RequestTopicMaxLength = 50;
-            public const int RequestTopicMinLength = 10;
+            public const int RequestTopicMinLength = 5;
 
             public const int RequestMessageMaxLength = 2000;
             public const int RequestMessageMinLength = 10;
