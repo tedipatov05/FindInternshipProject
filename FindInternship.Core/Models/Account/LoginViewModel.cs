@@ -5,19 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static FindInternship.Common.ModelValidationConstants.UserConstants;
+using static FindInternship.Common.ErrorMessages;
 
 namespace FindInternship.Core.Models.Account
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Имейла е задължителен")]
+        [Required(ErrorMessage = RequiredErrorMessage)]
         [EmailAddress]
-        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength, ErrorMessage = "Имейла трабва да бъде между {2} и {1} символа")]
+        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength, ErrorMessage = InvalidLengthMessage)]
         public string Email { get; set; } = null!;
 
-        [Required(ErrorMessage = "Паролата е задължителна")]
+        [Required(ErrorMessage = RequiredErrorMessage)]
         [DataType(DataType.Password)]
-        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength, ErrorMessage = "Паролата трябва да бъде между {2} и {1} символа")]
+        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength, ErrorMessage = InvalidLengthMessage)]
         public string Password { get; set; } = null!;
     }
 }

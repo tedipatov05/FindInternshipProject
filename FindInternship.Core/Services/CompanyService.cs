@@ -45,7 +45,7 @@ namespace FindInternship.Core.Services
             var companies = await companyQuery
                 .Select(c => new CompanyViewModel()
                 {
-                    Id = c.Id,
+                    Id = c.User.Id,
                     Name = c.User.Name, 
                     ProfilePictureUrl = c.User.ProfilePictureUrl,
                     Address = c.User.Address, 

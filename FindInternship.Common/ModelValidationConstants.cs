@@ -38,6 +38,8 @@ namespace FindInternship.Common
             public const int RequestTopicMinLength = 10;
 
             public const int RequestMessageMaxLength = 2000;
+            public const int RequestMessageMinLength = 10;
+
         }
 
         public static class GroupConstants

@@ -81,8 +81,8 @@
                                     </span>
                                 </div>
                                 <div class="css-11g2nnm e37uo190">
-                                    <a href="/cmp/Studypool" class="css-f7ljk3 e71d0lh0">
-                                       Explore
+                                    <a asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@first.Id" class="css-f7ljk3 e71d0lh0">
+                                       Повече
                                     </a>
                                     <a href="/cmp/Studypool/jobs" data-tn-link="true" class="css-1ag1fjx e71d0lh0">
                                        See jobs
@@ -104,7 +104,7 @@
                             <p class="card-text">
                                 @Model.Companies[i].Address
                             </p>
-                            <a href="#" class="btn btn-primary">Повече</a>
+                            <a asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@Model.Companies[i].Id" class="btn btn-primary">Повече</a>
                         </div>
                     </div>
                 </div>

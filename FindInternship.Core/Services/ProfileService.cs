@@ -51,7 +51,7 @@ namespace FindInternship.Core.Services
                 .Where(c => c.Id == companyId)
                 .Select(c => new CompanyProfileViewModel()
                 {
-                    Id = companyId,
+                    Id = c.User.Id,
                     Name = c.User.Name,
                     Address = c.User.Address,
                     City = c.User.City,

@@ -9,46 +9,47 @@ using System.Text;
 using System.Threading.Tasks;
 
 using static FindInternship.Common.ModelValidationConstants.UserConstants;
+using static FindInternship.Common.ErrorMessages;
 
 namespace FindInternship.Core.Models.Account
 {
     public class RegisterViewModel
     {
 
-        [Required(ErrorMessage="Името е задължително")]
-        [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength, ErrorMessage="Името трябва да бъде между {2} и {1} символа")]
+        [Required(ErrorMessage=RequiredErrorMessage)]
+        [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength, ErrorMessage=InvalidLengthMessage)]
         public string Name { get; set; } = null!;
 
-        [Required(ErrorMessage="Имейла е задължителен")]
+        [Required(ErrorMessage= RequiredErrorMessage)]
         [EmailAddress]
-        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength, ErrorMessage = "Имейла трябва да бъде между {2} и {1} символа")]
+        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength, ErrorMessage = InvalidLengthMessage)]
         public string Email { get; set; } = null!;
 
-        [Required(ErrorMessage = "Паролата е задължителна")]
+        [Required(ErrorMessage = RequiredErrorMessage)]
         [DataType(DataType.Password)]
-        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength, ErrorMessage = "Паролата трябва да бъде между {2} и {1} символа")]
+        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength, ErrorMessage = InvalidLengthMessage)]
 
 		public string Password { get; set; } = null!;
 
-        [Required(ErrorMessage = "Паролата е задължителна")]
-        [Compare(nameof(Password), ErrorMessage = "Паролите не съвпадат")]
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [Compare(nameof(Password), ErrorMessage = DifferentPasswordMessage)]
         [DataType(DataType.Password)]
-        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength, ErrorMessage = "Паролата трябва да бъде между {2} и {1} символа")]
+        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength, ErrorMessage = InvalidLengthMessage)]
         public string PasswordRepeat { get; set; } = null!;
 
-        [Required(ErrorMessage = "Телефона е задължителен")]
+        [Required(ErrorMessage = RequiredErrorMessage)]
         public string PhoneNumber { get; set; } = null!;
 
-        [Required(ErrorMessage = "Държавата е задължителна")]
-        [StringLength(CountryMaxLength, MinimumLength = CountryMinLength, ErrorMessage = "Държавата трябва да бъде между {2} и {1} символа")]
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [StringLength(CountryMaxLength, MinimumLength = CountryMinLength, ErrorMessage = InvalidLengthMessage)]
         public string Country { get; set; } = null!;
 
-        [Required(ErrorMessage = "Градът е задължителен")]
-        [StringLength(CityMaxLength, MinimumLength = CityMinLength, ErrorMessage = "Градът трябва да бъде между {2} и {1} символа")]
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [StringLength(CityMaxLength, MinimumLength = CityMinLength, ErrorMessage = InvalidLengthMessage)]
         public string City { get; set; } = null!;
 
-        [Required(ErrorMessage = "Адреса е задължителен")]
-        [StringLength(AddressMaxLength, MinimumLength = AddressMinLength, ErrorMessage = "Адреса трябва да бъде между {2} и {1} символа")]
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [StringLength(AddressMaxLength, MinimumLength = AddressMinLength, ErrorMessage = InvalidLengthMessage)]
         public string Address { get; set; } = null!;
 
         [Required]

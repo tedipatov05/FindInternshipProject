@@ -11,6 +11,7 @@ namespace FindInternship.Web.Controllers
 {
     public class AccountController : Controller
     {
+
         private IUserService userService;
         private UserManager<User> userManager;
         private SignInManager<User> signInManager;
@@ -29,6 +30,7 @@ namespace FindInternship.Web.Controllers
             this.classService = classService;
             this.abilityService = abilityService;
         }
+
         [HttpGet]
         public async Task<IActionResult> Register()
         {

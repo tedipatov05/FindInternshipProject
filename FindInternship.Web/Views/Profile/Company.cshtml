@@ -14,6 +14,11 @@
                                      class="img-fluid avatar-xxl rounded-circle" alt="">
                                 <h4 class="text-primary font-size-20 mt-3 mb-2">@Model.Name</h4>
                                 <h5 class="text-muted font-size-13 mb-0">ИТ Фирма</h5>
+                                @if(Model.Id == User.GetId())
+                                {
+                                    <a asp-action="Edit" asp-controller="Profile" asp-route-userId="@Model.Id" class="btn btn-primary">Промени</a>
+                                }
+                               
                             </div>
                         </div>
                         <div class="col-md-9">
