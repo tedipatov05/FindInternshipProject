@@ -11,6 +11,8 @@ namespace FindInternship.Core.Contracts
     {
         Task<List<CompanyViewModel>> GetAllCompaniesAsync(CompanyQueryModel model);
         Task<bool> IsCompanyAsync(string userId);
+
+        Task<string> GetCompanyIdByNameAsync(string companyName);
         Task<string> GetCompanyIdAsync(string userId);
     }
 }

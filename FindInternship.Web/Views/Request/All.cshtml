@@ -1,0 +1,30 @@
+﻿@using FindInternship.Core.Models.Request;
+@model List<AllRequestsViewModel>
+
+<div class="card">
+    <div class="tab-content p-4">
+        <div class="tab-pane active show" id="projects-tab" role="tabpanel">
+            <div class="d-flex align-items-center">
+                <div class="flex-1">
+                    <h4 class="card-title mb-4">Молби за практика</h4>
+                </div>
+            </div>
+
+            <div class="row" id="all-projects">
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/companyProfile.css" asp-append-version="true" />
+}
+
+@section Scripts{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/allRequest.js" asp-append-version="true"></script>
+}

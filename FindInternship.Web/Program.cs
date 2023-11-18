@@ -3,6 +3,7 @@ using FindInternship.Common;
 using FindInternship.Data;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
+using FindInternship.Web.Hubs;
 using FindInternship.Web.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -63,8 +64,6 @@ namespace FindInternship.Web
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
             });
 
-
-
             builder.Services
                 .AddControllersWithViews(options =>
                 {
@@ -73,7 +72,11 @@ namespace FindInternship.Web
 
             builder.Services.AddResponseCaching();
 
+            builder.Services.AddSignalR();
+
             var app = builder.Build();
+
+            app.MapHub<RequestHub>("/requestHub");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -98,6 +101,7 @@ namespace FindInternship.Web
             app.UseAuthorization();
 
             app.UseMiddleware<OnlineUserMiddleware>();
+           
 
             app.UseEndpoints(endpoints =>
             {

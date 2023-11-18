@@ -1,11 +1,7 @@
-﻿@using FindInternship.Core.Models.Request;
-@model CreateRequestModel;
-
+﻿
 @{
     ViewData["FormTitle"] = "Молба за практика";
 }
-
-
 
 <div class="page-wrapper bg-dark p-t-100 p-b-50">
     <div class="wrapper wrapper--w900">
@@ -13,11 +9,44 @@
             <div class="card-heading">
                 <h2 class="title">@ViewData["FormTitle"]</h2>
             </div>
-            <partial name="_RequestFormPartial" model="@Model" />
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="name">Фирма</div>
+                    <div class="value" >
+                        <div id="company" class="input--style-6" type="text" name="full_name">New Techies</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="name">Заглавие</div>
+                    <div class="value">
+                        <input id="topic" class="input--style-6" type="text">
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="name">Съобщение</div>
+                    <div class="value">
+                        <div class="input-group">
+                            <textarea class="textarea--style-6" id="message" placeholder="Съобщение до фирмата"></textarea>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn--radius-2 btn--blue-2" id="send" type="submit">Изпрати</button>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
 
 @section Styles{
     <link rel="stylesheet" href="~/css/request.css" asp-append-version="true" />
+}
+
+@section Scripts{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/request.js" asp-append-version="true"></script>
 }
