@@ -1,6 +1,16 @@
 ﻿@using FindInternship.Core.Models.Request;
 @model List<AllRequestsViewModel>
 
+@{
+    var statusClass = new Dictionary<string, string>()
+    {
+        {"Waiting", "warning"},
+        {"Rejected", "danger"},
+        {"Accepted", "success"}
+    };
+    
+ }
+
 <div class="card">
     <div class="tab-content p-4">
         <div class="tab-pane active show" id="projects-tab" role="tabpanel">
@@ -12,6 +22,42 @@
 
             <div class="row" id="all-projects">
 
+                @foreach(var request in Model)
+                {
+                    
+                    <div class="col-md-6" id="project-items-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex mb-3">
+                                    <div class="flex-grow-1 align-items-start">
+                                        <div>
+                                            <h6 class="mb-0 text-muted">
+                                                <i class="mdi mdi-circle-medium text-danger fs-3 align-middle"></i>
+                                                <span class="team-date">@request.DateCreated</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="mb-4">
+                                    <h5 class="mb-1 font-size-17 team-title">@request.Topic</h5>
+                                    <p class="text-muted mb-0 team-description">
+                                        @request.Message
+                                    </p>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="avatar-group float-start flex-grow-1 task-assigne">
+                                    </div>
+                                    <div class="align-self-end">
+                                        <span class="badge badge-soft-@statusClass[request.Status] p-2 team-status" style="font-size: 1rem">@request.Status</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
 
             </div>
 
@@ -26,5 +72,5 @@
 
 @section Scripts{
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/allRequest.js" asp-append-version="true"></script>
+    <script src="~/js/requestCompany.js" asp-append-version="true"></script>
 }

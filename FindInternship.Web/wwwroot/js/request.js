@@ -9,6 +9,7 @@ document.getElementById('send').disabled = true;
 connection.start().then(function () {
     document.getElementById("send").disabled = false;
 }).catch(function (err) {
+
     return console.error(err.toString());
 });
 
@@ -20,7 +21,6 @@ document.getElementById('send').addEventListener('click', function (event) {
 
     let data = new FormData();
    
-  
     if (message == null) {
         document.getElementsByClassName('text-danger')[1].textContent = 'Това поле е задължително';
        
@@ -37,9 +37,7 @@ document.getElementById('send').addEventListener('click', function (event) {
         data.append('topic', topicText)
         data.append('message', messageText)
 
-
         let t = $("input[name='__RequestVerificationToken']").val();
-
 
         $.ajax({
             type: "POST",
@@ -54,15 +52,15 @@ document.getElementById('send').addEventListener('click', function (event) {
                 "RequestVerificationToken": t
 
             },
-            success: function (result) {
-                if (result) {
-                    console.log(result);
+            success: function (data) {
+                if (data) {
+
+                    connection.invoke("SendRequest", topicText, messageText, data.requestId, data.companyUserId);
+                    window.location = `https://localhost:7256/Company/All`
+
+                    
                 }
 
-                connection.invoke("SendRequest", topicText, messageText);
-
-                window.location = "https://localhost:7256/Company/All"
-                
                 console.log('Request added successfully');
             },
             error: function (error) {
@@ -71,8 +69,6 @@ document.getElementById('send').addEventListener('click', function (event) {
             }
         });
        
-        
-
     }
 
     event.preventDefault();

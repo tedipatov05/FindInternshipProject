@@ -9,6 +9,10 @@ namespace FindInternship.Core.Contracts
 {
     public interface IRequestService
     {
-        Task Create(CreateRequestModel model);
+        Task<string> Create(CreateRequestModel model);
+
+        Task<AllRequestsViewModel> GetRequestByIdAsync(string requestId);
+
+        Task<List<AllRequestsViewModel>> GetAllCompanyRequestsByIdAsync(string companyId);
     }
 }

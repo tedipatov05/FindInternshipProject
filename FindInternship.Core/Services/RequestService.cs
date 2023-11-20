@@ -6,11 +6,14 @@ using FindInternship.Data.Models.Enums;
 using FindInternship.Data.Repository;
 using FindInternship.Web.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Request = FindInternship.Data.Models.Request;
 
 namespace FindInternship.Core.Services
 {
@@ -24,7 +27,7 @@ namespace FindInternship.Core.Services
             this.hubContext = hubContext;
         }
 
-        public async Task Create(CreateRequestModel model)
+        public async Task<string> Create(CreateRequestModel model)
         {
             var request = new Request()
             {
@@ -36,10 +39,44 @@ namespace FindInternship.Core.Services
                 Status = RequestStatusEnum.Waiting.ToString(),
             };
 
-            //await hubContext.Clients.User(companyUserId).SendAsync("ReceiveRequest", request.Topic,request.Message);
-
             await repo.AddAsync(request);
             await repo.SaveChangesAsync();
+
+
+            return request.Id;
+        }
+
+        public async Task<List<AllRequestsViewModel>> GetAllCompanyRequestsByIdAsync(string companyId)
+        {
+             var requests = await repo.All<Request>()
+                .Where(r => r.CompanyId == companyId)
+                .Select(r => new AllRequestsViewModel()
+                {
+                    Id = r.Id,
+                    Message = r.Message,
+                    Status = r.Status,
+                    Topic = r.Topic,
+                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy")
+                })
+                .ToListAsync();
+
+            return requests;
+        }
+
+        public async Task<AllRequestsViewModel> GetRequestByIdAsync(string requestId)
+        {
+            var request = await repo.All<Request>()
+                .Select(r => new AllRequestsViewModel()
+                {
+                    Id = requestId,
+                    Message = r.Message,
+                    Status = r.Status,
+                    Topic = r.Topic,
+                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy")
+                })
+                .FirstOrDefaultAsync(r => r.Id == requestId);
+
+            return request;
         }
     }
 }

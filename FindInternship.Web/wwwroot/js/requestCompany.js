@@ -2,9 +2,13 @@
     .withUrl("/requestHub")
     .build();
 
-connection.on("ReceiveRequest", function (topic, message) {
+connection.on("ReceiveRequest", function (topic, message, status, date) {
     let div = document.createElement('div');
-    var date = 
+    let colors = {
+        "Waiting": "warning", 
+        "Accepted": "success", 
+        "Rejected": "danger"
+    }
 
     div.classList.add("col-md-6");
 
@@ -15,7 +19,7 @@ connection.on("ReceiveRequest", function (topic, message) {
                                         <div>
                                             <h6 class="mb-0 text-muted">
                                                 <i class="mdi mdi-circle-medium text-danger fs-3 align-middle"></i>
-                                                <span class="team-date">21 Jun, 2021</span>
+                                                <span class="team-date">${date}</span>
                                             </h6>
                                         </div>
                                     </div>
@@ -32,7 +36,8 @@ connection.on("ReceiveRequest", function (topic, message) {
                                     <div class="avatar-group float-start flex-grow-1 task-assigne">
                                     </div>
                                     <div class="align-self-end">
-                                        <span class="badge badge-soft-danger p-2 team-status">Pending</span>
+                                   
+                                        <span class="badge badge-soft-${colors[status]} p-2 team-status" style="font-size: 1rem">${status}</span>
                                     </div>
                                 </div>
                             </div>

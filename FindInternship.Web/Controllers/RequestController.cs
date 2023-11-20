@@ -38,8 +38,6 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("All", "Company");
             }
 
-            
-            
             return View("Create");
         }
 
@@ -63,6 +61,7 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Трябва да бъдеш учител за да изпращаш молби за практика ";
                 return RedirectToAction("All", "Company");
             }
+            string requestId = null;
 
             try
             {
@@ -77,7 +76,7 @@ namespace FindInternship.Web.Controllers
                 model.ClassId = classId;
                 model.CompanyId = companyId;
 
-                await requestService.Create(model);
+                requestId =  await requestService.Create(model);
 
             }
             catch (Exception ex)
@@ -89,14 +88,29 @@ namespace FindInternship.Web.Controllers
             TempData[SuccessMessage] = "Успешно изпратена молба за практика";
             //return RedirectToAction("All", "Company");
 
-            return new JsonResult(true);
+            return new JsonResult(new {RequestId=requestId, CompanyUserId=companyUserId  });
 
         }
 
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            return View();
+            string userId = User.GetId()!;
+
+            
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+
+            if(!isCompany)
+            {
+                TempData[ErrorMessage] = "Трябва да си учител или фирма за да имаш достъп";
+                return RedirectToAction("Index", "Home");
+            }
+
+            string companyId = await companyService.GetCompanyIdAsync(userId);
+            var companyRequests = await requestService.GetAllCompanyRequestsByIdAsync(companyId);
+
+            return View(companyRequests);
+
         }
     }
 }

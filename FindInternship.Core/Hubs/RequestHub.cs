@@ -22,9 +22,11 @@ namespace FindInternship.Web.Hubs
             this.companyService = companyService;
         }
 
-        public async Task SendRequest(string topic, string message)
+        public async Task SendRequest(string topic, string message, string requestId, string companyUserId)
         {
-            await Clients.All.SendAsync("ReceiveRequest",  topic, message);
+            var request = await requestService.GetRequestByIdAsync(requestId);
+
+            await Clients.User(companyUserId).SendAsync("ReceiveRequest",  topic, message, request.Status, request.DateCreated);
         }
     }
 }
