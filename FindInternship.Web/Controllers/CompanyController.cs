@@ -20,6 +20,7 @@ namespace FindInternship.Web.Controllers
             this.abilityService = abilityService;
         }
 
+
         public async Task<IActionResult> All([FromQuery]CompanyQueryModel model)
         {
             string userId = User.GetId();

@@ -87,7 +87,10 @@ namespace FindInternship.Web.Controllers
             }
 
             TempData[SuccessMessage] = "Успешно изпратена молба за практика";
-            return RedirectToAction("All", "Company");
+            //return RedirectToAction("All", "Company");
+
+            return new JsonResult(true);
+
         }
 
         [HttpGet]

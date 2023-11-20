@@ -69,7 +69,7 @@ namespace FindInternship.Core.Services
         {
             var company = await repo.All<Company>()
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.User.UserName == companyName);
+                .FirstOrDefaultAsync(c => c.User.Name == companyName);
 
             return company!.User.Id;
         }
