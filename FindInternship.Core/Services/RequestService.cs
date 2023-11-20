@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,21 @@ namespace FindInternship.Core.Services
             return request.Id;
         }
 
+        public async Task<bool> EditRequestStatus(string status, string requestId)
+        {
+            var request = await repo.GetByIdAsync<Request>(requestId);
+            
+            if(request != null)
+            {
+                request.Status = status;
+                await repo.SaveChangesAsync();
+
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<List<AllRequestsViewModel>> GetAllCompanyRequestsByIdAsync(string companyId)
         {
              var requests = await repo.All<Request>()
@@ -73,7 +89,7 @@ namespace FindInternship.Core.Services
                     Message = r.Message,
                     Status = r.Status,
                     Topic = r.Topic,
-                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy")
+                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy", CultureInfo.CurrentCulture)
                 })
                 .FirstOrDefaultAsync(r => r.Id == requestId);
 

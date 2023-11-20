@@ -25,7 +25,7 @@
                 @foreach(var request in Model)
                 {
                     
-                    <div class="col-md-6" id="project-items-1">
+                    <div class="col-md-6" id="project-items-@request.Id">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex mb-3">
@@ -50,7 +50,18 @@
                                     <div class="avatar-group float-start flex-grow-1 task-assigne">
                                     </div>
                                     <div class="align-self-end">
-                                        <span class="badge badge-soft-@statusClass[request.Status] p-2 team-status" style="font-size: 1rem">@request.Status</span>
+                                        @*<span class="badge badge-soft-@statusClass[request.Status] p-2 team-status" style="font-size: 1rem">@request.Status</span>*@
+                                        <div class="dropdown">
+                                            <a class="badge badge-soft-@statusClass[request.Status] p-2 team-status dropdown-toggle" id="status-@request.Id" style="text-decoration: none; font-size: 1rem" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                @request.Status
+                                            </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" onclick="changeStatus('Accepted', '@request.Id')">Accept</a></li>
+                                                <li><a class="dropdown-item" onclick="changeStatus('Rejected', '@request.Id')">Reject</a></li>
+                                                <li><a class="dropdown-item" onclick="changeStatus('Waiting', '@request.Id')">Waiting</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

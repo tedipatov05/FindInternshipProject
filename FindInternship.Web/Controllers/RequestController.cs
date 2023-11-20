@@ -112,5 +112,27 @@ namespace FindInternship.Web.Controllers
             return View(companyRequests);
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditStatus(string newStatus, string id)
+        {
+            string userId = User.GetId();
+
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+
+            if (!isCompany)
+            {
+                TempData[ErrorMessage] = "Трябва да си фирма за да променяш статуса.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool result = await requestService.EditRequestStatus(newStatus, id);
+
+            return new JsonResult(result);
+
+
+
+
+        }
     }
 }

@@ -52,3 +52,37 @@ connection.start().then(function () {
 }).catch(function (err) {
     return console.error(err.toString());
 });
+
+function changeStatus(newStatus, id) {
+    let statusStyles = {
+        "Waiting": "warning",
+        "Rejected": "danger",
+        "Accepted": "success"
+    }
+
+
+
+    $.ajax({
+        type: "POST",
+        url: `/Request/EditStatus`,
+        data: {
+            'newStatus': newStatus,
+            'id': id
+        },
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            if (data) {
+                let oldStatus = document.getElementById(`status-${id}`).textContent;
+                document.getElementById(`status-${id}`).textContent = newStatus;
+                document.getElementById(`status-${id}`).classList.remove(`badge-soft-${statusStyles[oldStatus]}`);
+                document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
+            }
+        },
+        error: function (msg) {
+            console.error(msg);
+        }
+    });
+}

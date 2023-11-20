@@ -13,6 +13,18 @@
     box-shadow: 0 2px 3px #eaedf2;
 }
 
+a.badge-soft-warning:hover {
+    color: #f7cc53;
+}
+
+a.badge-soft-success:hover {
+    color: #51d28c;
+}
+
+a.badge-soft-danger {
+    color: #f34e4e;
+}
+
 .pb-0 {
     padding-bottom: 0 !important;
 }

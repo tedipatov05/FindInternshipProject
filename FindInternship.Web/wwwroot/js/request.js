@@ -57,8 +57,7 @@ document.getElementById('send').addEventListener('click', function (event) {
 
                     connection.invoke("SendRequest", topicText, messageText, data.requestId, data.companyUserId);
                     window.location = `https://localhost:7256/Company/All`
-
-                    
+                   
                 }
 
                 console.log('Request added successfully');
