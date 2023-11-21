@@ -36,7 +36,6 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id) {
                                     <div class="avatar-group float-start flex-grow-1 task-assigne">
                                     </div>
                                     <div class="align-self-end">
-                                   
                                         <div class="dropdown">
                                             <a class="badge badge-soft-${colors[status]} p-2 team-status dropdown-toggle" id="status-${id}" style="text-decoration: none; font-size: 1rem" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 ${status}

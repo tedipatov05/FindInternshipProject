@@ -100,6 +100,7 @@ namespace FindInternship.Core.Services
         public async Task<AllRequestsViewModel> GetRequestByIdAsync(string requestId)
         {
             var request = await repo.All<Request>()
+                .Where(r => r.Id == requestId)
                 .Select(r => new AllRequestsViewModel()
                 {
                     Id = requestId,
@@ -108,7 +109,7 @@ namespace FindInternship.Core.Services
                     Topic = r.Topic,
                     DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy", CultureInfo.CurrentCulture)
                 })
-                .FirstOrDefaultAsync(r => r.Id == requestId);
+                .FirstOrDefaultAsync();
 
             return request;
         }

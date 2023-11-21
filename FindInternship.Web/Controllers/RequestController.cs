@@ -61,7 +61,7 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Трябва да бъдеш учител за да изпращаш молби за практика ";
                 return RedirectToAction("All", "Company");
             }
-            string requestId = null;
+            string requestId;
 
             try
             {
@@ -76,7 +76,7 @@ namespace FindInternship.Web.Controllers
                 model.ClassId = classId;
                 model.CompanyId = companyId;
 
-                requestId =  await requestService.Create(model);
+                requestId = await requestService.Create(model);
 
             }
             catch (Exception ex)
@@ -86,9 +86,8 @@ namespace FindInternship.Web.Controllers
             }
 
             TempData[SuccessMessage] = "Успешно изпратена молба за практика";
-            //return RedirectToAction("All", "Company");
-
-            return new JsonResult(new {RequestId=requestId, CompanyUserId=companyUserId  });
+            
+            return new JsonResult(new {RequestId=requestId, CompanyUserId = companyUserId});
 
         }
 

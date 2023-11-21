@@ -26,6 +26,8 @@ namespace FindInternship.Web.Hubs
         {
             var request = await requestService.GetRequestByIdAsync(requestId);
 
+            
+
             await Clients.User(companyUserId).SendAsync("ReceiveRequest",  topic, message, request.Status, request.DateCreated, request.Id);
         }
 
