@@ -112,6 +112,7 @@ namespace FindInternship.Web.Controllers
             return View("All", companyRequests);
 
         }
+
         [HttpGet]
         public async Task<IActionResult> ClassRequests()
         {

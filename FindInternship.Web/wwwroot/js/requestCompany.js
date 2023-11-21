@@ -58,6 +58,7 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id) {
 });
 
 connection.on("ReceiveNewStatus", function (newStatus, id) {
+
     let statusStyles = {
         "Waiting": "warning",
         "Rejected": "danger",
@@ -65,7 +66,7 @@ connection.on("ReceiveNewStatus", function (newStatus, id) {
     };
 
 
-    let oldStatus = document.getElementById(`status-${id}`).textContent;
+    let oldStatus = document.getElementById(`status-${id}`).textContent.trim();
     document.getElementById(`status-${id}`).textContent = newStatus;
     document.getElementById(`status-${id}`).classList.remove(`badge-soft-${statusStyles[oldStatus]}`);
     document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
@@ -100,12 +101,15 @@ function changeStatus(newStatus, id) {
         },
         success: function (data) {
             if (data.isEdited) {
-                let oldStatus = document.getElementById(`status-${id}`).textContent;
+
+                connection.invoke("ChangeRequestStatus", id, newStatus);
+
+                let oldStatus = document.getElementById(`status-${id}`).textContent.trim();
                 document.getElementById(`status-${id}`).textContent = newStatus;
                 document.getElementById(`status-${id}`).classList.remove(`badge-soft-${statusStyles[oldStatus]}`);
                 document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
 
-                connection.invoke("ChangeRequestStatus", id, newStatus);
+                
             }
         },
         error: function (msg) {

@@ -65,7 +65,7 @@ namespace FindInternship.Core.Services
         public async Task<List<AllRequestsViewModel>> GetAllClassRequestsByIdAsync(string classId)
         {
             var requests = await repo.All<Request>()
-                .Where(r =>  r.ClassId == classId)
+                .Where(r =>  r.ClassId == classId && r.Status != RequestStatusEnum.Rejected.ToString())
                 .Select(r => new AllRequestsViewModel()
                 {
                     Id = r.Id,
@@ -82,7 +82,7 @@ namespace FindInternship.Core.Services
         public async Task<List<AllRequestsViewModel>> GetAllCompanyRequestsByIdAsync(string companyId)
         {
              var requests = await repo.All<Request>()
-                .Where(r => r.CompanyId == companyId)
+                .Where(r => r.CompanyId == companyId && r.Status != RequestStatusEnum.Rejected.ToString())
                 .Select(r => new AllRequestsViewModel()
                 {
                     Id = r.Id,
