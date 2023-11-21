@@ -9,7 +9,6 @@ document.getElementById('send').disabled = true;
 connection.start().then(function () {
     document.getElementById("send").disabled = false;
 }).catch(function (err) {
-
     return console.error(err.toString());
 });
 

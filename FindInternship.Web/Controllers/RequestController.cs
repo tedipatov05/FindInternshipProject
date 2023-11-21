@@ -93,7 +93,7 @@ namespace FindInternship.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> CompanyRequests()
         {
             string userId = User.GetId()!;
 
@@ -102,14 +102,32 @@ namespace FindInternship.Web.Controllers
 
             if(!isCompany)
             {
-                TempData[ErrorMessage] = "Трябва да си учител или фирма за да имаш достъп";
+                TempData[ErrorMessage] = "Трябва да си фирма за да имаш достъп";
                 return RedirectToAction("Index", "Home");
             }
 
             string companyId = await companyService.GetCompanyIdAsync(userId);
             var companyRequests = await requestService.GetAllCompanyRequestsByIdAsync(companyId);
 
-            return View(companyRequests);
+            return View("All", companyRequests);
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> ClassRequests()
+        {
+            string userId = User.GetId();
+
+            bool isTeacher = await teacherService.IsTeacherAsync(userId);
+            if(!isTeacher)
+            {
+                TempData[ErrorMessage] = "Трябва да си учител за да имаш достъп";
+                return RedirectToAction("Index", "Home");
+            }
+
+            string classId = await teacherService.GetTeacherClassIdAsync(userId);
+            var classRequests = await requestService.GetAllClassRequestsByIdAsync(classId);
+
+            return View("All", classRequests);
 
         }
 
@@ -128,10 +146,7 @@ namespace FindInternship.Web.Controllers
 
             bool result = await requestService.EditRequestStatus(newStatus, id);
 
-            return new JsonResult(result);
-
-
-
+            return new JsonResult(new { IsEdited = result, CompanyUserId = userId });
 
         }
     }

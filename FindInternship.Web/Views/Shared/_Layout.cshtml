@@ -38,16 +38,20 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link scrollto" asp-area="" asp-controller="Company" asp-action="All">Фирми</a>
-
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link scrollto" asp-area="" asp-controller="Request" asp-action="ClassRequests">Молби</a>
+                            </li>
+
                         }
                         @if (User.IsInRole("Company"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link scrollto" asp-area="" asp-controller="Request" asp-action="All">Молби</a>
+                                <a class="nav-link scrollto" asp-area="" asp-controller="Request" asp-action="CompanyRequests">Молби</a>
 
                             </li>
                         }
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

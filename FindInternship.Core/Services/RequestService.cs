@@ -62,6 +62,23 @@ namespace FindInternship.Core.Services
             return false;
         }
 
+        public async Task<List<AllRequestsViewModel>> GetAllClassRequestsByIdAsync(string classId)
+        {
+            var requests = await repo.All<Request>()
+                .Where(r =>  r.ClassId == classId)
+                .Select(r => new AllRequestsViewModel()
+                {
+                    Id = r.Id,
+                    Message = r.Message,
+                    Status = r.Status,
+                    Topic = r.Topic,
+                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy")
+                })
+                .ToListAsync();
+
+            return requests;
+        }
+
         public async Task<List<AllRequestsViewModel>> GetAllCompanyRequestsByIdAsync(string companyId)
         {
              var requests = await repo.All<Request>()
