@@ -64,11 +64,20 @@ connection.on("ReceiveNewStatus", function (newStatus, id) {
         "Accepted": "success"
     };
 
+    
 
     let oldStatus = document.getElementById(`status-${id}`).textContent.trim();
     document.getElementById(`status-${id}`).textContent = newStatus;
     document.getElementById(`status-${id}`).classList.remove(`badge-soft-${statusStyles[oldStatus]}`);
     document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
+
+    if (newStatus == "Accepted") {
+        document.getElementById('btn-documents').style.display = 'block';
+    }
+    else {
+        document.getElementById('btn-documents').style.display = 'none';
+    }
+
 
 })
 
@@ -107,6 +116,13 @@ function changeStatus(newStatus, id) {
                 document.getElementById(`status-${id}`).textContent = newStatus;
                 document.getElementById(`status-${id}`).classList.remove(`badge-soft-${statusStyles[oldStatus]}`);
                 document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
+
+                if (newStatus == "Accepted") {
+                    document.getElementById('btn-documents').style.display = 'block';
+                }
+                else {
+                    document.getElementById('btn-documents').style.display = 'none';
+                }
 
                 
             }

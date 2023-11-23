@@ -31,6 +31,8 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("All", "Company");
             }
 
+            string companyName = await companyService.GetCompanyNameByIdAsync(companyUserId);
+
             bool isTeacher = await teacherService.IsTeacherAsync(User.GetId()!);
             if(!isTeacher)
             {
@@ -38,7 +40,7 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("All", "Company");
             }
 
-            return View("Create");
+            return View("Create", companyName);
         }
 
 
@@ -134,6 +136,7 @@ namespace FindInternship.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditStatus(string newStatus, string id)
         {
+
             string userId = User.GetId();
 
             bool isCompany = await companyService.IsCompanyAsync(userId);

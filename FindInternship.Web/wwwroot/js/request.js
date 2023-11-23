@@ -20,17 +20,19 @@ document.getElementById('send').addEventListener('click', function (event) {
 
     let data = new FormData();
    
-    if (message == null) {
-        document.getElementsByClassName('text-danger')[1].textContent = 'Това поле е задължително';
+    if (messageText == "") {
+        document.getElementsByClassName('text-danger')[1].style.display = 'block';
        
     }
-    if (topic == null) {
-        document.getElementsByClassName('text-danger')[0].textContent = 'Това поле е задължително';
+    
+    if (topicText == "") {
+        document.getElementsByClassName('text-danger')[0].style.display = 'block';
        
     }
     else {
-        document.getElementsByClassName('text-danger')[1].textContent = '';
-        document.getElementsByClassName('text-danger')[0].textContent = '';
+
+        document.getElementsByClassName('text-danger')[1].style.display = 'none';
+        document.getElementsByClassName('text-danger')[0].style.display = 'none';
 
         data.append('company', companyText)
         data.append('topic', topicText)

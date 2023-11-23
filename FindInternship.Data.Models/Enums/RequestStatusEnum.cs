@@ -9,7 +9,7 @@ namespace FindInternship.Data.Models.Enums
     public enum RequestStatusEnum
     {
         Waiting = 0, 
-        Acepted = 1,
+        Accepted = 1,
         Rejected = 2,
     }
 }

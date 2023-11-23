@@ -47,7 +47,6 @@ namespace FindInternship.Web.Controllers
             {
                 ModelState.AddModelError(nameof(model.Email), "Потребител с този имейл вече съществува.");
 
-
             }
             if (await userService.IsUserExistsByPhoneAsync(model.PhoneNumber))
             {

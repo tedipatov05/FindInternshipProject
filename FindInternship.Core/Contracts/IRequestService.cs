@@ -18,5 +18,7 @@ namespace FindInternship.Core.Contracts
         Task<List<AllRequestsViewModel>> GetAllClassRequestsByIdAsync(string classId);
 
         Task<bool> EditRequestStatus(string status, string requestId);
+
+        
     }
 }
