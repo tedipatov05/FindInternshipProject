@@ -2,6 +2,7 @@
 using FindInternship.Core.Models.Email;
 using FindInternship.Core.Models.Profile;
 using FindInternship.Core.Models.Statistics;
+using FindInternship.Core.Services;
 using FindInternship.Web.Extensions;
 using FindInternship.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,15 @@ namespace FindInternship.Web.Controllers
         private readonly IStatisticService statisticService;
         private readonly IEmailService emailService;
         private readonly ITeacherService teacherService;
+        private readonly ICompanyService companyService;
 
-        public HomeController(IStatisticService statisticService, IEmailService emailService, ITeacherService teacherService)
+        public HomeController(IStatisticService statisticService, IEmailService emailService, ITeacherService teacherService, 
+            ICompanyService companyService)
         {
             this.statisticService = statisticService;
             this.emailService = emailService;
             this.teacherService = teacherService;
+            this.companyService = companyService;
         }
 
         public async Task<IActionResult> Index()
@@ -29,7 +33,7 @@ namespace FindInternship.Web.Controllers
 
             if (User.IsInRole("Teacher"))
             {
-                return RedirectToAction("Teacher", "Home");
+                return RedirectToAction("Teacher", "Home", new {id = ""});
             }
             
             StatisticViewModel model = new StatisticViewModel();
@@ -46,24 +50,24 @@ namespace FindInternship.Web.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Teacher()
+        public async Task<IActionResult> Teacher(string id)
         {
             string userId = User.GetId()!;
 
-            bool isTeacher = await teacherService.IsTeacherAsync(userId);
-
+            bool isTeacher = await teacherService.IsTeacherAsync(id == "" ? userId : id);
+            
             if (!isTeacher)
             {
                 TempData[ErrorMessage] = "Трябва да бъдете учител";
                 return RedirectToAction("Index", "Home");
             }
 
-            string teacherId = await teacherService.GetTeacherIdAsync(userId);
+            string teacherId = await teacherService.GetTeacherIdAsync(id == "" ? userId : id);
             var model = await teacherService.GetTeacherStudentsAsync(teacherId);
 
             return View(model);
         }
-
+        
         [HttpGet]
         public IActionResult Contact()
         {

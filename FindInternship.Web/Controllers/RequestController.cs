@@ -34,6 +34,7 @@ namespace FindInternship.Web.Controllers
             string companyName = await companyService.GetCompanyNameByIdAsync(companyUserId);
 
             bool isTeacher = await teacherService.IsTeacherAsync(User.GetId()!);
+           
             if(!isTeacher)
             {
                 TempData[ErrorMessage] = "Трябва да бъдеш учител за да узпращаш молби за практика ";

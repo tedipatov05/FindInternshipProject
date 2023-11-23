@@ -65,14 +65,17 @@ namespace FindInternship.Core.Services
         public async Task<List<AllRequestsViewModel>> GetAllClassRequestsByIdAsync(string classId)
         {
             var requests = await repo.All<Request>()
-                .Where(r =>  r.ClassId == classId && r.Status != RequestStatusEnum.Rejected.ToString())
+                .Where(r => r.ClassId == classId && r.Status != RequestStatusEnum.Rejected.ToString())
+                .Include(r => r.Class.Teacher)
                 .Select(r => new AllRequestsViewModel()
                 {
                     Id = r.Id,
                     Message = r.Message,
                     Status = r.Status,
                     Topic = r.Topic,
-                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy")
+                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy"),
+                    CompanyId = r.CompanyId,
+                    TeacherId = r.Class.Teacher.UserId
                 })
                 .ToListAsync();
 
@@ -83,13 +86,16 @@ namespace FindInternship.Core.Services
         {
              var requests = await repo.All<Request>()
                 .Where(r => r.CompanyId == companyId && r.Status != RequestStatusEnum.Rejected.ToString())
+                 .Include(r => r.Class.Teacher)
                 .Select(r => new AllRequestsViewModel()
                 {
                     Id = r.Id,
                     Message = r.Message,
                     Status = r.Status,
                     Topic = r.Topic,
-                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy")
+                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy"),
+                    CompanyId = r.CompanyId,
+                    TeacherId = r.Class.Teacher.UserId
                 })
                 .ToListAsync();
 
