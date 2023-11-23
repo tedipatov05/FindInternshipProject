@@ -86,7 +86,7 @@ namespace FindInternship.Core.Services
         {
              var requests = await repo.All<Request>()
                 .Where(r => r.CompanyId == companyId && r.Status != RequestStatusEnum.Rejected.ToString())
-                 .Include(r => r.Class.Teacher)
+                .Include(r => r.Class.Teacher)
                 .Select(r => new AllRequestsViewModel()
                 {
                     Id = r.Id,
@@ -108,13 +108,16 @@ namespace FindInternship.Core.Services
         {
             var request = await repo.All<Request>()
                 .Where(r => r.Id == requestId)
+                .Include(r => r.Class.Teacher)
                 .Select(r => new AllRequestsViewModel()
                 {
                     Id = requestId,
                     Message = r.Message,
                     Status = r.Status,
                     Topic = r.Topic,
-                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy", CultureInfo.CurrentCulture)
+                    DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy", CultureInfo.CurrentCulture),
+                    CompanyId = r.CompanyId,
+                    TeacherId = r.Class.Teacher.UserId
                 })
                 .FirstOrDefaultAsync();
 

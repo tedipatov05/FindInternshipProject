@@ -54,7 +54,7 @@ namespace FindInternship.Web.Controllers
         {
             string userId = User.GetId()!;
 
-            bool isTeacher = await teacherService.IsTeacherAsync(id == "" ? userId : id);
+            bool isTeacher = await teacherService.IsTeacherAsync(string.IsNullOrEmpty(id) ? userId : id);
             
             if (!isTeacher)
             {
@@ -62,7 +62,7 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            string teacherId = await teacherService.GetTeacherIdAsync(id == "" ? userId : id);
+            string teacherId = await teacherService.GetTeacherIdAsync(string.IsNullOrEmpty(id) ? userId : id);
             var model = await teacherService.GetTeacherStudentsAsync(teacherId);
 
             return View(model);

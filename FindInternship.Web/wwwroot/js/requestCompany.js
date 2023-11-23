@@ -2,7 +2,7 @@
     .withUrl("/requestHub")
     .build();
 
-connection.on("ReceiveRequest", function (topic, message, status, date, id) {
+connection.on("ReceiveRequest", function (topic, message, status, date, id, teacherId) {
     let div = document.createElement('div');
     let colors = {
         "Waiting": "warning", 
@@ -23,7 +23,6 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id) {
                                             </h6>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div class="mb-4">
@@ -34,6 +33,8 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id) {
                                 </div>
                                 <div class="d-flex">
                                     <div class="avatar-group float-start flex-grow-1 task-assigne">
+                                        <a class="btn badge-soft-secondary" id="btn-documents-${id}" style="font-weight: 600;display:none">Изпрати документи</a>
+                                        <a href="/Home/Teacher/${teacherId}" class="btn badge-soft-secondary" id="btn-class-${id}" style="font-weight: 600;display:block">Виж учениците</a>
                                     </div>
                                     <div class="align-self-end">
                                         <div class="dropdown">
@@ -72,10 +73,12 @@ connection.on("ReceiveNewStatus", function (newStatus, id) {
     document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
 
     if (newStatus == "Accepted") {
-        document.getElementById('btn-documents').style.display = 'block';
+        document.getElementById(`btn-documents-${id}`).style.display = 'block';
+        document.getElementById(`btn-class-${id}`).style.display = 'none'
     }
     else {
-        document.getElementById('btn-documents').style.display = 'none';
+        document.getElementById(`btn-documents-${id}`).style.display = 'none';
+        document.getElementById(`btn-class-${id}`).style.display = 'block'
     }
 
 
@@ -118,10 +121,12 @@ function changeStatus(newStatus, id) {
                 document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
 
                 if (newStatus == "Accepted") {
-                    document.getElementById('btn-documents').style.display = 'block';
+                    document.getElementById(`btn-documents-${id}`).style.display = 'block';
+                    document.getElementById(`btn-class-${id}`).style.display = 'none'
                 }
                 else {
-                    document.getElementById('btn-documents').style.display = 'none';
+                    document.getElementById(`btn-documents-${id}`).style.display = 'none';
+                    document.getElementById(`btn-class-${id}`).style.display = 'block'
                 }
 
                 

@@ -49,15 +49,18 @@
                                 </div>
                                 <div class="d-flex">
                                     <div class="avatar-group float-start flex-grow-1 task-assigne">
-                                        @if (User.IsInRole("Company") && request.Status == RequestStatusEnum.Accepted.ToString())
+                                        @if (User.IsInRole("Company") )
                                         {
-                                            <a class="btn badge-soft-secondary" id="btn-documents" style="font-weight: 600;display:block">Изпрати документи</a>
+                                            bool isAccepted = request.Status == RequestStatusEnum.Accepted.ToString();
+                                            string resultDoc = isAccepted ? "block" : "none";
+                                            string resultStudents = isAccepted ? "none" : "block";
+
+
+                                            <a class="btn badge-soft-secondary" id="btn-documents-@request.Id" style="font-weight: 600;display:@resultDoc">Изпрати документи</a>
+                                            <a asp-action="Teacher" asp-controller="Home" asp-route-id="@request.TeacherId" class="btn badge-soft-secondary" id="btn-class-@request.Id" style="font-weight: 600;display:@resultStudents">Виж учениците</a>
 
                                         }
-                                        else if (User.IsInRole("Company"))
-                                        {
-                                            <a asp-action="Teacher" asp-controller="Home" asp-route-id="@request.TeacherId" class="btn badge-soft-secondary" id="btn-class" style="font-weight: 600;display:block">Виж учениците</a>
-                                        }
+                                        
                                     </div>
                                     <div class="align-self-end">
                                         @if (User.IsInRole("Company"))
