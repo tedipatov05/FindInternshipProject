@@ -12,6 +12,34 @@
 
  }
 
+<div class="upload" id="upload-files" style="display:none; width: 750px">
+    <div class="upload-files">
+        <header>
+            <p>
+                <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                <span class="up">up</span>
+                <span class="load">load</span>
+            </p>
+        </header>
+        <div class="body" id="drop">
+            <i class="fa fa-file-text-o pointer-none" aria-hidden="true"></i>
+            <p class="pointer-none"><b>Drag and drop</b> files here <br /> or <a href="" id="triggerFile">browse</a> to begin the upload</p>
+            <input type="file" multiple="multiple" />
+        </div>
+        <footer>
+            <div class="divider">
+                <span>
+                    <AR>FILES</AR>
+                </span>
+            </div>
+            <div class="list-files">
+                <!--   template   -->
+            </div>
+            <button class="importar" id="update">UPDATE FILES</button>
+        </footer>
+    </div>
+</div>
+
 <div class="card">
     <div class="tab-content p-4">
         <div class="tab-pane active show" id="projects-tab" role="tabpanel">
@@ -56,7 +84,7 @@
                                             string resultStudents = isAccepted ? "none" : "block";
 
 
-                                            <a class="btn badge-soft-secondary" id="btn-documents-@request.Id" style="font-weight: 600;display:@resultDoc">Изпрати документи</a>
+                                            <a data-fancybox data-src="#upload-files" class="btn badge-soft-secondary doc" id="btn-documents-@request.Id" style="font-weight: 600;display:@resultDoc">Изпрати документи</a>
                                             <a asp-action="Teacher" asp-controller="Home" asp-route-id="@request.TeacherId" class="btn badge-soft-secondary" id="btn-class-@request.Id" style="font-weight: 600;display:@resultStudents">Виж учениците</a>
 
                                         }
@@ -98,9 +126,14 @@
 
 @section Styles{
     <link rel="stylesheet" href="~/css/companyProfile.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/upload.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 }
 
 @section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/requestCompany.js" asp-append-version="true"></script>
+    <script src="~/js/upload.js" asp-append-version="true"></script>
 }

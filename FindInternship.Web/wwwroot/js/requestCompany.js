@@ -5,8 +5,8 @@
 connection.on("ReceiveRequest", function (topic, message, status, date, id, teacherId) {
     let div = document.createElement('div');
     let colors = {
-        "Waiting": "warning", 
-        "Accepted": "success", 
+        "Waiting": "warning",
+        "Accepted": "success",
         "Rejected": "danger"
     }
 
@@ -65,7 +65,7 @@ connection.on("ReceiveNewStatus", function (newStatus, id) {
         "Accepted": "success"
     };
 
-    
+
 
     let oldStatus = document.getElementById(`status-${id}`).textContent.trim();
     document.getElementById(`status-${id}`).textContent = newStatus;
@@ -85,14 +85,14 @@ connection.on("ReceiveNewStatus", function (newStatus, id) {
 })
 
 connection.start().then(function () {
-    
+
 }).catch(function (err) {
     return console.error(err.toString());
 });
 
 
 function changeStatus(newStatus, id) {
-    
+
     let statusStyles = {
         "Waiting": "warning",
         "Rejected": "danger",
@@ -129,7 +129,7 @@ function changeStatus(newStatus, id) {
                     document.getElementById(`btn-class-${id}`).style.display = 'block'
                 }
 
-                
+
             }
         },
         error: function (msg) {
