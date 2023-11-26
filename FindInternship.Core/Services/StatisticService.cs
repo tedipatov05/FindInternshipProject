@@ -1,5 +1,6 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Data.Models;
+using FindInternship.Data.Models.Enums;
 using FindInternship.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,10 +30,11 @@ namespace FindInternship.Core.Services
 
         public async Task<int> GetInternshipsCountAsync()
         {
-            var internships = await repo.All<Company>()
+            var internships = await repo.All<Request>()
+                .Where(i => i.Status.Equals(RequestStatusEnum.Accepted.ToString()) )
                 .ToListAsync();
 
-            return internships.Sum(i => i.Classes.Count);
+            return internships.Count;
                
         }
 
