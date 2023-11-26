@@ -26,7 +26,8 @@ namespace FindInternship.Core.Services
                 .Select(c => new ClassViewModel()
                 {
                     Id = c.Id,
-                    Name = c.Grade
+                    Name = c.Grade, 
+                    School = c.School.Name,
                 })
                 .ToListAsync();
 

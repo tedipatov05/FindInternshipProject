@@ -32,6 +32,8 @@ namespace FindInternship.Data
         public DbSet<Request> Requests { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Document> Documents { get; set; }
+
+        public DbSet<School> Schools { get; set; }
         public DbSet<CompanyAbility> Technologies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -97,7 +99,7 @@ namespace FindInternship.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
 
-
+            builder.ApplyConfiguration(new SchoolConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new RolesConfiguration());
             builder.ApplyConfiguration(new UserRolesConfiguration());
@@ -107,6 +109,7 @@ namespace FindInternship.Data
             builder.ApplyConfiguration(new CompanyConfiguration());
             builder.ApplyConfiguration(new AbilityConfiguration());
             builder.ApplyConfiguration(new CompanyTechnologiesConfiguration());
+            
 
 
             base.OnModelCreating(builder);

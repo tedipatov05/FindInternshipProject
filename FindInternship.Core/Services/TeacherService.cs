@@ -41,13 +41,14 @@ namespace FindInternship.Core.Services
         {
             var teacher = await repo.All<Teacher>()
                 .Include(s => s.Class)
+                .Include(s => s.Class.School)
                 .FirstOrDefaultAsync(s => s.Id == teacherId && s.User.IsActive == true);
                 
             var model = new TeacherStudentsViewModel();
             model.Id = teacher!.Id;
             model.Class = teacher.Class.Grade;
             model.ClassSpeciality = teacher.Class.Speciality;
-            model.School = teacher.Class.School;
+            model.School = teacher.Class.School.Name;
 
             model.Students = await studentService.GetTeacherStudentsAsync(teacher.Class.Grade);
 

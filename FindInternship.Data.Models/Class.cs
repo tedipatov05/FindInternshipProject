@@ -27,8 +27,10 @@ namespace FindInternship.Data.Models
         [MaxLength(SpecialtityMaxLength)]
         public string Speciality { get; set; } = null!;
 
-        [MaxLength(SchoolMaxLength)]
-        public string School { get; set; } = null!;
+        [ForeignKey(nameof(School))]
+        public int SchoolId { get; set; }
+
+        public School School { get; set; } = null!;
 
         public string Grade { get; set; } = null!;
 

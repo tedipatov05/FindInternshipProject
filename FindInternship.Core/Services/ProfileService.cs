@@ -76,6 +76,7 @@ namespace FindInternship.Core.Services
                 .Where(s => s.Id == studentId && s.User.IsActive == true)
                 .Include(s => s.User)
                 .Include(s => s.Class)
+                .Include(s => s.Class.School)
                 .FirstOrDefaultAsync();
 
             var model = new StudentProfileViewModel()
@@ -90,7 +91,7 @@ namespace FindInternship.Core.Services
                 City = student.User.City,
                 Country = student.User.Country,
                 Address = student.User.Address,
-                School = student.Class.School
+                School = student.Class.School.Name
 
             };
 

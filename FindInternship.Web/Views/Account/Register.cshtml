@@ -53,7 +53,7 @@
                             <select asp-for="@Model.ClassId" class="form-control" value="Клас" aria-required="true">
                                 @foreach (var c in Model.Classes)
                                 {
-                                    <option value="@c.Id">@c.Name</option>
+                                    <option value="@c.Id">@c.Name (@c.School)</option>
                                 }
                             </select>
                             <span asp-validation-for="@Model.ClassId" class="text-danger"></span>

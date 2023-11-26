@@ -24,7 +24,7 @@ namespace FindInternship.Data.Configurations
             {
                 Id = "0edc45cb-b2f1-48a2-8f6b-17910e09a147",
                 Speciality = "Приложен програмист",
-                School = "ППМГ Никола Обрешков",
+                SchoolId = 1,
                 TeacherId = "2644afb5-f916-4b3f-b451-9ff86c881de3", 
                 CompanyId = null, 
                 Grade = "12 Б",
