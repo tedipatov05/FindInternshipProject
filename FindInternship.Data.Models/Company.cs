@@ -14,10 +14,12 @@ namespace FindInternship.Data.Models
         public Company()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.IsApproved = true;
             this.Classes = new HashSet<Class>();
             this.Requests = new List<Request>();
             this.Meetings = new HashSet<Meeting>();
             this.Technologies = new HashSet<CompanyAbility>();
+            
         }
 
         [Key]
@@ -33,6 +35,8 @@ namespace FindInternship.Data.Models
 
         [MaxLength(CompanyServicesMaxLength)]
         public string Services { get; set; } = null!;
+
+        public bool IsApproved { get; set; }
 
         public ICollection<CompanyAbility> Technologies { get; set; }
 

@@ -53,7 +53,7 @@ namespace FindInternship.Web.Controllers
                 ModelState.AddModelError(nameof(model.PhoneNumber), "Потребител с този телефонен номер вече съществува.");
 
             }
-            if(DateTime.Compare(model.BirthDate, new DateTime(DateTime.Now.Year - 6, 1, 1)) > 0)
+            if(DateTime.Compare(model.BirthDate, new DateTime(DateTime.Now.Year - 14, 1, 1)) > 0)
             {
                 ModelState.AddModelError(nameof(model.BirthDate), "Грешна дата на раждане!");
             }
@@ -112,6 +112,8 @@ namespace FindInternship.Web.Controllers
             model.Classes = await classService.AllClassesAsync();
             return View(model);
         }
+
+
 
         [HttpGet]
         public IActionResult Login()

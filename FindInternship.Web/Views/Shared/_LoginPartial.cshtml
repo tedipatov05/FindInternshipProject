@@ -3,32 +3,40 @@
 @using Microsoft.AspNetCore.Identity;
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
- 
+
 
 <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
+@if (SignInManager.IsSignedIn(User))
+{
+
+    <li>
+        <a class="nav-link scrollto" asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@User.GetId()" title="Manage">Здравей, @User.Identity?.Name!</a>
+    </li>
+
+    <li>
+        <form class="form-inline" asp-action="Logout" asp-controller="Account">
+            <button type="submit" class="nav-link scrollto" style="background-color: unset;border: none;margin-left: 10px;">
+                Излез
+            </button>
+        </form>
+    </li>
+}
+else
+{
+
+    <li class="dropdown">
+        <a class="getstarted scrollto"><span>Създай акаунт</span></a>
+        <ul>
+            <li><a href="#">Учител</a></li>
+            <li><a asp-action="Register" asp-controller="Account">Ученик</a></li>
+            <li><a href="#">Фирма</a></li>
+        </ul>
+    </li>
+
+    <li><a class="getstarted scrollto" asp-action="Login" asp-controller="Account" style="margin-left: 10px"><span>Вход</span></a></li>
        
-        <li class="nav-item">
-            <a class="nav-link scrollto" asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@User.GetId()" title="Manage">Здравей, @User.Identity?.Name!</a>
-        </li>
-       
-        <li class="nav-item">
-            <form class="form-inline" asp-action="Logout" asp-controller="Account">
-                <button type="submit" class="nav-link scrollto" style="background-color: unset;border: none;">
-                    Излез
-                </button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link scrollto" asp-action="Register" asp-controller="Account">Регистрирай се</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link scrollto" asp-action="Login" asp-controller="Account">Влез</a>
-        </li>
-    }
+    
+}
 </ul>
+
 

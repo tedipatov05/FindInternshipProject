@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FindInternship.Web.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/font/font-awesome.min.css" asp-append-version="true" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -16,46 +15,44 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <header>
+    <header id="header">
         <partial name="_NotificationsPartial" />
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow" style="background-color: black; opacity: 0.7">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FindInternship</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav id="navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow">
+            <div class="container-fluid" style="margin-top: 10px;margin-right: 10px;margin-bottom: 5px;">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <a class="navbar-brand" href="#">Find Internship</a>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link scrollto" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link scrollto" asp-area="" asp-controller="Home" asp-action="Contact">Контакт</a>
-                        </li>
+
+
+                        <li class="nav-item"><a class="nav-link scrollto active" asp-controller="Home" asp-action="Index">Начало</a></li>
+                        <li class="nav-item"><a class="nav-link scrollto" asp-controller="Home" asp-action="Contact">Контакт</a></li>
+
                         @if (User.IsInRole("Teacher"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link scrollto" asp-area="" asp-controller="Company" asp-action="All">Фирми</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link scrollto" asp-area="" asp-controller="Request" asp-action="ClassRequests">Молби</a>
-                            </li>
-
+                            <li class="nav-item"><a class="nav-link scrollto" asp-controller="Company" asp-action="All">Фирми</a></li>
+                            <li class="nav-item"><a class="nav-link scrollto" asp-controller="Request" asp-action="ClassRequests">Молби</a></li>
                         }
+
+
                         @if (User.IsInRole("Company"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link scrollto" asp-area="" asp-controller="Request" asp-action="CompanyRequests">Молби</a>
-
-                            </li>
+                            <li class="nav-item"><a class="nav-link scrollto" asp-controller="Request" asp-action="CompanyRequests">Молби</a></li>
                         }
 
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
+
+
+
             </div>
+
         </nav>
     </header>
 
@@ -67,8 +64,9 @@
     <script src="https://kit.fontawesome.com/b9403dda92.js" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 
-    
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
