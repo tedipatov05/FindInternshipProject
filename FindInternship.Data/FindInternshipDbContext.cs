@@ -94,7 +94,7 @@ namespace FindInternship.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Document>()
-                .HasOne(d => d.Student)
+                .HasOne(d => d.Class)
                 .WithMany(s => s.Documents)
                 .OnDelete(DeleteBehavior.NoAction);
 

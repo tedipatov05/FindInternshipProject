@@ -26,7 +26,7 @@ namespace FindInternship.Web.Hubs
         {
             var request = await requestService.GetRequestByIdAsync(requestId);
 
-            await Clients.User(companyUserId).SendAsync("ReceiveRequest",  topic, message, request.Status, request.DateCreated, request.Id, request.TeacherId);
+            await Clients.User(companyUserId).SendAsync("ReceiveRequest",  topic, message, request.Status, request.DateCreated, request.Id, request.TeacherId, request.TeacherName);
         }
 
         public async Task ChangeRequestStatus(string requestId, string newStatus)

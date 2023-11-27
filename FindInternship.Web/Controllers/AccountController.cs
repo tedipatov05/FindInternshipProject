@@ -77,10 +77,7 @@ namespace FindInternship.Web.Controllers
                 RegisteredOn = DateTime.Now,
                 PhoneNumber = model.PhoneNumber
 
-
             };
-
-            
 
             var result = await userManager.CreateAsync(user, model.Password);
 

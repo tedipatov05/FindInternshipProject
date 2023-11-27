@@ -2,9 +2,10 @@
     .withUrl("/requestHub")
     .build();
 
-connection.on("ReceiveRequest", function (topic, message, status, date, id, teacherId) {
+connection.on("ReceiveRequest", function (topic, message, status, date, id, teacherId, teacherName) {
+
     let div = document.createElement('div');
-    let colors = {
+    let colors = { 
         "Waiting": "warning",
         "Accepted": "success",
         "Rejected": "danger"
@@ -20,6 +21,8 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id, teac
                                             <h6 class="mb-0 text-muted">
                                                 <i class="mdi mdi-circle-medium text-danger fs-3 align-middle"></i>
                                                 <span class="team-date">${date}</span>
+                                                <br>
+                                                 <label>От: </label><span class="team-date"> ${teacherName}</span>
                                             </h6>
                                         </div>
                                     </div>
@@ -35,6 +38,7 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id, teac
                                     <div class="avatar-group float-start flex-grow-1 task-assigne">
                                         <a class="btn badge-soft-secondary" id="btn-documents-${id}" style="font-weight: 600;display:none">Изпрати документи</a>
                                         <a href="/Home/Teacher/${teacherId}" class="btn badge-soft-secondary" id="btn-class-${id}" style="font-weight: 600;display:block">Виж учениците</a>
+                                        <input name="teacherId" value="${teacherId}" hidden/>
                                     </div>
                                     <div class="align-self-end">
                                         <div class="dropdown">
@@ -48,6 +52,7 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id, teac
                                                 <li><a class="dropdown-item" onclick="changeStatus('Waiting', '${id}')">Waiting</a></li>
                                             </ul>
                                         </div>
+                                         
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +90,7 @@ connection.on("ReceiveNewStatus", function (newStatus, id) {
 })
 
 connection.start().then(function () {
-
+    console.log("established connection")
 }).catch(function (err) {
     return console.error(err.toString());
 });

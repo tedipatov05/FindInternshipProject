@@ -20,14 +20,14 @@ namespace FindInternship.Data.Models
         public string Id { get; set; }
 
         [EnumDataType(typeof(DocumentTypeEnum))]
-        public string Type { get; set; }
+        public string Type { get; set; } = null!;
 
         public string DocumentUrl { get; set; }
 
         [ForeignKey(nameof(Student))]
-        public string StudentId { get; set; }
+        public string ClassId { get; set; } = null!;
 
-        public Student Student { get; set; }
+        public Class Class { get; set; } = null!;
 
 
     }

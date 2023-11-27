@@ -6,6 +6,7 @@ App.init = (function () {
 
 	
 	function handleFileSelect(evt) {
+
 		const files = evt.target.files; 
 
 		
@@ -63,14 +64,19 @@ App.init = (function () {
 
 	
 	$("#update").addEventListener("click", () => {
+
+		let files = document.querySelector("input[type=file]").files;
+		let teacherName = document.getElementById
+		
 		$(".list-files").innerHTML = "";
 		$("footer").classList.remove("hasFiles");
 		$(".importar").classList.remove("active");
 		setTimeout(() => {
 			$("#drop").classList.remove("hidden");
 		}, 500);
-	});
 
+
+	});
 	
 	$("input[type=file]").addEventListener("change", handleFileSelect);
 })();

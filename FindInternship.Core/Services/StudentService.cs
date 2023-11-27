@@ -25,7 +25,7 @@ namespace FindInternship.Core.Services
             var student = new Student()
             {
                 UserId = userId,
-                ClassId = classId
+                ClassId = classId, 
             };
             await repo.AddAsync(student);
             await repo.SaveChangesAsync();
