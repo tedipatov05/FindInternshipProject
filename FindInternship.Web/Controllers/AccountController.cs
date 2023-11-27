@@ -111,8 +111,27 @@ namespace FindInternship.Web.Controllers
         }
 
 
+		[HttpGet]
+		public async Task<IActionResult> RegisterTeacher()
+		{
+			RegisterTeacherViewModel model = new RegisterTeacherViewModel();
+			//model.Classes = await classService.AllClassesAsync();
+			//model.Abilities = await abilityService.AllAbilitiesAsync();
+			return View(model);
+		}
 
-        [HttpGet]
+		//Add http post register
+
+		[HttpGet]
+		public async Task<IActionResult> RegisterCompany()
+		{
+			RegisterCompanyViewModel model = new RegisterCompanyViewModel();
+			//model.Classes = await classService.AllClassesAsync();
+			model.Technologies = await abilityService.AllAbilitiesAsync();
+			return View(model);
+		}
+
+		[HttpGet]
         public IActionResult Login()
         {
             LoginViewModel model = new LoginViewModel();
