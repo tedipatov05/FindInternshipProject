@@ -23,13 +23,13 @@ namespace FindInternship.Core.Services
             this.repo = repo;
         }
 
-        public async Task<string> UploadDocumentAsync(IFormFile file, string folder ,Document document)
+        public async Task<string> UploadDocumentAsync(IFormFile file, string folder)
         {
             using var stream = file.OpenReadStream();
 
             var uploadParams = new RawUploadParams()
             {
-                File = new FileDescription(document.Id, stream),
+                File = new FileDescription(file.Name, stream),
                 Folder = folder
             };
 
@@ -42,7 +42,22 @@ namespace FindInternship.Core.Services
 
             return uploadResult.Url.ToString();
 
+        }
 
+        public async Task<string> Create(string documentUrl, string classId, string documentName)
+        {
+            Document document = new Document()
+            {
+                Type = documentName,
+                DocumentUrl = documentUrl,
+                ClassId = classId
+
+            };
+
+            await repo.AddAsync(document);
+            await repo.SaveChangesAsync();
+
+            return document.Id;
             
         }
     }

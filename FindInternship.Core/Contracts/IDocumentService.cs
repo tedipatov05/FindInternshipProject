@@ -10,6 +10,7 @@ namespace FindInternship.Core.Contracts
 {
     public interface IDocumentService
     {
-        Task<string> UploadDocumentAsync(IFormFile file, string folder, Document classItern);
+        Task<string> UploadDocumentAsync(IFormFile file, string folder);
+        Task<string> Create(string documentUrl, string classId, string documentName);
     }
 }

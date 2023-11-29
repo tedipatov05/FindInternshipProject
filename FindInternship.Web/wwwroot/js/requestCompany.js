@@ -2,10 +2,12 @@
     .withUrl("/requestHub")
     .build();
 
+ 
+
 connection.on("ReceiveRequest", function (topic, message, status, date, id, teacherId, teacherName) {
 
     let div = document.createElement('div');
-    let colors = { 
+    let colors = {
         "Waiting": "warning",
         "Accepted": "success",
         "Rejected": "danger"
@@ -22,7 +24,7 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id, teac
                                                 <i class="mdi mdi-circle-medium text-danger fs-3 align-middle"></i>
                                                 <span class="team-date">${date}</span>
                                                 <br>
-                                                 <label>От: </label><span class="team-date"> ${teacherName}</span>
+                                                <label>От: </label><span class="team-date"> ${teacherName}</span>
                                             </h6>
                                         </div>
                                     </div>
@@ -69,8 +71,6 @@ connection.on("ReceiveNewStatus", function (newStatus, id) {
         "Rejected": "danger",
         "Accepted": "success"
     };
-
-
 
     let oldStatus = document.getElementById(`status-${id}`).textContent.trim();
     document.getElementById(`status-${id}`).textContent = newStatus;

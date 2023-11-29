@@ -1,14 +1,38 @@
 
+
+let connection = new signalR.HubConnectionBuilder()
+	.withUrl("/requestHub")
+	.build();
+
+
+
 let App = {}
 
 App.init = (function () {
-	const $ = document.querySelector.bind(document);
+	
 
+
+	Array.from(document.getElementsByClassName('btn badge-soft-secondary doc')).forEach(e =>
+		e.addEventListener('click', (ev) => {
+
+			let id = ev.target.id.slice(14);
+			requestId = id;
+			console.log(id);
+			const button = document.getElementById('update');
+
+			button.setAttribute('name', id);
+
+		})
+	)
+	
+	
 	
 	function handleFileSelect(evt) {
 
 		const files = evt.target.files; 
 
+		
+		
 		
 		let template = `${Object.keys(files)
 			.map(file => `<div class="file file--${file}">
@@ -24,59 +48,100 @@ App.init = (function () {
     </div>`)
 			.join("")}`;
 
-		$("#drop").classList.add("hidden");
-		$("footer").classList.add("hasFiles");
-		$(".importar").classList.add("active");
+		document.querySelector("#drop").classList.add("hidden");
+		document.querySelector("footer").classList.add("hasFiles");
+		document.querySelector(".importar").classList.add("active");
 		setTimeout(() => {
-			$(".list-files").innerHTML = template;
+			document.querySelector(".list-files").innerHTML = template;
 		}, 1000);
 
 		Object.keys(files).forEach(file => {
 			let load = 2000 + (file * 2000); 
 			setTimeout(() => {
-				$(`.file--${file}`).querySelector(".progress").classList.remove("active");
-				$(`.file--${file}`).querySelector(".done").classList.add("anim");
+				document.querySelector(`.file--${file}`).querySelector(".progress").classList.remove("active");
+				document.querySelector(`.file--${file}`).querySelector(".done").classList.add("anim");
 			}, load);
 		});
 	}
 
 	document.getElementById("triggerFile").addEventListener("click", evt => {
 		evt.preventDefault();
-		$("input[type=file]").click();
+		document.querySelector("input[type=file]").click();
 	});
 
-	$("#drop").ondragleave = evt => {
-		$("#drop").classList.remove("active");
+	document.querySelector("#drop").ondragleave = evt => {
+		document.querySelector("#drop").classList.remove("active");
 		evt.preventDefault();
 	};
 
-	$("#drop").ondragover = $("#drop").ondragenter = evt => {
-		$("#drop").classList.add("active");
+	document.querySelector("#drop").ondragover = $("#drop").ondragenter = evt => {
+		document.querySelector("#drop").classList.add("active");
 		evt.preventDefault();
 	};
 
-	$("#drop").ondrop = evt => {
-		$("input[type=file]").files = evt.dataTransfer.files;
-		$("footer").classList.add("hasFiles");
-		$("#drop").classList.remove("active");
+	document.querySelector("#drop").ondrop = evt => {
+		document.querySelector("input[type=file]").files = evt.dataTransfer.files;
+		document.querySelector("footer").classList.add("hasFiles");
+		document.querySelector("#drop").classList.remove("active");
 		evt.preventDefault();
 	};
 
 	
-	$("#update").addEventListener("click", () => {
+	document.getElementById("update").addEventListener("click", function(ev) {
 
 		let files = document.querySelector("input[type=file]").files;
-		let teacherName = document.getElementById
+		let requestId = String(document.getElementById('update').name); 
+
+		let token = document.querySelector("input[name='__RequestVerificationToken']").value;
+
+		let data = new FormData();
+
+		for (var i = 0; i < files.length; i++) {
+			data.append('files', files[i]);
+		}
+
 		
-		$(".list-files").innerHTML = "";
-		$("footer").classList.remove("hasFiles");
-		$(".importar").classList.remove("active");
+		data.append('requestId', requestId);
+
+		
+
+		$.ajax({
+			type: "POST",
+			url: `/Document/Upload`,
+			data: data,
+			headers: {
+				"RequestVerificationToken": token
+
+			},
+			processData: false,
+			contentType: false,
+			success: function () {
+				if (data) {
+
+					
+
+				}
+
+				
+			},
+			error: function (error) {
+				console.error(error.statusCode);
+				console.error('Error occurred while removing object');
+			}
+		});
+
+
+
+		
+		document.querySelector(".list-files").innerHTML = "";
+		document.querySelector("footer").classList.remove("hasFiles");
+		document.querySelector(".importar").classList.remove("active");
 		setTimeout(() => {
-			$("#drop").classList.remove("hidden");
+			document.querySelector("#drop").classList.remove("hidden");
 		}, 500);
 
-
+		ev.preventDefault();
 	});
 	
-	$("input[type=file]").addEventListener("change", handleFileSelect);
+	document.querySelector("input[type=file]").addEventListener("change", handleFileSelect);
 })();

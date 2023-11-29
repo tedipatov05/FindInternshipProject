@@ -10,5 +10,7 @@ namespace FindInternship.Core.Contracts
     public interface IClassService
     {
         Task<List<ClassViewModel>> AllClassesAsync();
+
+        Task<string> GetClassIdAsync(string requestId);
     }
 }
