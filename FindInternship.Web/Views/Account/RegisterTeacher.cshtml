@@ -4,110 +4,115 @@
 
 
 @{
-	var date = new DateOnly(DateTime.Now.Year - 14, 1, 1);
-	ViewData["Title"] = "Регистрация";
+    var date = new DateOnly(DateTime.Now.Year - 14, 1, 1);
+    ViewData["Title"] = "Регистрация";
 }
 
 <div class="form-body">
-	<div class="row">
-		<div class="form-holder">
-			<div class="form-content">
-				<div class="form-items">
-					<form class="requires-validation" id="registerForm" method="post" enctype="multipart/form-data">
-						<h2 class="text-center"><strong>@ViewData["Title"]</strong></h2>
-						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-						<div class="form-group">
-							<input asp-for="Email" class="form-control" placeholder="Имейл">
-							<span asp-validation-for="Email" class="text-danger"></span>
-						</div>
-						<div class="form-group">
-							<input asp-for="Name" class="form-control" placeholder="Име">
-							<span asp-validation-for="Name" class="text-danger"></span>
-						</div>
-						<div class="form-group">
-							<input asp-for="Password" class="form-control" placeholder="Парола">
-							<span asp-validation-for="Password" class="text-danger"></span>
-						</div>
-						<div class="form-group">
-							<input asp-for="PasswordRepeat" class="form-control" placeholder="Повтори паролата">
-							<span asp-validation-for="PasswordRepeat" class="text-danger"></span>
-						</div>
-						<div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <form class="requires-validation" id="registerForm" method="post" enctype="multipart/form-data">
+                        <h2 class="text-center"><strong>@ViewData["Title"]</strong></h2>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input asp-for="Email" class="form-control" placeholder="Имейл">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Name" class="form-control" placeholder="Име">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Password" class="form-control" placeholder="Парола">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="PasswordRepeat" class="form-control" placeholder="Повтори паролата">
+                            <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
+                        </div>
+                        <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
 
-							<h6 class="mb-0 me-4">Пол: </h6>
+                            <h6 class="mb-0 me-4">Пол: </h6>
 
-							<div class="form-check form-check-inline mb-0 me-4">
-								<input asp-for="@Model.Gender" value="Мъж" class="form-check-input text-dark" type="radio" name="Gender" id="maleGender" />
-								<label class="form-check-label text-dark" for="maleGender">Мъж</label>
-							</div>
+                            <div class="form-check form-check-inline mb-0 me-4">
+                                <input asp-for="@Model.Gender" value="Мъж" class="form-check-input text-dark" type="radio" name="Gender" id="maleGender" />
+                                <label class="form-check-label text-dark" for="maleGender">Мъж</label>
+                            </div>
 
-							<div class="form-check form-check-inline mb-0 me-4">
-								<input asp-for="@Model.Gender" value="Жена" class="form-check-input text-dark" type="radio" name="Gender" id="femaleGender" />
-								<label class="form-check-label text-dark" for="femaleGender">Жена</label>
-							</div>
+                            <div class="form-check form-check-inline mb-0 me-4">
+                                <input asp-for="@Model.Gender" value="Жена" class="form-check-input text-dark" type="radio" name="Gender" id="femaleGender" />
+                                <label class="form-check-label text-dark" for="femaleGender">Жена</label>
+                            </div>
 
-						</div>
+                        </div>
 
-						<div class="form-group">
-							<input asp-for="@Model.School" class="form-control" placeholder="Училище">
-							<span asp-validation-for="Name" class="text-danger"></span>
-						</div>
+                        <div class="form-group">
+                            <input asp-for="@Model.School" class="form-control" placeholder="Училище">
+                            <span asp-validation-for="School" class="text-danger"></span>
+                        </div>
 
-						<div class="form-group">
-							<input asp-for="@Model.Class" class="form-control" placeholder="Клас">
-							<span asp-validation-for="PhoneNumber" class="text-danger"></span>
-						</div>
+                        <div class="form-group">
+                            <input asp-for="@Model.Class" class="form-control" placeholder="Клас">
+                            <span asp-validation-for="@Model.Class" class="text-danger"></span>
+                        </div>
 
-						<div class="from-group">
-							<input asp-for="BirthDate" type="date" class="form-control" placeholder="Дата на раждане" value="@date" />
-							<span asp-validation-for="BirthDate" class="text-danger"></span>
+                        <div class="form-group">
+                            <input asp-for="@Model.Speciality" class="form-control" placeholder="Специалност">
+                            <span asp-validation-for="@Model.Class" class="text-danger"></span>
+                        </div>
 
-						</div>
-						<div class="form-group">
-							<input asp-for="PhoneNumber" class="form-control" placeholder="Телефон">
-							<span asp-validation-for="PhoneNumber" class="text-danger"></span>
-						</div>
-						<div class="form-group">
-							<input asp-for="Address" class="form-control" placeholder="Адррес">
-							<span asp-validation-for="Address" class="text-danger"></span>
-						</div>
-						<div class="form-group">
-							<input asp-for="City" class="form-control" placeholder="Град">
-							<span asp-validation-for="City" class="text-danger"></span>
-						</div>
-						<div class="form-group">
-							<input asp-for="Country" class="form-control" placeholder="Държава">
-							<span asp-validation-for="Country" class="text-danger"></span>
-						</div>
+                        <div class="from-group">
+                            <input asp-for="BirthDate" type="date" class="form-control" placeholder="Дата на раждане" value="@date" />
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
 
-						<div class="form-group">
-							<label for="profilePicture">Качи профилна снимка</label>
-							<input asp-for="ProfilePicture" accept="image/gif, image/jpeg, image/png" class="text-white" id="profilePicture">
-							<span asp-validation-for="ProfilePicture" class="text-danger"></span>
-						</div>
-						<div class="form-group">
-							<img alt="Uploaded Image" placeholder="Upload Profile Picture" accept="image/gif, image/jpeg, image/png" style="display:none;">
-						</div>
-						<div class="form-group">
-							<button class="btn btn-primary btn-block" type="submit">Регистрирай</button>
-						</div>
-						<br>
-						<a asp-controller="Account" asp-action="Login" class="already">Вече имате акаунт? <b>Влезте тук.</b></a>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="Телефон">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Address" class="form-control" placeholder="Адррес">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="City" class="form-control" placeholder="Град">
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Country" class="form-control" placeholder="Държава">
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profilePicture">Качи профилна снимка</label>
+                            <input asp-for="ProfilePicture" accept="image/gif, image/jpeg, image/png" class="text-white" id="profilePicture">
+                            <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <img alt="Uploaded Image" placeholder="Upload Profile Picture" accept="image/gif, image/jpeg, image/png" style="display:none;">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" type="submit">Регистрирай</button>
+                        </div>
+                        <br>
+                        <a asp-controller="Account" asp-action="Login" class="already">Вече имате акаунт? <b>Влезте тук.</b></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts{
-	<partial name="_ValidationScriptsPartial" />
-	<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js" asp-append-version="true"></script>
-	<script src="~/js/register.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js" asp-append-version="true"></script>
+    <script src="~/js/register.js" asp-append-version="true"></script>
 }
 
 @section Styles{
-	<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
 
 }

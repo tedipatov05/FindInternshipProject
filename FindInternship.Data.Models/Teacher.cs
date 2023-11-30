@@ -13,7 +13,6 @@ namespace FindInternship.Data.Models
         public Teacher()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.IsApproved = true;
         }
 
         [Key]
@@ -27,8 +26,6 @@ namespace FindInternship.Data.Models
         [ForeignKey(nameof(Class))]
         public string ClassId { get; set; } = null!;
         public Class Class { get; set; } = null!;
-
-        public bool IsApproved {get; set; }
 
 
     }

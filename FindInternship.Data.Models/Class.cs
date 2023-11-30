@@ -36,9 +36,9 @@ namespace FindInternship.Data.Models
         public string Grade { get; set; } = null!;
 
         [ForeignKey(nameof(Teacher))]
-        public string TeacherId { get; set; } = null!;
+        public string? TeacherId { get; set; } 
 
-        public Teacher Teacher { get; set; } = null!;
+        public Teacher? Teacher { get; set; } 
 
         [AllowNull]
         [ForeignKey(nameof(Company))]

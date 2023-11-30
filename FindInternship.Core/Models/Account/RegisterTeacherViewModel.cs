@@ -38,8 +38,9 @@ namespace FindInternship.Core.Models.Account
 
 
         //TODO: MAKE VALIDATION BECAUSE I DONT KNOW HOW <3
+        // I love you
         [Required(ErrorMessage = RequiredErrorMessage)]
-        [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength, ErrorMessage = InvalidLengthMessage)]
+        [StringLength(SchoolNameMaxLength, MinimumLength = SchoolNameMinLength, ErrorMessage = InvalidLengthMessage)]
         public string School { get; set; } = null!;
 
         [Required(ErrorMessage = RequiredErrorMessage)]
@@ -57,19 +58,20 @@ namespace FindInternship.Core.Models.Account
         [StringLength(AddressMaxLength, MinimumLength = AddressMinLength, ErrorMessage = InvalidLengthMessage)]
         public string Address { get; set; } = null!;
 
-        [Required]
-        public string ClassId { get; set; } = null!;
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        public string Class { get; set; } = null!;
+
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [StringLength(SpecialityMaxLength, MinimumLength = SpecialityMinLength, ErrorMessage = InvalidLengthMessage)]
+        public string Speciality { get; set; } = null!;
 
         [Required]
         public DateTime BirthDate { get; set; }
 
         public string Gender { get; set; } = null!;
 
-        public List<ClassViewModel> Classes { get; set; } = new List<ClassViewModel>();
-
         public IFormFile? ProfilePicture { get; set; }
 
-        [Required(ErrorMessage = RequiredErrorMessage)]
-        public string Class { get; set; } = null!;
+        
     }
 }

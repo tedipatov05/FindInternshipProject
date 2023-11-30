@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Account;
 using FindInternship.Core.Models.Teacher;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
@@ -15,11 +16,42 @@ namespace FindInternship.Core.Services
     {
         private IRepository repo;
         private IStudentService studentService;
+        private IClassService classService;
+        private ISchoolService schoolService;
 
-        public TeacherService(IRepository repo, IStudentService studentService)
+        public TeacherService(IRepository repo, IStudentService studentService, IClassService classService, ISchoolService schoolService)
         {
             this.repo = repo;
             this.studentService = studentService;
+            this.classService = classService;
+            this.schoolService = schoolService;
+        }
+
+        public async Task Create(RegisterTeacherViewModel model, string userId)
+        {
+            string classId = await classService.GetClassIdIfExistsAsync(model.Class);
+            int? schoolId = await schoolService.GetSchoolIdIfExistsAsync(model.School);
+
+            if(schoolId == null) 
+            {
+                schoolId = await schoolService.Create(model.School, model.City); 
+            }
+            if(classId == null)
+            {
+                classId = await classService.CreateAsync(model.Class, model.Speciality, (int)schoolId);
+            }
+
+            var teacher = new Teacher()
+            {
+                UserId = userId,
+                ClassId = classId,
+            };
+
+            await repo.AddAsync(teacher);
+            await repo.SaveChangesAsync();
+
+            await classService.UpdateAsync(classId, teacher.Id);
+
         }
 
         public async Task<string> GetTeacherClassIdAsync(string userId)

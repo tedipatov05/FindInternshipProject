@@ -1,11 +1,5 @@
 
 
-let connection = new signalR.HubConnectionBuilder()
-	.withUrl("/requestHub")
-	.build();
-
-
-
 let App = {}
 
 App.init = (function () {
@@ -116,11 +110,7 @@ App.init = (function () {
 			processData: false,
 			contentType: false,
 			success: function () {
-				if (data) {
-
-					
-
-				}
+				
 
 				
 			},

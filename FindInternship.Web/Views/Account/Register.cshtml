@@ -58,7 +58,7 @@
                             </select>
                             <span asp-validation-for="@Model.ClassId" class="text-danger"></span>
                         </div>
-
+                       
                         <div class="form-group" style="margin: 12px 0px 12px 0px;">
                             <select asp-for="AbilitiesIds" data-placeholder="Твоите знания" multiple class="form-control chosen-select choices-multiple-remove-button">
                                 @foreach (var a in Model.Abilities)

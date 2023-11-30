@@ -29,6 +29,12 @@ namespace FindInternship.Common
             public const int CountryMaxLength = 56;
             public const int CountryMinLength = 4;
 
+            public const int SchoolNameMinLength = 5;
+            public const int SchoolNameMaxLength = 50;
+
+            public const int SpecialityMinLength = 10;
+            public const int SpecialityMaxLength = 50;
+
             
         }
 

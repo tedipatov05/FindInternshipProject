@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static FindInternship.Common.ModelValidationConstants.UserConstants;
+using static FindInternship.Common.ModelValidationConstants.CompanyConstants;
 using static FindInternship.Common.ErrorMessages;
 using FindInternship.Data.Models.Enums;
 
@@ -39,8 +40,6 @@ namespace FindInternship.Core.Models.Account
         [Required(ErrorMessage = RequiredErrorMessage)]
         public string PhoneNumber { get; set; } = null!;
 
-
-
         [Required(ErrorMessage = RequiredErrorMessage)]
         [StringLength(CountryMaxLength, MinimumLength = CountryMinLength, ErrorMessage = InvalidLengthMessage)]
         public string Country { get; set; } = null!;
@@ -52,6 +51,14 @@ namespace FindInternship.Core.Models.Account
         [Required(ErrorMessage = RequiredErrorMessage)]
         [StringLength(AddressMaxLength, MinimumLength = AddressMinLength, ErrorMessage = InvalidLengthMessage)]
         public string Address { get; set; } = null!;
+
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [StringLength(CompanyDescriptionMaxLength, MinimumLength = CompanyDescriptionMinLength, ErrorMessage = InvalidLengthMessage)]
+        public string Description { get; set; } = null!;
+
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [StringLength(CompanyServicesMaxLength, MinimumLength = CompanyServicesMinLength, ErrorMessage = InvalidLengthMessage)]
+        public string Services { get; set; } = null!;
 
         public IFormFile? ProfilePicture { get; set; }
 

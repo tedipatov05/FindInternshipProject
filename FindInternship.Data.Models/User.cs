@@ -12,7 +12,7 @@ namespace FindInternship.Data.Models
         public User()
         {
             this.IsActive = true;
-
+            this.IsApproved = true;
             this.UserGroups = new HashSet<UserGroup>();
             this.ChatMessages = new HashSet<ChatMessage>();
             this.ChatImages = new HashSet<ChatImage>();
@@ -40,6 +40,8 @@ namespace FindInternship.Data.Models
         public string? ProfilePictureUrl { get; set; }
 
         public bool IsActive { get; set; }
+
+        public bool IsApproved { get; set; }
 
         public virtual ICollection<UserGroup> UserGroups { get; set; }
 

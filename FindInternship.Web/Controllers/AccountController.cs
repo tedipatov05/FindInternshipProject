@@ -19,8 +19,9 @@ namespace FindInternship.Web.Controllers
         private IStudentService studentService;
         private IClassService classService;
         private IAbilityService abilityService;
+        private ITeacherService teacherService;
 
-        public AccountController(IUserService userService, UserManager<User> userManager, SignInManager<User> singInManager, IImageService imageService, IStudentService studentService, IClassService classService, IAbilityService abilityService)
+        public AccountController(IUserService userService, UserManager<User> userManager, SignInManager<User> singInManager, IImageService imageService, IStudentService studentService, IClassService classService, IAbilityService abilityService, ITeacherService teacherService)
         {
             this.userService = userService;
             this.userManager = userManager;
@@ -29,6 +30,7 @@ namespace FindInternship.Web.Controllers
             this.studentService = studentService;
             this.classService = classService;
             this.abilityService = abilityService;
+            this.teacherService = teacherService;
         }
 
         [HttpGet]
@@ -115,23 +117,146 @@ namespace FindInternship.Web.Controllers
 		public async Task<IActionResult> RegisterTeacher()
 		{
 			RegisterTeacherViewModel model = new RegisterTeacherViewModel();
-			//model.Classes = await classService.AllClassesAsync();
-			//model.Abilities = await abilityService.AllAbilitiesAsync();
+
 			return View(model);
 		}
 
-		//Add http post register
+        [HttpPost]
+        public async Task<IActionResult> RegisterTeacher(RegisterTeacherViewModel model)
+        {
+            if (await userService.IsUserExistsByEmailAsync(model.Email))
+            {
+                ModelState.AddModelError(nameof(model.Email), "Потребител с този имейл вече съществува.");
 
-		[HttpGet]
+            }
+            if (await userService.IsUserExistsByPhoneAsync(model.PhoneNumber))
+            {
+                ModelState.AddModelError(nameof(model.PhoneNumber), "Потребител с този телефонен номер вече съществува.");
+
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = new User()
+            {
+                Name = model.Name,
+                Email = model.Email,
+                UserName = model.Email.Split('@')[0],
+                Address = model.Address,
+                BirthDate = model.BirthDate,
+                Gender = model.Gender,
+                Country = model.Country,
+                City = model.City,
+                RegisteredOn = DateTime.Now,
+                PhoneNumber = model.PhoneNumber,
+                IsApproved = false
+
+            };
+
+            var result = await userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, "Teacher");
+
+                await teacherService.Create(model, user.Id);
+
+                if(model.ProfilePicture != null)
+                {
+                    user.ProfilePictureUrl = await imageService.UploadImage(model.ProfilePicture, "projectImages", user);
+                    await userManager.UpdateAsync(user);
+                }
+
+                TempData[SuccessMessage] = "Успешна регистрация. Моля изчакайте одобрение от администратора.";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(model);
+
+
+        }
+
+
+
+
+        [HttpGet]
 		public async Task<IActionResult> RegisterCompany()
 		{
 			RegisterCompanyViewModel model = new RegisterCompanyViewModel();
-			//model.Classes = await classService.AllClassesAsync();
+			
 			model.Technologies = await abilityService.AllAbilitiesAsync();
 			return View(model);
 		}
 
-		[HttpGet]
+        [HttpPost]
+        public async Task<IActionResult> RegisterCompany(RegisterCompanyViewModel model)
+        {
+            if (await userService.IsUserExistsByEmailAsync(model.Email))
+            {
+                ModelState.AddModelError(nameof(model.Email), "Потребител с този имейл вече съществува.");
+
+            }
+            if (await userService.IsUserExistsByPhoneAsync(model.PhoneNumber))
+            {
+                ModelState.AddModelError(nameof(model.PhoneNumber), "Потребител с този телефонен номер вече съществува.");
+
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = new User()
+            {
+                Name = model.Name,
+                Email = model.Email,
+                UserName = model.Email.Split('@')[0],
+                Address = model.Address,
+                Gender = null,
+                Country = model.Country,
+                City = model.City,
+                RegisteredOn = DateTime.Now,
+                PhoneNumber = model.PhoneNumber,
+                IsApproved = false
+
+            };
+
+            var result = await userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, "Company");
+
+
+                if (model.ProfilePicture != null)
+                {
+                    user.ProfilePictureUrl = await imageService.UploadImage(model.ProfilePicture, "projectImages", user);
+                    await userManager.UpdateAsync(user);
+                }
+
+                TempData[SuccessMessage] = "Успешна регистрация. Моля изчакайте одобрение от администратора.";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(model);
+
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
             LoginViewModel model = new LoginViewModel();
@@ -150,7 +275,7 @@ namespace FindInternship.Web.Controllers
 
             if (user != null)
             {
-                if (user.IsActive)
+                if (user.IsActive && user.IsApproved)
                 {
                     var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
@@ -162,6 +287,11 @@ namespace FindInternship.Web.Controllers
                     }
 
                 }
+            }
+
+            if (!user.IsApproved)
+            {
+                TempData[WarningMessage] = "Изчакайте одобрение от администратора";
             }
 
             ModelState.AddModelError(nameof(model.Email), "Invalid login");

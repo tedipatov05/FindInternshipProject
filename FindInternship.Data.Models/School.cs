@@ -23,6 +23,8 @@ namespace FindInternship.Data.Models
         [MaxLength(SchoolMaxLength)]
         public string Name { get; set; } = null!;
 
+        public string City { get; set; }
+
         public ICollection<Class> Classes { get; set; }
     }
 }

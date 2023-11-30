@@ -23,7 +23,8 @@ namespace FindInternship.Data.Configurations
                 new School()
                 {
                     Id = 1, 
-                    Name = "ППМГ Никола Обрешков"
+                    Name = "ППМГ Никола Обрешков", 
+                    City = "Казанлък"
                 }
             };
         }

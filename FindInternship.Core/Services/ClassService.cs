@@ -34,12 +34,53 @@ namespace FindInternship.Core.Services
             return classes;
         }
 
+        public async Task<string> CreateAsync(string className, string specialtiy, int schoolId)
+        {
+            var c = new Class()
+            {
+                Grade = className,
+                Speciality = specialtiy,
+                SchoolId = schoolId
+            };
+
+
+            await repo.AddAsync(c);
+            await repo.SaveChangesAsync();
+
+            return c.Id;
+        }
+
         public async Task<string> GetClassIdAsync(string requestId)
         {
             var requestModel = await repo.All<Request>()
                 .FirstOrDefaultAsync(r => r.Id == requestId);
 
             return requestModel.ClassId;
+        }
+
+        public async Task<string?> GetClassIdIfExistsAsync(string className)
+        {
+            var c = await repo.All<Class>()
+                .FirstOrDefaultAsync(c => c.Grade.ToLower().Trim() == className.ToLower().Trim());
+
+            if(c == null)
+            {
+                return null;
+            }
+
+            return c.Id;
+
+
+        }
+
+        public async Task UpdateAsync(string classId, string teacherId)
+        {
+            var cl = await repo.All<Class>()
+                .FirstOrDefaultAsync(cl => cl.Id == classId);
+
+            cl.TeacherId = teacherId;
+
+            await repo.SaveChangesAsync();
         }
     }
 }

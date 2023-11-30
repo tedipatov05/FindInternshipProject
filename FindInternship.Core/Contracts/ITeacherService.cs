@@ -1,4 +1,5 @@
-﻿using FindInternship.Core.Models.Teacher;
+﻿using FindInternship.Core.Models.Account;
+using FindInternship.Core.Models.Teacher;
 using FindInternship.Data.Repository;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,7 @@ namespace FindInternship.Core.Contracts
         Task<string> GetTeacherClassIdAsync(string userId);
 
         Task<TeacherStudentsViewModel> GetTeacherStudentsAsync(string teacherId);
+
+        Task Create(RegisterTeacherViewModel model, string userId);
     }
 }
