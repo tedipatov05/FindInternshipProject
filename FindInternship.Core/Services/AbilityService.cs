@@ -11,16 +11,18 @@ using System.Threading.Tasks;
 
 namespace FindInternship.Core.Services
 {
-    public class AbilityService : IAbilityService
+	public class AbilityService : IAbilityService
     {
         private IRepository repo;
         private IStudentService studentService;
+        private ICompanyService companyService;
 
 
-        public AbilityService(IRepository repo, IStudentService studentService)
+        public AbilityService(IRepository repo, IStudentService studentService, ICompanyService companyService)
         {
             this.repo = repo;
             this.studentService = studentService;
+            this.companyService = companyService;
         }
 
         public async Task AddAbilitiesToStudentAsync(List<string> abilities, string userId)
@@ -43,7 +45,26 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
         }
 
-        public async Task<List<AbilityViewModel>> AllAbilitiesAsync()
+		public async Task AddTechnologiesToCompanyAsync(List<string> technologies, string userId)
+		{
+            string companyId = await companyService.GetCompanyIdAsync(userId);
+
+            var companyTechnologies = new List<CompanyAbility>();
+            foreach(var tech in technologies)
+            {
+                companyTechnologies.Add(new CompanyAbility()
+                {
+                    AbilityId = int.Parse(tech),
+                    CompanyId = companyId
+                });
+            }
+
+            await repo.AddRangeAsync(companyTechnologies);
+            await repo.SaveChangesAsync();
+
+		}
+
+		public async Task<List<AbilityViewModel>> AllAbilitiesAsync()
         {
             var abilities = await repo.All<Ability>()
                 .Select(a => new AbilityViewModel()

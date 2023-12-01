@@ -20,8 +20,9 @@ namespace FindInternship.Web.Controllers
         private IClassService classService;
         private IAbilityService abilityService;
         private ITeacherService teacherService;
+        private ICompanyService companyService;
 
-        public AccountController(IUserService userService, UserManager<User> userManager, SignInManager<User> singInManager, IImageService imageService, IStudentService studentService, IClassService classService, IAbilityService abilityService, ITeacherService teacherService)
+        public AccountController(IUserService userService, UserManager<User> userManager, SignInManager<User> singInManager, IImageService imageService, IStudentService studentService, IClassService classService, IAbilityService abilityService, ITeacherService teacherService, ICompanyService companyService)
         {
             this.userService = userService;
             this.userManager = userManager;
@@ -31,6 +32,7 @@ namespace FindInternship.Web.Controllers
             this.classService = classService;
             this.abilityService = abilityService;
             this.teacherService = teacherService;
+            this.companyService = companyService;
         }
 
         [HttpGet]
@@ -184,9 +186,6 @@ namespace FindInternship.Web.Controllers
 
         }
 
-
-
-
         [HttpGet]
 		public async Task<IActionResult> RegisterCompany()
 		{
@@ -211,7 +210,8 @@ namespace FindInternship.Web.Controllers
             }
             if (!ModelState.IsValid)
             {
-                return View(model);
+				model.Technologies = await abilityService.AllAbilitiesAsync();
+				return View(model);
             }
 
             var user = new User()
@@ -234,9 +234,10 @@ namespace FindInternship.Web.Controllers
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, "Company");
+                await companyService.CreateAsync(user.Id, model.Services, model.Description);
 
-
-                if (model.ProfilePicture != null)
+                await abilityService.AddTechnologiesToCompanyAsync(model.TechnologiesIds, user.Id);
+				if (model.ProfilePicture != null)
                 {
                     user.ProfilePictureUrl = await imageService.UploadImage(model.ProfilePicture, "projectImages", user);
                     await userManager.UpdateAsync(user);

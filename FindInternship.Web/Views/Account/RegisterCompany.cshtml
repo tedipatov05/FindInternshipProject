@@ -43,12 +43,14 @@
 								}
 							</select>
 						</div>
+
 						<div class="form-group">
-							<input asp-for="Description" class="form-control" placeholder="Описание">
+							<textarea asp-for="Description" class="form-control" placeholder="Описание"> </textarea>
 							<span asp-validation-for="Description" class="text-danger"></span>
 						</div>
+
 						<div class="form-group">
-							<input asp-for="Services" class="form-control" placeholder="Услуги">
+							<textarea asp-for="Services" class="form-control" placeholder="Услуги"></textarea>
 							<span asp-validation-for="Services" class="text-danger"></span>
 						</div>
 

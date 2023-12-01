@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FindInternship.Core.Services
 {
-    public class CompanyService : ICompanyService
+	public class CompanyService : ICompanyService
     {
         private readonly IRepository repo;
 
@@ -23,7 +23,7 @@ namespace FindInternship.Core.Services
         public async Task<List<CompanyViewModel>> GetAllCompaniesAsync(CompanyQueryModel model)
         {
             IQueryable<Company> companyQuery = repo.All<Company>()
-                .Where(c => c.User.IsActive == true);
+                .Where(c => c.User.IsActive == true && c.User.IsApproved == true);
 
             if(!string.IsNullOrEmpty(model.SearchString))
             {
@@ -88,5 +88,17 @@ namespace FindInternship.Core.Services
             return company.User.Name;
         }
 
-    }
+		public async Task CreateAsync(string userId, string services, string description)
+		{
+            var company = new Company()
+            {
+                UserId = userId,
+                Services = services,
+                Description = description
+            };
+
+            await repo.AddAsync(company);
+            await repo.SaveChangesAsync();
+		}
+	}
 }

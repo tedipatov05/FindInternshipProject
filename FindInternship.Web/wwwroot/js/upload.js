@@ -4,8 +4,6 @@ let App = {}
 
 App.init = (function () {
 	
-
-
 	Array.from(document.getElementsByClassName('btn badge-soft-secondary doc')).forEach(e =>
 		e.addEventListener('click', (ev) => {
 
@@ -109,8 +107,11 @@ App.init = (function () {
 			},
 			processData: false,
 			contentType: false,
-			success: function () {
-				
+			success: function (data) {
+				console.log(data.receiver);
+
+				window.location = `https://localhost:7256/Request/CompanyRequests`
+
 
 				
 			},
@@ -122,7 +123,6 @@ App.init = (function () {
 
 
 
-		
 		document.querySelector(".list-files").innerHTML = "";
 		document.querySelector("footer").classList.remove("hasFiles");
 		document.querySelector(".importar").classList.remove("active");

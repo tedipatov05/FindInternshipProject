@@ -13,6 +13,8 @@ namespace FindInternship.Core.Contracts
 
         Task AddAbilitiesToStudentAsync(List<string> abilities, string userId);
 
+        Task AddTechnologiesToCompanyAsync(List<string> technologies, string userId);
+
         Task<List<string>> AllAbilityNamesAsync();
 
         Task<List<string>> GetCompanyAbilityNamesAsync(string companyId);

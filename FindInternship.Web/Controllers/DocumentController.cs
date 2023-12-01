@@ -36,14 +36,15 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Request", "CompanyRequests");
             }
 
-
             List<string> documentsIds = new List<string>();
 
-            try
-            {
-                string classId = await classService.GetClassIdAsync(requestId);
+			string classId = await classService.GetClassIdAsync(requestId);
+            string teacherId = await teacherService.GetTeacherIdByClassAsync(classId);
 
-                foreach(var file in files)
+
+			try
+            {
+				foreach (var file in files)
                 {
                     string url = await documentService.UploadDocumentAsync(file, "projectDocuments");
                     string id = await documentService.Create(url, classId, file.FileName);
@@ -58,7 +59,7 @@ namespace FindInternship.Web.Controllers
             }
 
 
-            return new JsonResult(new { Documents = documentsIds});
+            return new JsonResult(new { Documents = documentsIds, Receiver = teacherId});
             
         }
         
