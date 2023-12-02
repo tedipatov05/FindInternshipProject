@@ -1,5 +1,7 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.Request;
+using FindInternship.Core.Services;
+using FindInternship.Data.Models.Enums;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using static FindInternship.Common.NotificationConstants;
@@ -12,16 +14,17 @@ namespace FindInternship.Web.Controllers
         private ICompanyService companyService;
         private ITeacherService teacherService; 
         private IRequestService requestService;
+		private IClassService classService;
 
+		public RequestController(ICompanyService companyService, ITeacherService teacherService, IRequestService requestService, IClassService classService)
+		{
+			this.companyService = companyService;
+			this.teacherService = teacherService;
+			this.requestService = requestService;
+			this.classService = classService;
+		}
 
-        public RequestController(ICompanyService companyService, ITeacherService teacherService, IRequestService requestService)
-        {
-            this.companyService = companyService;
-            this.teacherService = teacherService;
-            this.requestService = requestService;
-        }
-
-        [HttpGet]
+		[HttpGet]
         public async Task<IActionResult> CreateView(string companyUserId)
         {
             bool isCompany = await companyService.IsCompanyAsync(companyUserId);
@@ -149,6 +152,16 @@ namespace FindInternship.Web.Controllers
             }
 
             bool result = await requestService.EditRequestStatus(newStatus, id);
+
+            if(newStatus == RequestStatusEnum.Accepted.ToString())
+            {
+                var companyId = await companyService.GetCompanyIdAsync(userId);
+
+                var classId = await classService.GetClassIdAsync(id);
+
+                await companyService.AddClassToCompany(classId, companyId);
+            }
+
 
             return new JsonResult(new { IsEdited = result, CompanyUserId = userId });
 
