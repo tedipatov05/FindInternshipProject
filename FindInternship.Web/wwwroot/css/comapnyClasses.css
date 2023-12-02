@@ -1,0 +1,20 @@
+﻿body {
+    margin-top: 20px;
+    background: #eee;
+}
+
+.card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+
+.width-90 {
+    width: 90px !important;
+}
+
+.rounded-3 {
+    border-radius: 0.5rem !important;
+}
+
+a {
+    text-decoration: none;
+}

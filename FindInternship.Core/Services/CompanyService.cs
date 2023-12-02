@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models;
 using FindInternship.Core.Models.Company;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
@@ -88,5 +89,20 @@ namespace FindInternship.Core.Services
             return company.User.Name;
         }
 
+        public async Task<List<ClassViewModel>> GetAllClassesAsync(string companyId)
+        {
+            var classes = await repo.All<Class>()
+                .Where(c => c.CompanyId == companyId)
+                .Select(c => new ClassViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Grade,
+                    School = c.School.Name
+                })
+                .ToListAsync();
+
+            return classes;
+
+        }
     }
 }
