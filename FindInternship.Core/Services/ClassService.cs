@@ -34,7 +34,23 @@ namespace FindInternship.Core.Services
             return classes;
         }
 
-        public async Task<string> CreateAsync(string className, string specialtiy, int schoolId)
+		public async Task<List<ClassViewModel>> GetAllCompanyClassesAsync(string companyId)
+		{
+			var classes = await repo.All<Class>()
+				.Where(c => c.CompanyId == companyId)
+				.Select(c => new ClassViewModel()
+				{
+					Id = c.Id,
+					Name = c.Grade,
+					School = c.School.Name
+				})
+				.ToListAsync();
+
+			return classes;
+
+		}
+
+		public async Task<string> CreateAsync(string className, string specialtiy, int schoolId)
         {
             var c = new Class()
             {

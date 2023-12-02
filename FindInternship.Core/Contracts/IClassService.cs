@@ -13,7 +13,9 @@ namespace FindInternship.Core.Contracts
 
         Task<string> GetClassIdAsync(string requestId);
 
-        Task<string?> GetClassIdIfExistsAsync(string className);
+        Task<List<ClassViewModel>> GetAllCompanyClassesAsync(string companyId);
+
+		Task<string?> GetClassIdIfExistsAsync(string className);
 
         Task<string> CreateAsync(string className, string specialtiy, int schoolId);
 

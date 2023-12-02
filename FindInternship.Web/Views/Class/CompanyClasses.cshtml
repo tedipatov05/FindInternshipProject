@@ -1,0 +1,63 @@
+﻿@using FindInternship.Core.Models.Company;
+@model CompanyClassesViewModel;
+
+
+<div class="container">
+	<div class="row">
+
+		@if (Model.CompanyClasses.Count == 0)
+		{
+			<p>Няма стажуващи класове</p>
+		}
+		else
+		{
+			foreach (var item in Model.CompanyClasses)
+			{
+
+
+				<div class="col-xl-12">
+					<div class="card mb-3 card-body">
+						<div class="row align-items-center">
+							<div class="col-auto">
+								<a href="#!.html">
+									<img src="https://www.bootdey.com/image/280x280/FF00FF/000000" class="width-90 rounded-3" alt="">
+								</a>
+							</div>
+							<div class="col">
+								<div class="overflow-hidden flex-nowrap">
+									<h6 class="mb-1">
+										<a href="#!" class="text-reset">CRM dashboard landing page</a>
+									</h6>
+									<span class="text-muted d-block mb-2 small">
+										Updated 2 Hours Ago
+									</span>
+									<div class="row align-items-center">
+										<div class="col-12">
+											<div class="row align-items-center g-0">
+												<div class="col-auto">
+													<small class="me-2">45%</small>
+												</div>
+												<div class="col">
+
+													<!-- Progress bar -->
+													<div class="progress bg-tint-success" style="height: 4px;">
+														<div class="progress-bar bg-success" role="progressbar" style="width: 45%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		}
+	</div>
+</div>
+@section Styles{
+	<link rel="stylesheet" href="~/css/companyClasses.css" asp-append-version="true" />
+
+    }

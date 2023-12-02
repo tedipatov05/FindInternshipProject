@@ -37,5 +37,10 @@ namespace FindInternship.Web.Controllers
             
             return View(model);
         }
+
+        public IActionResult CompanyClas1ses()
+        {
+            return View();
+        }
     }
 }

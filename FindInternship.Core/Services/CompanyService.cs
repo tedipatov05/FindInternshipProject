@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models;
 using FindInternship.Core.Models.Company;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
