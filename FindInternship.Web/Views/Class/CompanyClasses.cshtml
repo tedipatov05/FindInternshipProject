@@ -1,17 +1,18 @@
-﻿@using FindInternship.Core.Models.Company;
-@model CompanyClassesViewModel;
+﻿@using FindInternship.Core.Models;
+
+@model List<ClassViewModel>
 
 
 <div class="container">
-	<div class="row">
+	<div class="row text-center">
 
-		@if (Model.CompanyClasses.Count == 0)
+		@if (Model.Count == 0)
 		{
-			<p>Няма стажуващи класове</p>
+			<h2>Няма стажуващи класове</h2>
 		}
 		else
 		{
-			foreach (var item in Model.CompanyClasses)
+			foreach (var item in Model)
 			{
 
 

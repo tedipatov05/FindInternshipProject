@@ -43,7 +43,7 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id, teac
                                         <input name="teacherId" value="${teacherId}" hidden/>
                                     </div>
                                     <div class="align-self-end">
-                                        <div class="dropdown">
+                                        <div class="dropdown" id="dropdown-${id}">
                                             <a class="badge badge-soft-${colors[status]} p-2 team-status dropdown-toggle" id="status-${id}" style="text-decoration: none; font-size: 1rem" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 ${status}
                                             </a>
@@ -125,13 +125,17 @@ function changeStatus(newStatus, id) {
                 document.getElementById(`status-${id}`).classList.remove(`badge-soft-${statusStyles[oldStatus]}`);
                 document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
 
+                
+
                 if (newStatus == "Accepted") {
                     document.getElementById(`btn-documents-${id}`).style.display = 'block';
                     document.getElementById(`btn-class-${id}`).style.display = 'none'
+                    document.getElementById(`dropdown-${id}`).getElementsByClassName('dropdown-menu')[0].style.display = 'none'
                 }
                 else {
                     document.getElementById(`btn-documents-${id}`).style.display = 'none';
                     document.getElementById(`btn-class-${id}`).style.display = 'block'
+                    document.getElementById(`dropdown-${id}`).getElementsByClassName('dropdown-menu')[0].style.display = 'block'
                 }
 
 

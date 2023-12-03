@@ -24,7 +24,6 @@ namespace FindInternship.Web.Controllers
 
 		public async Task<IActionResult> CompanyClasses()
 		{
-			CompanyClassesViewModel model = new();
 
 			string userId = User.GetId();
 			string companyId = await companyService.GetCompanyIdAsync(userId);
@@ -36,9 +35,9 @@ namespace FindInternship.Web.Controllers
 				return RedirectToAction("Index");
 			}
 
-			model.CompanyClasses = await classService.GetAllCompanyClassesAsync(companyId);
+			var classes = await classService.GetAllCompanyClassesAsync(companyId);
 
-			return View(model);
+			return View(classes);
 
 		}
 	}

@@ -31,7 +31,6 @@ namespace FindInternship.Web.Hubs
 
         public async Task ChangeRequestStatus(string requestId, string newStatus)
         {
-            
             await Clients.All.SendAsync("ReceiveNewStatus", newStatus, requestId);
         }
     }
