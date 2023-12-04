@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindInternship.Core.Models
+namespace FindInternship.Core.Models.Document
 {
     public class DocumentViewModel
     {

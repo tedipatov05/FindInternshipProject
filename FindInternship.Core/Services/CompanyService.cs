@@ -108,6 +108,7 @@ namespace FindInternship.Core.Services
                 .FirstOrDefaultAsync(c => c.Id == classId);
 
             classs.CompanyId = companyId;
+
 			await repo.SaveChangesAsync();
 		}
 	}

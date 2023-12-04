@@ -1,4 +1,4 @@
-﻿using FindInternship.Core.Models;
+﻿using FindInternship.Core.Models.Document;
 using FindInternship.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System;

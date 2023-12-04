@@ -97,6 +97,14 @@ namespace FindInternship.Core.Services
                 
         }
 
+        public async Task<string> GetTeacherUserIdAsync(string teacherId)
+        {
+            var teacher = await repo.All<Teacher>()
+                .FirstOrDefaultAsync(t => t.Id == teacherId);
+
+            return teacher!.UserId;
+        }
+
         public async Task<bool> IsTeacherAsync(string userId)
         {
             var isTeacher = await repo.All<Teacher>()

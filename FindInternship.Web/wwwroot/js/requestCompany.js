@@ -1,8 +1,11 @@
-﻿var connection = new signalR.HubConnectionBuilder()
+﻿
+var connection = new signalR.HubConnectionBuilder()
     .withUrl("/requestHub")
     .build();
 
- 
+
+/*document.querySelector(`#project-items-${requestId} div#docs-dropdown`).style.display = 'none';*/
+
 
 connection.on("ReceiveRequest", function (topic, message, status, date, id, teacherId, teacherName) {
 
@@ -61,6 +64,30 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id, teac
                         </div>`
 
     document.getElementById('all-projects').appendChild(div);
+
+});
+
+
+
+connection.on("ReceiveDocuments", function (documents, requestId) {
+
+    let div = document.querySelector(`#project-items-${requestId} div#docs-dropdown`)
+
+    let child = div.children[1];
+
+    documents.forEach(d => {
+        let li = document.createElement('li');
+        let a = document.createElement('a');
+        a.textContent = d.type;
+        a.classList.add('dropdown-item');
+        a.setAttribute('href', 'javascript:void(0)');
+
+        li.appendChild(a);
+
+        child.appendChild(li);
+    });
+
+    div.style.display = 'block';
 
 });
 
@@ -125,7 +152,7 @@ function changeStatus(newStatus, id) {
                 document.getElementById(`status-${id}`).classList.remove(`badge-soft-${statusStyles[oldStatus]}`);
                 document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
 
-                
+
 
                 if (newStatus == "Accepted") {
                     document.getElementById(`btn-documents-${id}`).style.display = 'block';

@@ -140,7 +140,6 @@ namespace FindInternship.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditStatus(string newStatus, string id)
         {
-
             string userId = User.GetId();
 
             bool isCompany = await companyService.IsCompanyAsync(userId);

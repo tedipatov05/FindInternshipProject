@@ -15,6 +15,8 @@ namespace FindInternship.Core.Contracts
 
         Task<string> GetTeacherIdAsync(string userId);
 
+        Task<string> GetTeacherUserIdAsync(string teacherId);
+
         Task<string> GetTeacherClassIdAsync(string userId);
 
         Task<TeacherStudentsViewModel> GetTeacherStudentsAsync(string teacherId);

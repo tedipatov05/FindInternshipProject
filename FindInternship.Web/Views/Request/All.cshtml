@@ -98,9 +98,26 @@
                                             string resultDoc = isAccepted ? "block" : "none";
                                             string resultStudents = isAccepted ? "none" : "block";
 
-
                                             <a data-fancybox data-src="#upload-files" class="btn badge-soft-secondary doc" id="btn-documents-@request.Id" style="font-weight: 600;display:@resultDoc">Изпрати документи</a>
                                             <a asp-action="Teacher" asp-controller="Home" asp-route-id="@request.TeacherId" class="btn badge-soft-secondary" id="btn-class-@request.Id" style="font-weight: 600;display:@resultStudents">Виж учениците</a>
+                                        }
+                                        else if (User.IsInRole("Teacher"))
+                                        {
+                                            @*<div class="dropdown" id="docs-dropdown" style="display: none">
+                                                <button class="dropbtn">Документи</button>
+                                                <div class="dropdown-content">
+                                                    
+                                                </div>
+                                            </div>*@
+
+                                            <div class="dropdown" id="docs-dropdown" style="display: none">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Документи
+                                                </button>
+                                                <ul class="dropdown-menu" id="docs-dropdown" aria-labelledby="dropdownMenuButton1">
+                                                   
+                                                </ul>
+                                            </div>
                                         }
 
                                     </div>

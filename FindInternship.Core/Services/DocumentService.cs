@@ -1,7 +1,7 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using FindInternship.Core.Contracts;
-using FindInternship.Core.Models;
+using FindInternship.Core.Models.Document;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.AspNetCore.Http;

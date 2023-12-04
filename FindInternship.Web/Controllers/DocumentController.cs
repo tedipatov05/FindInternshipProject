@@ -1,5 +1,4 @@
 ﻿using FindInternship.Core.Contracts;
-using FindInternship.Data.Repository;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using static FindInternship.Common.NotificationConstants;
@@ -9,15 +8,15 @@ namespace FindInternship.Web.Controllers
 {
     public class DocumentController : Controller
     {
-        private IRepository repo;
+       
         private IDocumentService documentService;
         private ITeacherService teacherService;
         private ICompanyService companyService;
         private IClassService classService;
 
-        public DocumentController(IRepository repo, IDocumentService documentService, ITeacherService teacherService, ICompanyService companyService, IClassService classService)
+        public DocumentController(IDocumentService documentService, ITeacherService teacherService, ICompanyService companyService, IClassService classService)
         {
-            this.repo = repo;
+           
             this.documentService = documentService;
             this.teacherService = teacherService;
             this.companyService = companyService;
@@ -38,13 +37,14 @@ namespace FindInternship.Web.Controllers
 
             HashSet<string> documentsIds = new HashSet<string>();
 
-			string classId = await classService.GetClassIdAsync(requestId);
-            string teacherId = await teacherService.GetTeacherIdByClassAsync(classId);
 
+            string teacherId = null;
 
 			try
             {
-				foreach (var file in files)
+                string classId = await classService.GetClassIdAsync(requestId);
+                teacherId = await teacherService.GetTeacherIdByClassAsync(classId);
+                foreach (var file in files)
                 {
                     string url = await documentService.UploadDocumentAsync(file, "projectDocuments");
                     string id = await documentService.Create(url, classId, file.FileName);
@@ -59,7 +59,7 @@ namespace FindInternship.Web.Controllers
             }
 
 
-            return new JsonResult(new { Documents = documentsIds, Receiver = teacherId});
+            return new JsonResult(new { Documents = documentsIds, Receiver = teacherId, RequestId = requestId});
             
         }
         

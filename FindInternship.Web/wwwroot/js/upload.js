@@ -1,5 +1,4 @@
 
-
 let App = {}
 
 App.init = (function () {
@@ -10,7 +9,7 @@ App.init = (function () {
 			let id = ev.target.id.slice(14);
 			requestId = id;
 			console.log(id);
-			const button = document.getElementById('update');
+			let button = document.getElementById('update');
 
 			button.setAttribute('name', id);
 
@@ -108,12 +107,13 @@ App.init = (function () {
 			processData: false,
 			contentType: false,
 			success: function (data) {
-				console.log(data.receiver);
+
+				connection.invoke("SendDocuments", data.documents, data.receiver, data.requestId);
 
 				window.location = `https://localhost:7256/Request/CompanyRequests`
 
-
 				
+
 			},
 			error: function (error) {
 				console.error(error.statusCode);

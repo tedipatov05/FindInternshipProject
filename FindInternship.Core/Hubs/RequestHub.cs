@@ -28,7 +28,7 @@ namespace FindInternship.Web.Hubs
         {
             var request = await requestService.GetRequestByIdAsync(requestId);
 
-            await Clients.User(companyUserId).SendAsync("ReceiveRequest",  topic, message, request.Status, request.DateCreated, request.Id, request.TeacherId, request.TeacherName);
+            await Clients.User(companyUserId).SendAsync("ReceiveRequest", topic, message, request.Status, request.DateCreated, request.Id, request.TeacherId, request.TeacherName);
         }
 
         public async Task ChangeRequestStatus(string requestId, string newStatus)
@@ -36,11 +36,13 @@ namespace FindInternship.Web.Hubs
             await Clients.All.SendAsync("ReceiveNewStatus", newStatus, requestId);
         }
 
-        public async Task SendDocuments(HashSet<string> documentIds, string teacherId)
+        public async Task SendDocuments(HashSet<string> documentIds, string teacherId, string requestId)
         {
+            string receiverId = await teacherService.GetTeacherUserIdAsync(teacherId);
+
             var documents = await documentService.GetDocumentsAsync(documentIds);
 
-            await Clients.User(teacherId).SendAsync("ReceiveDocuments",  documents);
+            await Clients.User(receiverId).SendAsync("ReceiveDocuments", documents, requestId);
         }
     }
 }
