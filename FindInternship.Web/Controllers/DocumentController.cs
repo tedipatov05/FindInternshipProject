@@ -36,7 +36,7 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Request", "CompanyRequests");
             }
 
-            List<string> documentsIds = new List<string>();
+            HashSet<string> documentsIds = new HashSet<string>();
 
 			string classId = await classService.GetClassIdAsync(requestId);
             string teacherId = await teacherService.GetTeacherIdByClassAsync(classId);

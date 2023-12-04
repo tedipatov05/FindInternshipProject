@@ -1,9 +1,11 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using FindInternship.Core.Contracts;
+using FindInternship.Core.Models;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +61,20 @@ namespace FindInternship.Core.Services
 
             return document.Id;
             
+        }
+
+        public async Task<List<DocumentViewModel>> GetDocumentsAsync(HashSet<string> documentsIds)
+        {
+            var documents = await repo.All<Document>()
+                .Where(d => documentsIds.Contains(d.Id))
+                .Select(d => new DocumentViewModel()
+                {
+                    Type = d.Type,
+                    Url = d.DocumentUrl
+                })
+                .ToListAsync();
+
+            return documents;
         }
     }
 }

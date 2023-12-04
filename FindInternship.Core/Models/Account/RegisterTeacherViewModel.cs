@@ -36,9 +36,6 @@ namespace FindInternship.Core.Models.Account
         [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength, ErrorMessage = InvalidLengthMessage)]
         public string PasswordRepeat { get; set; } = null!;
 
-
-        //TODO: MAKE VALIDATION BECAUSE I DONT KNOW HOW <3
-        // I love you
         [Required(ErrorMessage = RequiredErrorMessage)]
         [StringLength(SchoolNameMaxLength, MinimumLength = SchoolNameMinLength, ErrorMessage = InvalidLengthMessage)]
         public string School { get; set; } = null!;

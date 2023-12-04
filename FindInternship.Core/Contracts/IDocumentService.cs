@@ -1,4 +1,5 @@
-﻿using FindInternship.Data.Models;
+﻿using FindInternship.Core.Models;
+using FindInternship.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace FindInternship.Core.Contracts
     {
         Task<string> UploadDocumentAsync(IFormFile file, string folder);
         Task<string> Create(string documentUrl, string classId, string documentName);
+
+        Task<List<DocumentViewModel>> GetDocumentsAsync(HashSet<string> documentsIds);
     }
 }

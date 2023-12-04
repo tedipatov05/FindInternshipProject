@@ -9,17 +9,19 @@ namespace FindInternship.Web.Hubs
 {
     public class RequestHub : Hub
     {
-        private IRepository repo;
-        private ITeacherService teacherService; 
-        private IRequestService requestService;
-        private ICompanyService companyService;
+        private readonly IRepository repo;
+        private readonly ITeacherService teacherService; 
+        private readonly IRequestService requestService;
+        private readonly ICompanyService companyService;
+        private readonly IDocumentService documentService;
 
-        public RequestHub(IRepository repo, ITeacherService teacherService, IRequestService requestService, ICompanyService companyService)
+        public RequestHub(IRepository repo, ITeacherService teacherService, IRequestService requestService, ICompanyService companyService, IDocumentService documentService)
         {
             this.repo = repo;
             this.teacherService = teacherService;
             this.requestService = requestService;
             this.companyService = companyService;
+            this.documentService = documentService;
         }
 
         public async Task SendRequest(string topic, string message, string requestId, string companyUserId)
@@ -33,6 +35,13 @@ namespace FindInternship.Web.Hubs
         {
             
             await Clients.All.SendAsync("ReceiveNewStatus", newStatus, requestId);
+        }
+
+        public async Task SendDocuments(HashSet<string> documentIds, string teacherId)
+        {
+            var documents = await documentService.GetDocumentsAsync(documentIds);
+
+            await Clients.User(teacherId).SendAsync("ReceiveDocuments",  documents);
         }
     }
 }
