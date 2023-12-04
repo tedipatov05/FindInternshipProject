@@ -101,5 +101,14 @@ namespace FindInternship.Core.Services
             await repo.AddAsync(company);
             await repo.SaveChangesAsync();
 		}
+
+		public async Task AddClassToCompany(string classId, string companyId)
+		{
+            var classs = await repo.All<Class>()
+                .FirstOrDefaultAsync(c => c.Id == classId);
+
+            classs.CompanyId = companyId;
+			await repo.SaveChangesAsync();
+		}
 	}
 }
