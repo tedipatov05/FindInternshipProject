@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,7 +34,7 @@ namespace FindInternship.Core.Services
             {
                 File = new FileDescription(file.FileName, stream),
                 Folder = folder,
-                //RawConvert = "aspose"
+                 
             };
 
             var uploadResult = await cloudinary.UploadAsync(uploadParams);
