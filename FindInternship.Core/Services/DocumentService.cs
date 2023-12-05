@@ -31,8 +31,9 @@ namespace FindInternship.Core.Services
 
             var uploadParams = new RawUploadParams()
             {
-                File = new FileDescription(file.Name, stream),
-                Folder = folder
+                File = new FileDescription(file.FileName, stream),
+                Folder = folder,
+                //RawConvert = "aspose"
             };
 
             var uploadResult = await cloudinary.UploadAsync(uploadParams);
@@ -42,7 +43,7 @@ namespace FindInternship.Core.Services
                 throw new InvalidOperationException(uploadResult.Error.Message);
             }
 
-            return uploadResult.Url.ToString();
+            return uploadResult.SecureUrl.ToString();
 
         }
 
@@ -75,6 +76,14 @@ namespace FindInternship.Core.Services
                 .ToListAsync();
 
             return documents;
+        }
+
+        public async Task<bool> IsDocumentAsync(string name)
+        {
+            var isExists = await repo.All<Document>()
+                .AnyAsync(d => d.Type == name);
+
+            return isExists;
         }
     }
 }

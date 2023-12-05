@@ -106,18 +106,26 @@
                                             @*<div class="dropdown" id="docs-dropdown" style="display: none">
                                                 <button class="dropbtn">Документи</button>
                                                 <div class="dropdown-content">
-                                                    
+
                                                 </div>
                                             </div>*@
+                                            string display = request.Documents.Count > 0 ? "block" : "none";
 
-                                            <div class="dropdown" id="docs-dropdown" style="display: none">
+                                            
+                                            <div class="dropdown" id="docs-dropdown" style="display: @display">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Документи
                                                 </button>
                                                 <ul class="dropdown-menu" id="docs-dropdown" aria-labelledby="dropdownMenuButton1">
-                                                   
+                                                    @foreach(var doc in request.Documents)
+                                                    {
+                                                        <li><a class="dropdown-item" download href="@doc.Url">@doc.Type</a></li>
+                                                    }
+                                                    
                                                 </ul>
                                             </div>
+
+                                            
                                         }
 
                                     </div>

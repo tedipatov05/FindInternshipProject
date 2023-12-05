@@ -38,6 +38,7 @@ namespace FindInternship.Web.Hubs
 
         public async Task SendDocuments(HashSet<string> documentIds, string teacherId, string requestId)
         {
+
             string receiverId = await teacherService.GetTeacherUserIdAsync(teacherId);
 
             var documents = await documentService.GetDocumentsAsync(documentIds);

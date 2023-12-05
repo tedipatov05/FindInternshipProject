@@ -76,11 +76,13 @@ connection.on("ReceiveDocuments", function (documents, requestId) {
     let child = div.children[1];
 
     documents.forEach(d => {
+
         let li = document.createElement('li');
         let a = document.createElement('a');
         a.textContent = d.type;
         a.classList.add('dropdown-item');
-        a.setAttribute('href', 'javascript:void(0)');
+        a.setAttribute('download','');
+        a.href = d.url;
 
         li.appendChild(a);
 

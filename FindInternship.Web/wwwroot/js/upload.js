@@ -1,7 +1,7 @@
 
-let App = {}
 
-App.init = (function () {
+
+
 	
 	Array.from(document.getElementsByClassName('btn badge-soft-secondary doc')).forEach(e =>
 		e.addEventListener('click', (ev) => {
@@ -22,9 +22,6 @@ App.init = (function () {
 
 		const files = evt.target.files; 
 
-		
-		
-		
 		let template = `${Object.keys(files)
 			.map(file => `<div class="file file--${file}">
      <div class="name"><span class="text-dark">${files[file].name}</span></div>
@@ -108,6 +105,8 @@ App.init = (function () {
 			contentType: false,
 			success: function (data) {
 
+				console.log(data.receiver)
+
 				connection.invoke("SendDocuments", data.documents, data.receiver, data.requestId);
 
 				window.location = `https://localhost:7256/Request/CompanyRequests`
@@ -134,4 +133,4 @@ App.init = (function () {
 	});
 	
 	document.querySelector("input[type=file]").addEventListener("change", handleFileSelect);
-})();
+

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FindInternship.Core.Models.Document;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,5 +23,7 @@ namespace FindInternship.Core.Models.Request
         public string TeacherName { get; set; } = null!;
 
         public string CompanyId { get; set; } = null!;
+
+        public List<DocumentViewModel> Documents { get; set; } = new List<DocumentViewModel>();
     }
 }

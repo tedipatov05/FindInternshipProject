@@ -1,6 +1,8 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using static FindInternship.Common.NotificationConstants;
 
 
@@ -37,13 +39,12 @@ namespace FindInternship.Web.Controllers
 
             HashSet<string> documentsIds = new HashSet<string>();
 
+            string classId = await classService.GetClassIdAsync(requestId);
+            string teacherId = await teacherService.GetTeacherIdByClassAsync(classId);
 
-            string teacherId = null;
-
-			try
+            try
             {
-                string classId = await classService.GetClassIdAsync(requestId);
-                teacherId = await teacherService.GetTeacherIdByClassAsync(classId);
+               
                 foreach (var file in files)
                 {
                     string url = await documentService.UploadDocumentAsync(file, "projectDocuments");
@@ -62,6 +63,6 @@ namespace FindInternship.Web.Controllers
             return new JsonResult(new { Documents = documentsIds, Receiver = teacherId, RequestId = requestId});
             
         }
-        
+
     }
 }

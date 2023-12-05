@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Document;
 using FindInternship.Core.Models.Email;
 using FindInternship.Core.Models.Request;
 using FindInternship.Data.Models;
@@ -86,6 +87,7 @@ namespace FindInternship.Core.Services
         {
              var requests = await repo.All<Request>()
                 .Where(r => r.CompanyId == companyId && r.Status != RequestStatusEnum.Rejected.ToString())
+                .Include(r => r.Class.Documents)
                 .Include(r => r.Class.Teacher)
                 .Include(r => r.Class.Teacher.User)
                 .Select(r => new AllRequestsViewModel()
@@ -97,9 +99,17 @@ namespace FindInternship.Core.Services
                     DateCreated = r.CreatedOn.ToString("dd MMMM, yyyy"),
                     CompanyId = r.CompanyId,
                     TeacherId = r.Class.Teacher.UserId,
-                    TeacherName = r.Class.Teacher.User.Name
+                    TeacherName = r.Class.Teacher.User.Name, 
+                    Documents = r.Class.Documents.Where(d => d.ClassId == r.ClassId)
+                    .Select(d => new DocumentViewModel()
+                    {
+                        Type = d.Type, 
+                        Url = d.DocumentUrl
+                    }).ToList()
                 })
                 .ToListAsync();
+
+
 
             return requests;
 
