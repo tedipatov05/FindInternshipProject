@@ -1,2 +1,2 @@
 # FindInternshipProject
-Find internship project for Olimpiad
+FindInternship project for Olimpiad
