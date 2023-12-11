@@ -67,8 +67,6 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id, teac
 
 });
 
-
-
 connection.on("ReceiveDocuments", function (documents, requestId) {
 
     let div = document.querySelector(`#project-items-${requestId} div#docs-dropdown`)

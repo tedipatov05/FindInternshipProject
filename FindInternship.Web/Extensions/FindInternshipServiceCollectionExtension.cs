@@ -22,6 +22,7 @@ namespace FindInternship.Web.Extensions
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IRequestService, RequestService>();
+            services.AddScoped<IMeetingService, MeetingService>();
 
             return services;
 

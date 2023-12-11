@@ -34,7 +34,6 @@
                 </span>
             </div>
             <div class="list-files">
-
             </div>
             <button class="importar" name="id" id="update">Изпрати Фаиловете</button>
         </footer>
@@ -67,20 +66,21 @@
                                                 @if (User.IsInRole("Company"))
                                                 {
                                                     <br>
-                                                    <label>От: </label><span class="team-date"> @request.TeacherName</span>
+                                                    <label>От: </label>
+
+                                                    <span class="team-date"> @request.TeacherName</span>
                                                 }
                                             </h6>
                                         </div>
                                     </div>
-                                   
-                                        <div class="flex-grow-1 align-items-end">
-                                            <div>
-                                                <h6 class="mb-0 text-muted">
-                                                   
-                                                </h6>
-                                            </div>
+
+                                    <div class="flex-grow-1 align-items-end">
+                                        <div>
+                                            <h6 class="mb-0 text-muted">
+                                            </h6>
                                         </div>
-                                    
+                                    </div>
+
                                 </div>
 
                                 <div class="mb-4">
@@ -103,29 +103,24 @@
                                         }
                                         else if (User.IsInRole("Teacher"))
                                         {
-                                            @*<div class="dropdown" id="docs-dropdown" style="display: none">
-                                                <button class="dropbtn">Документи</button>
-                                                <div class="dropdown-content">
 
-                                                </div>
-                                            </div>*@
                                             string display = request.Documents.Count > 0 ? "block" : "none";
 
-                                            
+
                                             <div class="dropdown" id="docs-dropdown" style="display: @display">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Документи
                                                 </button>
                                                 <ul class="dropdown-menu" id="docs-dropdown" aria-labelledby="dropdownMenuButton1">
-                                                    @foreach(var doc in request.Documents)
+                                                    @foreach (var doc in request.Documents)
                                                     {
                                                         <li><a class="dropdown-item" download href="@doc.Url">@doc.Type</a></li>
                                                     }
-                                                    
+
                                                 </ul>
                                             </div>
 
-                                            
+
                                         }
 
                                     </div>
@@ -137,7 +132,7 @@
                                                     @request.Status
                                                 </a>
 
-                                                @if(request.Status != RequestStatusEnum.Accepted.ToString())
+                                                @if (request.Status != RequestStatusEnum.Accepted.ToString())
                                                 {
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item" onclick="changeStatus('Accepted', '@request.Id')">Accept</a></li>
@@ -145,12 +140,11 @@
                                                         <li><a class="dropdown-item" onclick="changeStatus('Waiting', '@request.Id')">Waiting</a></li>
                                                     </ul>
                                                 }
-                                                
 
-                                                
+
+
 
                                             </div>
-
 
                                         }
                                         else if (User.IsInRole("Teacher"))
@@ -159,7 +153,9 @@
                                         }
 
                                     </div>
-                                </div>
+                                    
+                                    
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -170,14 +166,14 @@
 </div>
 
 
-@section Styles{
+@section Styles {
     <link rel="stylesheet" href="~/css/companyProfile.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/upload.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 }
 
-@section Scripts{
+@section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/requestCompany.js" asp-append-version="true"></script>
