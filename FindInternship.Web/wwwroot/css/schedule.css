@@ -238,3 +238,113 @@ a.float {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(0, 0, 0, 0.125);
     color: white;
 }
+
+/* new css add meeting */
+
+
+.c-event__creator.isVisible {
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.c-event__creator {
+   
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* max-width: 500px;*/
+    /*max-height: 470px;*/
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    padding: 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    transform: translate(-50%, -50%) scale(0.9);
+    -webkit-transform: translate(-50%, -50%) scale(0.9);
+}
+
+.c-calendar__style {
+    background-color: #00407b;
+    margin: 20px;
+    padding: 10px;
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.18);
+    -webkit-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.18);
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+.o-btn {
+    margin-left: 20px;
+    display: inline-block;
+    padding: 0 10px;
+    line-height: 30px;
+    height: 30px;
+    background-color: #004b8f;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.c-event__creator form {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.c-event__creator label {
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+input {
+    height: 40px;
+}
+
+input, textarea, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0px;
+    padding: 0;
+    border-width: 0;
+    resize: none;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.o-btn span {
+    margin-left: 10px;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
