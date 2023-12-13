@@ -1,4 +1,7 @@
-﻿
+﻿@using FindInternship.Core.Models.Meeting
+@model AllMeetingsViewModel
+
+
 <div class="calendar">
     <div class="timeline">
         <div class="spacer"></div>
@@ -14,26 +17,48 @@
         <div class="time-marker">6 PM</div>
     </div>
     <div class="days">
-        <div class="day mon">
-            <div class="date">
-                <p class="date-num">9</p>
-                <p class="date-day">Mon</p>
-            </div>
-            <div class="events">
-                <div class="event start-9 end-12 corp-fi">
-                    <p class="title">Securities Regulation</p>
-                    <p class="time">2 AM - 5 AM</p>
-                </div>
-                <div class="event start-1 end-4 securities">
-                    <p class="title">Securities Regulation</p>
-                    <p class="time">2 PM - 5 PM</p>
-                </div>
-            </div>
+       
+        @{
+            Dictionary<string, string> hours = new Dictionary<string, string>()
+            {
+                {"13", "1"}, 
+                {"14", "2"}, 
+                {"15", "3"}, 
+                {"16", "4"}, 
+                {"17", "5"}, 
+                {"18", "6"}
 
-        </div>
+            };
+        }
+        
+        
+       @*
+        <partial name="_MeetingPartial" model="@Model.DayNow" />
+        <partial name="_MeetingPartial" model="@Model.DayTomorrow" />
+        <partial name="_MeetingPartial" model="@Model.Day2" />
+        <partial name="_MeetingPartial" model="@Model.Day3" />
+        <partial name="_MeetingPartial" model="@Model.Day4" /> *@
+
         <div class="day tues">
             <div class="date">
-                <p class="date-num">12</p>
+                <p class="date-num"> 12</p>
+                <p class="date-day"> Tues</p>
+            </div>
+            <div class="events">
+                <div class="event start-10 end-1 corp-fi">
+                    <p class="title">Corporate Finance</p>
+                    <p class="time">10 AM - 12 PM</p>
+                </div>
+                <div class="event start-1 end-4 ent-law">
+                    <p class="title">Entertainment Law</p>
+                    <p class="time">1PM - 4PM</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day tues">
+            <div class="date">
+                <p class="date-num"> 12</p>
                 <p class="date-day">Tues</p>
             </div>
             <div class="events">
@@ -96,7 +121,6 @@
                 <p class="date-num">13</p>
                 <p class="date-day">Fri</p>
             </div>
-
 
             <div class="events">
             </div>

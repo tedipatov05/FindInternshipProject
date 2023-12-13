@@ -15,9 +15,13 @@ namespace FindInternship.Core.Models.Meeting
         public string Day { get; set; } = null!;
         public int Number {  get; set; }
 
-        public string? CompanyId { get; set; }
+        public string StartHour { get; set; } = null!;
 
-        public string? ClassId { get; set; }
+        public string EndHour { get; set; } = null!;
+
+        //public string? CompanyId { get; set; }
+
+        //public string? ClassId { get; set; }
 
     }
 }
