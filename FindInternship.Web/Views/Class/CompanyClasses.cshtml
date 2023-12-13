@@ -4,60 +4,61 @@
 
 
 <div class="container">
-	<div class="row text-center">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="">
+				<div class="table-responsive">
+					<table class="table project-list-table table-nowrap align-middle table-borderless">
+						<thead>
+							<tr>
+								<th scope="col">Клас</th>
+								<th scope="col">Училище</th>
+								<th scope="col">Класен ръководител</th>
+								<th scope="col">Брой ученици</th>
+								<th scope="col" style="width: 200px;">График на класа</th>
+								<th scope="col" style="width: 200px;">Добави среща</th>
+							</tr>
+						</thead>
+						@if (Model.Count == 0)
+						{
+							<h4>Няма стажуващи класове</h4>
+						}
+						else
+						{
 
-		@if (Model.Count == 0)
-		{
-			<h2>Няма стажуващи класове</h2>
-		}
-		else
-		{
-			foreach (var item in Model)
-			{
+							<tbody>
+								@foreach (var class1 in Model)
+								{
 
 
-				<div class="col-xl-12">
-					<div class="card mb-3 card-body">
-						<div class="row align-items-center">
-							<div class="col-auto">
-								<a href="#!.html">
-									<img src="https://www.bootdey.com/image/280x280/FF00FF/000000" class="width-90 rounded-3" alt="">
-								</a>
-							</div>
-							<div class="col">
-								<div class="overflow-hidden flex-nowrap">
-									<h6 class="mb-1">
-										<a href="#!" class="text-reset">CRM dashboard landing page</a>
-									</h6>
-									<span class="text-muted d-block mb-2 small">
-										Updated 2 Hours Ago
-									</span>
-									<div class="row align-items-center">
-										<div class="col-12">
-											<div class="row align-items-center g-0">
-												<div class="col-auto">
-													<small class="me-2">45%</small>
-												</div>
-												<div class="col">
-
-													<!-- Progress bar -->
-													<div class="progress bg-tint-success" style="height: 4px;">
-														<div class="progress-bar bg-success" role="progressbar" style="width: 45%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+									<tr>
+										
+										<td>@class1.Name</td>
+										<td><span class="badge badge-soft-success mb-0">@class1.School</span></td>
+										<td>@class1.Teacher</td>
+										<td>@class1.Students</td>
+										<td>
+											<button>График</button>
+										</td>
+										<td>
+											<button>Добави среща</button>
+										</td>
+									</tr>
+								}
+							</tbody>
+						}
+					</table>
 				</div>
-			}
-		}
+			</div>
+		</div>
 	</div>
 </div>
+
+
+
+
+
+
 @section Styles{
 	<link rel="stylesheet" href="~/css/comapnyClasses.css" asp-append-version="true" />
 

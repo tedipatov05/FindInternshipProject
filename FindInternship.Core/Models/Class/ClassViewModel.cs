@@ -13,5 +13,9 @@ namespace FindInternship.Core.Models
         public string Name { get; set; } = null!;
 
         public string School { get; set; } = null!;
+
+        public string Teacher { get; set; } = null!;
+
+        public int Students { get; set; } = 0;
     }
 }
