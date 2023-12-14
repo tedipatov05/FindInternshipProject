@@ -1,19 +1,35 @@
 
-let meetCreator = document.getElementsByClassName("js-event__creator")[0];
-let body = document.getElementsByTagName('body')[0];
-
-document.getElementById('addMeeting').addEventListener('click', function () {
-
-    meetCreator.classList.add("isVisible");
-    body.classList.add('overlay');
-    /*body.classList.add('fancybox-active');*/
-
-});
-
-document.getElementsByClassName('js-event__close')[0].addEventListener('click', function () {
-    meetCreator.classList.remove("isVisible");
-    body.classList.remove('overlay');
-
-
-
+document.getElementById('addMeeting').addEventListener('click', () => {
+    Array.from(document.getElementsByClassName('text-danger')).forEach(e => e.style.display = 'none')
 })
+
+
+function create(e) {
+    e.preventDefault();
+    let formData = new FormData(e.target);
+    let { className, title, start, end, address } = Object.fromEntries(formData);
+
+    let dataArr = [className, title, start, end, address]
+
+    let validationSpans = document.getElementsByClassName('text-danger');
+
+    dataArr.forEach((element, index) => {
+        if (element == '') {
+            validationSpans[index].style.display = 'block';
+        }
+        else {
+            validationSpans[index].style.display = 'none';
+        }
+    })
+
+    if (start >= end) {
+
+    }
+   
+    console.log(className);
+   
+}
+
+document.getElementById('addEvent').addEventListener('submit', create);
+
+

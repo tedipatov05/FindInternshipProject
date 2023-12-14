@@ -50,6 +50,7 @@ namespace FindInternship.Web.Controllers
                     model.Day2 = await meetingService.GetAllCompanyMeetingsForDay(2, companyId);
                     model.Day3 = await meetingService.GetAllCompanyMeetingsForDay(3, companyId);
                     model.Day4 = await meetingService.GetAllCompanyMeetingsForDay(4, companyId);
+                    model.CompanyClasses = await companyService.GetAllCompanyClassesAsync(companyId);
 
                 }
                 else

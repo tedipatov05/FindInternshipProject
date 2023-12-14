@@ -4,31 +4,42 @@
 
 <div class="calendar">
 
-    <div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display: none; width: 750px; position: absolute;height: 500px;" id="meeting-form">
-        @* <a href="javascript:;" class="o-btn js-event__close">CLOSE <span class="fa fa-close"></span></a> *@
-
+    <div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display: none; width: 750px; position: absolute;height: fit-content;
+    padding-top: 40px" id="meeting-form">
+        
         <h2 class="text-light text-center">Създай среща</h2>
+
         <form class="requires-validation" id="addEvent">
 
-            <input placeholder="Тема на срещата" type="text" name="name">
-            <span class="text-danger" id="titleValidation"></span>
+            <select placeholder="Клас" type="text" name="className">
+                @foreach(string cl in Model.CompanyClasses)
+                {
+                    <option value="@cl">@cl</option>
+                }
+            </select>
+            <span class="text-danger" id="classValidation" style="display:none; font-weight: bold;">Това поле е задължително</span>
 
-            <lable class="text-light">Начален час</lable>
-            <input type="datetime-local" name="datetime" placeholder="start time">
-            <span class="text-danger" id="startValidation"></span>
+            <input placeholder="Тема на срещата" type="text" name="title">
+            <span class="text-danger" id="titleValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
 
-            <label class="text-light">Краен час</label>
-            <input type="datetime-local" name="datetime" placeholder="end time">
-            <span class="text-danger" id="endValidation"></span>
+            <lable class="text-light" style="margin-top: 10px">Начален час</lable>
+            <input type="datetime-local" name="start" placeholder="start time">
+            <span class="text-danger" id="startValidation" style="display:none; font-weight: bold;">Това поле е задължително</span>
 
-            <input placeholder="Адрес на срещата" type="text" name="name">
-            <span class="text-danger" id="addressValidation"></span>
+            <label class="text-light" style="margin-top: 10px">Краен час</label>
+            <input type="datetime-local" name="end" placeholder="end time">
+            <span class="text-danger" id="endValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
 
+            <input placeholder="Адрес на срещата" type="text" name="address">
+            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
 
+            <br>
 
+            <button type="submit" class="o-btn js-event__save" id="btn-save">SAVE <span class="fa fa-save"></span></button>
+             
         </form>
-        <br>
-        <a href="javascript:;" class="o-btn js-event__save">SAVE <span class="fa fa-save"></span></a>
+       
+       
     </div>
 
 
@@ -47,20 +58,6 @@
         <div class="time-marker">6 PM</div>
     </div>
     <div class="days">
-
-        @{
-            Dictionary<string, string> hours = new Dictionary<string, string>()
-        {
-        {"13", "1"},
-        {"14", "2"},
-        {"15", "3"},
-        {"16", "4"},
-        {"17", "5"},
-        {"18", "6"}
-
-        };
-        }
-
 
         @*
         <partial name="_MeetingPartial" model="@Model.DayNow" />
@@ -139,14 +136,7 @@
             </div>
         </div>
         <div class="day fri">
-            <div id="ignoreOverflow">
-                <a data-fancybox data-src="#meeting-form" class="float" id="addMeeting">
-                    <div class="plus">+</div>
-                    <div class="ink-visual-container">
-                        <div class="ink-visual-static"></div>
-                    </div>
-                </a>
-            </div>
+            
             <div class="date">
                 <p class="date-num">13</p>
                 <p class="date-day">Fri</p>
@@ -154,6 +144,14 @@
 
             <div class="events">
             </div>
+        </div>
+        <div id="ignoreOverflow">
+            <a data-fancybox data-src="#meeting-form" class="float" id="addMeeting">
+                <div class="plus">+</div>
+                <div class="ink-visual-container">
+                    <div class="ink-visual-static"></div>
+                </div>
+            </a>
         </div>
 
     </div>
@@ -167,5 +165,5 @@
 }
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @*  <script src="~/js/meeting.js" asp-append-version="true"></script> *@
+     <script src="~/js/meeting.js" asp-append-version="true"></script> 
 }
