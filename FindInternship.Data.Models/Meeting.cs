@@ -25,7 +25,9 @@ namespace FindInternship.Data.Models
         [MaxLength(MeetingTitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        public DateTime Time { get; set; }
+        public DateTime StartTime { get; set; }
+
+        public DateTime EndTime { get; set; }
 
         [ForeignKey(nameof(Company))]
         public string CompanyId { get; set; } = null!;

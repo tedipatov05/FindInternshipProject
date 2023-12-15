@@ -20,5 +20,7 @@ namespace FindInternship.Core.Contracts
         Task AddClassToCompany(string classId, string companyId);
 
         Task CreateAsync(string userId, string services, string description);
+
+        Task<List<string>> GetAllCompanyClassesAsync(string companyId);
     }
 }

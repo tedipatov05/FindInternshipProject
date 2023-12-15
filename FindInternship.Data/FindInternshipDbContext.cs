@@ -16,6 +16,7 @@ namespace FindInternship.Data
         public FindInternshipDbContext(DbContextOptions<FindInternshipDbContext> options) 
             : base(options)
         {
+           
 
         }
 

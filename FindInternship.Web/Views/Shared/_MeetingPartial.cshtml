@@ -1,0 +1,31 @@
+﻿@using FindInternship.Core.Models.Meeting
+@model List<MeetingViewModel>
+
+@{
+    Dictionary<string, string> hours = new Dictionary<string, string>()
+    {
+        {"13", "1"},
+        {"14", "2"},
+        {"15", "3"},
+        {"16", "4"},
+        {"17", "5"},
+        {"18", "6"}
+
+    };
+}
+<div class="day tues">
+    <div class="date">
+        <p class="date-num">@Model.First().Number</p>
+        <p class="date-day">@Model.First().Day</p>
+    </div>
+    <div class="events">
+        @foreach (var meeting in Model)
+        {
+            <div class="event start-@hours[meeting.StartHour] end-@hours[meeting.EndHour] corp-fi">
+                <p class="title">@meeting.Title</p>
+                <p class="title">@meeting.Address</p>
+                <p class="time">@meeting.StartHour ч. - @meeting.EndHour ч.</p>
+            </div>
+        }
+    </div>
+</div>

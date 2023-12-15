@@ -111,5 +111,18 @@ namespace FindInternship.Core.Services
 
 			await repo.SaveChangesAsync();
 		}
-	}
+
+        public async Task<List<string>> GetAllCompanyClassesAsync(string companyId)
+        {
+            var classes = await repo.All<Class>()
+                .Where(c => c.CompanyId == companyId)
+                .Include(c => c.School)
+                .Select(c => $"{c.Grade} ({c.School.Name})")
+                .ToListAsync();
+
+
+            return classes;
+                
+        }
+    }
 }
