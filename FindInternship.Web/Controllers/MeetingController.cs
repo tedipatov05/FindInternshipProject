@@ -1,5 +1,6 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.Meeting;
+using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using static FindInternship.Common.NotificationConstants;
@@ -12,13 +13,17 @@ namespace FindInternship.Web.Controllers
         private readonly IUserService userService;
         private readonly ICompanyService companyService;
         private readonly ITeacherService teacherService;
+        private readonly IStudentService studentService;
+        private readonly IClassService classService;
 
-        public MeetingController(IMeetingService meetingService, IUserService userService, ICompanyService companyService, ITeacherService teacherService)
+        public MeetingController(IMeetingService meetingService, IUserService userService, ICompanyService companyService, ITeacherService teacherService, IStudentService studentService, IClassService classService)
         {
             this.meetingService = meetingService;
             this.userService = userService;
             this.companyService = companyService;
             this.teacherService = teacherService;
+            this.studentService = studentService;
+            this.classService = classService;
         }
 
 
@@ -31,26 +36,38 @@ namespace FindInternship.Web.Controllers
             {
                 bool isTeacher = await teacherService.IsTeacherAsync(userId);
                 bool isCompany = await companyService.IsCompanyAsync(userId);
+                bool isStudent = await studentService.IsStudent(userId);
 
                 if (isTeacher)
                 {
                     string teacherId = await teacherService.GetTeacherIdAsync(userId);
-                    model.DayNow = await meetingService.GetClassMeetingsForDay(0, teacherId);
-                    model.DayTomorrow = await meetingService.GetClassMeetingsForDay(1, teacherId);
-                    model.Day2 = await meetingService.GetClassMeetingsForDay(2, teacherId);
-                    model.Day3 = await meetingService.GetClassMeetingsForDay(3, teacherId);
-                    model.Day4 = await meetingService.GetClassMeetingsForDay(4, teacherId);
+                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(0, teacherId);
+                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(1, teacherId);
+                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(2, teacherId);
+                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(3, teacherId);
+                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(4, teacherId);
 
                 }
                 else if (isCompany)
                 {
                     string companyId = await companyService.GetCompanyIdAsync(userId);
-                    model.DayNow = await meetingService.GetAllCompanyMeetingsForDay(0, companyId);
-                    model.DayTomorrow = await meetingService.GetAllCompanyMeetingsForDay(1, companyId);
-                    model.Day2 = await meetingService.GetAllCompanyMeetingsForDay(2, companyId);
-                    model.Day3 = await meetingService.GetAllCompanyMeetingsForDay(3, companyId);
-                    model.Day4 = await meetingService.GetAllCompanyMeetingsForDay(4, companyId);
-                    model.CompanyClasses = await companyService.GetAllCompanyClassesAsync(companyId);
+                    model.DayNow = await meetingService.GetAllCompanyMeetingsForDayAsync(0, companyId);
+                    model.DayTomorrow = await meetingService.GetAllCompanyMeetingsForDayAsync(1, companyId);
+                    model.Day2 = await meetingService.GetAllCompanyMeetingsForDayAsync(2, companyId);
+                    model.Day3 = await meetingService.GetAllCompanyMeetingsForDayAsync(3, companyId);
+                    model.Day4 = await meetingService.GetAllCompanyMeetingsForDayAsync(4, companyId);
+                    model.CompanyClasses = await classService.GetClassMeetingAsync(companyId);
+
+                }
+                else if (isStudent)
+                {
+                    string studentId = await studentService.GetStudentId(userId);
+                    string studentTeacherId = await studentService.GetStudentTeacherIdAsync(studentId);
+                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(0, studentTeacherId);
+                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(1, studentTeacherId);
+                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(2, studentTeacherId);
+                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(3, studentTeacherId);
+                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(4, studentTeacherId);
 
                 }
                 else
@@ -65,12 +82,61 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = ex.Message;
                 return RedirectToAction("Index", "Home");
             }
-
-
-
-
-
             return View(model);
         }
+
+
+        [HttpPost]
+        [Route("Meeting/Create")]
+        public async Task<IActionResult> Create(string classId, string title, DateTime start, DateTime end, string address)
+        {
+            string userId = User.GetId();
+
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+            if (!isCompany)
+            {
+                TempData[ErrorMessage] = "Този потребител не може да добавя срещи";
+                return RedirectToAction("All", "Meeting");
+            }
+
+            try
+            {
+
+                string teacherId = await teacherService.GetTeacherIdByClassIdAsync(classId);
+                string companyId = await companyService.GetCompanyIdAsync(userId);
+               
+
+                AddMeetingViewModel model = new AddMeetingViewModel()
+                {
+                    Title = title,
+                    Start = start,
+                    End = end,
+                    Address = address
+                };
+
+                if (start >= end)
+                {
+                    TempData[ErrorMessage] = "Неправилна начална дата";
+                    return this.RedirectToAction("All", "Meeting");
+
+                }
+
+                await meetingService.CreateAsync(model, companyId, classId);
+
+                TempData[SuccessMessage] = "Успешно добавена среща";
+                return new JsonResult(new { ReceiverId = teacherId, model});
+
+
+            }
+            catch (Exception ex)
+            {
+                TempData[ErrorMessage] = ex.Message;
+                return RedirectToAction("All", "Meeting");
+            }
+
+           
+        }
+
+
     }
 }

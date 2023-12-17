@@ -11,10 +11,10 @@
 
         <form class="requires-validation" id="addEvent">
 
-            <select placeholder="Клас" type="text" name="className">
-                @foreach(string cl in Model.CompanyClasses)
+            <select placeholder="Клас" type="text" name="classId">
+                @foreach(var cl in Model.CompanyClasses)
                 {
-                    <option value="@cl">@cl</option>
+                    <option value="@cl.Id">@cl.Grade (@cl.School)</option>
                 }
             </select>
             <span class="text-danger" id="classValidation" style="display:none; font-weight: bold;">Това поле е задължително</span>
@@ -58,15 +58,15 @@
         <div class="time-marker">6 PM</div>
     </div>
     <div class="days">
+        
+        
 
-        @*
-        <partial name="_MeetingPartial" model="@Model.DayNow" />
-        <partial name="_MeetingPartial" model="@Model.DayTomorrow" />
-        <partial name="_MeetingPartial" model="@Model.Day2" />
-        <partial name="_MeetingPartial" model="@Model.Day3" />
-        <partial name="_MeetingPartial" model="@Model.Day4" /> *@
-
-        <div class="day tues">
+        <partial name="_MeetingPartial" model="@Model.DayNow"/>
+        <partial name="_MeetingPartial" model="@Model.DayTomorrow"/>
+        <partial name="_MeetingPartial" model="@Model.Day2"/>
+        <partial name="_MeetingPartial" model="@Model.Day3"/>
+        <partial name="_MeetingPartial" model="@Model.Day4"/>
+        @* <div class="day tues">
             <div class="date">
                 <p class="date-num"> 12</p>
                 <p class="date-day"> Tues</p>
@@ -144,7 +144,7 @@
 
             <div class="events">
             </div>
-        </div>
+        </div> *@
         <div id="ignoreOverflow">
             <a data-fancybox data-src="#meeting-form" class="float" id="addMeeting">
                 <div class="plus">+</div>

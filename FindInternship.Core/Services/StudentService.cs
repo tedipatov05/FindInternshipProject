@@ -51,6 +51,16 @@ namespace FindInternship.Core.Services
             return student!.Id;
         }
 
+        public async Task<string> GetStudentTeacherIdAsync(string studentId)
+        {
+            var student = await repo.All<Student>()
+                .Include(s => s.Class)
+                .FirstOrDefaultAsync(s => s.Id == studentId);
+
+            return student.Class.TeacherId;
+                
+        }
+
         public async Task<List<StudentViewModel>> GetTeacherStudentsAsync(string className)
         {
             var students = await repo.All<Student>()
