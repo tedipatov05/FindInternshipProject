@@ -21,7 +21,7 @@
 						</thead>
 						@if (Model.Count == 0)
 						{
-							<h4>Няма стажуващи класове</h4>
+							<p>Няма стажуващи класове</p>
 						}
 						else
 						{
@@ -32,16 +32,13 @@
 
 
 									<tr>
-										
-										<td>@class1.Name</td>
-										<td><span class="badge badge-soft-success mb-0">@class1.School</span></td>
-										<td>@class1.Teacher</td>
+
+										<td class="thickness">@class1.Name</td>
+										<td><span class="badge badge-soft-success mb-0 thickness">@class1.School</span></td>
+										<td class="thickness">@class1.Teacher</td>
 										<td>@class1.Students</td>
-										<td>
-											<button>График</button>
-										</td>
-										<td>
-											<button>Добави среща</button>
+										<td class="thickness">
+											<button class="button-81" role="button">График</button>
 										</td>
 									</tr>
 								}
