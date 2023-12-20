@@ -34,6 +34,14 @@ header {
     color: grey;
 }
 
+.for-dropdown {
+    border-radius: 50px;
+    color: #fff;
+    font-size: 14px;
+    border: 2px solid #47b2e4;
+    font-weight: 600;
+    background: transparent;
+}
 
 .heading {
     text-shadow: 1px 1px 2px black;
@@ -119,6 +127,7 @@ header {
 
         .navbar .dropdown ul li {
             min-width: 200px;
+
         }
 
         .navbar .dropdown ul a {
@@ -167,6 +176,21 @@ header {
     height: 430px;
 }
 
+.navbar-brand {
+    background: no-repeat;
+    background-image: url(../img/Picture2.png);
+    background-size: 250px, 50px;
+    width: 250px;
+    height: 80px;
+}
+
+.nav-item {
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+    background-color: black;
+    background-size: 100px, 50px;
+}
 
 .counter-section i {
     display: block;
