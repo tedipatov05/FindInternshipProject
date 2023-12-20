@@ -4,6 +4,10 @@
 @{
     Dictionary<string, string> hours = new Dictionary<string, string>()
     {
+        {"9", "9"},
+        {"10", "10"},
+        {"11", "11"},
+        {"12", "12"},
         {"13", "1"},
         {"14", "2"},
         {"15", "3"},
@@ -12,20 +16,28 @@
         {"18", "6"}
 
     };
+    var day = Model.FirstOrDefault() != null ? Model.FirstOrDefault().Number : DateTime.Now.Day;
+    var dayText = Model.FirstOrDefault() != null ? Model.FirstOrDefault().Day : DateTime.Now.DayOfWeek.ToString();
 }
+
+
 <div class="day tues">
     <div class="date">
-        <p class="date-num">@Model.First().Number</p>
-        <p class="date-day">@Model.First().Day</p>
+        <p class="date-num">@day</p>
+        <p class="date-day">@dayText</p>
     </div>
     <div class="events">
         @foreach (var meeting in Model)
         {
-            <div class="event start-@hours[meeting.StartHour] end-@hours[meeting.EndHour] corp-fi">
-                <p class="title">@meeting.Title</p>
-                <p class="title">@meeting.Address</p>
-                <p class="time">@meeting.StartHour ч. - @meeting.EndHour ч.</p>
-            </div>
+            if (meeting.Title != null)
+            {
+                <div class="event start-@hours[meeting.StartHour] end-@hours[meeting.EndHour] corp-fi">
+                    <p class="title">@meeting.Title</p>
+                    <p class="title">@meeting.Address</p>
+                    <p class="time">@meeting.StartHour ч. - @meeting.EndHour ч.</p>
+                </div>
+            }
+
         }
     </div>
 </div>

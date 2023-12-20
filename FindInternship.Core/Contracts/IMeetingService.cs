@@ -9,9 +9,11 @@ namespace FindInternship.Core.Contracts
 {
     public interface IMeetingService
     {
-        Task<List<MeetingViewModel>> GetAllCompanyMeetingsForDay(int days, string companyId);
+        Task<List<MeetingViewModel>> GetAllCompanyMeetingsForDayAsync(int days, string companyId);
 
-        Task<List<MeetingViewModel>> GetClassMeetingsForDay(int days, string teacherId);
+        Task<List<MeetingViewModel>> GetClassMeetingsForDayAsync(int days, string teacherId);
+
+        Task CreateAsync(AddMeetingViewModel model, string companyId, string classId);
         
     }
 }

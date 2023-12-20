@@ -1,5 +1,6 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Core.Models;
+using FindInternship.Core.Models.Class;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -100,6 +101,33 @@ namespace FindInternship.Core.Services
             cl.TeacherId = teacherId;
 
             await repo.SaveChangesAsync();
+        }
+
+        public async Task<string> GetClassIdByClassNameAsync(string className, string schoolName)
+        {
+            var class1 = await repo.All<Class>()
+                 .Include(c => c.School)
+                 .FirstOrDefaultAsync(c => c.Grade == className && c.School.Name == schoolName);
+
+            return class1!.Id;
+        }
+
+        public async Task<List<ClassMeetingViewModel>> GetClassMeetingAsync(string companyId)
+        {
+            var classes = await repo.All<Class>()
+                .Include(c => c.School)
+                .Where(c => c.CompanyId == companyId)
+                .Select(c => new ClassMeetingViewModel()
+                {
+                    Grade = c.Grade, 
+                    Id = c.Id, 
+                    School = c.School.Name
+
+                })
+                .ToListAsync();
+
+            return classes;
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Models;
+using FindInternship.Core.Models.Class;
 using FindInternship.Core.Models.Company;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,5 @@ namespace FindInternship.Core.Contracts
 
         Task CreateAsync(string userId, string services, string description);
 
-        Task<List<string>> GetAllCompanyClassesAsync(string companyId);
     }
 }

@@ -58,14 +58,14 @@ namespace FindInternship.Web.Controllers
             if (!isCompany)
             {
                 TempData[ErrorMessage] = "Тази фирма не съществува";
-                return RedirectToAction("All", "Company");
+                return this.RedirectToAction("All", "Company");
             }
 
             bool isTeacher = await teacherService.IsTeacherAsync(User.GetId()!);
             if (!isTeacher)
             {
                 TempData[ErrorMessage] = "Трябва да бъдеш учител за да изпращаш молби за практика ";
-                return RedirectToAction("All", "Company");
+                return this.RedirectToAction("All", "Company");
             }
             string requestId;
 

@@ -8,16 +8,16 @@ namespace FindInternship.Core.Models.Meeting
 {
     public class MeetingViewModel
     {
-        public string Title { get; set; } = null!;
+        public string? Title { get; set; } 
 
-        public string Address { get; set; } = null!;
+        public string? Address { get; set; } 
 
         public string Day { get; set; } = null!;
         public int Number {  get; set; }
 
-        public string StartHour { get; set; } = null!;
+        public string? StartHour { get; set; } 
 
-        public string EndHour { get; set; } = null!;
+        public string? EndHour { get; set; }
 
         //public string? CompanyId { get; set; }
 

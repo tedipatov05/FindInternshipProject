@@ -68,5 +68,7 @@ namespace FindInternship.Core.Models.Account
 
         public IFormFile? ProfilePicture { get; set; }
 
+
+        
     }
 }
