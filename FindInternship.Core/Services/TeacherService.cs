@@ -29,7 +29,7 @@ namespace FindInternship.Core.Services
 
         public async Task Create(RegisterTeacherViewModel model, string userId)
         {
-            string classId = await classService.GetClassIdIfExistsAsync(model.Class);
+            string classId = await classService.GetClassIdIfExistsAsync(model.Class.Trim());
             int? schoolId = await schoolService.GetSchoolIdIfExistsAsync(model.School);
 
             if(schoolId == null) 
@@ -74,7 +74,7 @@ namespace FindInternship.Core.Services
 			var teacher = await repo.All<Teacher>()
                 .FirstOrDefaultAsync(t => t.ClassId == classId);
 
-            return teacher!.Id;
+            return teacher!.UserId;
                 
 		}
 

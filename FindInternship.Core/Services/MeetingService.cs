@@ -21,7 +21,7 @@ namespace FindInternship.Core.Services
             this.repo = repo;
         }
 
-        public async Task CreateAsync(AddMeetingViewModel model, string companyId, string classId)
+        public async Task<string> CreateAsync(AddMeetingViewModel model, string companyId, string classId)
         {
             var meeting = new Meeting()
             {
@@ -36,6 +36,28 @@ namespace FindInternship.Core.Services
 
             await repo.AddAsync(meeting);
             await repo.SaveChangesAsync();
+
+            return meeting.Id;
+        }
+
+        public async Task<MeetingViewModel> GetMeetingByIdAsync(string meetingId)
+        {
+            var meeting = await repo.All<Meeting>()
+                .Where(m => m.Id == meetingId)
+                .Select(m => new MeetingViewModel()
+                {
+                    Title = m.Title,
+                    Address = m.Address,
+                    Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
+                    Number = m.StartTime.Day,
+                    StartHour = m.StartTime.ToString("HH"),
+                    EndHour = m.EndTime.ToString("HH")
+                })
+                .FirstOrDefaultAsync();
+
+            return meeting;
+
+
         }
 
         public async Task<List<MeetingViewModel>> GetAllCompanyMeetingsForDayAsync(int days, string companyId)

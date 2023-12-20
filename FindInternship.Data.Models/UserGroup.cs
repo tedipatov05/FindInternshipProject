@@ -9,6 +9,7 @@ namespace FindInternship.Data.Models
 {
     public class UserGroup
     {
+
         [ForeignKey(nameof(Group))]
         public string GroupId { get; set; } = null!;
 

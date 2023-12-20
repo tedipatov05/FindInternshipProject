@@ -1,5 +1,6 @@
 using CloudinaryDotNet;
 using FindInternship.Common;
+using FindInternship.Core.Hubs;
 using FindInternship.Data;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
@@ -77,6 +78,7 @@ namespace FindInternship.Web
             var app = builder.Build();
 
             app.MapHub<RequestHub>("/requestHub");
+            app.MapHub<MeetingHub>("/meetingHub");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

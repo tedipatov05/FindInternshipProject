@@ -11,17 +11,19 @@ namespace FindInternship.Web.Controllers
 {
     public class RequestController : Controller
     {
-        private ICompanyService companyService;
-        private ITeacherService teacherService; 
-        private IRequestService requestService;
-		private IClassService classService;
+        private readonly ICompanyService companyService;
+        private readonly ITeacherService teacherService; 
+        private readonly IRequestService requestService;
+        private readonly IClassService classService;
+        private readonly IStudentService studentService;
 
-		public RequestController(ICompanyService companyService, ITeacherService teacherService, IRequestService requestService, IClassService classService)
+		public RequestController(ICompanyService companyService, ITeacherService teacherService, IRequestService requestService, IClassService classService, IStudentService studentService)
 		{
 			this.companyService = companyService;
 			this.teacherService = teacherService;
 			this.requestService = requestService;
 			this.classService = classService;
+            this.studentService = studentService;
 		}
 
 		[HttpGet]
@@ -159,6 +161,14 @@ namespace FindInternship.Web.Controllers
                 var classId = await classService.GetClassIdAsync(id);
 
                 await companyService.AddClassToCompany(classId, companyId);
+
+                //TODO: Remove comments :)
+
+                //var studentIds = await studentService.GetStudentCompanyIdsAsync(companyId, classId);
+
+
+                //return new JsonResult(new { IsEdited = result, CompanyUserId = userId, ClassId = classId, StudentIds = studentIds });
+
             }
 
 

@@ -16,6 +16,8 @@ namespace FindInternship.Core.Models.Meeting
         public ICollection<MeetingViewModel> Day3 { get; set; } = new HashSet<MeetingViewModel>();
         public ICollection<MeetingViewModel> Day4 { get; set; } = new HashSet<MeetingViewModel>();
 
+        public string? ClassId { get; set; }
+
         public ICollection<ClassMeetingViewModel> CompanyClasses { get; set; } = new HashSet<ClassMeetingViewModel>();
 
 

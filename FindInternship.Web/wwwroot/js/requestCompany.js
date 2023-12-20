@@ -123,6 +123,8 @@ connection.start().then(function () {
 });
 
 
+
+
 function changeStatus(newStatus, id) {
 
     let statusStyles = {
@@ -154,10 +156,11 @@ function changeStatus(newStatus, id) {
 
 
 
-                if (newStatus == "Accepted") {
+                if(newStatus == "Accepted") {
                     document.getElementById(`btn-documents-${id}`).style.display = 'block';
                     document.getElementById(`btn-class-${id}`).style.display = 'none'
                     document.getElementById(`dropdown-${id}`).getElementsByClassName('dropdown-menu')[0].style.display = 'none'
+                    
                 }
                 else {
                     document.getElementById(`btn-documents-${id}`).style.display = 'none';

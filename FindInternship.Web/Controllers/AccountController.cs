@@ -1,10 +1,12 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Hubs;
 using FindInternship.Core.Models.Account;
 using FindInternship.Core.Services;
 using FindInternship.Data.Models;
 using FindInternship.Data.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using static FindInternship.Common.NotificationConstants;
 
 namespace FindInternship.Web.Controllers
@@ -12,17 +14,20 @@ namespace FindInternship.Web.Controllers
     public class AccountController : Controller
     {
 
-        private IUserService userService;
-        private UserManager<User> userManager;
-        private SignInManager<User> signInManager;
-        private IImageService imageService;
-        private IStudentService studentService;
-        private IClassService classService;
-        private IAbilityService abilityService;
-        private ITeacherService teacherService;
-        private ICompanyService companyService;
+        private readonly IUserService userService;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
+        private readonly IImageService imageService;
+        private readonly IStudentService studentService;
+        private readonly IClassService classService;
+        private readonly IAbilityService abilityService;
+        private readonly ITeacherService teacherService;
+        private readonly ICompanyService companyService;
 
-        public AccountController(IUserService userService, UserManager<User> userManager, SignInManager<User> singInManager, IImageService imageService, IStudentService studentService, IClassService classService, IAbilityService abilityService, ITeacherService teacherService, ICompanyService companyService)
+        public AccountController(IUserService userService, UserManager<User> userManager,
+            SignInManager<User> singInManager, IImageService imageService, IStudentService studentService,
+            IClassService classService, IAbilityService abilityService, ITeacherService teacherService,
+            ICompanyService companyService)
         {
             this.userService = userService;
             this.userManager = userManager;
@@ -111,6 +116,7 @@ namespace FindInternship.Web.Controllers
             }
             model.Abilities = await abilityService.AllAbilitiesAsync();
             model.Classes = await classService.AllClassesAsync();
+
             return View(model);
         }
 
@@ -288,12 +294,14 @@ namespace FindInternship.Web.Controllers
                     }
 
                 }
+                else if (!user.IsApproved)
+                {
+                    TempData[WarningMessage] = "Изчакайте одобрение от администратора";
+                    
+                }
+
             }
 
-            if (!user.IsApproved)
-            {
-                TempData[WarningMessage] = "Изчакайте одобрение от администратора";
-            }
 
             ModelState.AddModelError(nameof(model.Email), "Invalid login");
 

@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FindInternship.Core.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace FindInternship.Core.Services
 {
@@ -103,7 +105,10 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
 		}
 
-		public async Task AddClassToCompany(string classId, string companyId)
+
+     
+
+        public async Task AddClassToCompany(string classId, string companyId)
 		{
             var classs = await repo.All<Class>()
                 .FirstOrDefaultAsync(c => c.Id == classId);

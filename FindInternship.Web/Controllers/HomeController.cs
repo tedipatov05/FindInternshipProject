@@ -43,7 +43,7 @@ namespace FindInternship.Web.Controllers
 
             if (User.IsInRole("Student"))
             {
-                //TO DO: Change redirection when student schedule is ready
+                //TODO: Change redirection when student schedule is ready
                 return View(model);
             }
 

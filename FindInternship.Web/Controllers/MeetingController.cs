@@ -41,6 +41,7 @@ namespace FindInternship.Web.Controllers
                 if (isTeacher)
                 {
                     string teacherId = await teacherService.GetTeacherIdAsync(userId);
+                    model.ClassId = await teacherService.GetTeacherClassIdAsync(userId);
                     model.DayNow = await meetingService.GetClassMeetingsForDayAsync(0, teacherId);
                     model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(1, teacherId);
                     model.Day2 = await meetingService.GetClassMeetingsForDayAsync(2, teacherId);
@@ -63,6 +64,7 @@ namespace FindInternship.Web.Controllers
                 {
                     string studentId = await studentService.GetStudentId(userId);
                     string studentTeacherId = await studentService.GetStudentTeacherIdAsync(studentId);
+                    model.ClassId = await studentService.GetStudentClassIdAsync(studentId);
                     model.DayNow = await meetingService.GetClassMeetingsForDayAsync(0, studentTeacherId);
                     model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(1, studentTeacherId);
                     model.Day2 = await meetingService.GetClassMeetingsForDayAsync(2, studentTeacherId);
@@ -102,9 +104,12 @@ namespace FindInternship.Web.Controllers
             try
             {
 
-                string teacherId = await teacherService.GetTeacherIdByClassIdAsync(classId);
+                string teacherUserId = await teacherService.GetTeacherIdByClassIdAsync(classId);
                 string companyId = await companyService.GetCompanyIdAsync(userId);
                
+                List<string> receiversIds = await studentService.GetStudentCompanyIdsAsync(companyId, classId);
+
+                receiversIds.Add(teacherUserId);
 
                 AddMeetingViewModel model = new AddMeetingViewModel()
                 {
@@ -121,10 +126,12 @@ namespace FindInternship.Web.Controllers
 
                 }
 
-                await meetingService.CreateAsync(model, companyId, classId);
+                string meetingId = await meetingService.CreateAsync(model, companyId, classId);
+
+
 
                 TempData[SuccessMessage] = "Успешно добавена среща";
-                return new JsonResult(new { ReceiverId = teacherId, model});
+                return new JsonResult(new { MeetingId=meetingId, ReceiversIds = receiversIds });
 
 
             }

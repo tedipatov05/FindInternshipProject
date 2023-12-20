@@ -1,6 +1,10 @@
 ﻿@using FindInternship.Core.Models.Meeting
 @model AllMeetingsViewModel
 
+@{
+    string display = User.IsInRole("Company") ? "block" : "none";
+}
+
 
 <div class="calendar">
 
@@ -57,7 +61,7 @@
         <div class="time-marker">5 PM</div>
         <div class="time-marker">6 PM</div>
     </div>
-    <div class="days">
+    <div class="days @Model.ClassId">
         
         
 
@@ -66,6 +70,7 @@
         <partial name="_MeetingPartial" model="@Model.Day2"/>
         <partial name="_MeetingPartial" model="@Model.Day3"/>
         <partial name="_MeetingPartial" model="@Model.Day4"/>
+
         @* <div class="day tues">
             <div class="date">
                 <p class="date-num"> 12</p>
@@ -145,25 +150,27 @@
             <div class="events">
             </div>
         </div> *@
-        <div id="ignoreOverflow">
-            <a data-fancybox data-src="#meeting-form" class="float" id="addMeeting">
-                <div class="plus">+</div>
-                <div class="ink-visual-container">
-                    <div class="ink-visual-static"></div>
-                </div>
-            </a>
-        </div>
+      
+            <div id="ignoreOverflow" style="display:@display">
+                <a data-fancybox data-src="#meeting-form" class="float" id="addMeeting">
+                    <div class="plus">+</div>
+                    <div class="ink-visual-container">
+                        <div class="ink-visual-static"></div>
+                    </div>
+                </a>
+            </div>
+        
 
     </div>
 
 </div>
 
 @section Styles {
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/schedule.css" asp-append-version="true" />
 }
 @section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
      <script src="~/js/meeting.js" asp-append-version="true"></script> 
 }
