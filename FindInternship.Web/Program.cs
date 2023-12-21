@@ -19,7 +19,7 @@ namespace FindInternship.Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("FindInternshipDbContextConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<FindInternshipDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -60,6 +60,18 @@ namespace FindInternship.Web
 
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:7256")
+                            .AllowAnyHeader()
+                            .WithMethods("GET", "POST", "PUT")
+                            .AllowCredentials();
+                    });
+            });
+
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
@@ -80,7 +92,7 @@ namespace FindInternship.Web
             app.MapHub<RequestHub>("/requestHub");
             app.MapHub<MeetingHub>("/meetingHub");
 
-            // Configure the HTTP request pipeline.
+            // Configure the HTTP request pipeline. 
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();

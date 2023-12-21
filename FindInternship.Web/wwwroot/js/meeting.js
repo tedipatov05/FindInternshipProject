@@ -8,6 +8,23 @@ document.getElementById('addMeeting').addEventListener('click', () => {
     Array.from(document.getElementsByClassName('text-danger')).forEach(e => e.style.display = 'none')
 })
 
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
+
+connection.onclose(async () => {
+    await start();
+});
+
+// Start the connection.
+start()
+
 function create(e) {
    
     
@@ -46,10 +63,16 @@ function create(e) {
             "RequestVerificationToken": t
 
         },
-        success: function (data) {
+        success: async function (data) {
             if (data) {
 
-                connection.invoke("SendMeeting", data.meetingId, data.receiversIds);
+                try {
+                    await connection.invoke("SendMeeting", data.meetingId, data.receiversIds);
+                }
+                catch (err) {
+                    console.error(err);
+                }
+                
 
                 window.location = `https://localhost:7256/Meeting/All`
 
@@ -86,24 +109,25 @@ connection.on("ReceiveMeeting", function (meeting) {
     let divParent = document.querySelector(`div.day-${meeting.day} div.events`);
 
     let divChild = document.createElement('div');
-    divChild.classList.add(`event start-${hours[meeting.startHour]} end-${hours[meeting.endHour]} corp-fi`);
+    divChild.classList.add(`event`);
+    divChild.classList.add(`start-${hours[meeting.startHour]}`);
+    divChild.classList.add(`end-${hours[meeting.endHour]}`);
+    divChild.classList.add(`corp-fi`);
 
-    divChild.innerHTML += ` <p class="title">${meeting.title}</p>
+    divChild.innerHTML = ` <p class="title">${meeting.title}</p>
                        <p class="title">${meeting.address}</p>
-                       <p class="time">${meeting.startHour} ÷. - ${meeting.endHour} ÷.</p>
-                       `;
+                       <p class="time">${meeting.startHour} \u0447. - ${meeting.endHour} \u0447.</p>
+                       `.normalize();
 
 
     divParent.appendChild(divChild);
+
+
+
+    console.log("hello")
     
 });
 
 document.getElementById('addEvent').addEventListener('submit', create);
 
-
-connection.start().then(function () {
-    console.log("established meeting connection")
-}).catch(function (err) {
-    return console.error(err.toString());
-});
 

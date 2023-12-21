@@ -104,7 +104,7 @@ namespace FindInternship.Web.Controllers
             try
             {
 
-                string teacherUserId = await teacherService.GetTeacherIdByClassIdAsync(classId);
+                string teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
                 string companyId = await companyService.GetCompanyIdAsync(userId);
                
                 List<string> receiversIds = await studentService.GetStudentCompanyIdsAsync(companyId, classId);
@@ -127,8 +127,6 @@ namespace FindInternship.Web.Controllers
                 }
 
                 string meetingId = await meetingService.CreateAsync(model, companyId, classId);
-
-
 
                 TempData[SuccessMessage] = "Успешно добавена среща";
                 return new JsonResult(new { MeetingId=meetingId, ReceiversIds = receiversIds });

@@ -34,13 +34,13 @@ namespace FindInternship.Web.Controllers
             if(!isCompany)
             {
                 TempData[ErrorMessage] = "Трябва да си фирма, за да качваш файлове";
-                return RedirectToAction("Request", "CompanyRequests");
+                return RedirectToAction("ClassRequests", "Request");
             }
 
             HashSet<string> documentsIds = new HashSet<string>();
 
             string classId = await classService.GetClassIdAsync(requestId);
-            string teacherId = await teacherService.GetTeacherIdByClassAsync(classId);
+            string teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
 
             try
             {
@@ -60,7 +60,7 @@ namespace FindInternship.Web.Controllers
             }
 
 
-            return new JsonResult(new { Documents = documentsIds, Receiver = teacherId, RequestId = requestId});
+            return new JsonResult(new { Documents = documentsIds, Receiver = teacherUserId, RequestId = requestId});
             
         }
 

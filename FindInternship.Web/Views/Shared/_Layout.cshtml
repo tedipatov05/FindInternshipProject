@@ -1,87 +1,81 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - FindInternship</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/FindInternship.Web.styles.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/lib/font/font-awesome.min.css" asp-append-version="true" />
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FindInternship</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FindInternship.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font/font-awesome.min.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-	@await RenderSectionAsync("Styles", required: false)
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-	<header id="header">
-		<partial name="_NotificationsPartial" />
+    <header id="header">
+        <partial name="_NotificationsPartial" />
 
-		<nav id="navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow">
-			<div class="container-fluid" style="margin-top: 10px;margin-right: 10px;margin-bottom: 5px;">
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-						aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-
-
-				@*    <div class="sec-center">*@
-				<input class="dropdown" type="checkbox" id="dropdown" name="dropdown" />
-				<label class="for-dropdown" for="dropdown" style="
-					   padding: 8px 20px;
-					   margin-left: 30px;
-					   border-radius: 50px;
-					   color: white;
-					   font-size: 14px;
-					   border: 2px solid #47b2e4;
-					   font-weight: 600;
-background-color: transparent;">Меню <i class="uil uil-arrow-down"></i></label>
-				<div class="section-dropdown">
-					<li class="nav-item"><a class="nav-link scrollto active" asp-controller="Home" asp-action="Index">Начало</a></li>
-					<li class="nav-item"><a class="nav-link scrollto" asp-controller="Home" asp-action="Contact">Контакт</a></li>
-					@if (User.IsInRole("Teacher"))
-					{
-						<li class="nav-item"><a class="nav-link scrollto" asp-controller="Company" asp-action="All">Фирми</a></li>
-						<li class="nav-item"><a class="nav-link scrollto" asp-controller="Request" asp-action="ClassRequests">Молби</a></li>
-					}
-					@if (User.IsInRole("Company"))
-					{
-						<li class="nav-item"><a class="nav-link scrollto" asp-controller="Request" asp-action="CompanyRequests">Молби</a></li>
-						<li class="nav-item"><a class="nav-link scrollto" asp-controller="Class" asp-action="CompanyClasses">Моите класове</a></li>
-						<li class="nav-item"><a class="nav-link scrollto" asp-controller="Meeting" asp-action="All">График</a></li>
-					}
-				</div>
-				@*                </div>*@
-
-
-				<a class="navbar-brand" href="#" ></a>
-
-				
-
-				<partial name="_LoginPartial" />
-				
+        <nav id="navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow">
+            <div class="container-fluid" style="margin-top: 10px;margin-right: 10px;margin-bottom: 5px;">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
 
 
-			</div>
+                
+                <input class="dropdown" type="checkbox" id="dropdown" name="dropdown" />
+                <label class="for-dropdown" for="dropdown" style="padding: 8px 20px; margin-left: 30px;border-radius: 50px;color: white; font-size: 14px; border: 2px solid #47b2e4;font-weight: 600;background-color: transparent;">
+                    Меню 
+                    <i class="uil uil-arrow-down"></i>
+                </label>
+                <div class="section-dropdown">
+                    <li class="nav-item"><a class="nav-link scrollto active" asp-controller="Home" asp-action="Index">Начало</a></li>
+                    <li class="nav-item"><a class="nav-link scrollto" asp-controller="Home" asp-action="Contact">Контакт</a></li>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <li class="nav-item"><a class="nav-link scrollto" asp-controller="Company" asp-action="All">Фирми</a></li>
+                        <li class="nav-item"><a class="nav-link scrollto" asp-controller="Request" asp-action="ClassRequests">Молби</a></li>
+                        <li class="nav-item"><a class="nav-link scrollto" asp-controller="Meeting" asp-action="All">График</a></li>
+                    }
+                    @if (User.IsInRole("Company"))
+                    {
+                        <li class="nav-item"><a class="nav-link scrollto" asp-controller="Request" asp-action="CompanyRequests">Молби</a></li>
+                        <li class="nav-item"><a class="nav-link scrollto" asp-controller="Class" asp-action="CompanyClasses">Моите класове</a></li>
+                        <li class="nav-item"><a class="nav-link scrollto" asp-controller="Meeting" asp-action="All">График</a></li>
+                    }
+                </div>
+              
+                <a class="navbar-brand" href="#"></a>
 
-		</nav>
-	</header>
+
+
+                <partial name="_LoginPartial" />
 
 
 
-	@RenderBody()
 
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="https://kit.fontawesome.com/b9403dda92.js" crossorigin="anonymous"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	<link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+            </div>
+
+        </nav>
+    </header>
 
 
 
-	@await RenderSectionAsync("Scripts", required: false)
+    @RenderBody()
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/b9403dda92.js" crossorigin="anonymous"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

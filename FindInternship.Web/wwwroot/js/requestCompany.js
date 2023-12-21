@@ -2,11 +2,7 @@
 var connection = new signalR.HubConnectionBuilder()
     .withUrl("/requestHub")
     .build();
-
-
-/*document.querySelector(`#project-items-${requestId} div#docs-dropdown`).style.display = 'none';*/
-
-
+    
 connection.on("ReceiveRequest", function (topic, message, status, date, id, teacherId, teacherName) {
 
     let div = document.createElement('div');
@@ -144,10 +140,17 @@ function changeStatus(newStatus, id) {
             RequestVerificationToken:
                 $('input:hidden[name="__RequestVerificationToken"]').val()
         },
-        success: function (data) {
+        success: async function (data) {
             if (data.isEdited) {
 
-                connection.invoke("ChangeRequestStatus", id, newStatus);
+                try {
+                   await connection.invoke("ChangeRequestStatus", id, newStatus);
+                }
+                catch (err) {
+                    console.error(err)
+                }
+
+                
 
                 let oldStatus = document.getElementById(`status-${id}`).textContent.trim();
                 document.getElementById(`status-${id}`).textContent = newStatus;

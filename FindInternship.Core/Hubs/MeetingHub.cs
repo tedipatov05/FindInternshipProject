@@ -22,18 +22,16 @@ namespace FindInternship.Core.Hubs
             this.meetingService = meetingService;
         }
 
-        //public async Task JoinGroup(string groupName, string userId)
-        //{
-        //    await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
-        //    await groupService.AddToGroup(groupName, userId);
 
-        //}
-
+        //TODO: Fix the bug with sending meetings
         public async Task SendMeeting(string meetingId, List<string> studentIds)
         {
             var meetingData = await meetingService.GetMeetingByIdAsync(meetingId);
+            
             await Clients.Users(studentIds).SendAsync("ReceiveMeeting", meetingData);
+            
+            
         }
     }
 }
