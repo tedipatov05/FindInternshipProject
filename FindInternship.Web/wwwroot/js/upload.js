@@ -103,11 +103,17 @@
 			},
 			processData: false,
 			contentType: false,
-			success: function (data) {
+			success: async function (data) {
 
-				console.log(data.receiver)
+				try {
+					await connection.invoke("SendDocuments", data.documents, data.receiver, data.requestId);
 
-				connection.invoke("SendDocuments", data.documents, data.receiver, data.requestId);
+
+				} catch (err) {
+					console.error(err)
+				}
+				
+
 
 				window.location = `https://localhost:7256/Request/CompanyRequests`
 

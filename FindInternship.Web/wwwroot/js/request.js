@@ -6,11 +6,22 @@ var connection = new signalR.HubConnectionBuilder()
 
 document.getElementById('send').disabled = true;
 
-connection.start().then(function () {
-    document.getElementById("send").disabled = false;
-}).catch(function (err) {
-    return console.error(err.toString());
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
+
+connection.onclose(async () => {
+    await start();
 });
+
+// Start the connection.
+start()
 
 document.getElementById('send').addEventListener('click', function (event) {
 
@@ -53,10 +64,15 @@ document.getElementById('send').addEventListener('click', function (event) {
                 "RequestVerificationToken": t
 
             },
-            success: function (data) {
+            success: async function (data) {
                 if (data) {
+                    try {
+                        await connection.invoke("SendRequest", topicText, messageText, data.requestId, data.companyUserId);
 
-                    connection.invoke("SendRequest", topicText, messageText, data.requestId, data.companyUserId);
+                    }
+                    catch (err) {
+                        console.error(err)
+                    }
                     window.location = `https://localhost:7256/Company/All`
                    
                 }
