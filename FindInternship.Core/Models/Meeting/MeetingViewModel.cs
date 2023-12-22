@@ -8,6 +8,7 @@ namespace FindInternship.Core.Models.Meeting
 {
     public class MeetingViewModel
     {
+        public string Id { get; set; } = null!;
         public string? Title { get; set; } 
 
         public string? Address { get; set; } 

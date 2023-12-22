@@ -105,8 +105,17 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
 		}
 
+        public async Task<bool> IsInCompanyScheduleAsync(string companyId, string meetingId)
+        {
+            var company = await repo.All<Company>()
+                .Include(c => c.Meetings)
+                .FirstOrDefaultAsync(c => c.Id == companyId);
 
-     
+
+            return company.Meetings.Any(m => m.Id == meetingId);
+
+        }
+
 
         public async Task AddClassToCompany(string classId, string companyId)
 		{

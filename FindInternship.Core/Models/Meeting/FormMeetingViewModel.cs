@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FindInternship.Core.Models.Meeting
 {
-    public class AddMeetingViewModel
+    public class FormMeetingViewModel
     {
         public string Title { get; set; }
 

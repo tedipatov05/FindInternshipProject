@@ -1,4 +1,5 @@
-﻿using FindInternship.Core.Contracts;
+﻿using FindInternship.Common;
+using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.Meeting;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
@@ -111,7 +112,7 @@ namespace FindInternship.Web.Controllers
 
                 receiversIds.Add(teacherUserId);
 
-                AddMeetingViewModel model = new AddMeetingViewModel()
+                FormMeetingViewModel model = new FormMeetingViewModel()
                 {
                     Title = title,
                     Start = start,
@@ -140,6 +141,66 @@ namespace FindInternship.Web.Controllers
             }
 
            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            string userId = User.GetId();
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+            if (!isCompany)
+            {
+                TempData[ErrorMessage] = "Трябва да си фирма за да реедактираш срещи";
+                return this.RedirectToAction("All");
+            }
+            string companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId, id);
+
+            if (!isInCompanySchedule)
+            {
+                TempData[ErrorMessage] = "Тази среща не е във вашия график";
+                return this.RedirectToAction("All");
+            }
+
+            var meeting = await meetingService.GetMeetingForEditAsync(id);
+
+            return View(meeting);
+
+        }
+
+        [HttpPost]
+        [Route("Meeting/Edit/{id}")]
+        public async Task<IActionResult> Edit([FromRoute] string id, string title, DateTime start, DateTime end,
+            string address)
+        {
+            string userId = User.GetId();
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+            if (!isCompany)
+            {
+                TempData[ErrorMessage] = "Трябва да си фирма за да реедактираш срещи";
+                return this.RedirectToAction("All");
+            }
+            string companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId, id);
+
+            if (!isInCompanySchedule)
+            {
+                TempData[ErrorMessage] = "Тази среща не е във вашия график";
+                return this.RedirectToAction("All");
+            }
+
+            FormMeetingViewModel model = new FormMeetingViewModel()
+            {
+                Address = address, 
+                End = end,
+                Start = start,
+                Title = title,
+            };
+
+            await meetingService.EditMeetingAsync(id, model);
+
+
+            return new JsonResult(new { id, title, start, end, address });
         }
 
 

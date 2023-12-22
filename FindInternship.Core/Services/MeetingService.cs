@@ -21,7 +21,7 @@ namespace FindInternship.Core.Services
             this.repo = repo;
         }
 
-        public async Task<string> CreateAsync(AddMeetingViewModel model, string companyId, string classId)
+        public async Task<string> CreateAsync(FormMeetingViewModel model, string companyId, string classId)
         {
             var meeting = new Meeting()
             {
@@ -46,6 +46,7 @@ namespace FindInternship.Core.Services
                 .Where(m => m.Id == meetingId)
                 .Select(m => new MeetingViewModel()
                 {
+                    Id = m.Id,
                     Title = m.Title,
                     Address = m.Address,
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
@@ -60,6 +61,36 @@ namespace FindInternship.Core.Services
 
         }
 
+        public async Task<FormMeetingViewModel> GetMeetingForEditAsync(string meetingId)
+        {
+            var meeting = await repo.All<Meeting>()
+                .Where(me => me.Id == meetingId)
+                .Select(m => new FormMeetingViewModel()
+                {
+                    Address = m.Address, 
+                    End = m.EndTime,
+                    Start = m.StartTime, 
+                    Title = m.Title
+                })
+                .FirstOrDefaultAsync();
+
+
+            return meeting;
+        }
+
+        public async Task EditMeetingAsync(string id, FormMeetingViewModel model)
+        {
+            var meeting = await repo.GetByIdAsync<Meeting>(id);
+
+            meeting.Address = model.Address;
+            meeting.Title = model.Title;
+            meeting.EndTime = model.End;
+            meeting.StartTime = model.Start;
+
+
+            await repo.SaveChangesAsync();
+        }
+
         public async Task<List<MeetingViewModel>> GetAllCompanyMeetingsForDayAsync(int days, string companyId)
         {
             var meetings = await repo.All<Meeting>()
@@ -68,6 +99,7 @@ namespace FindInternship.Core.Services
                 m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.CompanyId == companyId)
                 .Select(m => new MeetingViewModel()
                 {
+                    Id = m.Id,
                     Title = m.Title,
                     Address = m.Address,
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
@@ -99,6 +131,7 @@ namespace FindInternship.Core.Services
                 .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear && m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.Class.TeacherId==teacherId)
                 .Select(m => new MeetingViewModel()
                 {
+                    Id = m.Id,
                     Title = m.Title,
                     Address = m.Address,
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),

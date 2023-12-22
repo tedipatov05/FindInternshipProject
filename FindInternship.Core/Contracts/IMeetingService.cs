@@ -13,9 +13,13 @@ namespace FindInternship.Core.Contracts
 
         Task<List<MeetingViewModel>> GetClassMeetingsForDayAsync(int days, string teacherId);
 
-        Task<string> CreateAsync(AddMeetingViewModel model, string companyId, string classId);
+        Task<string> CreateAsync(FormMeetingViewModel model, string companyId, string classId);
 
         Task<MeetingViewModel> GetMeetingByIdAsync(string meetingId);
+
+        Task<FormMeetingViewModel> GetMeetingForEditAsync(string meetingId);
+
+        Task EditMeetingAsync(string id, FormMeetingViewModel model);
 
     }
 }

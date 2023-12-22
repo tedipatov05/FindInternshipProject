@@ -22,9 +22,6 @@ namespace FindInternship.Core.Hubs
             this.meetingService = meetingService;
         }
 
-
-
-        //TODO: Fix the bug with sending meetings
         public async Task SendMeeting(string meetingId, List<string> studentIds)
         {
             var meetingData = await meetingService.GetMeetingByIdAsync(meetingId);

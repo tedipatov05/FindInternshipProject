@@ -31,11 +31,23 @@
         {
             if (meeting.Title != null)
             {
-                <div class="event start-@hours[meeting.StartHour] end-@hours[meeting.EndHour] corp-fi">
+                <div class="event start-@hours[meeting.StartHour] end-@hours[meeting.EndHour] corp-fi" id="@meeting.Id" style="display: grid">
                     <p class="title">@meeting.Title</p>
                     <p class="title">@meeting.Address</p>
                     <p class="time">@meeting.StartHour ч. - @meeting.EndHour ч.</p>
+                    
+                    
+                    @if (User.IsInRole("Company"))
+                    {
+                        //TODO: Change style of button
+
+                        <a class="btn btn-warning" asp-action="Edit" asp-controller="Meeting" asp-route-id="@meeting.Id">Промени</a>
+
+                    }
+
+
                 </div>
+
             }
 
         }

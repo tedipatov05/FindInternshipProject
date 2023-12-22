@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FindInternship.Core.Models.Meeting;
 
 namespace FindInternship.Core.Contracts
 {
@@ -22,7 +23,11 @@ namespace FindInternship.Core.Contracts
 
         Task CreateAsync(string userId, string services, string description);
 
+        Task<bool> IsInCompanyScheduleAsync(string companyId, string meetingId);
+
         
+
+
 
     }
 }

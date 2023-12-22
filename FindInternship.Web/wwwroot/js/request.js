@@ -20,7 +20,7 @@ connection.onclose(async () => {
     await start();
 });
 
-// Start the connection.
+
 start()
 
 document.getElementById('send').addEventListener('click', function (event) {

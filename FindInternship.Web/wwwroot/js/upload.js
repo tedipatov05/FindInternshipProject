@@ -1,29 +1,23 @@
 
+Array.from(document.getElementsByClassName('btn badge-soft-secondary doc')).forEach(e =>
+    e.addEventListener('click', (ev) => {
 
+        let id = ev.target.id.slice(14);
+        requestId = id;
+        console.log(id);
+        let button = document.getElementById('update');
 
+        button.setAttribute('name', id);
 
-	
-	Array.from(document.getElementsByClassName('btn badge-soft-secondary doc')).forEach(e =>
-		e.addEventListener('click', (ev) => {
+    })
+)
 
-			let id = ev.target.id.slice(14);
-			requestId = id;
-			console.log(id);
-			let button = document.getElementById('update');
+function handleFileSelect(evt) {
 
-			button.setAttribute('name', id);
+    const files = evt.target.files;
 
-		})
-	)
-	
-	
-	
-	function handleFileSelect(evt) {
-
-		const files = evt.target.files; 
-
-		let template = `${Object.keys(files)
-			.map(file => `<div class="file file--${file}">
+    let template = `${Object.keys(files)
+        .map(file => `<div class="file file--${file}">
      <div class="name"><span class="text-dark">${files[file].name}</span></div>
      <div class="progress active"></div>
      <div class="done">
@@ -34,109 +28,109 @@
 						</a>
      </div>
     </div>`)
-			.join("")}`;
+        .join("")}`;
 
-		document.querySelector("#drop").classList.add("hidden");
-		document.querySelector("footer").classList.add("hasFiles");
-		document.querySelector(".importar").classList.add("active");
-		setTimeout(() => {
-			document.querySelector(".list-files").innerHTML = template;
-		}, 1000);
+    document.querySelector("#drop").classList.add("hidden");
+    document.querySelector("footer").classList.add("hasFiles");
+    document.querySelector(".importar").classList.add("active");
+    setTimeout(() => {
+        document.querySelector(".list-files").innerHTML = template;
+    }, 1000);
 
-		Object.keys(files).forEach(file => {
-			let load = 2000 + (file * 2000); 
-			setTimeout(() => {
-				document.querySelector(`.file--${file}`).querySelector(".progress").classList.remove("active");
-				document.querySelector(`.file--${file}`).querySelector(".done").classList.add("anim");
-			}, load);
-		});
-	}
+    Object.keys(files).forEach(file => {
+        let load = 2000 + (file * 2000);
+        setTimeout(() => {
+            document.querySelector(`.file--${file}`).querySelector(".progress").classList.remove("active");
+            document.querySelector(`.file--${file}`).querySelector(".done").classList.add("anim");
+        }, load);
+    });
+}
 
-	document.getElementById("triggerFile").addEventListener("click", evt => {
-		evt.preventDefault();
-		document.querySelector("input[type=file]").click();
-	});
+document.getElementById("triggerFile").addEventListener("click", evt => {
+    evt.preventDefault();
+    document.querySelector("input[type=file]").click();
+});
 
-	document.querySelector("#drop").ondragleave = evt => {
-		document.querySelector("#drop").classList.remove("active");
-		evt.preventDefault();
-	};
+document.querySelector("#drop").ondragleave = evt => {
+    document.querySelector("#drop").classList.remove("active");
+    evt.preventDefault();
+};
 
-	document.querySelector("#drop").ondragover = $("#drop").ondragenter = evt => {
-		document.querySelector("#drop").classList.add("active");
-		evt.preventDefault();
-	};
+document.querySelector("#drop").ondragover = $("#drop").ondragenter = evt => {
+    document.querySelector("#drop").classList.add("active");
+    evt.preventDefault();
+};
 
-	document.querySelector("#drop").ondrop = evt => {
-		document.querySelector("input[type=file]").files = evt.dataTransfer.files;
-		document.querySelector("footer").classList.add("hasFiles");
-		document.querySelector("#drop").classList.remove("active");
-		evt.preventDefault();
-	};
-
-	
-	document.getElementById("update").addEventListener("click", function(ev) {
-
-		let files = document.querySelector("input[type=file]").files;
-		let requestId = String(document.getElementById('update').name); 
-
-		let token = document.querySelector("input[name='__RequestVerificationToken']").value;
-
-		let data = new FormData();
-
-		for (var i = 0; i < files.length; i++) {
-			data.append('files', files[i]);
-		}
-
-		
-		data.append('requestId', requestId);
-
-		
-
-		$.ajax({
-			type: "POST",
-			url: `/Document/Upload`,
-			data: data,
-			headers: {
-				"RequestVerificationToken": token
-
-			},
-			processData: false,
-			contentType: false,
-			success: async function (data) {
-
-				try {
-					await connection.invoke("SendDocuments", data.documents, data.receiver, data.requestId);
+document.querySelector("#drop").ondrop = evt => {
+    document.querySelector("input[type=file]").files = evt.dataTransfer.files;
+    document.querySelector("footer").classList.add("hasFiles");
+    document.querySelector("#drop").classList.remove("active");
+    evt.preventDefault();
+};
 
 
-				} catch (err) {
-					console.error(err)
-				}
-				
+document.getElementById("update").addEventListener("click", function (ev) {
+
+    let files = document.querySelector("input[type=file]").files;
+    let requestId = String(document.getElementById('update').name);
+
+    let token = document.querySelector("input[name='__RequestVerificationToken']").value;
+
+    let data = new FormData();
+
+    for (var i = 0; i < files.length; i++) {
+        data.append('files', files[i]);
+    }
 
 
-				window.location = `https://localhost:7256/Request/CompanyRequests`
-
-				
-
-			},
-			error: function (error) {
-				console.error(error.statusCode);
-				console.error('Error occurred while removing object');
-			}
-		});
+    data.append('requestId', requestId);
 
 
 
-		document.querySelector(".list-files").innerHTML = "";
-		document.querySelector("footer").classList.remove("hasFiles");
-		document.querySelector(".importar").classList.remove("active");
-		setTimeout(() => {
-			document.querySelector("#drop").classList.remove("hidden");
-		}, 500);
+    $.ajax({
+        type: "POST",
+        url: `/Document/Upload`,
+        data: data,
+        headers: {
+            "RequestVerificationToken": token
 
-		ev.preventDefault();
-	});
-	
-	document.querySelector("input[type=file]").addEventListener("change", handleFileSelect);
+        },
+        processData: false,
+        contentType: false,
+        success: async function (data) {
+
+            try {
+                await connection.invoke("SendDocuments", data.documents, data.receiver, data.requestId);
+
+
+            } catch (err) {
+                console.error(err)
+            }
+
+
+
+            window.location = `https://localhost:7256/Request/CompanyRequests`
+
+
+
+        },
+        error: function (error) {
+            console.error(error.statusCode);
+            console.error('Error occurred while removing object');
+        }
+    });
+
+
+
+    document.querySelector(".list-files").innerHTML = "";
+    document.querySelector("footer").classList.remove("hasFiles");
+    document.querySelector(".importar").classList.remove("active");
+    setTimeout(() => {
+        document.querySelector("#drop").classList.remove("hidden");
+    }, 500);
+
+    ev.preventDefault();
+});
+
+document.querySelector("input[type=file]").addEventListener("change", handleFileSelect);
 
