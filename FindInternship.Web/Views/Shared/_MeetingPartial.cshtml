@@ -31,10 +31,10 @@
         {
             if (meeting.Title != null)
             {
-                <div class="event start-@hours[meeting.StartHour] end-@hours[meeting.EndHour] corp-fi" id="@meeting.Id" style="display: grid">
+                <div class="event start-@hours[meeting.StartHour] end-@hours[meeting.EndHour] corp-fi" id="@meeting.Id" style="height: fit-content;margin-top: 20px;">
                     <p class="title">@meeting.Title</p>
                     <p class="title">@meeting.Address</p>
-                    <p class="time">@meeting.StartHour ч. - @meeting.EndHour ч.</p>
+                    <p class="time" style="margin-bottom: 5px">@meeting.StartHour ч. - @meeting.EndHour ч.</p>
                     
                     
                     @if (User.IsInRole("Company"))

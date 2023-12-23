@@ -8,7 +8,7 @@
 
         <h2 class="text-light text-center">Промени среща</h2>
 
-        <form class="requires-validation" id="addEvent">
+        <form class="requires-validation" id="editEvent">
 
             <input placeholder="Тема на срещата" value="@Model.Title" type="text" name="title">
             <span class="text-danger" id="titleValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
@@ -36,4 +36,7 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/schedule.css" asp-append-version="true" />
+}
+@section Scripts{
+    <script src="~/js/editMeeting.js" asp-append-version="true"></script>
 }

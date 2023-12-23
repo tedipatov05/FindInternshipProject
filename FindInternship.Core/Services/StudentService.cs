@@ -74,6 +74,17 @@ namespace FindInternship.Core.Services
 
         }
 
+        public async Task<List<string>> GetCompanyStudentIdsAsync(string companyId, string meetingId)
+        {
+            var cl = await repo.All<Class>()
+                .Include(c => c.Students)
+                .Include(c => c.Meetings)
+                .Where(c => c.CompanyId == companyId && c.Meetings.Any(m => m.Id == meetingId))
+                .FirstOrDefaultAsync();
+
+            return cl.Students.Select(s => s.UserId).ToList();
+        }
+
         public async Task<string> GetStudentClassIdAsync(string studentId)
         {
             var student = await repo.All<Student>()

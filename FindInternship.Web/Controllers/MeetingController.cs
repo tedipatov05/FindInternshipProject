@@ -189,6 +189,13 @@ namespace FindInternship.Web.Controllers
                 return this.RedirectToAction("All");
             }
 
+
+            var receiversIds = await studentService.GetCompanyStudentIdsAsync(companyId, id);
+            string teacherUserId = await teacherService.GetTeacherUserIdByMeetingIdAsync(id);
+
+            receiversIds.Add(teacherUserId);
+
+
             FormMeetingViewModel model = new FormMeetingViewModel()
             {
                 Address = address, 
@@ -200,7 +207,7 @@ namespace FindInternship.Web.Controllers
             await meetingService.EditMeetingAsync(id, model);
 
 
-            return new JsonResult(new { id, title, start, end, address });
+            return new JsonResult(new { id, title, start, end, address, ReceiversIds =  receiversIds});
         }
 
 
