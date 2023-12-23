@@ -29,7 +29,7 @@ namespace FindInternship.Web.Controllers
             if(!IsTeacher) 
             {
                 TempData[ErrorMessage] = "Трябва да бъдете учител за да достъпите всички фирми";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             model.Companies = await companyService.GetAllCompaniesAsync(model);

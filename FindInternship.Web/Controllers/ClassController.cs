@@ -32,7 +32,7 @@ namespace FindInternship.Web.Controllers
 			if (!IsCompany)
 			{
 				TempData[ErrorMessage] = "Трябва да бъдете фирма за да достъпите класовете";
-				return RedirectToAction("Index");
+				return RedirectToAction("Index", "Home");
 			}
 
 			var classes = await classService.GetAllCompanyClassesAsync(companyId);

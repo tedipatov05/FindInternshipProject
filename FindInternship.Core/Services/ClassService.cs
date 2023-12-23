@@ -38,6 +38,7 @@ namespace FindInternship.Core.Services
 		public async Task<List<ClassViewModel>> GetAllCompanyClassesAsync(string companyId)
 		{
             var classes = await repo.All<Class>()
+                .Include(c => c.Teacher)
                 .Where(c => c.CompanyId == companyId)
                 .Select(c => new ClassViewModel()
                 {
@@ -46,7 +47,7 @@ namespace FindInternship.Core.Services
                     School = c.School.Name,
                     Teacher = c.Teacher.User.Name,
                     Students = c.Students.Count,
-                    TeacherId = c.TeacherId
+                    TeacherId = c.Teacher.UserId
                     
                 })
 				.ToListAsync();
