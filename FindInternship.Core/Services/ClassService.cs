@@ -45,7 +45,8 @@ namespace FindInternship.Core.Services
                     Name = c.Grade,
                     School = c.School.Name,
                     Teacher = c.Teacher.User.Name,
-                    Students = c.Students.Count
+                    Students = c.Students.Count,
+                    TeacherId = c.TeacherId
                     
                 })
 				.ToListAsync();
