@@ -122,6 +122,5 @@ a {
 }
 
 .thickness {
-    color: white;
-    text-shadow: 0px 1px 0 #4a6868, 0px 2px 0 #405959, 0px 3px 0 #354a4a, 0px 0px 0px hsla(0, 0%, 0%, 0), -4px 4px 6px black;
+    color: black;
 }
