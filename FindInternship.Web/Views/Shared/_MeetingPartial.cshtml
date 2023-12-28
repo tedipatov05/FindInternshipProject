@@ -39,8 +39,7 @@
                     
                     @if (User.IsInRole("Company"))
                     {
-                        //TODO: Change style of button
-
+                       
                         <a class="btn btn-warning" asp-action="Edit" asp-controller="Meeting" asp-route-id="@meeting.Id">Промени</a>
 
                     }

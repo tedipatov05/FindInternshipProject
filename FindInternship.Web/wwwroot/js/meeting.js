@@ -54,21 +54,15 @@ function create(e) {
             validationSpans[index].style.display = 'none';
         }
     });
-
     
-
    
     if (Array.from(validationSpans).some(v => v.style.display == 'block') != true) {
 
-        if (new Date(end).getHours() - new Date(start).getHours()) {
+        if (new Date(end).getHours() - new Date(start).getHours() < 3) {
             toastr.error('\u041F\u0440\u043E\u0434\u044A\u043B\u0436\u0438\u0442\u0435\u043B\u043D\u043E\u0441\u0442\u0442\u0430 \u043D\u0430 \u0441\u0440\u0435\u0449\u0430\u0442\u0430 \u0442\u0440\u044F\u0431\u0432\u0430 \u0434\u0430 \u0435 \u043F\u043E\u043D\u0435 3 \u0447\u0430\u0441\u0430'.normalize());
         }
         else {
-
-
-
-
-
+            
             let t = $("input[name='__RequestVerificationToken']").val();
 
             $.ajax({
@@ -115,8 +109,23 @@ function create(e) {
 
 }
 
+connection.on("ReceiveEditedMeeting", async function (meetingId, receivers) {
 
-connection.on("ReceiveMeeting", function (meeting) {
+    var divMeeting = document.getElementById(`${meetingId}`);
+
+    divMeeting.parentNode.removeChild(divMeeting);
+
+    try {
+        await connection.invoke("SendMeeting", meetingId, receivers);
+    }
+    catch (err) {
+        console.error(err);
+    }
+
+});
+
+
+connection.on("ReceiveMeeting", function (meeting, id) {
 
     let hours = {
         "09": "9",
@@ -138,6 +147,7 @@ connection.on("ReceiveMeeting", function (meeting) {
     divChild.classList.add(`start-${hours[meeting.startHour]}`);
     divChild.classList.add(`end-${hours[meeting.endHour]}`);
     divChild.classList.add(`corp-fi`);
+    divChild.id = id;
 
     divChild.innerHTML = ` <p class="title">${meeting.title}</p>
                        <p class="title">${meeting.address}</p>

@@ -89,6 +89,9 @@ namespace FindInternship.Web.Controllers
         }
 
 
+
+        //TODO: Add validation meeting to be minimum three hours
+
         [HttpPost]
         [Route("Meeting/Create")]
         public async Task<IActionResult> Create(string classId, string title, DateTime start, DateTime end, string address)
@@ -177,7 +180,7 @@ namespace FindInternship.Web.Controllers
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
             {
-                TempData[ErrorMessage] = "Трябва да си фирма за да реедактираш срещи";
+                TempData[ErrorMessage] = "Трябва да си фирма за да редактираш срещи";
                 return this.RedirectToAction("All");
             }
             string companyId = await companyService.GetCompanyIdAsync(userId);
@@ -207,7 +210,7 @@ namespace FindInternship.Web.Controllers
             await meetingService.EditMeetingAsync(id, model);
 
 
-            return new JsonResult(new { id, title, start, end, address, ReceiversIds =  receiversIds});
+            return new JsonResult(new { MeetingId = id, Model = model , ReceiversIds =  receiversIds});
         }
 
 

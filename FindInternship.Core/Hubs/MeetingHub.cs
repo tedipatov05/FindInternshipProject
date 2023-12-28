@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Meeting;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Org.BouncyCastle.Operators;
 
@@ -26,9 +27,13 @@ namespace FindInternship.Core.Hubs
         {
             var meetingData = await meetingService.GetMeetingByIdAsync(meetingId);
             
-            await Clients.Users(studentIds).SendAsync("ReceiveMeeting", meetingData);
+            await Clients.Users(studentIds).SendAsync("ReceiveMeeting", meetingData, meetingId);
             
-            
+        }
+
+        public async Task EditMeeting(string meetingId, FormMeetingViewModel model, List<string> receiversIds)
+        {
+            await Clients.Users(receiversIds).SendAsync("ReceiveEditedMeeting", meetingId, receiversIds);
         }
     }
 }

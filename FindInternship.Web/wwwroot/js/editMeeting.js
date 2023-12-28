@@ -1,5 +1,23 @@
 
+var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/meetingHub")
+    .build();
 
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
+
+connection.onclose(async () => {
+    await start();
+});
+
+start()
 
 function edit(e) {
     e.preventDefault();
@@ -43,9 +61,20 @@ function edit(e) {
             },
             success: async function (data) {
 
-                console.log(data.id)
+                if (data) {
 
+                    try {
 
+                        await connection.invoke("EditMeeting", data.meetingId, data.model, data.receiversIds)
+
+                    } catch (err) {
+                        console.error(err);
+                    }
+
+                    console.log("successfully edited");
+
+                    window.location = `https://localhost:7256/Meeting/All`;
+                }
             },
             error: function (err) {
                 console.error(error)
