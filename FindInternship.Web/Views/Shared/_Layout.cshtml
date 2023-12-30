@@ -48,6 +48,10 @@
                         <li class="nav-item"><a class="nav-link scrollto" asp-controller="Class" asp-action="CompanyClasses">Моите класове</a></li>
                         <li class="nav-item"><a class="nav-link scrollto" asp-controller="Meeting" asp-action="All">График</a></li>
                     }
+                    @if (User.IsInRole("Student"))
+                    {
+                        <li class="nav-item"><a class="nav-link scrollto" asp-controller="Meeting" asp-action="All">График</a></li>
+                    }
                 </div>
               
                 <a class="navbar-brand" href="#"></a>

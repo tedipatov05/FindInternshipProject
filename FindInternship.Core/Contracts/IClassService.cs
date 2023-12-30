@@ -26,5 +26,7 @@ namespace FindInternship.Core.Contracts
 
         Task UpdateAsync(string classId, string teacherId);
 
+        Task<bool> ExistsClassByNameAndSchoolAsync(string className, string schoolName);
+
     }
 }

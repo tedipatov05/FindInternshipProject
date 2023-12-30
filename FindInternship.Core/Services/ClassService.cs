@@ -105,6 +105,16 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task<bool> ExistsClassByNameAndSchoolAsync(string className, string schoolName)
+        {
+            var isExists = await repo.All<Class>()
+                .Include(c => c.School)
+                .AnyAsync(c => c.Grade.ToUpper() == className.ToUpper() && c.School.Name.ToUpper() == schoolName.ToUpper());
+
+            return isExists;
+            
+        }
+
         public async Task<string> GetClassIdByClassNameAsync(string className, string schoolName)
         {
             var class1 = await repo.All<Class>()

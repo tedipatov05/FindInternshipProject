@@ -142,6 +142,13 @@ namespace FindInternship.Web.Controllers
                 ModelState.AddModelError(nameof(model.PhoneNumber), "Потребител с този телефонен номер вече съществува.");
 
             }
+
+            if (await classService.ExistsClassByNameAndSchoolAsync(model.Class, model.School))
+            {
+                TempData[ErrorMessage] = "Този клас вече си има учител";
+                return View(model);
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
