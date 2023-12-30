@@ -239,7 +239,6 @@ namespace FindInternship.Web.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         [Route("/Meeting/Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] string id, PreDeleteMeetingViewModel model)

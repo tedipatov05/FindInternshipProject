@@ -4,7 +4,7 @@ var connection = new signalR.HubConnectionBuilder()
     .withUrl("/requestHub")
     .build();
 
-document.getElementById('send').disabled = true;
+/*document.getElementById('send').disabled = true;*/
 
 async function start() {
     try {
