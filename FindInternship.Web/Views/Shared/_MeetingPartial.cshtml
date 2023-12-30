@@ -39,9 +39,8 @@
                     
                     @if (User.IsInRole("Company"))
                     {
-                       
                         <a class="btn btn-warning" asp-action="Edit" asp-controller="Meeting" asp-route-id="@meeting.Id">Промени</a>
-
+                        <a class="btn btn-warning" asp-action="Delete" asp-controller="Meeting" asp-route-id="@meeting.Id">Изтрий</a>
                     }
 
 

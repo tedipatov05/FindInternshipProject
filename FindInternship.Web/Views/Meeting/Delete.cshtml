@@ -1,0 +1,44 @@
+﻿@model FindInternship.Core.Models.Meeting.PreDeleteMeetingViewModel
+
+
+<div class="form-holder">
+    
+    <div class="c-event__creator c-calendar__style js-event__creator isVisible" style="width: 1050px; position: absolute;height: fit-content;
+    padding-top: 40px" id="meeting-form">
+
+        <h2 class="text-light text-center">Изтрий среща</h2>
+
+        <form class="requires-validation" id="deleteEvent">
+
+            <input placeholder="Тема на срещата" value="@Model.Title" type="text" name="title" disabled>
+            <span class="text-danger" id="titleValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+
+            <lable class="text-light" style="margin-top: 10px">Начален час</lable>
+            <input type="datetime" name="start" placeholder="start time" value="@Model.Start" disabled>
+            <span class="text-danger" id="startValidation" style="display:none; font-weight: bold;">Това поле е задължително</span>
+
+            <label class="text-light" style="margin-top: 10px">Краен час</label>
+            <input type="datetime" name="end" placeholder="end time" value="@Model.End" disabled>
+            <span class="text-danger" id="endValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+
+            <input placeholder="Адрес на срещата" type="text" name="address" value="@Model.Address" disabled>
+            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+
+            <br>
+
+            <button type="submit" class="o-btn js-event__save" id="btn-save">SAVE <span class="fa fa-save"></span></button>
+
+        </form>
+
+
+    </div>
+
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/schedule.css" asp-append-version="true" />
+}
+@section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/deleteMeeting.js" asp-append-version="true"></script>
+}

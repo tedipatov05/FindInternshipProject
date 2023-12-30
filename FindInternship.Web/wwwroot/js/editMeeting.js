@@ -22,7 +22,7 @@ start()
 function edit(e) {
     e.preventDefault();
 
-    var data = new FormData(e.target);
+    let data = new FormData(e.target);
 
     let { title, start, end, address } = Object.fromEntries(data);
 

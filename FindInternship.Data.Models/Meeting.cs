@@ -15,6 +15,7 @@ namespace FindInternship.Data.Models
         public Meeting()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.IsActive = true;
         }
         [Key]
         public string Id { get; set; } = null!;
@@ -38,5 +39,7 @@ namespace FindInternship.Data.Models
         public string ClassId { get; set; } = null!;
 
         public Class Class { get; set; } = null!;
+
+        public bool IsActive { get; set; }
     }
 }

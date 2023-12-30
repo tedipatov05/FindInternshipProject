@@ -183,6 +183,7 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Трябва да си фирма за да редактираш срещи";
                 return this.RedirectToAction("All");
             }
+
             string companyId = await companyService.GetCompanyIdAsync(userId);
             bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId, id);
 
@@ -198,10 +199,9 @@ namespace FindInternship.Web.Controllers
 
             receiversIds.Add(teacherUserId);
 
-
             FormMeetingViewModel model = new FormMeetingViewModel()
             {
-                Address = address, 
+                Address = address,
                 End = end,
                 Start = start,
                 Title = title,
@@ -210,7 +210,67 @@ namespace FindInternship.Web.Controllers
             await meetingService.EditMeetingAsync(id, model);
 
 
-            return new JsonResult(new { MeetingId = id, Model = model , ReceiversIds =  receiversIds});
+            return new JsonResult(new { MeetingId = id, Model = model, ReceiversIds = receiversIds });
+        }
+
+        [HttpGet]
+        [Route("/Meeting/Delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute]string id)
+        {
+            string userId = User.GetId();
+
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+            if (!isCompany)
+            {
+                TempData[ErrorMessage] = "Ти трябва да бъдеш фирма, за да изтриваш срещи";
+                return this.RedirectToAction("All");
+            }
+            string companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId, id);
+
+            if (!isInCompanySchedule)
+            {
+                TempData[ErrorMessage] = "Тази среща не е в твоя график";
+                return this.RedirectToAction("All");
+            }
+
+            var model = await meetingService.GetMeetingForDeleteAsync(id);
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [Route("/Meeting/Delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] string id, PreDeleteMeetingViewModel model)
+        {
+            string userId = User.GetId();
+
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+            if (!isCompany)
+            {
+                TempData[ErrorMessage] = "Ти трябва да бъдеш фирма, за да изтриваш срещи";
+                return this.RedirectToAction("All");
+            }
+            string companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId, id);
+
+            if (!isInCompanySchedule)
+            {
+                TempData[ErrorMessage] = "Тази среща не е в твоя график";
+                return this.RedirectToAction("All");
+            }
+
+            var receiversIds = await studentService.GetCompanyStudentIdsAsync(companyId, id);
+            string teacherUserId = await teacherService.GetTeacherUserIdByMeetingIdAsync(id);
+
+            receiversIds.Add(teacherUserId);
+
+            await meetingService.DeleteMeetingAsync(id);
+
+            return new JsonResult(new {ReceiversIds = receiversIds, meetingId = id });
+
+
         }
 
 

@@ -39,11 +39,38 @@ namespace FindInternship.Core.Services
 
             return meeting.Id;
         }
+        public async Task DeleteMeetingAsync(string meetingId)
+        {
+            var meeting = await repo.All<Meeting>()
+                .FirstOrDefaultAsync(m => m.Id == meetingId);
+
+            meeting.IsActive = false;
+
+            await repo.SaveChangesAsync();
+
+        }
+
+        public async Task<PreDeleteMeetingViewModel> GetMeetingForDeleteAsync(string meetingId)
+        {
+            var meeting = await repo.All<Meeting>()
+                .Where(m => m.Id == meetingId && m.IsActive)
+                .Select(m => new PreDeleteMeetingViewModel()
+                {
+                    
+                    Address = m.Address,
+                    End = m.EndTime,
+                    Start = m.StartTime,
+                    Title = m.Title,
+                })
+                .FirstOrDefaultAsync();
+
+            return meeting;
+        }
 
         public async Task<MeetingViewModel> GetMeetingByIdAsync(string meetingId)
         {
             var meeting = await repo.All<Meeting>()
-                .Where(m => m.Id == meetingId)
+                .Where(m => m.Id == meetingId && m.IsActive == true)
                 .Select(m => new MeetingViewModel()
                 {
                     Id = m.Id,
@@ -64,7 +91,7 @@ namespace FindInternship.Core.Services
         public async Task<FormMeetingViewModel> GetMeetingForEditAsync(string meetingId)
         {
             var meeting = await repo.All<Meeting>()
-                .Where(me => me.Id == meetingId)
+                .Where(me => me.Id == meetingId && me.IsActive == true)
                 .Select(m => new FormMeetingViewModel()
                 {
                     Address = m.Address, 
@@ -96,7 +123,7 @@ namespace FindInternship.Core.Services
             var meetings = await repo.All<Meeting>()
                 .OrderBy(m => m.StartTime)
                 .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear &&
-                m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.CompanyId == companyId)
+                m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.CompanyId == companyId && m.IsActive)
                 .Select(m => new MeetingViewModel()
                 {
                     Id = m.Id,
@@ -128,7 +155,7 @@ namespace FindInternship.Core.Services
             var meetings = await repo.All<Meeting>()
                 .Include(m => m.Class)
                 .OrderBy(m => m.StartTime)
-                .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear && m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.Class.TeacherId==teacherId)
+                .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear && m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.Class.TeacherId==teacherId && m.IsActive)
                 .Select(m => new MeetingViewModel()
                 {
                     Id = m.Id,

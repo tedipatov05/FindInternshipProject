@@ -104,10 +104,15 @@ function create(e) {
         }
     }
 
-
-
-
 }
+
+connection.on("ReceiveDelete", function (meetingId) {
+    
+    var divMeeting = document.getElementById(`${meetingId}`);
+
+    divMeeting.parentNode.removeChild(divMeeting);
+
+});
 
 connection.on("ReceiveEditedMeeting", async function (meetingId, receivers) {
 

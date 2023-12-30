@@ -35,5 +35,10 @@ namespace FindInternship.Core.Hubs
         {
             await Clients.Users(receiversIds).SendAsync("ReceiveEditedMeeting", meetingId, receiversIds);
         }
+
+        public async Task DeleteMeeting(string meetingId, List<string> receiversIds)
+        {
+            await Clients.Users(receiversIds).SendAsync("ReceiveDelete", meetingId);
+        }
     }
 }

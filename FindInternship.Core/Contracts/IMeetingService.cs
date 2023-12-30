@@ -20,6 +20,9 @@ namespace FindInternship.Core.Contracts
         Task<FormMeetingViewModel> GetMeetingForEditAsync(string meetingId);
 
         Task EditMeetingAsync(string id, FormMeetingViewModel model);
+        Task DeleteMeetingAsync(string meetingId);
+
+        Task<PreDeleteMeetingViewModel> GetMeetingForDeleteAsync(string meetingId);
 
     }
 }

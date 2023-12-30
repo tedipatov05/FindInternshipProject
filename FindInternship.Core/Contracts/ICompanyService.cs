@@ -27,6 +27,8 @@ namespace FindInternship.Core.Contracts
 
         
 
+        
+
 
 
     }

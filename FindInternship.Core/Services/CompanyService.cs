@@ -116,6 +116,8 @@ namespace FindInternship.Core.Services
 
         }
 
+       
+
 
         public async Task AddClassToCompany(string classId, string companyId)
 		{
