@@ -70,9 +70,7 @@ function edit(e) {
                     } catch (err) {
                         console.error(err);
                     }
-
-                    console.log("successfully edited");
-
+                    
                     window.location = `https://localhost:7256/Meeting/All`;
                 }
             },

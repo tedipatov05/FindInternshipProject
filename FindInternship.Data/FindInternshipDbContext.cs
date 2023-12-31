@@ -34,6 +34,8 @@ namespace FindInternship.Data
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Document> Documents { get; set; }
 
+        public DbSet<Lector> Lectors { get; set; }
+
         public DbSet<School> Schools { get; set; }
         public DbSet<CompanyAbility> Technologies { get; set; }
 
@@ -97,6 +99,11 @@ namespace FindInternship.Data
             builder.Entity<Document>()
                 .HasOne(d => d.Class)
                 .WithMany(s => s.Documents)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Lector>()
+                .HasOne(l => l.Company)
+                .WithMany(c => c.Lectors)
                 .OnDelete(DeleteBehavior.NoAction);
 
 

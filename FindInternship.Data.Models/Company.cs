@@ -19,7 +19,8 @@ namespace FindInternship.Data.Models
             this.Requests = new List<Request>();
             this.Meetings = new HashSet<Meeting>();
             this.Technologies = new HashSet<CompanyAbility>();
-            
+            this.Lectors = new HashSet<Lector>();
+
         }
 
         [Key]
@@ -43,6 +44,8 @@ namespace FindInternship.Data.Models
         public ICollection<Request> Requests { get; set; }
 
         public ICollection<Meeting> Meetings { get; set; }
+
+        public ICollection<Lector> Lectors { get; set; }
 
 
     }

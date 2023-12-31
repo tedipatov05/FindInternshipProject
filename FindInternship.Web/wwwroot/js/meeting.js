@@ -164,8 +164,6 @@ connection.on("ReceiveMeeting", function (meeting, id) {
 
 
 
-    console.log("hello")
-    
 });
 
 document.getElementById('addEvent').addEventListener('submit', create);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FindInternship.Core.Models.Lector;
 
 namespace FindInternship.Core.Models.Profile
 {
@@ -14,6 +15,6 @@ namespace FindInternship.Core.Models.Profile
 
         public List<string> Technologies { get; set; } = new List<string>();
 
-        // TODO: Add company meeting for classes in internship
+        public List<LectorViewModel> Lectors { get; set; } = new List<LectorViewModel>();
     }
 }

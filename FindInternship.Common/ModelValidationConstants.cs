@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -96,6 +97,17 @@ namespace FindInternship.Common
 
             public const int MeetingTitleMaxLength = 50;
             public const int MeetingTitleMinLength = 4;
+        }
+
+        public static class LectorConstants
+        {
+            public const int NameMaxLength = 100;
+            public const int NameMinLength = 3;
+
+            public const int DescriptionMaxLength = 400;
+            public const int DescriptionMinLength = 4;
+
+           
         }
 
         

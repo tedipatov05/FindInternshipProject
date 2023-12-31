@@ -4,7 +4,6 @@ Array.from(document.getElementsByClassName('btn badge-soft-secondary doc')).forE
 
         let id = ev.target.id.slice(14);
         requestId = id;
-        console.log(id);
         let button = document.getElementById('update');
 
         button.setAttribute('name', id);
@@ -116,7 +115,7 @@ document.getElementById("update").addEventListener("click", function (ev) {
         },
         error: function (error) {
             console.error(error.statusCode);
-            console.error('Error occurred while removing object');
+            console.error('Error occurred while uploading object');
         }
     });
 

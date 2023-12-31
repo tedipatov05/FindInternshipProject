@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FindInternship.Core.Models.Lector;
 
 namespace FindInternship.Core.Services
 {
@@ -61,6 +62,12 @@ namespace FindInternship.Core.Services
                     PhoneNumber = c.User.PhoneNumber,
                     ProfilePictureUrl = c.User.ProfilePictureUrl,
                     Services = c.Services, 
+                    Lectors = c.Lectors.Select(l => new LectorViewModel()
+                    {
+                        Description = l.Description, 
+                        Name = l.Name, 
+                        ProfilePicturUrl = l.ProfilePictureUrl
+                    }).ToList()
 
                 })
                 .FirstOrDefaultAsync();

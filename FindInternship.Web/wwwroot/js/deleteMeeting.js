@@ -56,9 +56,7 @@ function deleteMeeting(e) {
                 } catch (err) {
                     console.error(err);
                 }
-
-                console.log("successfully deleted");
-
+                
                 window.location = `https://localhost:7256/Meeting/All`;
             }
         },
