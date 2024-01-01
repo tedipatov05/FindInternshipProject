@@ -1,0 +1,53 @@
+﻿@model FindInternship.Core.Models.Lector.AddLectorViewModel
+
+@{
+    ViewData["Title"] = "Добави";
+}
+
+
+<div class="form-body">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <form class="requires-validation" id="registerForm" method="post" enctype="multipart/form-data">
+                        <h2 class="text-center"><strong>@ViewData["Title"] </strong> лектор.</h2>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input asp-for="Name" class="form-control" placeholder="Име">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 14px">
+                            <textarea asp-for="Description" class="form-control" placeholder="Кратка биография"> </textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profilePicture">Качи профилна снимка</label>
+                            <input asp-for="ProfilePicture" accept="image/gif, image/jpeg, image/png" class="text-white" id="profilePicture">
+                            <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <img alt="Uploaded Image" placeholder="Upload Profile Picture" accept="image/gif, image/jpeg, image/png" style="display:none;">
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" type="submit">Създай</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+}
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+                     

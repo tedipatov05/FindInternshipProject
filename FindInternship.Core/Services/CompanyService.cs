@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FindInternship.Core.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using FindInternship.Core.Models.Lector;
 
 namespace FindInternship.Core.Services
 {
@@ -129,6 +130,18 @@ namespace FindInternship.Core.Services
 			await repo.SaveChangesAsync();
 		}
 
+        public async Task AddLectorToCompany(string companyId, AddLectorViewModel model, string profilePicture)
+        {
+            var lector = new Lector()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                CompanyId = companyId, 
+                ProfilePictureUrl = profilePicture
+            };
 
+            await repo.AddAsync(lector);
+            await repo.SaveChangesAsync();
+        }
     }
 }

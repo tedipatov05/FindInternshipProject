@@ -50,5 +50,25 @@ namespace FindInternship.Core.Services
 
             return user.ProfilePictureUrl;
         }
+
+        public async Task<string> UploadImageToLectorAsync(IFormFile imageFile, string folderName, string name)
+        {
+            using var stream = imageFile.OpenReadStream();
+
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(name ,stream),
+                Folder = folderName
+            };
+
+            var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+            if (uploadResult.Error != null)
+            {
+                throw new InvalidOperationException(uploadResult.Error.Message);
+            }
+
+            return uploadResult.Url.ToString();
+        }
     }
 }

@@ -2,7 +2,7 @@
 @model LoginViewModel;
 
 @{
-    ViewData["Title"] = "Влез в";
+    ViewData["Title"] = "Влез";
 }
 
 <div class="form-body">
@@ -11,7 +11,7 @@
             <div class="form-content">
                 <div class="form-items">
                     <form class="requires-validation" id="registerForm" method="post">
-                        <h2 class="text-center"><strong>@ViewData["Title"]</strong> акаунт.</h2>
+                        <h2 class="text-center"><strong>@ViewData["Title"] в</strong> акаунт.</h2>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <input asp-for="Email" class="form-control" placeholder="Email">

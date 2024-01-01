@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FindInternship.Core.Models.Lector;
 using FindInternship.Core.Models.Meeting;
 
 namespace FindInternship.Core.Contracts
@@ -25,9 +26,9 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> IsInCompanyScheduleAsync(string companyId, string meetingId);
 
-        
+        Task AddLectorToCompany(string companyId, AddLectorViewModel model, string profilePicture);
 
-        
+
 
 
 

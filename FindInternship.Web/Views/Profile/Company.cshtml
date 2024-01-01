@@ -55,37 +55,52 @@
             </div>
 
             <div class="card">
+                
                 <div class="tab-content p-4">
                     <div class="tab-pane active show" id="projects-tab" role="tabpanel">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-1">
-                                <h4 class="card-title mb-4">Лектори</h4>
+                        <div style="flex-direction: row; display: flex;">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1">
+                                    <h4 class="card-title mb-4">Лектори</h4>
+                                </div>
                             </div>
+                            <div class="add-lector">
+                                <a asp-controller="Lector" asp-action="Add">+</a>
+
+                            </div>
+        
                         </div>
 
                         <div class="row" id="all-projects">
                             @foreach (var lector in Model.Lectors)
                             {
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="card border-0 shadow-lg pt-5 my-5 position-relative">
-                                        <div class="card-body p-4">
-                                            <div class="member-profile position-absolute w-100 text-center">
-                                                <img class="rounded-circle mx-auto d-inline-block shadow-sm" src="@lector.ProfilePicturUrl" alt="">
-                                            </div>
-                                            <div class="card-text pt-1">
-                                                <h5 class="member-name mb-0 text-center text-primary font-weight-bold">@lector.Name</h5>
-                                                <div class="mb-3 text-center">Лектор</div>
-                                                <div>@lector.Description</div>
-                                            </div>
-                                        </div>
-				    
-                                    </div>
-                                </div>
+                                <section class="module-trainers-section">
+                                    <article class="module-trainers one-trainer">
+                                        <section class="module-trainer-info module-single-trainer-info desktop">
+                                            <article class="module-trainer-info-img-container module-single-trainer-info-img-container">
+                                                <img class="module-trainer-info-img" alt="Profile Picture" src="@lector.ProfilePicturUrl" />
+                                            </article>
+                                            <p class="module-trainer-info-name">
+                                                @lector.Name
+                                            </p>
+                                            <p class="module-trainer-info-role">
+                                                Преподавател
+                                            </p>
+                                            <article class="module-single-trainer-description">
+                                                @lector.Description
+                                            </article>
+                                            <a class="btn btn-danger">Delete</a>
+                                        </section>
+                                    </article>
+                                </section>
                             }
 
 
                         </div>
-                        
+
+
+
+
                     </div>
                 </div>
             </div>
