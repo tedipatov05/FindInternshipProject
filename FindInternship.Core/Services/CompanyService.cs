@@ -74,7 +74,7 @@ namespace FindInternship.Core.Services
         {
             var company = await repo.All<Company>()
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.User.Name == companyName);
+                .FirstOrDefaultAsync(c => c.User.Name == companyName && c.User.IsActive);
 
             return company!.User.Id;
         }
@@ -88,7 +88,7 @@ namespace FindInternship.Core.Services
         {
             var company = await repo.All<Company>()
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.UserId == companyId);
+                .FirstOrDefaultAsync(c => c.UserId == companyId && c.User.IsActive);
 
             return company.User.Name;
         }
@@ -110,7 +110,7 @@ namespace FindInternship.Core.Services
         {
             var company = await repo.All<Company>()
                 .Include(c => c.Meetings)
-                .FirstOrDefaultAsync(c => c.Id == companyId);
+                .FirstOrDefaultAsync(c => c.Id == companyId && c.User.IsActive);
 
 
             return company.Meetings.Any(m => m.Id == meetingId);
@@ -142,6 +142,19 @@ namespace FindInternship.Core.Services
 
             await repo.AddAsync(lector);
             await repo.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsLectorInCompany(string companyId, string lectorId)
+        {
+            var company = await repo.All<Company>()
+                .Include(c => c.Lectors)
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(c => c.Id == companyId && c.User.IsActive);
+
+
+            return company.Lectors.Any(l => l.IsActive && l.Id == lectorId);
+
+
         }
     }
 }

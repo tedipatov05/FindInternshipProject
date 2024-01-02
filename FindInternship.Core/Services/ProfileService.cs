@@ -49,7 +49,7 @@ namespace FindInternship.Core.Services
         public async Task<CompanyProfileViewModel> GetCompanyProfileAsync(string companyId)
         {
             var company = await repo.All<Company>()
-                .Where(c => c.Id == companyId)
+                .Where(c => c.Id == companyId )
                 .Select(c => new CompanyProfileViewModel()
                 {
                     Id = c.User.Id,
@@ -62,8 +62,9 @@ namespace FindInternship.Core.Services
                     PhoneNumber = c.User.PhoneNumber,
                     ProfilePictureUrl = c.User.ProfilePictureUrl,
                     Services = c.Services, 
-                    Lectors = c.Lectors.Select(l => new LectorViewModel()
+                    Lectors = c.Lectors.Where(l => l.IsActive).Select(l => new LectorViewModel()
                     {
+                        Id = l.Id,
                         Description = l.Description, 
                         Name = l.Name, 
                         ProfilePicturUrl = l.ProfilePictureUrl

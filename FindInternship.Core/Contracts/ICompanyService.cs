@@ -28,6 +28,8 @@ namespace FindInternship.Core.Contracts
 
         Task AddLectorToCompany(string companyId, AddLectorViewModel model, string profilePicture);
 
+        Task<bool> IsLectorInCompany(string companyId, string lectorId);
+
 
 
 

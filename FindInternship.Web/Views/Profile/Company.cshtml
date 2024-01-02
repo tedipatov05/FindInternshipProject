@@ -61,7 +61,7 @@
                         <div style="flex-direction: row; display: flex;">
                             <div class="d-flex align-items-center">
                                 <div class="flex-1">
-                                    <h4 class="card-title mb-4">Лектори</h4>
+                                    <h4 class="card-title mb-4">Преподаватели</h4>
                                 </div>
                             </div>
                             <div class="add-lector">
@@ -89,7 +89,7 @@
                                             <article class="module-single-trainer-description">
                                                 @lector.Description
                                             </article>
-                                            <a class="btn btn-danger">Delete</a>
+                                            <a asp-action="Delete" asp-controller="Lector" asp-route-id="@lector.Id" class="btn btn-danger">Delete</a>
                                         </section>
                                     </article>
                                 </section>

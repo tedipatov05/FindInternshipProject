@@ -13,12 +13,14 @@ namespace FindInternship.Web.Controllers
         private readonly ICompanyService companyService;
         private readonly IUserService userService;
         private readonly IImageService imageService;
+        private readonly ILectorService lectorService;
 
-        public LectorController(ICompanyService companyService, IUserService userService, IImageService imageService)
+        public LectorController(ICompanyService companyService, IUserService userService, IImageService imageService, ILectorService lectorService)
         {
             this.companyService = companyService;
             this.userService = userService;
             this.imageService = imageService;
+            this.lectorService = lectorService;
         }
 
         [HttpGet]
@@ -28,7 +30,7 @@ namespace FindInternship.Web.Controllers
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
             {
-                TempData[ErrorMessage] = "Трябва да си фирма за да добавяш лектори";
+                TempData[ErrorMessage] = "Трябва да си фирма за да добавяш преподаватели";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -45,7 +47,7 @@ namespace FindInternship.Web.Controllers
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
             {
-                TempData[ErrorMessage] = "Трябва да си фирма за да добавяш лектори";
+                TempData[ErrorMessage] = "Трябва да си фирма за да добавяш преподаватели";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -62,7 +64,7 @@ namespace FindInternship.Web.Controllers
 
                 await companyService.AddLectorToCompany(companyId, model, profilePicture);
 
-                TempData[SuccessMessage] = "Успешно добавен лектор";
+                TempData[SuccessMessage] = "Успешно добавен преподаватели";
                 return RedirectToAction("MyProfile", "Profile", new { userId = userId});
             }
             catch (Exception ex)
@@ -70,7 +72,43 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("MyProfile", "Profile", new { userId = userId });
             }
             
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            string userId = User.GetId();
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+            if (!isCompany)
+            {
+                TempData[ErrorMessage] = "Трябва да си фирма, за да изтриваш преподаватели";
+                return RedirectToAction("MyProfile", "Profile", new { userId });
+            }
+
+            string companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanyLectors = await companyService.IsLectorInCompany(companyId, id);
+            if (!isInCompanyLectors)
+            {
+                TempData[ErrorMessage] = "Този преподавател не е в твоята фирма";
+                return RedirectToAction("MyProfile", "Profile", new { userId });
+            }
+
+            try
+            {
+                await lectorService.DeleteAsync(id);
+
+                TempData[SuccessMessage] = "Успешно изтрит преподавател";
+                return RedirectToAction("MyProfile", "Profile", new { userId });
+            }
+            catch (Exception ex)
+            {
+                TempData[ErrorMessage] = "Неочаквана грешка възникна";
+                return RedirectToAction("MyProfile", "Profile", new { userId });
+            }
+           
+
+
 
         }
+        
     }
 }
