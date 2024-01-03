@@ -9,6 +9,7 @@ namespace FindInternship.Web.Extensions
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IPrivateChatService, PrivateChatService>();
             services.AddScoped<ISchoolService, SchoolService>();
             services.AddScoped<IStatisticService, StatisticService>();
             services.AddScoped<IUserService, UserService>();  

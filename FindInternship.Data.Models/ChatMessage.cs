@@ -28,6 +28,7 @@ namespace FindInternship.Data.Models
         public Group Group { get; set; }
 
         [ForeignKey(nameof(User))]
+        //Sender Id
         public string UserId { get; set; }
 
         public User User { get; set; }

@@ -1,0 +1,107 @@
+﻿@model List<FindInternship.Core.Models.PrivateChat.UsersToChatViewModel>
+
+
+
+<h1 class="text-center text-dark" style="margin-top: 20px">Чатове</h1>
+<div class="card-stacked" style="margin-top: 30px;">
+    <div class="card shadow-line mb-3 chat">
+
+        <div class="archived-messages d-flex p-3">
+            <div class="w-100">
+                <div class="d-flex pl-0">
+                    <div class="d-flex flex-row mt-1">
+                        <span class="margin-auto mr-2">
+                            <div class="svg15 archived"></div>
+                        </span>
+                        <p class="margin-auto fw-400 text-dark-75">Последно търсени</p>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-user-panel">
+            <div class="pb-3 d-flex flex-column navigation-mobile pagination-scrool chat-user-scroll ps-container" data-ps-id="5763ff43-5f52-08c4-2a1a-15047d34b4fa">
+                <div class="chat-item d-flex pl-3 pr-0 pt-3 pb-3">
+                    <div class="w-100">
+                        <div class="d-flex pl-0">
+                            <img class="rounded-circle shadow avatar-sm mr-3" src="https://user-images.githubusercontent.com/35243461/168796884-ee3aafb6-8083-48ec-9cfb-51b95eae08fe.jpg">
+                            <div>
+                                <p class="margin-auto fw-400 text-dark-75">Emily Woods</p>
+                                <div class="d-flex flex-row mt-1">
+                                    <span>
+                                        <div class="svg15 double-check"></div>
+                                    </span>
+                                    <span class="message-shortcut margin-auto text-muted fs-13 ml-1 mr-4">I'm looking forward to it</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 margin-auto pl-2 pr-3">
+                        <div class="d-flex flex-column">
+                            <p class="text-muted text-right fs-13 mb-2">08:55</p>
+                            <div class="text-right d-flex flex-row">
+                                <span>
+                                    <div class="svg18 pinned"></div>
+                                </span>
+                                <i class="text-muted la la-angle-down ml-1 fs-15"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-item active d-flex pl-3 pr-0 pt-3 pb-3">
+                    <div class="w-100">
+                        <div class="d-flex pl-0">
+                            <img class="rounded-circle shadow avatar-sm mr-3" src="https://user-images.githubusercontent.com/35243461/168796877-f6c8819a-5d6e-4b2a-bd56-04963639239b.jpg">
+                            <div>
+                                <p class="margin-auto fw-400 text-dark-75">Charles Leclerc</p>
+                                <div class="d-flex flex-row mt-1">
+                                    <span>
+                                        <div class="svg15 double-check"></div>
+                                    </span>
+                                    <span class="message-shortcut margin-auto fw-400 fs-13 ml-1 mr-4">Poleeee Position</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 margin-auto pl-2 pr-3">
+                        <div class="d-flex flex-column">
+                            <p class="text-muted text-right fs-13 mb-2">08:21</p>
+                            <span class="round badge badge-light-success margin-auto">2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-item d-flex pl-3 pr-0 pt-3 pb-3">
+                    <div class="w-100">
+                        <div class="d-flex pl-0">
+                            <img class="rounded-circle shadow avatar-sm mr-3" src="https://user-images.githubusercontent.com/35243461/168796882-28875c5c-424a-40d4-8f69-cfb7f18ccd14.jpg">
+                            <div>
+                                <p class="margin-auto fw-400 text-dark-75">Lewis Hamilton</p>
+                                <div class="d-flex flex-row mt-1">
+                                    <span>
+                                        <div class="svg15 double-check"></div>
+                                    </span>
+                                    <span class="message-shortcut margin-auto text-muted fs-13 ml-1 mr-4">it's P2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 margin-auto pl-2 pr-3">
+                        <div class="d-flex flex-column">
+                            <p class="text-muted text-right fs-13 mb-2">yesterday</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" style="top: 0px; height: 0px;"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/chat.css"/>
+}
+
