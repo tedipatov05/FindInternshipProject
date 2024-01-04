@@ -75,7 +75,9 @@ namespace FindInternship.Core.Services
         public async Task<List<UsersToChatViewModel>> GetUsersToChatAsync(string classId, string currentUserId)
         {
             var users = await repo.All<Student>()
-                .Where(s => s.ClassId == classId)
+                .Include(s => s.User)
+                .Include(s => s.User.ChatMessages)
+                .Where(s => s.ClassId == classId && s.User.IsActive)
                 .Select(s => new UsersToChatViewModel()
                 {
                     UserId = s.UserId,
@@ -91,6 +93,53 @@ namespace FindInternship.Core.Services
             return users;
 
 
+        }
+
+        //TODO: Change logic for messages
+
+        public async Task<UsersToChatViewModel> GetTeacherToChatAsync(string classId, string currentUserId)
+        {
+            var teacher = await repo.All<Teacher>()
+                .Include(t => t.User)
+                .Where(t => t.ClassId == classId && t.User.IsActive)
+                .Include(t => t.User.ChatMessages)
+                .Select(t => new UsersToChatViewModel()
+                {
+                    UserId = t.UserId,
+                    Name = t.User.Name,
+                    ProfilePicture = t.User.ProfilePictureUrl,
+                    LastMessageToUser = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
+                        .OrderBy(m => m.SendedOn).Last().Content,
+                    LastSendOn = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
+                        .OrderBy(m => m.SendedOn).Last().SendedOn.ToString("HH:mm"),
+
+                })
+                .FirstOrDefaultAsync();
+
+            return teacher;
+
+        }
+
+        public async Task<UsersToChatViewModel> GetCompanyToChatAsync(string classId, string currentUserId)
+        {
+            var company = await repo.All<Company>()
+                .Include(t => t.User)
+                .Where(t => t.Classes.Any(c => c.Id == classId) && t.User.IsActive)
+                .Include(t => t.User.ChatMessages)
+                .Select(t => new UsersToChatViewModel()
+                {
+                    UserId = t.UserId,
+                    Name = t.User.Name,
+                    ProfilePicture = t.User.ProfilePictureUrl,
+                    LastMessageToUser = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
+                        .OrderBy(m => m.SendedOn).Last().Content,
+                    LastSendOn = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
+                        .OrderBy(m => m.SendedOn).Last().SendedOn.ToString("HH:mm"),
+
+                })
+                .FirstOrDefaultAsync();
+
+            return company;
         }
     }
 }

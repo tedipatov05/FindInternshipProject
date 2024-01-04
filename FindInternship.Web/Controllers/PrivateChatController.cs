@@ -1,6 +1,7 @@
 ﻿using FindInternship.Common;
 using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.PrivateChat;
+using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using static FindInternship.Common.NotificationConstants;
@@ -33,19 +34,37 @@ namespace FindInternship.Web.Controllers
             bool isStudent = await studentService.IsStudent(userId);
             if (isCompany)
             {
-                var users = new List<UsersToChatViewModel>();
-                return View(users);
+                var classIds = await classService.GetClassIdsByCompanyUserIdAsync(userId);
+                List<UsersToChatViewModel> usersToChat = new();
+                if (classIds.Count() > 0)
+                {
+                    foreach (var id in classIds)
+                    {
+                        var users = await privateChatService.GetUsersToChatAsync(id, userId);
+                        var teacher = await privateChatService.GetTeacherToChatAsync(id, userId);
+                        users.Add(teacher);
+                        usersToChat.AddRange(users);
+                    }
+                } 
+                
+                return View(usersToChat);
 
             }
             else if (isTeacher)
             {
-                var users = new List<UsersToChatViewModel>();
+                string classId = await classService.GetClassIdByTeacherUserIdAsync(userId);
+                var users = await privateChatService.GetUsersToChatAsync(classId, userId);
+                var company = await privateChatService.GetCompanyToChatAsync(classId, userId);
+                users.Add(company);
+
                 return View(users);
             }
             else if (isStudent)
             {
-                string classId = await classService.GetClassIdAsync(userId);
+                string classId = await classService.GetClassIdByStudentUserIdAsync(userId);
                 var users = await privateChatService.GetUsersToChatAsync(classId, userId);
+                var studentTeacher = await privateChatService.GetTeacherToChatAsync(classId, userId);
+                users.Add(studentTeacher);
 
                 return View(users);
 
