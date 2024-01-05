@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FindInternship.Core.Models.PrivateChat;
+using FindInternship.Data.Models;
 
 namespace FindInternship.Core.Contracts
 {
@@ -16,6 +17,8 @@ namespace FindInternship.Core.Contracts
         Task<UsersToChatViewModel> GetTeacherToChatAsync(string classId, string currentUserId);
 
         Task<UsersToChatViewModel> GetCompanyToChatAsync(string classId, string currentUserId);
+
+        Task<ICollection<ChatMessage>> ExtractAllMessagesAsync(string group);
 
     }
 }

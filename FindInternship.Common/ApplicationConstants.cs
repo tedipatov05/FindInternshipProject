@@ -11,6 +11,7 @@ namespace FindInternship.Common
 
         public const string OnlineUsersCookieName = "IsOnline";
         public const int LastActivityBeforeOfflineMinutes = 10;
+        public const int MessageCountPerScroll = 10;
 
     }
 }

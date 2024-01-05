@@ -42,7 +42,7 @@ namespace FindInternship.Core.Services
                 throw new InvalidOperationException(uploadResult.Error.Message);
             }
 
-            user.ProfilePictureUrl = uploadResult.Url.ToString();
+            user.ProfilePictureUrl = uploadResult.SecureUrl.ToString();
 
             this.repo.Update(user);
 
@@ -68,7 +68,7 @@ namespace FindInternship.Core.Services
                 throw new InvalidOperationException(uploadResult.Error.Message);
             }
 
-            return uploadResult.Url.ToString();
+            return uploadResult.SecureUrl.ToString();
         }
     }
 }

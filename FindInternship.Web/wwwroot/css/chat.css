@@ -15,6 +15,18 @@ html body a {
     transition: all 0.2s linear 0s;
 }
 
+.pr-4, .px-4 {
+    padding-right: 1.5rem !important;
+}
+
+.mr-3, .mx-3 {
+    margin-right: 2rem !important;
+}
+
+.mb-0, .my-0 {
+    margin-bottom: 0 !important;
+}
+
 .container {
     padding-right: 0;
     padding-left: 0;
@@ -29,6 +41,7 @@ html body a {
 .card-stacked {
     display: flex;
     flex-flow: row wrap;
+    width: 100%;
 }
 
 .chat {
@@ -157,7 +170,10 @@ a.btn i, button.btn i {
     border-color: transparent;
     border-image: initial;
     padding: 0.5rem 1rem;
+
 }
+
+.fw-400
 
 .chat .chat-profile-picture {
     cursor: pointer;
@@ -189,8 +205,8 @@ a.btn i, button.btn i {
 }
 
 .avatar-sm {
-    height: calc(1.5em + 1.2rem) !important;
-    width: calc(1.5em + 1.2rem) !important;
+    height: calc(2.2em + 1.2rem) !important;
+    width: calc(2.2em + 1.2rem) !important;
 }
 
 .btn.btn-light:hover {
@@ -311,9 +327,19 @@ a.btn i, button.btn i {
     width: 15px;
 }
 
+.fw-500 {
+    font-weight: 500 !important;
+    
+}
+
+.fs-med {
+    font-size: medium;
+}
+
 .fw-400 {
     font-weight: 400 !important;
 }
+
 
 .text-dark-75 {
     color: #3f4254 !important;
@@ -423,7 +449,7 @@ img.shadow {
 }
 
 .chat-panel-scroll {
-    max-height: 680px;
+    max-height: 480px;
     position: relative;
 }
 

@@ -3,6 +3,7 @@ using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.PrivateChat;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static FindInternship.Common.NotificationConstants;
 
@@ -16,14 +17,19 @@ namespace FindInternship.Web.Controllers
         private readonly ICompanyService companyService;
         private readonly IStudentService studentService;
         private readonly IClassService classService;
+        private readonly IUserService userService;
+        private readonly UserManager<User> userManager;
+        
 
-        public PrivateChatController(IPrivateChatService privateChatService, ITeacherService teacherService, ICompanyService companyService, IStudentService studentService, IClassService classService)
+        public PrivateChatController(IPrivateChatService privateChatService, ITeacherService teacherService, ICompanyService companyService, IStudentService studentService, IClassService classService, IUserService userService, UserManager<User> userManager)
         {
             this.privateChatService = privateChatService;
             this.teacherService = teacherService;
             this.companyService = companyService;
             this.studentService = studentService;
             this.classService = classService;
+            this.userService = userService;
+            this.userManager = userManager;
         }
 
         public async Task<IActionResult> UsersToChat()
@@ -76,6 +82,31 @@ namespace FindInternship.Web.Controllers
             }
 
         }
+
+        public async Task<IActionResult> Chat(/*string toUsername, string group*/)
+        {
+            //string userId = User.GetId();
+            //string toUserId = await userService.GetUserIdByUsernameAsync(toUsername);
+
+            //if (toUserId == null)
+            //{
+            //    TempData[ErrorMessage] = "Непрвилен потребител";
+            //    return RedirectToAction("UsersToChat");
+            //}
+
+            //var model = new PrivateChatViewModel()
+            //{
+            //    FromUser = await userManager.GetUserAsync(this.HttpContext.User),
+            //    ToUser = await userManager.FindByIdAsync(toUserId),
+            //    ChatMessages = await privateChatService.ExtractAllMessagesAsync(group)
+
+            //};
+
+            var model = new PrivateChatViewModel();
+
+            return View(model);
+        }
+
 
 
 

@@ -10,6 +10,7 @@ using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using static FindInternship.Common.ApplicationConstants;
 
 namespace FindInternship.Core.Services
 {
@@ -140,6 +141,28 @@ namespace FindInternship.Core.Services
                 .FirstOrDefaultAsync();
 
             return company;
+        }
+
+        public async Task<ICollection<ChatMessage>> ExtractAllMessagesAsync(string groupName)
+        {
+            var targetGroup = await repo.All<Group>()
+                .FirstOrDefaultAsync(g => g.Name == groupName);
+
+            if (targetGroup != null)
+            {
+                var messages = await repo.All<ChatMessage>()
+                    .Where(ch => ch.GroupId == targetGroup.Id)
+                    .Include(m => m.User)
+                    .OrderByDescending(ch => ch.SendedOn)
+                    .Take(MessageCountPerScroll)
+                    .OrderBy(m => m.SendedOn)
+                    .ToListAsync();
+
+
+                return messages;
+            }
+
+            return new List<ChatMessage>();
         }
     }
 }

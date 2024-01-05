@@ -12,5 +12,7 @@ namespace FindInternship.Core.Contracts
         Task<bool> IsUserExistsByPhoneAsync(string phoneNumber);
 
         Task<bool> IsExistsByIdAsync(string id);
+
+        Task<string> GetUserIdByUsernameAsync(string username);
     }
 }
