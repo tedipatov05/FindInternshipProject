@@ -20,5 +20,9 @@ namespace FindInternship.Core.Contracts
 
         Task<ICollection<ChatMessage>> ExtractAllMessagesAsync(string group);
 
+        Task<ICollection<LoadMoreMessagesViewModel>> LoadMoreMessagesAsync(string group, int messagesSkipCount,
+            User user);
+
+        Task SendMessageToUser(string fromUsername, string toUsername, string message, string group);
     }
 }
