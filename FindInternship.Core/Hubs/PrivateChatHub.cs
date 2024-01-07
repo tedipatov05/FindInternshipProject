@@ -29,7 +29,11 @@ namespace FindInternship.Core.Hubs
         {
             await privateChatService.SendMessageToUser(fromUsername, toUserName, message, group);
 
-            
+        }
+
+        public async Task ReceiveMessage(string fromUsername, string message, string group)
+        {
+            await privateChatService.ReceiveNewMessage(fromUsername, message, group);
         }
     }
 }

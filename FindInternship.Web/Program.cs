@@ -91,6 +91,7 @@ namespace FindInternship.Web
 
             app.MapHub<RequestHub>("/requestHub");
             app.MapHub<MeetingHub>("/meetingHub");
+            app.MapHub<PrivateChatHub>("/privateChatHub");
 
             // Configure the HTTP request pipeline. 
             if (app.Environment.IsDevelopment())

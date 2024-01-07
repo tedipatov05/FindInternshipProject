@@ -83,26 +83,26 @@ namespace FindInternship.Web.Controllers
 
         }
 
-        public async Task<IActionResult> Chat(/*string toUsername, string group*/)
+        public async Task<IActionResult> Chat(string toUsername, string group)
         {
-            //string userId = User.GetId();
-            //string toUserId = await userService.GetUserIdByUsernameAsync(toUsername);
+            string userId = User.GetId();
+            string toUserId = await userService.GetUserIdByUsernameAsync(toUsername);
 
-            //if (toUserId == null)
-            //{
-            //    TempData[ErrorMessage] = "Непрвилен потребител";
-            //    return RedirectToAction("UsersToChat");
-            //}
+            if (toUserId == null)
+            {
+                TempData[ErrorMessage] = "Непрвилен потребител";
+                return RedirectToAction("UsersToChat");
+            }
 
-            //var model = new PrivateChatViewModel()
-            //{
-            //    FromUser = await userManager.GetUserAsync(this.HttpContext.User),
-            //    ToUser = await userManager.FindByIdAsync(toUserId),
-            //    ChatMessages = await privateChatService.ExtractAllMessagesAsync(group)
+            var model = new PrivateChatViewModel()
+            {
+                FromUser = await userManager.GetUserAsync(this.HttpContext.User),
+                ToUser = await userManager.FindByIdAsync(toUserId),
+                ChatMessages = await privateChatService.ExtractAllMessagesAsync(group)
 
-            //};
+            };
 
-            var model = new PrivateChatViewModel();
+            //var model = new PrivateChatViewModel();
 
             return View(model);
         }

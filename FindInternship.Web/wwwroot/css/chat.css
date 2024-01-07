@@ -8,6 +8,7 @@ body {
     background-image: linear-gradient(to right, rgba(238, 240, 248, 0.5), rgb(238, 240, 248), rgba(238, 240, 248, 0.5));
     margin: 0px;
 }
+.left-chat-message
 
 html body a {
     color: rgb(0, 115, 152);
@@ -482,7 +483,7 @@ img.shadow {
 
 .left-chat-message {
     position: relative;
-    margin: 0 0 0 10px;
+ 
     background: #fff;
     width: fit-content;
     max-width: 60%;
@@ -840,4 +841,9 @@ img.shadow {
 
 .pl-2, .px-2 {
     padding-left: 0.5rem !important;
+}
+
+.media-left{
+    display: block;
+    float: left
 }

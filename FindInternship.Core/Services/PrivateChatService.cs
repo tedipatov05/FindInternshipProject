@@ -83,7 +83,7 @@ namespace FindInternship.Core.Services
                 .Select(s => new UsersToChatViewModel()
                 {
                     UserId = s.UserId,
-                    Name = s.User.Name,
+                    Name = s.User.UserName,
                     ProfilePicture = s.User.ProfilePictureUrl,
                     LastMessageToUser = s.User.ChatMessages.Where(c => c.UserId == currentUserId)
                         .OrderBy(m => m.SendedOn).Last().Content, 
@@ -108,7 +108,7 @@ namespace FindInternship.Core.Services
                 .Select(t => new UsersToChatViewModel()
                 {
                     UserId = t.UserId,
-                    Name = t.User.Name,
+                    Name = t.User.UserName,
                     ProfilePicture = t.User.ProfilePictureUrl,
                     LastMessageToUser = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
                         .OrderBy(m => m.SendedOn).Last().Content,
@@ -131,7 +131,7 @@ namespace FindInternship.Core.Services
                 .Select(t => new UsersToChatViewModel()
                 {
                     UserId = t.UserId,
-                    Name = t.User.Name,
+                    Name = t.User.UserName,
                     ProfilePicture = t.User.ProfilePictureUrl,
                     LastMessageToUser = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
                         .OrderBy(m => m.SendedOn).Last().Content,
@@ -227,6 +227,17 @@ namespace FindInternship.Core.Services
                 fromUser.ProfilePictureUrl, new HtmlSanitizer().Sanitize(message.Trim()));
 
 
+        }
+
+        public async Task ReceiveNewMessage(string fromUsername, string message, string group)
+        {
+            var fromUser = await repo.All<User>()
+                .FirstOrDefaultAsync(u => u.UserName.ToLower() == fromUsername.ToLower());
+
+            string fromId = fromUser.Id;
+            string fromUserImage = fromUser.ProfilePictureUrl;
+
+            await hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromUserImage, message.Trim());
         }
     }
 }

@@ -13,6 +13,7 @@ namespace FindInternship.Core.Models.PrivateChat
         {
             this.ChatMessages = new HashSet<ChatMessage>();
         }
+
         public User FromUser { get; set; } = null!;
         public User ToUser { get; set; } = null!;
 

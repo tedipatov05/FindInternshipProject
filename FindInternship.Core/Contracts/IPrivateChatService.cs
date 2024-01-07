@@ -24,5 +24,7 @@ namespace FindInternship.Core.Contracts
             User user);
 
         Task SendMessageToUser(string fromUsername, string toUsername, string message, string group);
+
+        Task ReceiveNewMessage(string fromUsername, string message, string group);
     }
 }
