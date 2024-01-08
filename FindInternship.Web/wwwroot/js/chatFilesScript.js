@@ -11,7 +11,7 @@ $('#uploadFile').on('change', function () {
     for (let file in files) {
         let fileExtension = file.name.split('.').pop();
         if (fileExtensions.includes(fileExtension.toUpper())) {
-
+            // continue logic
         }
     }
 });
