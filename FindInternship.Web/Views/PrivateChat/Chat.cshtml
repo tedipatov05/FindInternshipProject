@@ -6,6 +6,9 @@
 
 }
 
+
+
+<h2 class="text-center text-black" id="groupName">@Model.Group</h2>
 <div class="main-wrapper">
     <div class="container" style="margin-top: 0px;">
         <div class="page-content">
@@ -18,10 +21,10 @@
                                     <div class="w-100 d-flex pl-0">
                                         <img class="rounded-circle shadow avatar-sm mr-3 chat-profile-picture" src="@Model.ToUser.ProfilePictureUrl">
                                         <div class="mr-3">
-                                            <a href="!#">
+                                            <a asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@Model.ToUser.Id">
                                                 <p class="fw-400 mb-0 text-dark-75" id="toUser">@Model.ToUser.UserName</p>
-                                                <p class="fw-400 mb-0 text-dark-75" id="fromUser" style="display: none">@Model.FromUser.UserName</p>
                                             </a>
+                                            <p class="fw-400 mb-0 text-dark-75" id="fromUser" style="display: none">@Model.FromUser.UserName</p>
                                             
                                             @if (OnlineUserMiddleware.CheckIfUserIsOnline(Model.ToUser.Id))
                                             {
@@ -39,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" style="height: @height">
-                                <div class="w-100 p-3">
+                                <div class="w-100 p-3" id="chatHolder">
                                     @if (Model.ChatMessages != null || @Model.ChatMessages.Count() != 0)
                                     {
                                         @foreach (var message in Model.ChatMessages)
@@ -53,7 +56,7 @@
 
                                                     </div>
                                                     <div class="right-chat-message fs-13 mb-2">
-                                                        <div class="mb-0 mr-3 pr-4">
+                                                        <div class="mb-3 mr-3 pr-4">
                                                             <div class="d-flex flex-row">
                                                                 <div class="pr-2">@Html.Raw(message.Content)</div>
                                                                 <div class="pr-4"></div>
@@ -62,8 +65,8 @@
                                                         <div class="message-options dark">
                                                             <div class="message-time">
                                                                 <div class="d-flex flex-row">
-                                                                    <div class="mr-2">@message.SendedOn</div>
-                                                                    @* <div class="svg15 double-check"></div> *@
+                                                                    <div class="mr-2">@message.SendedOn.ToString("yyyy-MM-dd HH:mm")</div>
+                                                                   
                                                                 </div>
                                                             </div>
                                                             <div class="message-arrow"><i class="text-muted la la-angle-down fs-17"></i></div>
@@ -83,9 +86,9 @@
                                                         </div>
                                                         <div class="left-chat-message fs-13 mb-2">
                         
-                                                            <p class="mb-0 mr-3 pr-4">Hey Quan, If you are free now we can meet tonight ?</p>
+                                                            <p class="mb-3 mr-3 pr-4">@Html.Raw(message.Content)</p>
                                                             <div class="message-options">
-                                                                <div class="message-time">08:21</div>
+                                                                <div class="message-time">@message.SendedOn.ToString("yyyy-MM-dd HH:mm")</div>
                                                                 <div class="message-arrow"><i class="text-muted la la-angle-down fs-17"></i></div>
                                                             </div>
                                                         </div>
@@ -109,28 +112,20 @@
                                             <i class="chat-upload-trigger fs-19 bi bi-file-plus ml-2 mr-2"></i>
                                             <i class="fs-19 bi bi-emoji-smile ml-2 mr-2"></i>
                                             <i class="fs-19 bi bi-camera ml-2 mr-2"></i>
-                                            <i class="fs-19 bi bi-cursor ml-2 mr-2"></i>
+                                            <i class="fs-19 bi bi-cursor ml-2 mr-2" id="send"></i>
                                             <div class="chat-upload">
                                                 <div class="d-flex flex-column">
                                                     <div class="p-2">
-                                                        <button type="button" class="btn btn-secondary btn-md btn-icon btn-circle btn-blushing">
-                                                            <i class="fs-15 bi bi-camera"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="p-2">
-                                                        <button type="button" class="btn btn-success btn-md btn-icon btn-circle btn-blushing">
-                                                            <i class="fs-15 bi bi-file-earmark-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="p-2">
-                                                        <button type="button" class="btn btn-warning btn-md btn-icon btn-circle btn-blushing">
-                                                            <i class="fs-15 bi bi-person"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="p-2">
-                                                        <button type="button" class="btn btn-danger btn-md btn-icon btn-circle btn-blushing">
+                                                        <div class="btn btn-secondary btn-md btn-icon btn-circle btn-blushing" id="imageButton">
                                                             <i class="fs-15 bi bi-card-image"></i>
-                                                        </button>
+                                                            <input accept=".jpg, .jpeg, .png" type="file" style="display: none" multiple id="uploadImage">
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="btn btn-success btn-md btn-icon btn-circle btn-blushing" id="fileButton">
+                                                            <i class="fs-15 bi bi-file-earmark-plus"></i>
+                                                            <input accept=".zip, .rar, .docx, .xlsx, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" type="file" style="display: none;" multiple id="uploadFile">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,7 +141,7 @@
     </div>
 </div>
 @section Styles {
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" asp-append-version="true"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
 }
@@ -155,4 +150,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
     <script src="~/js/chatPreformance.js" asp-append-version="true"></script>
     <script src="~/js/privateChat.js" asp-append-version="true"></script>
+    <script src="~/js/chatImagesScript.js" asp-append-version="true"></script>
+    <script src="~/js/chatFilesScript.js" asp-append-version="true"></script>
 }

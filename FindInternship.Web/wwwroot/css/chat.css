@@ -847,3 +847,30 @@ img.shadow {
     display: block;
     float: left
 }
+
+/* new css */
+input-group-append {
+    margin-left: -1px;
+}
+
+.input-group-append, .input-group-prepend {
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.ml-2, .mx-2 {
+    margin-left: 0.5rem !important;
+}
+
+.mr-2, .mx-2 {
+    margin-right: 0.5rem !important;
+}
+
+.p-2 {
+    padding: 0.5rem !important;
+}
+
+.btn-send {
+    border: none;
+    background-color: inherit;
+}

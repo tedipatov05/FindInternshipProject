@@ -98,7 +98,8 @@ namespace FindInternship.Web.Controllers
             {
                 FromUser = await userManager.GetUserAsync(this.HttpContext.User),
                 ToUser = await userManager.FindByIdAsync(toUserId),
-                ChatMessages = await privateChatService.ExtractAllMessagesAsync(group)
+                ChatMessages = await privateChatService.ExtractAllMessagesAsync(group), 
+                Group = group,
 
             };
 

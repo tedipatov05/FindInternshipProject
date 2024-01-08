@@ -237,7 +237,7 @@ namespace FindInternship.Core.Services
             string fromId = fromUser.Id;
             string fromUserImage = fromUser.ProfilePictureUrl;
 
-            await hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromUserImage, message.Trim());
+            await hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUser.Id, fromUsername, fromUserImage, message.Trim());
         }
     }
 }

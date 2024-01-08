@@ -17,6 +17,8 @@ namespace FindInternship.Core.Models.PrivateChat
         public User FromUser { get; set; } = null!;
         public User ToUser { get; set; } = null!;
 
+        public string Group { get; set; }
+
         public ICollection<ChatMessage> ChatMessages { get; set; }
 
 
