@@ -18,10 +18,11 @@ namespace FindInternship.Web.Controllers
         private readonly IStudentService studentService;
         private readonly IClassService classService;
         private readonly IUserService userService;
+        private readonly IGroupService groupService;
         private readonly UserManager<User> userManager;
         
 
-        public PrivateChatController(IPrivateChatService privateChatService, ITeacherService teacherService, ICompanyService companyService, IStudentService studentService, IClassService classService, IUserService userService, UserManager<User> userManager)
+        public PrivateChatController(IPrivateChatService privateChatService, ITeacherService teacherService, ICompanyService companyService, IStudentService studentService, IClassService classService, IUserService userService, UserManager<User> userManager, IGroupService groupService)
         {
             this.privateChatService = privateChatService;
             this.teacherService = teacherService;
@@ -30,6 +31,7 @@ namespace FindInternship.Web.Controllers
             this.classService = classService;
             this.userService = userService;
             this.userManager = userManager;
+            this.groupService = groupService;
         }
 
         public async Task<IActionResult> UsersToChat()
@@ -70,7 +72,9 @@ namespace FindInternship.Web.Controllers
                 string classId = await classService.GetClassIdByStudentUserIdAsync(userId);
                 var users = await privateChatService.GetUsersToChatAsync(classId, userId);
                 var studentTeacher = await privateChatService.GetTeacherToChatAsync(classId, userId);
+                var company = await privateChatService.GetCompanyToChatAsync(classId, userId);
                 users.Add(studentTeacher);
+                users.Add(company);
 
                 return View(users);
 
@@ -94,16 +98,20 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("UsersToChat");
             }
 
+            var groupId = await groupService.GetGroupBetweenUsersAsync(userId, toUserId);
+            string? groupName = await groupService.GetGroupNameByIdAsync(groupId);
+
+            var messages = await privateChatService.ExtractAllMessagesAsync(groupName == null ? group : groupName);
+
+
             var model = new PrivateChatViewModel()
             {
                 FromUser = await userManager.GetUserAsync(this.HttpContext.User),
                 ToUser = await userManager.FindByIdAsync(toUserId),
-                ChatMessages = await privateChatService.ExtractAllMessagesAsync(group), 
-                Group = group,
+                ChatMessages =messages , 
+                Group = groupName == null ? group : groupName,
 
             };
-
-            //var model = new PrivateChatViewModel();
 
             return View(model);
         }

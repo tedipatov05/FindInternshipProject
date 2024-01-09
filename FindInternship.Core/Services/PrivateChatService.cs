@@ -27,53 +27,6 @@ namespace FindInternship.Core.Services
                 
         }
 
-        public async Task AddUserToGroup(string groupName, string toUserName, string fromUserName)
-        {
-            var toUser = await repo.All<User>()
-                .FirstOrDefaultAsync(u => u.UserName == toUserName);
-            string toId = toUser.Id;
-            string toImage = toUser.ProfilePictureUrl;
-
-            var fromUser = await repo.All<User>()
-                .FirstOrDefaultAsync(u => u.UserName == fromUserName);
-            string fromId = fromUser.Id;
-            string fromImage = fromUser.ProfilePictureUrl;
-
-
-            var group = await repo.All<Group>()
-                .FirstOrDefaultAsync(g => g.Name.ToLower() == groupName.ToLower());
-
-            if (group == null)
-            {
-                group = new Group()
-                {
-                    Name = groupName
-                };
-
-                var targetToUser = new UserGroup()
-                {
-                    UserId = toId,
-                    Group = group
-                };
-
-                var targetFromUser = new UserGroup()
-                {
-                    UserId = fromId,
-                    Group = group
-                };
-
-
-                group.UsersGroups.Add(targetFromUser);
-                group.UsersGroups.Add(targetToUser);
-
-                await repo.AddAsync(group);
-                await repo.SaveChangesAsync();
-            }
-
-            await hubContext.Clients.Groups(groupName).SendAsync("ReceiveMessage", fromUserName, fromImage,
-                $"{fromUserName} се присъедини към {groupName}");
-        }
-
         public async Task<List<UsersToChatViewModel>> GetUsersToChatAsync(string classId, string currentUserId)
         {
             var users = await repo.All<Student>()
@@ -200,7 +153,7 @@ namespace FindInternship.Core.Services
         public async Task SendMessageToUser(string fromUsername, string toUsername, string message, string group)
         {
             var toUser = await repo.All<User>()
-                .FirstOrDefaultAsync(u => u.UserName.ToLower() == u.UserName.ToLower() && u.IsActive);
+                .FirstOrDefaultAsync(u => u.UserName.ToLower() == toUsername.ToLower() && u.IsActive);
 
             var fromUser = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName.ToLower() == fromUsername.ToLower() && u.IsActive);
@@ -237,7 +190,11 @@ namespace FindInternship.Core.Services
             string fromId = fromUser.Id;
             string fromUserImage = fromUser.ProfilePictureUrl;
 
+
+            //TODO: Change sending message
             await hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUser.Id, fromUsername, fromUserImage, message.Trim());
         }
+
+       
     }
 }

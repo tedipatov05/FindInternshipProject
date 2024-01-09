@@ -8,6 +8,10 @@ namespace FindInternship.Core.Contracts
 {
     public interface IGroupService
     {
-        Task AddToGroup(string groupName, string userId);
+        Task AddUserToGroup(string groupName, string toUserName, string fromUserName);
+
+        Task<string> GetGroupBetweenUsersAsync(string userId, string receiverId);
+
+        Task<string> GetGroupNameByIdAsync(string groupId);
     }
 }

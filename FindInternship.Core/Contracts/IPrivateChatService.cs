@@ -10,7 +10,7 @@ namespace FindInternship.Core.Contracts
 {
     public interface IPrivateChatService
     {
-        Task AddUserToGroup(string groupName, string toUserName, string fromUserName);
+        
 
         Task<List<UsersToChatViewModel>> GetUsersToChatAsync(string classId, string currentUserId);
 
@@ -26,5 +26,8 @@ namespace FindInternship.Core.Contracts
         Task SendMessageToUser(string fromUsername, string toUsername, string message, string group);
 
         Task ReceiveNewMessage(string fromUsername, string message, string group);
+
+       
+
     }
 }

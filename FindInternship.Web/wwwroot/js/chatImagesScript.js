@@ -14,7 +14,7 @@ $('#uploadImage').on('change', function () {
         if (imageExtensions.includes(fileExtension.toUppercase())) {
             let sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
             if (sizeInMB > 15) {
-                continue;
+                continue; 
             }
 
             dtImages.items.add(file);
@@ -29,7 +29,7 @@ $('#uploadImage').on('change', function () {
         }
     }
 
-    document.getElementById('uploadImage').files = dtImages;
+    document.getElementById('uploadImage').files = dtImages.files;
 
     if (dtFiles.items.length > 0) {
         transferFiles(dtFiles);

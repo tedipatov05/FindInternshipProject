@@ -13,16 +13,18 @@ namespace FindInternship.Core.Hubs
     public class PrivateChatHub : Hub
     {
         private readonly IPrivateChatService privateChatService;
+        private readonly IGroupService groupService;
 
-        public PrivateChatHub(IPrivateChatService privateChatService)
+        public PrivateChatHub(IPrivateChatService privateChatService, IGroupService groupService)
         {
             this.privateChatService = privateChatService;
+            this.groupService = groupService;
         }
 
         public async Task AddToGroup(string groupName, string toUsername, string fromUsername)
         {
             await this.Groups.AddToGroupAsync(this.Context.ConnectionId, groupName);
-            await privateChatService.AddUserToGroup(groupName, toUsername, fromUsername);
+            await groupService.AddUserToGroup(groupName, toUsername, fromUsername);
         }
 
         public async Task SendMessage(string fromUsername, string toUserName, string message, string group)
