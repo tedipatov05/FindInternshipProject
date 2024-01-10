@@ -374,6 +374,7 @@ img.shadow {
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+    margin-left: 7px;
 }
 
 .fs-13 {
@@ -864,6 +865,10 @@ input-group-append {
 
 .mr-2, .mx-2 {
     margin-right: 0.5rem !important;
+}
+
+.pl-1, .px-1 {
+    padding-left: 0.25rem !important;
 }
 
 .p-2 {

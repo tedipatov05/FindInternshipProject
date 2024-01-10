@@ -16,3 +16,4 @@
         $(this).closest('.chat').find('.chat-user-detail').toggleClass("active");
     });
 })(jQuery); 
+

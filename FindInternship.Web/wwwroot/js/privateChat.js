@@ -9,15 +9,15 @@ async function start() {
     try {
         await connection.start().then(function () {
 
-            //let toUser = document.getElementById('toUser').textContent;
-            //let fromUser = document.getElementById('fromUser').textContent;
-            //let groupName = document.getElementById('groupName').textContent
+            let toUser = document.getElementById('toUser').textContent;
+            let fromUser = document.getElementById('fromUser').textContent;
+            let groupName = document.getElementById('groupName').textContent
 
-            //connection.invoke("AddToGroup", `${groupName}`, toUser, fromUser).catch(function (err) {
-            //    console.error(err);
-            //});
+            connection.invoke("AddToGroup", `${groupName}`, toUser, fromUser).catch(function (err) {
+                console.error(err);
+            });
 
-            //console.log(`successfully added to group ${groupName}`);
+            console.log(`successfully added to group ${groupName}`);
 
             console.log('successfully connected')
             console.log("SignalR Connected.");
@@ -37,8 +37,13 @@ connection.onclose(async () => {
     await start();
 });
 
-// Start the connection.
-start()
+start();
+
+$('#send').click(function () {
+    $('#sendButton').trigger('click');
+});
+
+
 
 document.getElementById('sendButton').addEventListener('click', function (event) {
 
@@ -72,8 +77,7 @@ document.getElementById('sendButton').addEventListener('click', function (event)
         document.getElementById('messageInput').value = '';
     }
 
-
-
+    
 })
 
 connection.on("SendMessage", function (userId, fromUsername, fromUserImage, message) {
@@ -120,7 +124,7 @@ connection.on("SendMessage", function (userId, fromUsername, fromUserImage, mess
 });
 
 connection.on("ReceiveMessage", function (fromUserName, fromUserImage, message) {
-  
+
 
     let msg = message;
     let dateTime = new Date()
@@ -147,7 +151,56 @@ connection.on("ReceiveMessage", function (fromUserName, fromUserImage, message) 
                      </div>`;
 
     chatHolder.appendChild(div);
-    //TODO: update scroling messages
-    
-    
-})
+
+
+
+});
+
+
+function addFiles(files) {
+
+    let icons = {
+        "PDF": "bi bi-file-pdf-fill",
+        "PNG": "bi bi-file-earmark-image", 
+        "JPG": "bi bi-file-earmark-image", 
+        "JPEG": "bi bi-file-earmark-image", 
+        "ZIP": "bi bi-file-zip", 
+        "RAR": "bi bi-file-zip", 
+        "DOCX": "bi bi-file-earmark-fill", 
+        "DOC": "bi bi-file-earmark-fill",
+        "PPT": "bi bi-filetype-ppt", 
+        "TXT": "bi bi-file-text", 
+        "TEXT": "bi bi-file-text", 
+        "XLS": "bi bi-filetype-xls", 
+        "XLSX": "bi bi-filetype-xlsx", 
+        
+    }
+
+    var appendFiles = document.getElementById('appendFiles');
+
+
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+
+        let span = document.createElement('span');
+        span.classList.add('input-group-text')
+        span.classList.add('pl-2')
+        span.classList.add('pr-2');
+        span.style = "margin-left: 10px;"
+
+        let fileExtension = file.name.split('.').pop();
+
+        span.innerHTML = ` <div style="display: flex; flex-direction: row;">
+                            <i class="${icons[fileExtension.toUpperCase()]}"></i>
+                            <div class="pl-1 pt-1 text-dark" style="font-size: small;">${file.name}</div>
+                           </div>`
+
+        appendFiles.appendChild(span);
+
+
+
+
+    }
+
+
+}

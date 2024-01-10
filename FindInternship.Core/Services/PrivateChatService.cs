@@ -29,47 +29,69 @@ namespace FindInternship.Core.Services
 
         public async Task<List<UsersToChatViewModel>> GetUsersToChatAsync(string classId, string currentUserId)
         {
-            var users = await repo.All<Student>()
+            var currentUser = await repo.All<User>()
+                .Include(u => u.ChatMessages)
+                .FirstOrDefaultAsync(u => u.Id == currentUserId);
+
+            Func<string, List<ChatMessage>> predicate = (username) => currentUser.ChatMessages.Where(m =>
+                m.UserId == currentUserId && m.ReceiverUsername == username).ToList();
+
+            var users = repo.All<Student>()
                 .Include(s => s.User)
                 .Include(s => s.User.ChatMessages)
-                .Where(s => s.ClassId == classId && s.User.IsActive)
+                .AsEnumerable()
+                .Where(s => s.ClassId == classId && s.User.IsActive && s.UserId != currentUserId)
                 .Select(s => new UsersToChatViewModel()
                 {
                     UserId = s.UserId,
                     Name = s.User.UserName,
                     ProfilePicture = s.User.ProfilePictureUrl,
-                    LastMessageToUser = s.User.ChatMessages.Where(c => c.UserId == currentUserId)
-                        .OrderBy(m => m.SendedOn).Last().Content, 
-                    LastSendOn = s.User.ChatMessages.Where(c => c.UserId == currentUserId)
-                        .OrderBy(m => m.SendedOn).Last().SendedOn.ToString("HH:mm"),
+                    LastMessageToUser = s.User.ChatMessages
+                        .Where(c => c.UserId == s.UserId && c.ReceiverUsername == currentUser.UserName)
+                        .Union(predicate(s.User.UserName))
+                        .OrderBy(m => m.SendedOn)
+                        .LastOrDefault()
+                        
+                    
+                        
+
 
                 })
-                .ToListAsync();
+                .ToList();
+
             return users;
 
 
         }
 
-        //TODO: Change logic for messages
-
+        //TODO: Change logic for lest sent message
         public async Task<UsersToChatViewModel> GetTeacherToChatAsync(string classId, string currentUserId)
         {
-            var teacher = await repo.All<Teacher>()
+
+            var currentUser = await repo.All<User>()
+                .Include(u => u.ChatMessages)
+                .FirstOrDefaultAsync(u => u.Id == currentUserId);
+
+            Func<string, List<ChatMessage>> predicate = (username) => currentUser.ChatMessages.Where(m =>
+                m.UserId == currentUserId && m.ReceiverUsername == username).ToList();
+
+            var teacher = repo.All<Teacher>()
                 .Include(t => t.User)
                 .Where(t => t.ClassId == classId && t.User.IsActive)
                 .Include(t => t.User.ChatMessages)
+                .AsEnumerable()
                 .Select(t => new UsersToChatViewModel()
                 {
                     UserId = t.UserId,
                     Name = t.User.UserName,
                     ProfilePicture = t.User.ProfilePictureUrl,
-                    LastMessageToUser = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
-                        .OrderBy(m => m.SendedOn).Last().Content,
-                    LastSendOn = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
-                        .OrderBy(m => m.SendedOn).Last().SendedOn.ToString("HH:mm"),
+                    LastMessageToUser = t.User.ChatMessages.Where(c => c.UserId == t.UserId && c.ReceiverUsername == currentUser.UserName)
+                        .Union(predicate(t.User.UserName))
+                        .OrderBy(m => m.SendedOn).LastOrDefault()
+                    
 
                 })
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
 
             return teacher;
 
@@ -77,22 +99,33 @@ namespace FindInternship.Core.Services
 
         public async Task<UsersToChatViewModel> GetCompanyToChatAsync(string classId, string currentUserId)
         {
-            var company = await repo.All<Company>()
+            var currentUser = await repo.All<User>()
+                .Include(c => c.ChatMessages)
+                .FirstOrDefaultAsync(u => u.Id == currentUserId);
+
+            Func<string, List<ChatMessage>> predicate = (username) => currentUser.ChatMessages.Where(m =>
+                m.UserId == currentUserId && m.ReceiverUsername == username).ToList();
+
+
+            var company = repo.All<Company>()
                 .Include(t => t.User)
                 .Where(t => t.Classes.Any(c => c.Id == classId) && t.User.IsActive)
                 .Include(t => t.User.ChatMessages)
+                .AsEnumerable()
                 .Select(t => new UsersToChatViewModel()
                 {
                     UserId = t.UserId,
                     Name = t.User.UserName,
                     ProfilePicture = t.User.ProfilePictureUrl,
-                    LastMessageToUser = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
-                        .OrderBy(m => m.SendedOn).Last().Content,
-                    LastSendOn = t.User.ChatMessages.Where(c => c.UserId == currentUserId)
-                        .OrderBy(m => m.SendedOn).Last().SendedOn.ToString("HH:mm"),
+                    LastMessageToUser = t.User.ChatMessages
+                        .Where(c => c.UserId == t.UserId && c.ReceiverUsername == currentUser.UserName)
+                        .Union(predicate(t.User.UserName))
+                        .OrderBy(m => m.SendedOn)
+                        .LastOrDefault()
+                    
 
                 })
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
 
             return company;
         }
@@ -140,7 +173,7 @@ namespace FindInternship.Core.Services
                         CurrentUsername = user.UserName, 
                         FromImageUrl = m.User.ProfilePictureUrl, 
                         FromUsername = m.User.UserName, 
-                        SendedOn = m.SendedOn.ToLocalTime().ToString("dd/mm/yyyy hh:mm:ss tt")
+                        SendedOn = m.SendedOn.ToLocalTime().ToString("dd/mm/yyyy hh:mm")
                     })
                     .ToListAsync();
 

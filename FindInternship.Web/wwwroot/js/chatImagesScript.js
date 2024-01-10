@@ -1,17 +1,22 @@
 
+
 $('#imageButton i').click(function () {
     $('#uploadImage').trigger('click');
 })
 
 $('#uploadImage').on('change', function () {
     const imageExtensions = ['PNG', 'JPG', 'JPEG'];
-    let files = document.getElementById('uploadImage').files;
+    let files = Array.from(document.getElementById('uploadImage').files);
     const dtImages = new DataTransfer();
     const dtFiles = new DataTransfer();
 
-    for (let file in files) {
+    for (let i = 0; i < files.length; i++) {
+
+        let file = files[i];
+
+
         let fileExtension = file.name.split('.').pop();
-        if (imageExtensions.includes(fileExtension.toUppercase())) {
+        if (imageExtensions.includes(fileExtension.toUpperCase())) {
             let sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
             if (sizeInMB > 15) {
                 continue; 
@@ -28,6 +33,8 @@ $('#uploadImage').on('change', function () {
             dtFiles.items.add(file);
         }
     }
+
+    addFiles(files);
 
     document.getElementById('uploadImage').files = dtImages.files;
 

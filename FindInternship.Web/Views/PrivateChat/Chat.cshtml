@@ -25,7 +25,7 @@
                                                 <p class="fw-400 mb-0 text-dark-75" id="toUser">@Model.ToUser.UserName</p>
                                             </a>
                                             <p class="fw-400 mb-0 text-dark-75" id="fromUser" style="display: none">@Model.FromUser.UserName</p>
-                                            
+
                                             @if (OnlineUserMiddleware.CheckIfUserIsOnline(Model.ToUser.Id))
                                             {
                                                 <p class="sub-caption text-muted text-small mb-0" style="color: green">На линия</p>
@@ -35,7 +35,7 @@
                                             {
                                                 <p class="sub-caption text-muted text-small mb-0">Офлайн</p>
                                             }
-                                           
+
                                         </div>
                                     </div>
 
@@ -66,7 +66,7 @@
                                                             <div class="message-time">
                                                                 <div class="d-flex flex-row">
                                                                     <div class="mr-2">@message.SendedOn.ToString("yyyy-MM-dd HH:mm")</div>
-                                                                   
+
                                                                 </div>
                                                             </div>
                                                             <div class="message-arrow"><i class="text-muted la la-angle-down fs-17"></i></div>
@@ -85,7 +85,7 @@
 
                                                         </div>
                                                         <div class="left-chat-message fs-13 mb-2">
-                        
+
                                                             <p class="mb-3 mr-3 pr-4">@Html.Raw(message.Content)</p>
                                                             <div class="message-options">
                                                                 <div class="message-time">@message.SendedOn.ToString("yyyy-MM-dd HH:mm")</div>
@@ -100,7 +100,7 @@
 
                                     @* <div class="svg36 loader-animate3 horizontal-margin-auto mb-2"></div>
                                     <div class="text-center letter-space drop-shadow text-uppercase fs-12 w-100 mb-3">Today</div> *@
-                                   
+
 
                                 </div>
                             </div>
@@ -112,12 +112,11 @@
                                             <i class="chat-upload-trigger fs-19 bi bi-file-plus ml-2 mr-2"></i>
                                             <i class="fs-19 bi bi-emoji-smile ml-2 mr-2"></i>
                                             <i class="fs-19 bi bi-camera ml-2 mr-2"></i>
-                                            <i class="fs-19 bi bi-cursor ml-2 mr-2"></i>
-                                            <button type="submit" id="sendButton">
-                                                Test
+                                            <i class="fs-19 bi bi-cursor ml-2 mr-2" id="send"></i>
+                                            <button type="submit" style="display: none" id="sendButton">
                                             </button>
-                                                
-                                            
+
+
                                             <div class="chat-upload">
                                                 <div class="d-flex flex-column">
                                                     <div class="p-2">
@@ -137,6 +136,11 @@
                                         </span>
                                     </div>
                                 </div>
+                                
+
+                            </div>
+                            <div class="input-group-append prepend-white" id="appendFiles">
+
                             </div>
                         </div>
                     </div>
@@ -146,10 +150,11 @@
     </div>
 </div>
 @section Styles {
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
 }
+
 @section Scripts {
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>

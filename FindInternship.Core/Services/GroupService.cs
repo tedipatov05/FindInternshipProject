@@ -67,8 +67,8 @@ namespace FindInternship.Core.Services
                 await repo.SaveChangesAsync();
             }
 
-            await hubContext.Clients.Group(groupName).SendAsync("ReceiveMessage", fromUserName, fromImage,
-                $"{fromUserName} се присъедини към {groupName}");
+            //await hubContext.Clients.Group(groupName).SendAsync("SendMessage", fromId,fromUserName, fromImage,
+            //    $"{fromUserName} се присъедини към {groupName}");
         }
 
         public async Task<string> GetGroupBetweenUsersAsync(string userId, string receiverId)
@@ -95,7 +95,7 @@ namespace FindInternship.Core.Services
             var group = await repo.All<Group>()
                 .FirstOrDefaultAsync(g => g.Id == groupId);
 
-            return group.Name;
+            return group == null ? null : group.Name;
         }
     }
 }
