@@ -116,6 +116,26 @@ namespace FindInternship.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [Route("/PrivateChat/SendMessageWithFiles")]
+        public async Task<IActionResult> SendMessageWithFiles(IList<IFormFile> files, string group, string toUsername,
+            string fromUsername, string message)
+        {
+            var currentUser = await userManager.GetUserAsync(this.User);
+            bool isAbleToChat = await privateChatService.IsAbleToChatAsync(toUsername, group, currentUser);
+
+            if (!isAbleToChat)
+            {
+                TempData[ErrorMessage] = "Потребителя не може да плучава съобщения";
+                return RedirectToAction("UsersToChat");
+            }
+
+
+            var haveFiles = await privateChatService.SendMessageWitFilesToUser(files, group, toUsername, fromUsername, message);
+
+
+            return new JsonResult(new {haveFiles});
+        }
 
 
 

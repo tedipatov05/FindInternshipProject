@@ -34,6 +34,14 @@ namespace FindInternship.Core.Services
             return user.Id;
         }
 
+        public async Task<bool> IsExistsByUsernameAsync(string username)
+        {
+            bool isExists = await repo.All<User>()
+                .AnyAsync(u => u.UserName.ToUpper() == username.ToUpper());
+
+            return isExists;
+        }
+
         public async Task<bool> IsUserExistsByEmailAsync(string email)
         {
             var IsExist = await repo.All<User>().AnyAsync(u => u.Email==email);

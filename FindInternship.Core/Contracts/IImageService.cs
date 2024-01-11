@@ -13,6 +13,6 @@ namespace FindInternship.Core.Contracts
         
         Task<string> UploadImage(IFormFile imageFile, string nameFolder, User user);
 
-        Task<string> UploadImageToLectorAsync(IFormFile imageFile, string folderName, string name);
+        Task<string> UploadImageAsync(IFormFile imageFile, string folderName, string name);
     }
 }

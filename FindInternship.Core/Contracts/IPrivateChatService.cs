@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FindInternship.Core.Models.PrivateChat;
 using FindInternship.Data.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FindInternship.Core.Contracts
 {
@@ -27,7 +28,13 @@ namespace FindInternship.Core.Contracts
 
         Task ReceiveNewMessage(string fromUsername, string message, string group);
 
-       
+        Task<bool> SendMessageWitFilesToUser(IList<IFormFile> files, string group, string toUsername, string fromUsername,
+            string message);
+
+        Task<bool> IsAbleToChatAsync(string userName, string group, User user);
+
+
+
 
     }
 }

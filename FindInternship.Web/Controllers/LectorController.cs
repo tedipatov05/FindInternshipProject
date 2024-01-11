@@ -60,7 +60,7 @@ namespace FindInternship.Web.Controllers
             {
                 string companyId = await companyService.GetCompanyIdAsync(userId);
 
-                string profilePicture = await imageService.UploadImageToLectorAsync(model.ProfilePicture, "projectImages", model.Name);
+                string profilePicture = await imageService.UploadImageAsync(model.ProfilePicture, "projectImages", model.Name);
 
                 await companyService.AddLectorToCompany(companyId, model, profilePicture);
 

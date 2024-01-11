@@ -51,7 +51,7 @@ namespace FindInternship.Core.Services
             return user.ProfilePictureUrl;
         }
 
-        public async Task<string> UploadImageToLectorAsync(IFormFile imageFile, string folderName, string name)
+        public async Task<string> UploadImageAsync(IFormFile imageFile, string folderName, string name)
         {
             using var stream = imageFile.OpenReadStream();
 
