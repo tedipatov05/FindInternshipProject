@@ -19,7 +19,8 @@ namespace FindInternship.Data.Models
         [Key]
         public string Id { get; set; }
 
-        [MaxLength(ContentMaxLength)]
+
+        [Required]
         public string Content { get; set; }
 
         [ForeignKey(nameof(Group))]

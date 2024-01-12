@@ -273,12 +273,8 @@ namespace FindInternship.Core.Services
                 ReceiverUsername = toUsername,
                 ReceiverImageUrl = toUser.ProfilePictureUrl
             };
-            bool result = false;
 
-            if (files.Count > 0)
-            {
-                result = true;
-            }
+            bool result = files.Count > 0;
 
             StringBuilder messageContent = new StringBuilder();
 
@@ -289,6 +285,8 @@ namespace FindInternship.Core.Services
 
             StringBuilder imagesContent = new StringBuilder();
             StringBuilder filesContent = new StringBuilder();
+
+            List<ChatImage> chatImages = new(); 
 
             foreach (var file in files)
             {
@@ -305,9 +303,9 @@ namespace FindInternship.Core.Services
                 {
                     fileUrl = await imageService.UploadImageAsync(file, "projectImages", file.Name);
 
-                    chatFile.Name = string.Format("{0} - PrivateChat", chatFile.Id);
+                    chatFile.Name = file.FileName;
 
-                    imagesContent.AppendLine($"<span><img src=\"{fileUrl}\" style=\"margin-right: 10px; width: 27px; height: 35px; margin-top: 5px;\"></span>");
+                    imagesContent.AppendLine($"<span><img src=\"{fileUrl}\" style=\"margin-right: 10px; width: 50px; height: 70px; margin-top: 5px;\"></span>");
 
                 }
                 else
@@ -315,17 +313,20 @@ namespace FindInternship.Core.Services
                     var fileExtension = Path.GetExtension(file.Name);
 
                     fileUrl = await documentService.UploadDocumentAsync(file, "projectDocuments");
-                    chatFile.Name = string.Format("{0}-PrivateChat", $"{chatFile.Id}{fileExtension}");
+                    chatFile.Name = file.FileName;
 
-                    filesContent.AppendLine($"<<a href=\"{fileUrl}\">\r\n                    <span class=\"input-group-text pl-2 pr-2\" style=\"margin-left: 10px;\">\r\n                      <div style=\"display: flex; flex-direction: row;\">\r\n                        <i class=\"{iconsFiles[fileExtension.ToUpper()]}\"></i>\r\n                        <div class=\"pl-1 pt-1 text-dark\" style=\"font-size: small;\">{file.Name}.{fileExtension}</div>\r\n  \r\n                      </div>\r\n  \r\n                    </span>\r\n\r\n                  </a>");
+                    filesContent.AppendLine($"<a href=\"{fileUrl}\">\r\n<span class=\"input-group-text pl-2 pr-2\" style=\"margin-left: 10px;\">\r\n<div style=\"display: flex; flex-direction: row;\">\r\n<i class=\"{iconsFiles[fileExtension.ToUpper()]}\"></i>\r\n<div class=\"pl-1 pt-1 text-dark\" style=\"font-size: small;\">{file.FileName}</div>\r\n\r\n</div>\r\n\r\n      </span>\r\n\r\n</a>");
 
                     
 
                 }
                 chatFile.ImageUrl = fileUrl;
+                chatImages.Add(chatFile);
                 chatMessage.Images.Add(chatFile);
 
             }
+
+            
 
 
             if (imagesContent.Length == 0)
@@ -343,15 +344,17 @@ namespace FindInternship.Core.Services
                 }
             }
 
-            chatMessage.Content = messageContent.ToString().Trim();
-
-            await repo.AddAsync(chatMessage);
-            await repo.SaveChangesAsync();
+            chatMessage.Content = new HtmlSanitizer().Sanitize(messageContent.ToString().Trim());
 
             await hubContext.Clients.User(toUserId).SendAsync("ReceiveMessage", fromUser.UserName,
                 fromUser.ProfilePictureUrl, messageContent.ToString().Trim());
 
             await this.ReceiveNewMessage(fromUser.UserName, messageContent.ToString().Trim(), group);
+
+            await repo.AddAsync(chatMessage);
+            await repo.AddRangeAsync(chatImages);
+
+            await repo.SaveChangesAsync();
 
             return result;
 

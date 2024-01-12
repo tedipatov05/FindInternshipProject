@@ -26,7 +26,9 @@
 
                 @foreach (var user in Model)
                 {
+                    
                     string message = user.LastMessageToUser == null ? "" : $"{user.LastMessageToUser.User.UserName}: {user.LastMessageToUser.Content}";
+                    string lastMessage = message.Contains("<a>") || message.Contains("<span>") ? "Прикачен файл" : message;
                     
 
                     <div class="chat-item d-flex pl-3 pr-0 pt-3 pb-3">
@@ -40,7 +42,7 @@
                                             <span>
                                                 <div class="svg15 double-check"></div>
                                             </span>
-                                            <span class="message-shortcut margin-auto text-muted fs-13 ml-1 mr-4">@message</span>
+                                            <span class="message-shortcut margin-auto text-muted fs-13 ml-1 mr-4">@lastMessage</span>
                                         </div>
                                     </div>
                                 </div>

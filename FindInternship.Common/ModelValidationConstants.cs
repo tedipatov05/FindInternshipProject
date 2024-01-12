@@ -76,7 +76,7 @@ namespace FindInternship.Common
 
         public static class ChatMessageConstants
         {
-            public const int ContentMaxLength = 300;
+            public const int ContentMaxLength = 2000;
             public const int ContentMinLength = 1;
 
             public const int ReceiverUserNameMaxLength = 50;
@@ -86,7 +86,7 @@ namespace FindInternship.Common
         }
         public static class ChatImageConstants
         {
-            public const int ChatImageNameMaxLength = 20;
+            public const int ChatImageNameMaxLength = 100;
             public const int ChatImageNameMinLength = 4;
         }
 
