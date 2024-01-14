@@ -137,6 +137,31 @@ namespace FindInternship.Web.Controllers
             return new JsonResult(new {haveFiles});
         }
 
+        [HttpGet]
+        [Route("/PrivateChat/LoadMoreMessages")]
+        public async Task<IActionResult> LoadMoreMessages(string username, string group, int? messagesSkipCount)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isAbleToChat = await privateChatService.IsAbleToChatAsync(username, group, currentUser);
+
+            if (!isAbleToChat)
+            {
+                TempData[ErrorMessage] = "Потребителя не може да плучава съобщения";
+                return RedirectToAction("UsersToChat");
+            }
+
+            if (messagesSkipCount == null)
+            {
+                messagesSkipCount = 0;
+            }
+
+            ICollection<LoadMoreMessagesViewModel> data = 
+                await privateChatService.LoadMoreMessagesAsync(group, (int)messagesSkipCount, currentUser);
+
+
+            return new JsonResult(data);
+        }
+
 
 
     }

@@ -122,7 +122,7 @@ connection.on("SendMessage", function (userId, fromUsername, fromUserImage, mess
     let msg = message;
     let dateTime = new Date()
     let formattedDate =
-        `${dateTime.getDate()}-${(dateTime.getMonth() + 1)}-${dateTime.getFullYear()} ${dateTime.getHours()}:${dateTime.getMinutes()}`;
+        `${dateTime.getDate()}/${(dateTime.getMonth() + 1)}/${dateTime.getFullYear()} ${dateTime.getHours()}:${dateTime.getMinutes()}`;
 
     var chatHolder = document.getElementById('chatHolder');
 
@@ -166,7 +166,7 @@ connection.on("ReceiveMessage", function (fromUserName, fromUserImage, message) 
     let msg = message;
     let dateTime = new Date()
     let formattedDate =
-        `${dateTime.getDate()}-${(dateTime.getMonth() + 1)}-${dateTime.getFullYear()} ${dateTime.getHours()}:${dateTime.getMinutes()}`;
+        `${dateTime.getDate()}/${(dateTime.getMonth() + 1)}/${dateTime.getFullYear()} ${dateTime.getHours()}:${dateTime.getMinutes()}`;
 
 
     let chatHolder = document.getElementById('chatHolder');

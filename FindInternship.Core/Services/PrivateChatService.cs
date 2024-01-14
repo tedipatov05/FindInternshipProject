@@ -145,8 +145,7 @@ namespace FindInternship.Core.Services
                         .Union(predicate(t.User.UserName))
                         .OrderBy(m => m.SendedOn)
                         .LastOrDefault()
-
-
+                        
                 })
                 .FirstOrDefault();
 
@@ -305,7 +304,7 @@ namespace FindInternship.Core.Services
 
                     chatFile.Name = file.FileName;
 
-                    imagesContent.AppendLine($"<span><img src=\"{fileUrl}\" style=\"margin-right: 10px; width: 50px; height: 70px; margin-top: 5px;\"></span>");
+                    imagesContent.AppendLine($"<span><img src=\"{fileUrl}\" style=\"margin-right: 10px; width: 90%; height: 90%; margin-top: 5px;\"></span>");
 
                 }
                 else

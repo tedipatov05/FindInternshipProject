@@ -41,10 +41,12 @@
 
                                 </div>
                             </div>
-                            <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" style="height: @height">
+                            <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" id="chat-body" style="height: @height">
                                 <div class="w-100 p-3" id="chatHolder">
                                     @if (Model.ChatMessages != null || @Model.ChatMessages.Count() != 0)
                                     {
+                                        <div class="svg36 loader-animate3 horizontal-margin-auto mb-2" id="loader" style="display: none"></div>
+
                                         @foreach (var message in Model.ChatMessages)
                                         {
                                             if (message.ReceiverUsername == Model.ToUser.UserName && message.User.UserName != Model.ToUser.UserName)
@@ -53,7 +55,6 @@
                                                     <div class="media-left">
                                                         <img src="@message.User.ProfilePictureUrl" class="rounded-circle shadow avatar-sm mr-3"
                                                              alt="Profile Picture">
-
                                                     </div>
                                                     <div class="right-chat-message fs-13 mb-2">
                                                         <div class="mb-3 mr-3 pr-4">
@@ -97,9 +98,9 @@
                                             }
                                         }
                                     }
-
-                                    @* <div class="svg36 loader-animate3 horizontal-margin-auto mb-2"></div>
-                                    <div class="text-center letter-space drop-shadow text-uppercase fs-12 w-100 mb-3">Today</div> *@
+                                    <input id="messagesSkipCount" type="hidden" value="@this.Model.ChatMessages.Count" />
+                                    
+                                    
 
 
                                 </div>
