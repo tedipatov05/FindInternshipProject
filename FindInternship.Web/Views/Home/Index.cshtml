@@ -4,47 +4,197 @@
 }
 @model StatisticViewModel;
 
-
-
-
-<main>
-    <div class="jumbotron bg-cover text-white">
-        <div class="py-5 text-center">
-            <h1 class="display-4 heading">FindInternship</h1>
-            <p class="font-italic mb-0">Най-добрата платформа за намиране на стаж.</p>
+<section id="hero" class="d-flex align-items-center justify-content-center">
+    <div class="container" data-aos="fade-up">
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+            <div class="col-xl-6 col-lg-8">
+                <h1>Find Internship<span>.</span></h1>
+                <h2>Приложение за намиране на стаж на ученици</h2>
+            </div>
         </div>
 
-    </div>
-</main>
-
-
-
-
-<section class="wow fadeIn animated" style="visibility: visible; animation-name: fadeIn; justify-content: center">
-    <div class="container">
-
-
-        <div class="row">
-
-            <div class="col-md-3 col-sm-3 bottom-margin text-center counter-section wow fadeInUp sm-margin-bottom-ten animated" data-wow-duration="300ms" style="visibility: visible; animation-duration: 300ms; animation-name: fadeInUp;">
-                <i class="fa-regular fa-building fa-xl"></i>
-                <span id="anim-number-pizza" class="counter-number"></span>
-                <span class="timer counter alt-font appear" data-to="980" data-speed="7000">@Model.Internships</span>
-                <p class="counter-title text-dark">Осъществени стажове</p>
+        <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-store-line"></i>
+                    <h3><a href="">Организиране на срещи</a></h3>
+                </div>
             </div>
-
-            <div class="col-md-3 col-sm-3 bottom-margin text-center counter-section wow fadeInUp sm-margin-bottom-ten animated" data-wow-duration="600ms" style="visibility: visible; animation-duration: 600ms; animation-name: fadeInUp;">
-                <i class="fa-regular fa-calendar-days fa-xl"></i>
-                <span class="timer counter alt-font appear" data-to="980" data-speed="7000">@Model.Meetings</span>
-                <span class="counter-title text-dark">Организирани срещи</span>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-bar-chart-box-line"></i>
+                    <h3><a href="">График</a></h3>
+                </div>
             </div>
-
-            <div class="col-md-3 col-sm-3 bottom-margin-small text-center counter-section wow fadeInUp xs-margin-bottom-ten animated" data-wow-duration="900ms" style="visibility: visible; animation-duration: 900ms; animation-name: fadeInUp;">
-                <i class="fa-solid fa-user fa-xl"></i>
-                <span class="timer counter alt-font appear" data-to="810" data-speed="7000">@Model.HappyUsers</span>
-                <span class="counter-title text-dark">Щастливи потребители</span>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-calendar-todo-line"></i>
+                    <h3><a href="">Чат</a></h3>
+                </div>
             </div>
-
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-paint-brush-line"></i>
+                    <h3><a href="">Изпращане на молби</a></h3>
+                </div>
+            </div>
         </div>
+
     </div>
 </section>
+
+<main id="main">
+
+   @*  <section id="features" class="features">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row">
+                <div class="image col-lg-6" style='background-image: url("/img/features.jpg");'
+                     data-aos="fade-right"></div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
+                    <div class="icon-box mt-5 mt-lg-0" data-aos="zoom-in" data-aos-delay="150">
+                        <i class="bx bx-receipt"></i>
+                        <h4>Организиране на срещи</h4>
+                        <p>
+                            Find Internship позволява създаването на срещи, на които стажантите трябва да присъстват.
+                            Те имат въсможност да ги проверят в своя график
+                        </p>
+                    </div>
+                    <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
+                        <i class="bx bx-cube-alt"></i>
+                        <h4>Изпращане на молби за практика</h4>
+                        <p>
+                            Find Internship позволява изпращане на молба от ръководителя на класа към фирма,
+                            в която иска класът му да проведе своята практика
+                        </p>
+                    </div>
+                    <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
+                        <i class="bx bx-images"></i>
+                        <h4>Изпращане на докименти при одобрение на молбата</h4>
+                        <p>Find Internship позволява при одобрение на молбата от фирмата да изпрати необходимите документи, които всеки ученик тръбва да попълни</p>
+                    </div>
+                    <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
+                        <i class="bx bx-shield"></i>
+                        <h4>Чат</h4>
+                        <p>Find Internship позволява да се изпращат съобщения в чат между стажуващите ученици, учителя и фирмата</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section> *@
+
+    <section id="counts" class="counts">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row no-gutters">
+                <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start"
+                     data-aos="fade-right" data-aos-delay="100"></div>
+                <div class="col-xl-7 ps-4 ps-lg-5 pe-4 pe-lg-1 d-flex align-items-stretch" data-to="200"
+                     data-speed="1000" data-aos="fade-left" data-aos-delay="100">
+                    <div class="content d-flex flex-column justify-content-center">
+                        <h3>Обща информация за Find Internship</h3>
+                        <p>
+                            Find Internship е приложение, което цели да подпомогне училища, които имат затруднение в намирането на стаж на своите ученици
+                        </p>
+                        <div class="row">
+                            <div class="col-md-6 d-md-flex align-items-md-stretch">
+                                <div class="count-box">
+                                    <i class="bi bi-emoji-smile"></i>
+                                    <span class="counter" data-to="1000" data-speed="2000">@Model.HappyUsers</span>
+                                    <p>
+                                        <strong>Щастливи потербители</strong>
+                                        , които са използвали нашето приложение за да си намерят стаж във фирми
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-md-flex align-items-md-stretch">
+                                <div class="count-box">
+                                    <i class="bi bi-journal-richtext"></i>
+                                    <span class="counter" data-to="1000" data-speed="2000">@Model.Meetings</span>
+                                    <p><strong>Срещи</strong> организирани за провеждане на практика във фирми</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-md-flex align-items-md-stretch">
+                                <div class="count-box">
+                                    <i class="bi bi-building"></i>
+                                    <span class="counter" data-to="1000" data-speed="1000">@Model.Internships</span>
+                                    <p><strong>Класове </strong>, които са успели да си намерят стаж чрез Find Internship</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section id="team" class="team">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+               @*  <h2>Team</h2> *@
+                <p>Създатели на приложението</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                    <div class="member" data-aos="fade-up" data-aos-delay="100">
+                        <div class="member-img">
+                            <img src="/img/team-3.jpg" class="img-fluid" alt="">
+                            <div class="social">
+                                <a href=""><i class="bi bi-twitter"></i></a>
+                                <a href=""><i class="bi bi-facebook"></i></a>
+                                <a href=""><i class="bi bi-instagram"></i></a>
+                                <a href=""><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>Теодор Патов</h4>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                    <div class="member" data-aos="fade-up" data-aos-delay="200">
+                        <div class="member-img">
+                            <img src="/img/team-2.jpg" class="img-fluid" alt="">
+                            <div class="social">
+                                <a href=""><i class="bi bi-twitter"></i></a>
+                                <a href=""><i class="bi bi-facebook"></i></a>
+                                <a href=""><i class="bi bi-instagram"></i></a>
+                                <a href=""><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>Ивон Мирчева</h4>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+@section Styles
+{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true"/>
+}
+@section Scripts{
+    <script src="~/js/home.js" asp-append-version="true"></script>
+}

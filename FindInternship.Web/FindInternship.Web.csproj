@@ -9,16 +9,19 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\editMeeting.js" />
+    <Content Remove="wwwroot\js\home.js" />
     <Content Remove="wwwroot\js\upload.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\editMeeting.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\home.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\upload.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\js\editMeeting.js" />
+    <None Include="wwwroot\js\home.js" />
     <None Include="wwwroot\js\upload.js" />
   </ItemGroup>
 

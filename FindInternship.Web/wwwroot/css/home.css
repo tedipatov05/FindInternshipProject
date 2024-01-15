@@ -1,0 +1,437 @@
+﻿
+body {
+    font-family: "Open Sans", sans-serif;
+    color: #444444;
+}
+
+a {
+    color: #ffc451;
+    text-decoration: none;
+}
+.fixed-top{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+    a:hover {
+        color: #ffd584;
+        text-decoration: none;
+    }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Raleway", sans-serif;
+}
+
+.back-to-top {
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+    right: 15px;
+    bottom: 15px;
+    z-index: 996;
+    background: #ffc451;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    transition: all 0.4s;
+}
+
+    .back-to-top i {
+        font-size: 28px;
+        color: #151515;
+        line-height: 0;
+    }
+
+    .back-to-top:hover {
+        background: #151515;
+    }
+
+        .back-to-top:hover i {
+            color: #ffc451;
+        }
+
+    .back-to-top.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    overflow: hidden;
+    background: #151515;
+}
+
+    #preloader:before {
+        content: "";
+        position: fixed;
+        top: calc(50% - 0px);
+        left: calc(50% - 30px);
+        border: 6px solid #ffc451;
+        border-top-color: #151515;
+        border-bottom-color: #151515;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: animate-preloader 1s linear infinite;
+    }
+
+@keyframes animate-preloader {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+#header {
+    transition: all 0.5s;
+    z-index: 997;
+}
+
+    #header.header-scrolled,
+    #header.header-inner-pages {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    #header .logo {
+        font-size: 32px;
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+        #header .logo a {
+            color: #fff;
+        }
+
+            #header .logo a span {
+                color: #ffc451;
+            }
+
+        #header .logo img {
+            max-height: 40px;
+        }
+
+
+#hero {
+    width: 100%;
+    height: 100vh;
+    background: url("../img/hero-bg.jpg") top center;
+    background-size: cover;
+    position: relative;
+}
+
+    #hero:before {
+        content: "";
+        background: rgba(0, 0, 0, 0.6);
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    #hero .container {
+        position: relative;
+        padding-top: 74px;
+        text-align: center;
+    }
+
+    #hero h1 {
+        margin: 0;
+        font-size: 56px;
+        font-weight: 700;
+        line-height: 64px;
+        color: #fff;
+        font-family: "Poppins", sans-serif;
+    }
+
+        #hero h1 span {
+            color: #ffc451;
+        }
+
+    #hero h2 {
+        color: rgba(255, 255, 255, 0.9);
+        margin: 10px 0 0 0;
+        font-size: 24px;
+    }
+
+    #hero .icon-box {
+        padding: 30px 20px;
+        transition: ease-in-out 0.3s;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        height: 100%;
+        text-align: center;
+    }
+
+        #hero .icon-box i {
+            font-size: 32px;
+            line-height: 1;
+            color: #ffc451;
+        }
+
+        #hero .icon-box h3 {
+            font-weight: 700;
+            margin: 10px 0 0 0;
+            padding: 0;
+            line-height: 1;
+            font-size: 20px;
+            line-height: 26px;
+        }
+
+            #hero .icon-box h3 a {
+                color: #fff;
+                transition: ease-in-out 0.3s;
+            }
+
+                #hero .icon-box h3 a:hover {
+                    color: #ffc451;
+                }
+
+        #hero .icon-box:hover {
+            border-color: #ffc451;
+        }
+
+@media (min-width: 1024px) {
+    #hero {
+        background-attachment: fixed;
+    }
+}
+
+@media (max-width: 768px) {
+    #hero {
+        height: auto;
+    }
+
+        #hero h1 {
+            font-size: 28px;
+            line-height: 36px;
+        }
+
+        #hero h2 {
+            font-size: 20px;
+            line-height: 24px;
+        }
+}
+
+
+section {
+    padding: 60px 0;
+    overflow: hidden;
+}
+
+.section-title {
+    padding-bottom: 40px;
+}
+
+    .section-title h2 {
+        font-size: 14px;
+        font-weight: 500;
+        padding: 0;
+        line-height: 1px;
+        margin: 0 0 5px 0;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #aaaaaa;
+        font-family: "Poppins", sans-serif;
+    }
+
+        .section-title h2::after {
+            content: "";
+            width: 120px;
+            height: 1px;
+            display: inline-block;
+            background: #ffde9e;
+            margin: 4px 10px;
+        }
+
+    .section-title p {
+        margin: 0;
+        margin: 0;
+        font-size: 36px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-family: "Poppins", sans-serif;
+        color: #151515;
+    }
+
+.counts .content {
+    padding: 30px 0;
+}
+
+    .counts .content h3 {
+        font-weight: 700;
+        font-size: 34px;
+        color: #151515;
+    }
+
+    .counts .content p {
+        margin-bottom: 0;
+    }
+
+    .counts .content .count-box {
+        padding: 20px 0;
+        width: 100%;
+    }
+
+        .counts .content .count-box i {
+            display: block;
+            font-size: 36px;
+            color: #ffc451;
+            float: left;
+        }
+
+        .counts .content .count-box span {
+            font-size: 36px;
+            line-height: 30px;
+            display: block;
+            font-weight: 700;
+            color: #151515;
+            margin-left: 50px;
+        }
+
+        .counts .content .count-box p {
+            padding: 15px 0 0 0;
+            margin: 0 0 0 50px;
+            font-family: "Raleway", sans-serif;
+            font-size: 14px;
+            color: #3b3b3b;
+        }
+
+        .counts .content .count-box a {
+            font-weight: 600;
+            display: block;
+            margin-top: 20px;
+            color: #3b3b3b;
+            font-size: 15px;
+            font-family: "Poppins", sans-serif;
+            transition: ease-in-out 0.3s;
+        }
+
+            .counts .content .count-box a:hover {
+                color: #626262;
+            }
+
+.counts .image {
+    background: url("../img/counts-img.jpg") center center no-repeat;
+    background-size: cover;
+    min-height: 400px;
+}
+
+@media (max-width: 991px) {
+    .counts .image {
+        text-align: center;
+    }
+
+        .counts .image img {
+            max-width: 80%;
+        }
+}
+
+@media (max-width: 667px) {
+    .counts .image img {
+        max-width: 100%;
+    }
+}
+
+.team {
+    background: #fff;
+    padding: 60px 0;
+}
+
+    .team .member {
+        margin-bottom: 20px;
+        overflow: hidden;
+        border-radius: 5px;
+        background: #fff;
+        box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+        .team .member .member-img {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team .member .social {
+            position: absolute;
+            left: 0;
+            bottom: 30px;
+            right: 0;
+            opacity: 0;
+            transition: ease-in-out 0.3s;
+            text-align: center;
+        }
+
+            .team .member .social a {
+                transition: color 0.3s;
+                color: #151515;
+                margin: 0 3px;
+                border-radius: 4px;
+                width: 36px;
+                height: 36px;
+                background: rgba(255, 255, 255, 0.8);
+                transition: ease-in-out 0.3s;
+                color: #484848;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+                .team .member .social a:hover {
+                    color: #151515;
+                    background: #ffc451;
+                }
+
+            .team .member .social i {
+                font-size: 18px;
+                line-height: 0;
+            }
+
+        .team .member .member-info {
+            padding: 25px 15px;
+        }
+
+            .team .member .member-info h4 {
+                font-weight: 700;
+                margin-bottom: 5px;
+                font-size: 18px;
+                color: #151515;
+            }
+
+            .team .member .member-info span {
+                display: block;
+                font-size: 13px;
+                font-weight: 400;
+                color: #aaaaaa;
+            }
+
+            .team .member .member-info p {
+                font-style: italic;
+                font-size: 14px;
+                line-height: 26px;
+                color: #777777;
+            }
+
+        .team .member:hover .social {
+            opacity: 1;
+            bottom: 15px;
+        }

@@ -44,7 +44,12 @@ namespace FindInternship.Web.Controllers
             if (User.IsInRole("Student"))
             {
                 //TODO: Change redirection when student schedule is ready
-                return View(model);
+                return RedirectToAction("All", "Meeting");
+            }
+
+            if (User.IsInRole("Company"))
+            {
+                return RedirectToAction("CompanyClasses", "Class");
             }
 
             return View(model);
