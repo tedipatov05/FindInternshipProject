@@ -8,7 +8,7 @@ a {
     color: #ffc451;
     text-decoration: none;
 }
-.fixed-top{
+.header-top{
     position: fixed;
     top: 0;
     right: 0;

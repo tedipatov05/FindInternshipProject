@@ -1,14 +1,7 @@
 ﻿@using FindInternship.Web.Middlewares
 @model FindInternship.Core.Models.PrivateChat.PrivateChatViewModel
 
-@{
-    string height = Model.ChatMessages.Count() == 0 ? "500px" : "unset";
-
-}
-
-
-
-<h2 class="text-center text-black" id="groupName">@Model.Group</h2>
+<h2 class="text-center text-black" id="groupName" style="display: none">@Model.Group</h2>
 <div class="main-wrapper">
     <div class="container" style="margin-top: 0px;">
         <div class="page-content">
@@ -41,7 +34,7 @@
 
                                 </div>
                             </div>
-                            <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" id="chat-body" style="height: @height">
+                            <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" id="chat-body" style="height: 450px">
                                 <div class="w-100 p-3" id="chatHolder">
                                     @if (Model.ChatMessages != null || @Model.ChatMessages.Count() != 0)
                                     {

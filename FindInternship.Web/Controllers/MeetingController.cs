@@ -88,10 +88,6 @@ namespace FindInternship.Web.Controllers
             return View(model);
         }
 
-
-
-        //TODO: Add validation meeting to be minimum three hours
-
         [HttpPost]
         [Route("Meeting/Create")]
         public async Task<IActionResult> Create(string classId, string title, DateTime start, DateTime end, string address)

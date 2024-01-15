@@ -26,13 +26,13 @@
 
                 @foreach (var user in Model)
                 {
-                    
+
                     string message = user.LastMessageToUser == null ? "" : $"{user.LastMessageToUser.User.UserName}: {user.LastMessageToUser.Content}";
                     string lastMessage = message.Contains("<a>") || message.Contains("<span>") ? "Прикачен файл" : message;
-                    
 
-                    <div class="chat-item d-flex pl-3 pr-0 pt-3 pb-3">
-                        <a asp-action="Chat" asp-controller="PrivateChat" asp-route-toUsername="@user.Name" asp-route-group="@user.Name-@User.GetUsername()">
+                    <a asp-action="Chat" asp-controller="PrivateChat" asp-route-toUsername="@user.Name" asp-route-group="@user.Name-@User.GetUsername()">
+                        <div class="chat-item d-flex pl-3 pr-0 pt-3 pb-3">
+
                             <div class="w-100">
                                 <div class="d-flex pl-0">
                                     <img class="rounded-circle shadow avatar-sm mr-2" src="@user.ProfilePicture">
@@ -47,9 +47,10 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                        </a>
-                    </div>
+
+
+                        </div>
+                    </a>
                 }
 
 
