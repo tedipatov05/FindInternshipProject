@@ -30,6 +30,10 @@ namespace FindInternship.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Admin" });
+            }
 
             if (User.IsInRole("Teacher"))
             {

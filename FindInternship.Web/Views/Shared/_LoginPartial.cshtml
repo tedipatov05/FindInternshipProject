@@ -14,7 +14,7 @@
     </li>
 
     <li>
-        <form class="form-inline" asp-action="Logout" asp-controller="Account">
+        <form class="form-inline" asp-area="" asp-action="Logout" asp-controller="Account">
             <button type="submit" class="nav-link scrollto" style="background-color: unset;border: none;margin-left: 10px;">
                 Излез
             </button>
@@ -29,7 +29,7 @@ else
         <ul>
             <li><a asp-action="RegisterTeacher" asp-controller="Account">Учител</a></li>
             <li><a asp-action="Register" asp-controller="Account">Ученик</a></li>
-                <li><a asp-action="RegisterCompany" asp-controller="Account">Фирма</a></li>
+            <li><a asp-action="RegisterCompany" asp-controller="Account">Фирма</a></li>
         </ul>
     </li>
 
