@@ -4,57 +4,63 @@
 
 
 <div class="container">
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="">
-				<div class="table-responsive">
-					<table class="table project-list-table table-nowrap align-middle table-borderless">
-						<thead>
-							<tr>
-								<th scope="col">Клас</th>
-								<th scope="col">Училище</th>
-								<th scope="col">Класен ръководител</th>
-								<th scope="col">Брой ученици</th>
-								<th scope="col" style="width: 200px;">График на класа</th>
-								<th scope="col" style="width: 200px;">Добави среща</th>
-							</tr>
-						</thead>
-						@if (Model.Count == 0)
-						{
-							<p>Няма стажуващи класове</p>
-						}
-						else
-						{
-
-							<tbody>
-								@foreach (var class1 in Model)
-								{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="table-responsive">
 
 
-									<tr>
 
-										<td class="thickness">@class1.Name</td>
-										<td><span class="badge badge-soft-success mb-0 thickness">@class1.School</span></td>
-										<td class="thickness">@class1.Teacher</td>
-										<td>@class1.Students</td>
-										<td class="thickness">
-											<a class="button-81" asp-action="All" asp-controller="Meeting" role="button">График</a>
-										</td>
-										<td class="thickness">
-											<a class="button-81" asp-route-id="@class1.TeacherId" asp-controller="Home" asp-action="Teacher" role="button">Списък с ученици</a>
-										</td>
-									</tr>
-								}
-							</tbody>
-						}
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+                    @if (Model.Count == 0)
+                    {
+                        <div class="text-center" style="font-size: 20px;font-weight: 600;">
+                            <p>Няма стажуващи класове</p>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <table class="table project-list-table table-nowrap align-middle table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Клас</th>
+                                    <th scope="col">Училище</th>
+                                    <th scope="col">Класен ръководител</th>
+                                    <th scope="col">Брой ученици</th>
+                                    <th scope="col" style="width: 200px;">График на класа</th>
+                                    <th scope="col" style="width: 200px;">Добави среща</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var class1 in Model)
+                                {
+
+
+                                    <tr>
+
+                                        <td class="thickness">@class1.Name</td>
+                                        <td><span class="badge badge-soft-success mb-0 thickness">@class1.School</span></td>
+                                        <td class="thickness">@class1.Teacher</td>
+                                        <td>@class1.Students</td>
+                                        <td class="thickness">
+                                            <a class="button-81" asp-action="All" asp-controller="Meeting" role="button">График</a>
+                                        </td>
+                                        <td class="thickness">
+                                            <a class="button-81" asp-route-id="@class1.TeacherId" asp-controller="Home" asp-action="Teacher" role="button">Списък с ученици</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-@section Styles{
-	<link rel="stylesheet" href="~/css/comapnyClasses.css" asp-append-version="true" />
+@section Styles {
+    <link rel="stylesheet" href="~/css/comapnyClasses.css" asp-append-version="true" />
 
 }
