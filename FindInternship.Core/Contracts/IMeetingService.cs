@@ -24,5 +24,7 @@ namespace FindInternship.Core.Contracts
 
         Task<PreDeleteMeetingViewModel> GetMeetingForDeleteAsync(string meetingId);
 
+        Task<int> GetMeetingsCountAsync();
+
     }
 }

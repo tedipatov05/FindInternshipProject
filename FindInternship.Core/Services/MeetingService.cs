@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -178,6 +179,14 @@ namespace FindInternship.Core.Services
             }
 
             return meetings;
+        }
+
+        public async Task<int> GetMeetingsCountAsync()
+        {
+            var meetingsCount = await repo.All<Meeting>().CountAsync();
+
+            return meetingsCount;
+                
         }
     }
 }

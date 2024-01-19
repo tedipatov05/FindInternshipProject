@@ -19,6 +19,8 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> EditRequestStatus(string status, string requestId);
 
+        Task<int> GetAcceptedRequestCountAsync();
+
         
     }
 }

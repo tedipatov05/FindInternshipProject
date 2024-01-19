@@ -63,6 +63,13 @@ namespace FindInternship.Core.Services
             return false;
         }
 
+        public async Task<int> GetAcceptedRequestCountAsync()
+        {
+            var requests = await repo.All<Request>().CountAsync();
+
+            return requests;
+        }
+
         public async Task<List<AllRequestsViewModel>> GetAllClassRequestsByIdAsync(string classId)
         {
             var requests = await repo.All<Request>()

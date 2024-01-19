@@ -384,5 +384,12 @@ namespace FindInternship.Core.Services
             return true;
 
         }
+
+        public async Task<int> GetMessagesCountAsync()
+        {
+            var messagesCount = await repo.All<ChatMessage>().CountAsync();
+
+            return messagesCount;
+        }
     }
 }

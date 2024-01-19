@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Users;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,47 @@ namespace FindInternship.Core.Services
         {
             var IsExist = await repo.All<User>().AnyAsync(u => u.PhoneNumber == phoneNumber);
             return IsExist;
+
+        }
+
+        public async Task<int> GetUsersCountAsync()
+        {
+            var usersCount = await repo.All<User>().CountAsync();
+
+            return usersCount;
+        }
+
+        public async Task<List<UserViewModel>> GetFilteredUsersAsync(UsersQueryModel model)
+        {
+            IQueryable<User> usersQuery = repo.All<User>()
+                .Where(u => u.IsActive && !u.IsApproved);
+
+
+            if (!string.IsNullOrEmpty(model.SearchString))
+            {
+                string wildCard = $"%{model.SearchString.ToLower()}%";
+
+                usersQuery = usersQuery
+                    .Where(u => EF.Functions.Like(u.Name.ToLower(), wildCard) ||
+                                EF.Functions.Like(u.Email.ToLower(), wildCard) ||
+                                EF.Functions.Like(u.City.ToLower(), wildCard));
+
+            }
+
+            var users = await usersQuery
+                .Select(u => new UserViewModel()
+                {
+                    Id = u.Id, 
+                    Name = u.Name,
+                    Email = u.Email,
+                    RegisteredOn = u.RegisteredOn.ToString("dddd, dd MMMM yyyy"),
+                    ProfilePictureUrl = u.ProfilePictureUrl,
+                })
+                .ToListAsync();
+
+            return users;
+
+
 
         }
     }

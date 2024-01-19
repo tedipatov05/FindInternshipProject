@@ -33,6 +33,8 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> IsAbleToChatAsync(string userName, string group, User user);
 
+        Task<int> GetMessagesCountAsync();
+             
        
 
 

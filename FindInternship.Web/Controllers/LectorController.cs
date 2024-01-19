@@ -51,10 +51,16 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            if(model.ProfilePicture == null)
+            {
+                ModelState.AddModelError(nameof(model.ProfilePicture), "Снимката е задължителна");
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
+
+            
             
             try
             {

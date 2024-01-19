@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FindInternship.Core.Models.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,9 @@ namespace FindInternship.Core.Contracts
         Task<string> GetUserIdByUsernameAsync(string username);
 
         Task<bool> IsExistsByUsernameAsync(string username);
+
+        Task<int> GetUsersCountAsync();
+
+        Task<List<UserViewModel>> GetFilteredUsersAsync(UsersQueryModel model);
     }
 }

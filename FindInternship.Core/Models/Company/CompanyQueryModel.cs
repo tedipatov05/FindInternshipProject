@@ -16,9 +16,6 @@ namespace FindInternship.Core.Models.Company
         }
 
         public string? SearchString { get; set; }
-
-		//public string City { get; set; } = null!;
-
 		public string Technology { get; set; }
 
 		public List<string> Technologies { get; set; }
