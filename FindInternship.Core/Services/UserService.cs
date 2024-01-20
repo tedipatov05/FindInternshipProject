@@ -32,7 +32,7 @@ namespace FindInternship.Core.Services
             var user = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName == username);
 
-            return user.Id;
+            return user!.Id;
         }
 
         public async Task<bool> IsExistsByUsernameAsync(string username)
@@ -95,6 +95,28 @@ namespace FindInternship.Core.Services
             return users;
 
 
+
+        }
+
+        public async Task ChangeUserIsApprovedAsync(string userId)
+        {
+            var user = await repo.GetByIdAsync<User>(userId);
+
+            user!.IsApproved = true;
+
+            await repo.SaveChangesAsync();
+                
+        }
+
+        public async Task DeleteUserAsync(string userId)
+        {
+            var user = await repo.GetByIdAsync<User>(userId);
+
+            user!.IsApproved = false;
+            user!.IsActive = false;
+            
+
+            await repo.SaveChangesAsync();
 
         }
     }

@@ -21,5 +21,9 @@ namespace FindInternship.Core.Contracts
         Task<int> GetUsersCountAsync();
 
         Task<List<UserViewModel>> GetFilteredUsersAsync(UsersQueryModel model);
+
+        Task ChangeUserIsApprovedAsync(string userId);
+
+        Task DeleteUserAsync(string userId);
     }
 }

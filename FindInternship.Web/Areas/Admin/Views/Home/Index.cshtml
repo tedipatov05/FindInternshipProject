@@ -85,10 +85,8 @@
                                 <h3 class="t-op-nextlvl ml-40">@user.Email</h3>
                                 <h3 class="t-op-nextlvl ml-40">@user.RegisteredOn</h3>
                                 <div style="display: flex; flex-direction: column;">
-                                    <a class="t-op-nextlvl label-tag" style="text-decoration: none; margin-bottom: 10px;">Published</a>
-                                    <a class="t-op-nextlvl label-tag-delete" style="text-decoration: none;">Delete</a>
-
-
+                                    <a asp-area="Admin" asp-controller="User" asp-action="AcceptRequest" asp-route-id="@user.Id" class="t-op-nextlvl label-tag" style="text-decoration: none; margin-bottom: 10px;">Одобри</a>
+                                    <a asp-area="Admin" asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.Id" class="t-op-nextlvl label-tag-delete" style="text-decoration: none;">Изтрий</a>
                                 </div>
                             </div>
                             <hr>

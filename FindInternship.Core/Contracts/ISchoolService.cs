@@ -8,7 +8,7 @@ namespace FindInternship.Core.Contracts
 {
     public interface ISchoolService
     {
-        Task<int?> GetSchoolIdIfExistsAsync(string schoolName);
+        int? GetSchoolIdIfExistsAsync(string schoolName);
 
         Task<int> Create(string schooName, string city);
     }

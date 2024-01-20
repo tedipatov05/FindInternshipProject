@@ -29,8 +29,8 @@ namespace FindInternship.Core.Services
 
         public async Task Create(RegisterTeacherViewModel model, string userId)
         {
-            string classId = await classService.GetClassIdIfExistsAsync(model.Class.Trim());
-            int? schoolId = await schoolService.GetSchoolIdIfExistsAsync(model.School);
+            string classId = classService.GetClassIdIfExistsAsync(model.Class.Trim(), model.School);
+            int? schoolId =  schoolService.GetSchoolIdIfExistsAsync(model.School);
 
             if(schoolId == null) 
             {

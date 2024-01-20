@@ -32,10 +32,13 @@ namespace FindInternship.Core.Services
             return school.Id;
         }
 
-        public async Task<int?> GetSchoolIdIfExistsAsync(string schoolName)
+        public int? GetSchoolIdIfExistsAsync(string schoolName)
         {
-            var school = await repo.All<School>()
-                .FirstOrDefaultAsync(s => s.Name.ToLower().Trim() == schoolName.ToLower().Trim());
+            Func<string, string> concatedName = (str) => string.Join("", str).ToLower();
+
+            var school = repo.All<School>()
+                .AsEnumerable()
+                .FirstOrDefault(s => concatedName(s.Name) == concatedName(schoolName));
 
             if(school == null)
             {

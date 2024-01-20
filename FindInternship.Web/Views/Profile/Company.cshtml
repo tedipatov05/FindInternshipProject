@@ -10,8 +10,17 @@
                     <div class="row align-items-center" style="height: 250px;">
                         <div class="col-md-3">
                             <div class="text-center border-end">
-                                <img src="@Model.ProfilePictureUrl"
-                                     class="img-fluid avatar-xxl rounded-circle" alt="">
+                                @if(Model.ProfilePictureUrl == null)
+                                {
+                                    <img src="~/img/blank-profile-picture.png"
+                                    class="img-fluid avatar-xxl rounded-circle" alt="">
+                                }
+                                else
+                                {
+                                    <img src="@Model.ProfilePictureUrl"
+                                         class="img-fluid avatar-xxl rounded-circle" alt="">
+                                }
+                                
                                 <h4 class="text-primary font-size-20 mt-3 mb-2">@Model.Name</h4>
                                 <h5 class="text-muted font-size-13 mb-0">ИТ Фирма</h5>
                                 @if(Model.Id == User.GetId())
