@@ -1,0 +1,163 @@
+﻿
+.browser {
+    align-self: center;
+    width: 830px;
+    height: 520px;
+    border: 1px solid #fff;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 0 20px 3px rgba(32,35,42,0.14);
+}
+
+.browser-bar {
+    background: #EEF1F5;
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #DEE0E4;
+    overflow: hidden;
+}
+
+    .browser-bar .options {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+.options .option {
+    height: 12px;
+    width: 12px;
+    border-radius: 50px;
+    margin: 0 5px;
+}
+
+.close {
+    background: #EF534A;
+}
+
+.minimise {
+    background: #EDC04A;
+}
+
+.expand {
+    background: #97D272;
+}
+
+/* ~ Browser Content ~ */
+.browser-content {
+    height: 90%;
+}
+
+.row {
+    padding: 0px 15px;
+    border-bottom: 1px solid #EBEFF4;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+    .row:hover {
+        background: #EBEFF4;
+        cursor: pointer;
+        transition: background .5s ease;
+    }
+
+    .row > p {
+        align-self: flex-start;
+      
+    }
+
+    .row i {
+        margin-right: 10px;
+        font-size: 25px;
+        font-weight: normal;
+        margin-top: 3px;
+        width: 30px;
+    }
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.row .heading {
+    position: relative;
+    top: -5px;
+    color: #616B7F;
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.stars {
+    margin: -5px 15px 0 15px;
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    max-width: 300px;
+}
+
+.fas {
+    font-weight: 900 !important;
+}
+
+.stars i {
+    font-size: 22px;
+}
+
+    .stars i:hover {
+        transform: scale(1.2);
+        transition: transform .4s ease;
+    }
+
+.arrow {
+    display: flex;
+    align-self: center;
+    justify-content: flex-end;
+    width: 110px;
+}
+
+    .arrow i {
+        color: #C4C4C4 !important;
+    }
+
+
+.item-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 15px;
+    background: rgba(235, 239, 244, 0.4);
+    transition: height .5s;
+    height: auto;
+    overflow: hidden;
+}
+
+    .item-content p {
+        color: #616B7F;
+        line-height: 28px;
+    }
+
+.hidden-content {
+    display: none;
+    transition: height .5s;
+    height: 0;
+    overflow: hidden;
+}
+
+/* ~ Other ~ */
+.rotate0 {
+    transform: rotate(0deg);
+    transition: all 0.5s ease;
+}
+
+.rotate90 {
+    transform: rotate(90deg);
+    transition: all 0.5s ease;
+}
+
+.add-overflow {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
