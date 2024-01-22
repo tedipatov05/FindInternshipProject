@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FindInternship.Core.Services
 {
-	public class AbilityService : IAbilityService
+    public class AbilityService : IAbilityService
     {
         private IRepository repo;
         private IStudentService studentService;
@@ -45,7 +45,18 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
         }
 
-		public async Task AddTechnologiesToCompanyAsync(List<string> technologies, string userId)
+        public async Task AddNewAbilityAsync(string ability)
+        {
+            Ability abilityModel = new Ability()
+            {
+                AbilityText = ability
+            };
+
+            await repo.AddAsync(abilityModel);
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task AddTechnologiesToCompanyAsync(List<string> technologies, string userId)
 		{
             string companyId = await companyService.GetCompanyIdAsync(userId);
 

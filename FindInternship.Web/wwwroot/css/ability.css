@@ -1,4 +1,33 @@
 ﻿
+.searchbar input {
+    width: 250px;
+    height: 42px;
+    border-radius: 50px 0 0 50px;
+    background-color: #d8d7d7;
+    padding: 0 20px;
+    font-size: 15px;
+    outline: none;
+    border: none;
+}
+
+.searchbar, .message, .logosec {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchbtn {
+    width: 50px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 50px 50px 0px;
+    background-color: #d8d7d7;
+    cursor: pointer;
+}
+
+
 .browser {
     align-self: center;
     width: 830px;
@@ -101,27 +130,6 @@
 .fas {
     font-weight: 900 !important;
 }
-
-.stars i {
-    font-size: 22px;
-}
-
-    .stars i:hover {
-        transform: scale(1.2);
-        transition: transform .4s ease;
-    }
-
-.arrow {
-    display: flex;
-    align-self: center;
-    justify-content: flex-end;
-    width: 110px;
-}
-
-    .arrow i {
-        color: #C4C4C4 !important;
-    }
-
 
 .item-content {
     display: flex;

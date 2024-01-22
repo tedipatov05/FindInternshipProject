@@ -24,34 +24,38 @@
         <div class="chat-user-panel">
             <div class="pb-3 d-flex flex-column navigation-mobile pagination-scrool chat-user-scroll ps-container">
 
-                @foreach (var user in Model)
+                @if(Model.Count > 0)
                 {
+                    foreach (var user in Model)
+                    {
 
-                    string message = user.LastMessageToUser == null ? "" : $"{user.LastMessageToUser.User.UserName}: {user.LastMessageToUser.Content}";
-                    string lastMessage = message.Contains("<a>") || message.Contains("<span>") ? "Прикачен файл" : message;
+                        string message = user.LastMessageToUser == null ? "" : $"{user.LastMessageToUser.User.UserName}: {user.LastMessageToUser.Content}";
+                        string lastMessage = message.Contains("<a>") || message.Contains("<span>") ? "Прикачен файл" : message;
 
-                    <a asp-action="Chat" asp-controller="PrivateChat" asp-route-toUsername="@user.Name" asp-route-group="@user.Name-@User.GetUsername()">
-                        <div class="chat-item d-flex pl-3 pr-0 pt-3 pb-3">
+                        <a asp-action="Chat" asp-controller="PrivateChat" asp-route-toUsername="@user.Name" asp-route-group="@user.Name-@User.GetUsername()">
+                            <div class="chat-item d-flex pl-3 pr-0 pt-3 pb-3">
 
-                            <div class="w-100">
-                                <div class="d-flex pl-0">
-                                    <img class="rounded-circle shadow avatar-sm mr-2" src="@user.ProfilePicture">
-                                    <div style="margin-left: 10px;">
-                                        <p class="margin-auto fw-500 fs-med text-dark-75">@user.Name</p>
-                                        <div class="d-flex flex-row mt-2">
-                                            <span>
-                                                <div class="svg15 double-check"></div>
-                                            </span>
-                                            <span class="message-shortcut margin-auto text-muted fs-13 ml-1 mr-4">@lastMessage</span>
+                                <div class="w-100">
+                                    <div class="d-flex pl-0">
+                                        <img class="rounded-circle shadow avatar-sm mr-2" src="@user.ProfilePicture">
+                                        <div style="margin-left: 10px;">
+                                            <p class="margin-auto fw-500 fs-med text-dark-75">@user.Name</p>
+                                            <div class="d-flex flex-row mt-2">
+                                                <span>
+                                                    <div class="svg15 double-check"></div>
+                                                </span>
+                                                <span class="message-shortcut margin-auto text-muted fs-13 ml-1 mr-4">@lastMessage</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
-
-
-                        </div>
-                    </a>
+                        </a>
+                    }
                 }
+                
 
 
                 <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" style="top: 0px; height: 0px;"></div></div>

@@ -74,7 +74,10 @@ namespace FindInternship.Web.Controllers
                 var studentTeacher = await privateChatService.GetTeacherToChatAsync(classId, userId);
                 var company = await privateChatService.GetCompanyToChatAsync(classId, userId);
                 users.Add(studentTeacher);
-                users.Add(company);
+                if(company != null)
+                {
+                    users.Add(company);
+                }
 
                 return View(users);
 

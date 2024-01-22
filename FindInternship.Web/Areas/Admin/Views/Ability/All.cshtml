@@ -1,4 +1,43 @@
-﻿
+﻿@using FindInternship.Core.Models.Ability
+
+@model List<AbilityViewModel>
+
+
+@{
+    Dictionary<string, string> lanIcons = new()
+    {
+        {"c++", "devicon-cplusplus-plain colored"},
+        {"docker", "devicon-docker-plain colored"},
+        {"apache", "devicon-apache-plain colored"},
+        {"angular", "devicon-angularjs-plain colored"},
+        {"vue", "devicon-vuejs-plain colored"},
+        {"react", "devicon-react-original colored"},
+        {"azure", "devicon-azure-plain colored"},
+        {"arduino", "devicon-arduino-plain colored"},
+        {"babel", "devicon-babel-plain colored"},
+        {"cakephp", "devicon-cakephp-plain colored"},
+        {"cofeescript", "devicon-coffeescript-original colored"},
+        {"css", "devicon-css3-plain colored"}, 
+        {"html", "devicon-html5-plain colored"},
+        {"dart", "devicon-dart-plain colored"},
+        {"debian", "devicon-debian-plain colored"}, 
+        {"express", "devicon-express-original colored"},
+        {"flask", "devicon-flask-original colored"},
+        {"github", "devicon-github-original colored"},
+        {"go", "devicon-go-original-wordmark colored"}, 
+        {"haskell", "devicon-haskell-plain colored"},
+        {"handlebars", "devicon-handlebars-plain colored"}, 
+        {"java", "devicon-java-plain colored"}, 
+        {"jquery", "devicon-jquery-plain colored"}, 
+        {"mongodb", "devicon-mongodb-plain colored"}, 
+        {"mysql", "devicon-mysql-plain colored"},
+        {"nextjs", "devicon-nextjs-original colored"}, 
+        {"oracle", "devicon-oracle-original colored"}, 
+        {"rust", "devicon-rust-plain colored"},
+        {"typescript", "devicon-typescript-plain colored"}, 
+        {"unrealengine", "devicon-unrealengine-original colored"}
+    };
+}
 
 
 <div class="container" style="display: flex;align-items: center;">
@@ -12,27 +51,52 @@
         </div>
         <div class="browser-content add-overflow">
             <div class="row">
-                <p class="mb-10" style="margin-top:10px ;">
-                    <i class="bi bi-plus-circle-fill"></i>
-                    <span class="heading" style="text-shadow: none">Добави ново умение</span>
-                </p>
+                <div class="mb-10" style="margin-top:10px; display: flex; flex-direction: row;">
+                    <div id="add-ability" style="display: flex;">
+                        <i class="bi bi-plus-circle-fill"></i>
+                        <span class="heading" style="text-shadow: none;display: block; margin-top: 7%">Добави ново умение</span>
+                    </div>
+                   
+                    <div class="searchbar" id="form-add" style="display: none">
+                        <input type="text" placeholder="Име" id="ability-Text">
+                        <div class="searchbtn" id="btn-add">
+                            <i class="bi bi-plus-circle"></i>
+                        </div>
+                    </div> 
+                </div>
 
             </div>
 
-            <div id="html" class="row">
-                <p class="mb-10" style="margin-top:10px ;">
+            @foreach(var ability in Model)
+            {
+                <div class="row">
+                    <p class="mb-10" style="margin-top:10px;">
+                        <i class="@lanIcons[string.Join("", ability.AbilityText.Split(new char[] {' ', '.'}))]"></i>
+                        <span class="heading" style="text-shadow: none">@ability.AbilityText</span>
+                    </p>
+                </div>
+            }
+
+            @* <div class="row">
+                <p class="mb-10" style="margin-top:10px;">
                     <i class="devicon-html5-plain colored"></i>
                     <span class="heading" style="text-shadow: none">HTML</span>
                 </p>
 
-            </div>
+            </div> *@
+            
 
         </div>
     </div>
-</div> 
+</div>
 
 @section Styles {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/ability.css" asp-append-version="true" />
+   @*  <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" /> *@
 
+}
+
+@section Scripts{
+    <script src="~/js/ability.js" charset="utf-8" asp-append-version="true"></script>
 }
