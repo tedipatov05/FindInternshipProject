@@ -35,7 +35,17 @@
         {"oracle", "devicon-oracle-original colored"}, 
         {"rust", "devicon-rust-plain colored"},
         {"typescript", "devicon-typescript-plain colored"}, 
-        {"unrealengine", "devicon-unrealengine-original colored"}
+        {"unrealengine", "devicon-unrealengine-original colored"},
+        {"c", "devicon-c-plain colored"}, 
+        {"c#", "devicon-csharp-plain colored"}, 
+        {"asp.net", "devicon-dot-net-plain colored"},
+        {"php", "devicon-php-plain colored"}, 
+        {"python", "devicon-python-plain colored"}, 
+        {"node.js", "devicon-nodejs-plain colored"},
+        {"js", "devicon-javascript-plain colored"}, 
+        {"mssql", "devicon-microsoftsqlserver-plain colored"},
+        {"entityframework", "devicon-csharp-plain colored"}
+
     };
 }
 
@@ -49,7 +59,7 @@
                 <div class="option expand"></div>
             </div>
         </div>
-        <div class="browser-content add-overflow">
+        <div class="browser-content add-overflow" id="abilities-container">
             <div class="row">
                 <div class="mb-10" style="margin-top:10px; display: flex; flex-direction: row;">
                     <div id="add-ability" style="display: flex;">
@@ -58,7 +68,7 @@
                     </div>
                    
                     <div class="searchbar" id="form-add" style="display: none">
-                        <input type="text" placeholder="Име" id="ability-Text">
+                        <input type="text" placeholder="Име" id="ability-text">
                         <div class="searchbtn" id="btn-add">
                             <i class="bi bi-plus-circle"></i>
                         </div>
@@ -66,16 +76,21 @@
                 </div>
 
             </div>
-
-            @foreach(var ability in Model)
+            @if(Model.Count() > 0)
             {
-                <div class="row">
-                    <p class="mb-10" style="margin-top:10px;">
-                        <i class="@lanIcons[string.Join("", ability.AbilityText.Split(new char[] {' ', '.'}))]"></i>
-                        <span class="heading" style="text-shadow: none">@ability.AbilityText</span>
-                    </p>
-                </div>
+                foreach (var ability in Model)
+                {
+                    string abConcat = string.Join("", ability.AbilityText.Split(' ')).ToLower();
+                    <div class="row">
+                        <p class="mb-10" style="margin-top:10px;">
+                            <i class="@lanIcons[abConcat]"></i>
+                            <span class="heading" style="text-shadow: none">@ability.AbilityText</span>
+                        </p>
+                    </div>
+                }
             }
+
+           
 
             @* <div class="row">
                 <p class="mb-10" style="margin-top:10px;">

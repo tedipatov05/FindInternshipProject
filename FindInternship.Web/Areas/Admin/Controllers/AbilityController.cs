@@ -17,7 +17,15 @@ namespace FindInternship.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> All()
         {
-            return View();
+            string userId = User.GetId();
+            if (!User.IsInRole("Admin"))
+            {
+                TempData[ErrorMessage] = "Трябва да си администратор, за да имаш достъп.";
+                return RedirectToAction("Index", "Home", new { Area = "Admin" });
+            }
+
+            var model = await abilityService.AllAbilitiesAsync();
+            return View(model);
         }
 
         [HttpPost]
@@ -30,11 +38,12 @@ namespace FindInternship.Web.Areas.Admin.Controllers
                 TempData[ErrorMessage] = "Трябва да си администратор, за да имаш достъп.";
                 return RedirectToAction("Index", "Home", new { Area = "Admin" });
             }
+
             try
             {
                 await abilityService.AddNewAbilityAsync(ability);
 
-                return new JsonResult(ability);
+                return new JsonResult(new { ability });
             }
             catch (Exception ex)
             {
