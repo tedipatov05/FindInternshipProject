@@ -41,10 +41,12 @@ document.getElementById('btn-add').addEventListener('click', function () {
     let abilityConcated = ability.split().join('').toLowerCase();
 
     if (ability == '') {
-        toastr.error(`Новото умение не може да е празно`)
+        toastr.error(`Новото умение не може да е празно`);
+        changeVisibilityNormal();
     }
     else if (lanIcons[abilityConcated] == null) {
-        toastr.error(`Новото умение не съществува`)
+        toastr.error(`Новото умение не съществува`);
+        changeVisibilityNormal();
     }
     else {
 

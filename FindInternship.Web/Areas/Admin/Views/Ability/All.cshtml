@@ -1,8 +1,6 @@
 ﻿@using FindInternship.Core.Models.Ability
 
 @model List<AbilityViewModel>
-
-
 @{
     Dictionary<string, string> lanIcons = new()
     {
@@ -50,7 +48,9 @@
 }
 
 
-<div class="container" style="display: flex;align-items: center;">
+<h2 class="text-center text-dark" style="margin-top: 20px;margin-bottom: 20px;">Умения</h2>
+
+<div class="container" style="display: flex;align-items: center; margin-top: 0px">
     <div class="browser">
         <div class="browser-bar">
             <div class="options">
@@ -70,11 +70,10 @@
                     <div class="searchbar" id="form-add" style="display: none">
                         <input type="text" placeholder="Име" id="ability-text">
                         <div class="searchbtn" id="btn-add">
-                            <i class="bi bi-plus-circle"></i>
+                            <i class="bi bi-plus-circle-fill"></i>
                         </div>
                     </div> 
                 </div>
-
             </div>
             @if(Model.Count() > 0)
             {
@@ -89,18 +88,6 @@
                     </div>
                 }
             }
-
-           
-
-            @* <div class="row">
-                <p class="mb-10" style="margin-top:10px;">
-                    <i class="devicon-html5-plain colored"></i>
-                    <span class="heading" style="text-shadow: none">HTML</span>
-                </p>
-
-            </div> *@
-            
-
         </div>
     </div>
 </div>
@@ -108,8 +95,6 @@
 @section Styles {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/ability.css" asp-append-version="true" />
-   @*  <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" /> *@
-
 }
 
 @section Scripts{
