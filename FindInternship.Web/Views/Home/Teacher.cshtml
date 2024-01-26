@@ -10,12 +10,48 @@
         {"ASP.NET", "ASPLogo.png"},
     };
 
-    Dictionary<string, string> abilityIcon = new Dictionary<string, string>()
+    Dictionary<string, string> lanIcons = new()
     {
-        {"Python", "fa-brands fa-python"},
-        {"PHP", "fa-brands fa-php"},
-        {"JS", "fa-brands fa-js"},
-        {"Node.js", "fa-brands fa-node"}
+        {"c++", "devicon-cplusplus-plain colored"},
+        {"docker", "devicon-docker-plain colored"},
+        {"apache", "devicon-apache-plain colored"},
+        {"angular", "devicon-angularjs-plain colored"},
+        {"vue", "devicon-vuejs-plain colored"},
+        {"react", "devicon-react-original colored"},
+        {"azure", "devicon-azure-plain colored"},
+        {"arduino", "devicon-arduino-plain colored"},
+        {"babel", "devicon-babel-plain colored"},
+        {"cakephp", "devicon-cakephp-plain colored"},
+        {"cofeescript", "devicon-coffeescript-original colored"},
+        {"css", "devicon-css3-plain colored"},
+        {"html", "devicon-html5-plain colored"},
+        {"dart", "devicon-dart-plain colored"},
+        {"debian", "devicon-debian-plain colored"},
+        {"express", "devicon-express-original colored"},
+        {"flask", "devicon-flask-original colored"},
+        {"github", "devicon-github-original colored"},
+        {"go", "devicon-go-original-wordmark colored"},
+        {"haskell", "devicon-haskell-plain colored"},
+        {"handlebars", "devicon-handlebars-plain colored"},
+        {"java", "devicon-java-plain colored"},
+        {"jquery", "devicon-jquery-plain colored"},
+        {"mongodb", "devicon-mongodb-plain colored"},
+        {"mysql", "devicon-mysql-plain colored"},
+        {"nextjs", "devicon-nextjs-original colored"},
+        {"oracle", "devicon-oracle-original colored"},
+        {"rust", "devicon-rust-plain colored"},
+        {"typescript", "devicon-typescript-plain colored"},
+        {"unrealengine", "devicon-unrealengine-original colored"},
+        {"c", "devicon-c-plain colored"},
+        {"c#", "devicon-csharp-plain colored"},
+        {"asp.net", "devicon-dot-net-plain colored"},
+        {"php", "devicon-php-plain colored"},
+        {"python", "devicon-python-plain colored"},
+        {"node.js", "devicon-nodejs-plain colored"},
+        {"js", "devicon-javascript-plain colored"},
+        {"mssql", "devicon-microsoftsqlserver-plain colored"},
+        {"entityframework", "devicon-csharp-plain colored"}
+
     };
 }
 
@@ -34,7 +70,18 @@
                 {
                     <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
                         <div class="member d-flex align-items-start">
-                            <div class="pic"><img src="@student.ProfilePictureUrl" width="180" height="240" class="img-fluid" alt=""></div>
+                            <div class="pic">
+                                @if (student.ProfilePictureUrl == null)
+                                {
+                                    <img src="~/img/blank-profile-picture.png" width="180" height="240" class="img-fluid" alt="">
+
+                                }
+                                else
+                                {
+                                    <img src="@student.ProfilePictureUrl" width="180" height="240" class="img-fluid" alt="">
+
+                                }
+                            </div>
                             <div class="member-info">
                                 <h4>@student.Name</h4>
                                 @if (OnlineUserMiddleware.CheckIfUserIsOnline(student.Id))
@@ -58,7 +105,9 @@
                                         }
                                         else
                                         {
-                                            <a href=""><i class="@abilityIcon[ability] fa-xl"></i></a>
+                                            string abConcat = string.Join("", ability.Split(' ')).ToLower();
+
+                                            <a href=""><i class="@lanIcons[abConcat]"></i></a>
                                         }
                                     }
 

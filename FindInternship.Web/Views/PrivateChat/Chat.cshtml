@@ -1,6 +1,36 @@
 ﻿@using FindInternship.Web.Middlewares
 @model FindInternship.Core.Models.PrivateChat.PrivateChatViewModel
 
+
+
+
+<div id="errorMsg" class="col-12 col-md-6 alert-danger d-none">
+    Fail to start camera, please allow permision to access camera. <br />
+    If you are browsing through social media built in browsers, you would need to open the page in Sarafi (iPhone)/ Chrome (Android)
+    <button id="closeError" class="btn btn-primary ml-3">OK</button>
+</div>
+<div class="md-modal md-effect-12">
+    <div id="app-panel" class="app-panel md-content row p-0 m-0">
+        <div id="webcam-container" class="webcam-container col-12 d-none p-0 m-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+            </svg>
+            <video id="webcam" autoplay playsinline></video>
+            <canvas id="canvas" class="d-none"></canvas>
+            <div class="flash"></div>
+            <audio id="snapSound" src="audio/snap.wav" preload="auto"></audio>
+        </div>
+        <div id="cameraControls" class="cameraControls">
+            <a href="#" id="exit-app" title="Exit App"><i class="material-icons">exit_to_app</i></a>
+            <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
+            <a href="#" id="download-photo" download="selfie.png" target="_blank" title="Save Photo" class="d-none"><i class="material-icons">file_download</i></a>
+            <a href="#" id="resume-camera" title="Resume Camera" class="d-none"><i class="material-icons">camera_front</i></a>
+        </div>
+    </div>
+</div>
+<div class="md-overlay"></div>
+
+
 <h2 class="text-center text-black" id="groupName" style="display: none">@Model.Group</h2>
 <div class="main-wrapper">
     <div class="container" style="margin-top: 0px;">
@@ -131,7 +161,7 @@
                                         <span class="input-group-text pl-2 pr-2">
                                             <i class="chat-upload-trigger fs-19 bi bi-file-plus ml-2 mr-2"></i>
                                             <i class="fs-19 bi bi-emoji-smile ml-2 mr-2"></i>
-                                            <i class="fs-19 bi bi-camera ml-2 mr-2"></i>
+                                            <i class="fs-19 bi bi-camera ml-2 mr-2" id="photo-take"></i>
                                             <i class="fs-19 bi bi-cursor ml-2 mr-2" id="send"></i>
                                             <button type="submit" style="display: none" id="sendButton">
                                             </button>
@@ -173,13 +203,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/webcam.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 }
 
 @section Scripts {
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
     <script src="~/js/chatPreformance.js" asp-append-version="true"></script>
     <script src="~/js/privateChat.js" asp-append-version="true"></script>
     <script src="~/js/chatImagesScript.js" asp-append-version="true"></script>
     <script src="~/js/chatFilesScript.js" asp-append-version="true"></script>
+    <script src="~/js/webcam.js" asp-append-version="true"></script>
 }
