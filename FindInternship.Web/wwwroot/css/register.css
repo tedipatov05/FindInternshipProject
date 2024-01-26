@@ -175,6 +175,7 @@ li.search-field {
     color: #2acc80;
 }
 
-.already{
+.already {
     color: white;
+    text-shadow: 1px 1px black;
 }
