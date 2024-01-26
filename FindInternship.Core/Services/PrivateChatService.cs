@@ -223,7 +223,7 @@ namespace FindInternship.Core.Services
                 Group = targetGroup,
                 SendedOn = DateTime.Now,
                 Content = new HtmlSanitizer().Sanitize(message.Trim()),
-                ReceiverImageUrl = toUser.ProfilePictureUrl,
+                ReceiverImageUrl = toUser.ProfilePictureUrl == null ? "/img/blank-profile-picture.png" : toUser.ProfilePictureUrl,
                 ReceiverUsername = toUser.UserName,
 
             };

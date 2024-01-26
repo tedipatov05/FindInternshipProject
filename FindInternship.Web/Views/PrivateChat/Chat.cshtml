@@ -12,7 +12,15 @@
                             <div class="p-3 chat-header">
                                 <div class="d-flex">
                                     <div class="w-100 d-flex pl-0">
-                                        <img class="rounded-circle shadow avatar-sm mr-3 chat-profile-picture" src="@Model.ToUser.ProfilePictureUrl">
+                                        @if (Model.ToUser.ProfilePictureUrl == null)
+                                        {
+                                            <img class="rounded-circle shadow avatar-sm mr-3 chat-profile-picture" src="~/img/blank-profile-picture.png">
+
+                                        }
+                                        else{
+                                            <img class="rounded-circle shadow avatar-sm mr-3 chat-profile-picture" src="@Model.ToUser.ProfilePictureUrl">
+
+                                        }
                                         <div class="mr-3">
                                             <a asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@Model.ToUser.Id">
                                                 <p class="fw-400 mb-0 text-dark-75" id="toUser">@Model.ToUser.UserName</p>
@@ -46,8 +54,17 @@
                                             {
                                                 <div class="d-flex flex-row-reverse mb-2" id="@message.Id">
                                                     <div class="media-left">
-                                                        <img src="@message.User.ProfilePictureUrl" class="rounded-circle shadow avatar-sm mr-3"
-                                                             alt="Profile Picture">
+                                                        @if(message.User.ProfilePictureUrl == null)
+                                                        {
+                                                            <img src="~/img/blank-profile-picture.png" class="rounded-circle shadow avatar-sm mr-3"
+                                                                 alt="Profile Picture">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="@message.User.ProfilePictureUrl" class="rounded-circle shadow avatar-sm mr-3"
+                                                                 alt="Profile Picture">
+                                                        }
+                                                        
                                                     </div>
                                                     <div class="right-chat-message fs-13 mb-2">
                                                         <div class="mb-3 mr-3 pr-4">
@@ -75,7 +92,16 @@
                                                 {
                                                     <div class="d-flex" id="@message.Id">
                                                         <div style="margin-right: 15px">
-                                                            <img src="@message.User.ProfilePictureUrl" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture">
+                                                            @if (@message.User.ProfilePictureUrl == null)
+                                                            {
+                                                                <img src="~/img/blank-profile-picture.png" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture">
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="@message.User.ProfilePictureUrl" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture">
+
+                                                            }
 
                                                         </div>
                                                         <div class="left-chat-message fs-13 mb-2">

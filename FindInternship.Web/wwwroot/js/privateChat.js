@@ -133,6 +133,10 @@ connection.on("SendMessage", function (userId, fromUsername, fromUserImage, mess
     msgDiv.classList.add('flex-row-reverse');
     msgDiv.classList.add('mb-2');
 
+    if (fromUserImage == '' || fromUserImage == null) {
+        fromUserImage = '/img/blank-profile-picture.png';
+    }
+
     msgDiv.innerHTML = `<div class="media-left">
                             <img src="${fromUserImage}" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture">
 
@@ -175,6 +179,10 @@ connection.on("ReceiveMessage", function (fromUserName, fromUserImage, message) 
     //message Left
     let div = document.createElement('div');
     div.classList.add('d-flex');
+
+    if (fromUserImage == '' || fromUserImage == null) {
+        fromUserImage = '/img/blank-profile-picture.png';
+    }
 
     div.innerHTML = `<div style="margin-right: 15px">
                         <img src="${fromUserImage}" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture">
