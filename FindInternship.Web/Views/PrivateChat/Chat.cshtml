@@ -25,6 +25,7 @@
             <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
             <a href="#" id="download-photo" download="selfie.png" target="_blank" title="Save Photo" class="d-none"><i class="material-icons">file_download</i></a>
             <a href="#" id="resume-camera" title="Resume Camera" class="d-none"><i class="material-icons">camera_front</i></a>
+            <a href="#" id="send-photo" title="Send Photo" class="d-none"><i class="material-icons">send</i></a>
         </div>
     </div>
 </div>
@@ -35,7 +36,7 @@
 <div class="main-wrapper">
     <div class="container" style="margin-top: 0px;">
         <div class="page-content">
-            <div class="container mt-3">
+            <div class="container mt-5">
                 <div class="row">
                     <div class="card-stacked">
                         <div class="card shadow-line mb-3 chat chat-panel">
@@ -72,7 +73,7 @@
 
                                 </div>
                             </div>
-                            <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" id="chat-body" style="height: 450px">
+                            <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" id="chat-body" style="height: 490px">
                                 <div class="w-100 p-3" id="chatHolder">
                                     @if (Model.ChatMessages != null || @Model.ChatMessages.Count() != 0)
                                     {

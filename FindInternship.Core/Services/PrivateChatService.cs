@@ -270,7 +270,7 @@ namespace FindInternship.Core.Services
                 Group = targetGroup,
                 SendedOn = DateTime.Now,
                 ReceiverUsername = toUsername,
-                ReceiverImageUrl = toUser.ProfilePictureUrl
+                ReceiverImageUrl = toUser.ProfilePictureUrl == null ? "/img/blank-profile-picture.png" : toUser.ProfilePictureUrl
             };
 
             bool result = files.Count > 0;

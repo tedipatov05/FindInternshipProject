@@ -23,6 +23,31 @@ $("#photo-take").click(function () {
 
 });
 
+function b64toFile(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    var file = new File(byteArrays, "selfie", { type: contentType });
+    return file;
+}
+
+
 $('#cameraFlip').click(function () {
     webcam.flip();
     webcam.start();
@@ -32,14 +57,71 @@ $('#closeError').click(function () {
     $("#webcam-switch").prop('checked', false).change();
 });
 
-let picture = null;
+let file = null;
 
 $("#take-photo").click(function () {
     beforeTakePhoto();
-    picture = webcam.snap();
+    let picture = webcam.snap();
     document.querySelector('#download-photo').href = picture;
+
+    let ImageURL = picture;
+    let block = ImageURL.split(";");
+
+    let contentType = block[0].split(":")[1];
+
+    let realData = block[1].split(",")[1];
+
+
+    file = b64toFile(realData, contentType);
+
+
     afterTakePhoto();
 });
+
+$('#send-photo').click(function () {
+    if (file != null) {
+        let data = new FormData();
+
+        let toUser = document.getElementById('toUser').textContent;
+        let fromUser = document.getElementById('fromUser').textContent;
+        let groupName = document.getElementById('groupName').textContent;
+        let message = document.getElementById('messageInput').value;
+        data.append('group', groupName);
+        data.append('toUsername', toUser);
+        data.append('fromUsername', fromUser);
+        data.append('message', message);
+        data.append('files', file);
+
+        let token = $("input[name='__RequestVerificationToken']").val();
+
+        removeCapture();
+        cameraStopped()
+
+        $.ajax({
+            type: 'POST',
+            url: `/PrivateChat/SendMessageWithFiles`,
+            data: data,
+            headers: {
+                "RequestVerificationToken": token
+            },
+            processData: false,
+            contentType: false,
+            success: function (haveFiles) {
+
+                document.getElementById('appendFiles').innerHTML = '';
+                
+            },
+            error: function (err) {
+                console.error(err);
+                console.log(err.statusText)
+            }
+        });
+
+
+
+
+    }
+})
 
 $("#resume-camera").click(function () {
     webcam.stream()
@@ -108,6 +190,7 @@ function afterTakePhoto() {
     $('#canvas').removeClass('d-none');
     $('#take-photo').addClass('d-none');
     $('#exit-app').removeClass('d-none');
+    $('#send-photo').removeClass('d-none');
     $('#download-photo').removeClass('d-none');
     $('#resume-camera').removeClass('d-none');
     $('#cameraControls').removeClass('d-none');
@@ -118,6 +201,7 @@ function removeCapture() {
     $('#webcam-control').removeClass('d-none');
     $('#cameraControls').removeClass('d-none');
     $('#take-photo').removeClass('d-none');
+    $('#send-photo').addClass('d-none');
     $('#download-photo').addClass('d-none');
     $('#resume-camera').addClass('d-none');
 }
