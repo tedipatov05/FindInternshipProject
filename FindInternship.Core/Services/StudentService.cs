@@ -94,10 +94,10 @@ namespace FindInternship.Core.Services
 
         }
 
-        public async Task<List<StudentViewModel>> GetTeacherStudentsAsync(string className)
+        public async Task<List<StudentViewModel>> GetTeacherStudentsAsync(string id)
         {
             var students = await repo.All<Student>()
-                .Where(s => s.Class.Grade == className && s.User.IsActive == true)
+                .Where(s => s.Class.Id == id && s.User.IsActive == true)
                 .Include(s => s.Abilities)
                 .Select(s => new StudentViewModel()
                 {

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 using static FindInternship.Common.ModelValidationConstants.UserConstants;
 using static FindInternship.Common.ErrorMessages;
+using FindInternship.Core.Models.Class;
 
 namespace FindInternship.Core.Models.Account
 {
@@ -60,7 +61,7 @@ namespace FindInternship.Core.Models.Account
 
         public string Gender { get; set; } = null!;
 
-        public List<ClassViewModel> Classes { get; set; } = new List<ClassViewModel>();
+        public List<AllClassesViewModel> Classes { get; set; } = new List<AllClassesViewModel>();
 
         public List<AbilityViewModel> Abilities { get; set; } = new List<AbilityViewModel>();
 

@@ -67,7 +67,7 @@ namespace FindInternship.Core.Services
         public async Task<List<UserViewModel>> GetFilteredUsersAsync(UsersQueryModel model)
         {
             IQueryable<User> usersQuery = repo.All<User>()
-                .Where(u => u.IsActive && !u.IsApproved);
+                .Where(u => u.IsActive);
 
 
             if (!string.IsNullOrEmpty(model.SearchString))
@@ -89,6 +89,7 @@ namespace FindInternship.Core.Services
                     Email = u.Email,
                     RegisteredOn = u.RegisteredOn.ToString("dddd, dd MMMM yyyy"),
                     ProfilePictureUrl = u.ProfilePictureUrl,
+                    IsApproved = u.IsApproved,
                 })
                 .ToListAsync();
 

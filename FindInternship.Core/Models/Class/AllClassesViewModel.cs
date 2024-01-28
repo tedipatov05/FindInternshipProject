@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindInternship.Core.Models
+namespace FindInternship.Core.Models.Class
 {
-    public class ClassViewModel
+    public class AllClassesViewModel
     {
         public string Id { get; set; } = null!;
 
@@ -14,10 +14,5 @@ namespace FindInternship.Core.Models
 
         public string School { get; set; } = null!;
 
-        public string? Teacher { get; set; }
-
-        public int Students { get; set; } = 0;
-
-		public string? TeacherId { get; set; }
-	}
+    }
 }
