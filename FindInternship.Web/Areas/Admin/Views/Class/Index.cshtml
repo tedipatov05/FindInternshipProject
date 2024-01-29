@@ -26,7 +26,7 @@
                                     <th scope="col">Класен ръководител</th>
                                     <th scope="col">Брой ученици</th>
                                     <th scope="col" style="width: 200px;">Ученици</th>
-                                    <th scope="col" style="width: 200px;">Добави среща</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,9 +43,7 @@
                                         <td class="thickness">
                                             <a class="button-81" asp-area="Admin" asp-action="ClassStudents" asp-controller="Class" asp-route-classId="@class1.Id" role="button">Ученици</a>
                                         </td>
-                                        <td class="thickness">
-                                            <a class="button-81" asp-area="" asp-route-id="@class1.TeacherId" asp-controller="Home" asp-action="Teacher" role="button">Списък с ученици</a>
-                                        </td>
+                                        
                                     </tr>
                                 }
                             </tbody>

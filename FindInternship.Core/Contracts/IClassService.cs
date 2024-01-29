@@ -41,5 +41,6 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> IsClassExistsByIdAsync(string classId);
 
+       
     }
 }

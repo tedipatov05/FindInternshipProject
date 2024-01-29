@@ -198,9 +198,10 @@ namespace FindInternship.Core.Services
                 .Where(s => s.ClassId == classId)
                 .Include(c => c.User)
                 .Include(c => c.Abilities)
+                .Where(s => s.User.IsActive)
                 .Select(s => new StudentViewModel()
                 {
-                    Id = s.Id,
+                    Id = s.User.Id,
                     ProfilePictureUrl = s.User.ProfilePictureUrl,
                     Name = s.User.Name,
                     Abilities = s.Abilities.Select(a => a.Ability.AbilityText).ToList(),
@@ -215,5 +216,6 @@ namespace FindInternship.Core.Services
             return await repo.All<Class>()
                 .AnyAsync(c => c.Id == classId);
         }
+
     }
 }

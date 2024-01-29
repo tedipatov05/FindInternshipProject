@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -45,5 +46,6 @@ namespace FindInternship.Web.Areas.Admin.Controllers
 
             return View(students);
         }
+
     }
 }
