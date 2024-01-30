@@ -24,8 +24,8 @@ namespace FindInternship.Data.Models
         public User User { get; set; } = null!;
 
         [ForeignKey(nameof(Class))]
-        public string ClassId { get; set; } = null!;
-        public Class Class { get; set; } = null!;
+        public string? ClassId { get; set; } 
+        public Class? Class { get; set; }
 
 
     }

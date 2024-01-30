@@ -217,5 +217,47 @@ namespace FindInternship.Core.Services
                 .AnyAsync(c => c.Id == classId);
         }
 
+        public async Task DeleteAsync(string classId)
+        {
+            var classModel = await repo.All<Class>()
+                .FirstOrDefaultAsync();
+
+            await repo.DeleteAsync<Class>(classId);
+
+            var classStudents = await repo.All<Student>()
+                .Include(s => s.User)
+                .Where(s => s.ClassId == classId)
+                .ToListAsync();
+
+            if (classStudents.Any())
+            {
+                foreach(var student in classStudents)
+                {
+                    student.User.IsActive = false;
+                }
+            }
+
+
+            var classTeacher = await repo.All<Teacher>()
+                .Include(s => s.User)
+                .FirstOrDefaultAsync(c => c.ClassId == classId);
+
+            classTeacher!.User.IsActive = false;
+
+            var company = await repo.All<Company>()
+                .Include(s => s.Classes)
+                .FirstOrDefaultAsync(c => c.Classes.Any(c => c.Id == classId));
+
+            if(company  != null)
+            {
+                company.Classes.Remove(classModel);
+            }
+
+
+            await repo.SaveChangesAsync();
+
+            
+
+        }
     }
 }

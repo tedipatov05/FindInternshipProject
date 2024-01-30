@@ -47,5 +47,33 @@ namespace FindInternship.Web.Areas.Admin.Controllers
             return View(students);
         }
 
+        public async Task<IActionResult> Delete(string classId)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                TempData[ErrorMessage] = "Неправилен потребител";
+                return RedirectToAction("Index", "Home");
+            }
+            bool isClassExists = await classService.IsClassExistsByIdAsync(classId);
+            if (!isClassExists)
+            {
+                TempData[ErrorMessage] = "Този клас не съществува";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                await classService.DeleteAsync(classId);
+                TempData[SuccessMessage] = "Успешно изтрит клас";
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData[ErrorMessage] = ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
     }
 }

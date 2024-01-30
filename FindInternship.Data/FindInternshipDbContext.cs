@@ -15,7 +15,7 @@ namespace FindInternship.Data
 
         private bool seedDb;
 
-        public FindInternshipDbContext(DbContextOptions<FindInternshipDbContext> options, bool seedDb) 
+        public FindInternshipDbContext(DbContextOptions<FindInternshipDbContext> options, bool seedDb = true)
             : base(options)
         {
             if (this.Database.IsRelational())
