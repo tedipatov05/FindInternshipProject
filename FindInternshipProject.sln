@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindInternship.Data.Models"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindInternship.Common", "FindInternship.Common\FindInternship.Common.csproj", "{80ADC3DA-9E71-4A04-A33D-B20C3614034C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindInternship.Core", "FindInternship.Core\FindInternship.Core.csproj", "{5BFBDF5D-65A2-4EB1-9685-6AA5599105B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindInternship.Core", "FindInternship.Core\FindInternship.Core.csproj", "{5BFBDF5D-65A2-4EB1-9685-6AA5599105B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindInternship.Test", "FindInternship.Test\FindInternship.Test.csproj", "{2C3BBED9-95BB-4824-8DA5-B5D0BB6EC788}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{5BFBDF5D-65A2-4EB1-9685-6AA5599105B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BFBDF5D-65A2-4EB1-9685-6AA5599105B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BFBDF5D-65A2-4EB1-9685-6AA5599105B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C3BBED9-95BB-4824-8DA5-B5D0BB6EC788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C3BBED9-95BB-4824-8DA5-B5D0BB6EC788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C3BBED9-95BB-4824-8DA5-B5D0BB6EC788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C3BBED9-95BB-4824-8DA5-B5D0BB6EC788}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
