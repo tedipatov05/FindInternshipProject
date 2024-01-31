@@ -77,6 +77,7 @@ connection.on("ReceiveDocuments", function (documents, requestId) {
         a.classList.add('dropdown-item');
         a.setAttribute('download','');
         a.href = d.url;
+        a.setAttribute('target', '_blank')
 
         li.appendChild(a);
 

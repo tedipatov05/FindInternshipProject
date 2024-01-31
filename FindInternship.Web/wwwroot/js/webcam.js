@@ -95,7 +95,7 @@ $('#send-photo').click(function () {
         let token = $("input[name='__RequestVerificationToken']").val();
 
         removeCapture();
-        cameraStopped()
+        cameraStopped();
 
         $.ajax({
             type: 'POST',
@@ -106,12 +106,20 @@ $('#send-photo').click(function () {
             },
             processData: false,
             contentType: false,
+            beforeSend: function () {
+                document.getElementById('preloader').style.display = 'block';
+                
+            },
             success: function (haveFiles) {
+                document.getElementById('preloader').style.display = 'none';
+                
 
                 document.getElementById('appendFiles').innerHTML = '';
                 
             },
             error: function (err) {
+                document.getElementById('preloader').style.display = 'none';
+               
                 console.error(err);
                 console.log(err.statusText)
             }
