@@ -66,6 +66,8 @@ document.getElementById('sendButton').addEventListener('click', function (event)
 
     if (message && images.length == 0 && files.length == 0) {
 
+        document.getElementById('preloader').style.display = 'block';
+
         connection.invoke("SendMessage", fromUser, toUser, message, groupName).catch(function (err) {
             console.error(err);
         });
@@ -73,6 +75,7 @@ document.getElementById('sendButton').addEventListener('click', function (event)
         connection.invoke("ReceiveMessage", fromUser, message, groupName).catch(function (err) {
             console.error(err);
         });
+        document.getElementById('preloader').style.display = 'none';
 
         document.getElementById('messageInput').value = '';
     }
@@ -95,11 +98,15 @@ document.getElementById('sendButton').addEventListener('click', function (event)
                 },
                 processData: false,
                 contentType: false,
+                beforeSend: function () {
+                    document.getElementById('preloader').style.display = 'block';
+                },
                 success: function (haveFiles) {
-
+                    document.getElementById('preloader').style.display = 'none';
                     document.getElementById('appendFiles').innerHTML = '';
                 },
                 error: function (err) {
+                    document.getElementById('preloader').style.display = 'none';
                     console.error(err);
                     console.log(err.statusText)
                 }

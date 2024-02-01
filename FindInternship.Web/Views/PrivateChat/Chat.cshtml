@@ -16,7 +16,7 @@
             <video id="webcam" autoplay playsinline></video>
             <canvas id="canvas" class="d-none"></canvas>
             <div class="flash"></div>
-            <audio id="snapSound" src="audio/snap.wav" preload="auto"></audio>
+            <audio id="snapSound" src="~/audio/snap.wav" preload="auto"></audio>
         </div>
         <div id="cameraControls" class="cameraControls">
             <a href="#" id="exit-app" title="Exit App"><i class="material-icons">exit_to_app</i></a>
@@ -73,7 +73,7 @@
                             </div>
 
                             
-                            <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" id="chat-body" style="height: 490px">
+                            <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" id="chat-body" @* style="height: 490px" *@>
                                 
                                 <div class="w-100 p-3" id="chatHolder">
                                     @if (Model.ChatMessages != null || @Model.ChatMessages.Count() != 0)
