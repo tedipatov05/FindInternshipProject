@@ -1,11 +1,13 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Core.Models;
 using FindInternship.Core.Models.Class;
+using FindInternship.Core.Models.Student;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +23,13 @@ namespace FindInternship.Core.Services
             this.repo = repo;
         }
 
-        public async Task<List<ClassViewModel>> AllClassesAsync()
+        public async Task<List<AllClassesViewModel>> AllClassesAsync()
         {
             var classes = await repo.All<Class>()
-                .Select(c => new ClassViewModel()
+                .Select(c => new AllClassesViewModel()
                 {
                     Id = c.Id,
-                    Name = c.Grade, 
+                    Name = c.Grade,
                     School = c.School.Name,
                 })
                 .ToListAsync();
@@ -61,7 +63,7 @@ namespace FindInternship.Core.Services
         }
 
         public async Task<List<ClassViewModel>> GetAllCompanyClassesAsync(string companyId)
-		{
+        {
             var classes = await repo.All<Class>()
                 .Include(c => c.Teacher)
                 .Where(c => c.CompanyId == companyId)
@@ -73,15 +75,15 @@ namespace FindInternship.Core.Services
                     Teacher = c.Teacher!.User.Name,
                     Students = c.Students.Count,
                     TeacherId = c.Teacher.UserId
-                    
+
                 })
-				.ToListAsync();
+                .ToListAsync();
 
-			return classes;
+            return classes;
 
-		}
+        }
 
-		public async Task<string> CreateAsync(string className, string specialtiy, int schoolId)
+        public async Task<string> CreateAsync(string className, string specialtiy, int schoolId)
         {
             var c = new Class()
             {
@@ -112,9 +114,9 @@ namespace FindInternship.Core.Services
             var c = repo.All<Class>()
                 .Include(c => c.School)
                 .AsEnumerable()
-                .FirstOrDefault(c => concatedName(c.Grade) == concatedName(className) && concatedName( c.School.Name) == concatedName(school));
+                .FirstOrDefault(c => concatedName(c.Grade) == concatedName(className) && concatedName(c.School.Name) == concatedName(school));
 
-            if(c == null)
+            if (c == null)
             {
                 return null;
             }
@@ -141,7 +143,7 @@ namespace FindInternship.Core.Services
                 .AnyAsync(c => c.Grade.ToUpper() == className.ToUpper() && c.School.Name.ToUpper() == schoolName.ToUpper());
 
             return isExists;
-            
+
         }
 
         public async Task<string> GetClassIdByClassNameAsync(string className, string schoolName)
@@ -160,14 +162,101 @@ namespace FindInternship.Core.Services
                 .Where(c => c.CompanyId == companyId)
                 .Select(c => new ClassMeetingViewModel()
                 {
-                    Grade = c.Grade, 
-                    Id = c.Id, 
+                    Grade = c.Grade,
+                    Id = c.Id,
                     School = c.School.Name
 
                 })
                 .ToListAsync();
 
             return classes;
+
+        }
+
+        public async Task<List<ClassViewModel>> GetAllClassesAsync()
+        {
+            var classes = await repo.All<Class>()
+                .Include(c => c.Teacher)
+                .Select(c => new ClassViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Grade,
+                    School = c.School.Name,
+                    Teacher = c.Teacher!.User.Name,
+                    Students = c.Students.Count,
+                    TeacherId = c.Teacher.UserId
+                
+                })
+                .ToListAsync();
+
+            return classes;
+        }
+
+        public async Task<List<StudentViewModel>> GetClassStudentsAsync(string classId)
+        {
+            var students = await repo.All<Student>()
+                .Where(s => s.ClassId == classId)
+                .Include(c => c.User)
+                .Include(c => c.Abilities)
+                .Where(s => s.User.IsActive)
+                .Select(s => new StudentViewModel()
+                {
+                    Id = s.User.Id,
+                    ProfilePictureUrl = s.User.ProfilePictureUrl,
+                    Name = s.User.Name,
+                    Abilities = s.Abilities.Select(a => a.Ability.AbilityText).ToList(),
+                })
+                .ToListAsync();
+
+            return students;
+        }
+
+        public async Task<bool> IsClassExistsByIdAsync(string classId)
+        {
+            return await repo.All<Class>()
+                .AnyAsync(c => c.Id == classId);
+        }
+
+        public async Task DeleteAsync(string classId)
+        {
+            var classModel = await repo.All<Class>()
+                .FirstOrDefaultAsync();
+
+            await repo.DeleteAsync<Class>(classId);
+
+            var classStudents = await repo.All<Student>()
+                .Include(s => s.User)
+                .Where(s => s.ClassId == classId)
+                .ToListAsync();
+
+            if (classStudents.Any())
+            {
+                foreach(var student in classStudents)
+                {
+                    student.User.IsActive = false;
+                }
+            }
+
+
+            var classTeacher = await repo.All<Teacher>()
+                .Include(s => s.User)
+                .FirstOrDefaultAsync(c => c.ClassId == classId);
+
+            classTeacher!.User.IsActive = false;
+
+            var company = await repo.All<Company>()
+                .Include(s => s.Classes)
+                .FirstOrDefaultAsync(c => c.Classes.Any(c => c.Id == classId));
+
+            if(company  != null)
+            {
+                company.Classes.Remove(classModel);
+            }
+
+
+            await repo.SaveChangesAsync();
+
+            
 
         }
     }

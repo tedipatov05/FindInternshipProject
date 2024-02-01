@@ -1,5 +1,6 @@
 ﻿using FindInternship.Core.Models;
 using FindInternship.Core.Models.Class;
+using FindInternship.Core.Models.Student;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,11 @@ namespace FindInternship.Core.Contracts
 {
     public interface IClassService
     {
-        Task<List<ClassViewModel>> AllClassesAsync();
+        Task<List<AllClassesViewModel>> AllClassesAsync();
+
+        Task<List<ClassViewModel>> GetAllClassesAsync();
+
+        Task<List<StudentViewModel>> GetClassStudentsAsync(string classId);
 
         Task<string> GetClassIdAsync(string requestId);
 
@@ -34,5 +39,8 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> ExistsClassByNameAndSchoolAsync(string className, string schoolName);
 
+        Task<bool> IsClassExistsByIdAsync(string classId);
+
+       Task DeleteAsync(string classId);
     }
 }

@@ -17,5 +17,7 @@ namespace FindInternship.Core.Models.Users
         public string RegisteredOn { get; set; } = null!;
 
         public string? ProfilePictureUrl { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 }

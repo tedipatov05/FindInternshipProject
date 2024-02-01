@@ -28,7 +28,6 @@
                 {
                     foreach (var user in Model.Where(u => u != null))
                     {
-
                         string message = user.LastMessageToUser == null ? "" : $"{user.LastMessageToUser.User.UserName}: {user.LastMessageToUser.Content}";
                         string lastMessage = message.Contains("<a>") || message.Contains("<span>") ? "Прикачен файл" : message;
 
@@ -37,7 +36,16 @@
 
                                 <div class="w-100">
                                     <div class="d-flex pl-0">
-                                        <img class="rounded-circle shadow avatar-sm mr-2" src="@user.ProfilePicture">
+                                        @if(user.ProfilePicture == null)
+                                        {
+                                            <img class="rounded-circle shadow avatar-sm mr-2" src="~/img/blank-profile-picture.png">
+
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle shadow avatar-sm mr-2" src="@user.ProfilePicture">
+
+                                        }
                                         <div style="margin-left: 10px;">
                                             <p class="margin-auto fw-500 fs-med text-dark-75">@user.Name</p>
                                             <div class="d-flex flex-row mt-2">

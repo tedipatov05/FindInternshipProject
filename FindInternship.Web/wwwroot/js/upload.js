@@ -96,6 +96,10 @@ document.getElementById("update").addEventListener("click", function (ev) {
         },
         processData: false,
         contentType: false,
+        beforeSend: function () {
+            $('.fancybox-close-small')[0].click()
+
+        },
         success: async function (data) {
 
             try {

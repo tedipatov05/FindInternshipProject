@@ -12,11 +12,24 @@ namespace FindInternship.Data
 {
     public class FindInternshipDbContext : IdentityDbContext<User>
     {
-     
-        public FindInternshipDbContext(DbContextOptions<FindInternshipDbContext> options) 
+
+        private bool seedDb;
+
+        public FindInternshipDbContext(DbContextOptions<FindInternshipDbContext> options, bool seedDb = true)
             : base(options)
         {
-           
+            if (this.Database.IsRelational())
+            {
+                this.Database.Migrate();
+            }
+            else
+            {
+                this.Database.EnsureCreated();
+            }
+
+
+
+            this.seedDb = seedDb;
 
         }
 
@@ -106,19 +119,19 @@ namespace FindInternship.Data
                 .WithMany(c => c.Lectors)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
-            builder.ApplyConfiguration(new SchoolConfiguration());
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new RolesConfiguration());
-            builder.ApplyConfiguration(new UserRolesConfiguration());
-            builder.ApplyConfiguration(new TeacherConfiguration());
-            builder.ApplyConfiguration(new ClassConfiguration());
-            builder.ApplyConfiguration(new StudentConfiguration());
-            builder.ApplyConfiguration(new CompanyConfiguration());
-            builder.ApplyConfiguration(new AbilityConfiguration());
-            builder.ApplyConfiguration(new CompanyTechnologiesConfiguration());
-            
-
+            if (seedDb)
+            {
+                builder.ApplyConfiguration(new SchoolConfiguration());
+                builder.ApplyConfiguration(new UserConfiguration());
+                builder.ApplyConfiguration(new RolesConfiguration());
+                builder.ApplyConfiguration(new UserRolesConfiguration());
+                builder.ApplyConfiguration(new TeacherConfiguration());
+                builder.ApplyConfiguration(new ClassConfiguration());
+                builder.ApplyConfiguration(new StudentConfiguration());
+                builder.ApplyConfiguration(new CompanyConfiguration());
+                builder.ApplyConfiguration(new AbilityConfiguration());
+                builder.ApplyConfiguration(new CompanyTechnologiesConfiguration());
+            }
 
             base.OnModelCreating(builder);
         }

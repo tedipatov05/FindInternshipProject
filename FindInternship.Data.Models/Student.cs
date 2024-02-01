@@ -27,9 +27,9 @@ namespace FindInternship.Data.Models
 
 
         [ForeignKey(nameof(Class))]
-        public string ClassId { get; set; } = null!;
+        public string? ClassId { get; set; } 
 
-        public Class Class { get; set; } = null!;
+        public Class? Class { get; set; }
 
         public ICollection<StudentAbility> Abilities { get; set; }
 

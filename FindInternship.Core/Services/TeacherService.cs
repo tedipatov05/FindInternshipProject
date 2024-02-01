@@ -101,7 +101,7 @@ namespace FindInternship.Core.Services
             model.ClassSpeciality = teacher.Class.Speciality;
             model.School = teacher.Class.School.Name;
 
-            model.Students = await studentService.GetTeacherStudentsAsync(teacher.Class.Grade);
+            model.Students = await studentService.GetTeacherStudentsAsync(teacher.Class.Id);
 
             return model;
                 

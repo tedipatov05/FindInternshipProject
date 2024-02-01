@@ -49,10 +49,19 @@ namespace FindInternship.Web.Areas.Admin.Controllers
                 TempData[ErrorMessage] = "Трябва да си администратор, за да имаш достъп.";
                 return RedirectToAction("Index", "Home", new { Area = "Admin" });
             }
+            try
+            {
+                await userService.DeleteUserAsync(id);
+                TempData[SuccessMessage] = "Успешно изтрит потребител";
 
-            await userService.DeleteUserAsync(id);
-
-            return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                return RedirectToAction("Index", "Home", new { Area = "Admin" });
+            }
+            catch (Exception ex)
+            {
+                TempData[ErrorMessage] = ex.ToString();
+                return RedirectToAction("Index", "Home");
+            }
+           
         }
     }
 }

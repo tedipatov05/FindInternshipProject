@@ -64,10 +64,10 @@ namespace FindInternship.Core.Services
             return usersCount;
         }
 
-        public async Task<List<UserViewModel>> GetFilteredUsersAsync(UsersQueryModel model)
+        public async Task<List<UserViewModel>> GetFilteredUsersAsync(UsersQueryModel model, string adminId)
         {
             IQueryable<User> usersQuery = repo.All<User>()
-                .Where(u => u.IsActive && !u.IsApproved);
+                .Where(u => u.IsActive && u.Id != adminId);
 
 
             if (!string.IsNullOrEmpty(model.SearchString))
@@ -82,6 +82,7 @@ namespace FindInternship.Core.Services
             }
 
             var users = await usersQuery
+                .OrderByDescending(u => u.RegisteredOn)
                 .Select(u => new UserViewModel()
                 {
                     Id = u.Id, 
@@ -89,12 +90,12 @@ namespace FindInternship.Core.Services
                     Email = u.Email,
                     RegisteredOn = u.RegisteredOn.ToString("dddd, dd MMMM yyyy"),
                     ProfilePictureUrl = u.ProfilePictureUrl,
+                    IsApproved = u.IsApproved,
                 })
+                
                 .ToListAsync();
 
             return users;
-
-
 
         }
 

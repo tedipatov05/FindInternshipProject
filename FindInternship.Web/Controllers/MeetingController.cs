@@ -75,7 +75,7 @@ namespace FindInternship.Web.Controllers
                 }
                 else
                 {
-                    TempData[ErrorMessage] = "Invalid user";
+                    TempData[ErrorMessage] = "Неправилен потебител";
                     return RedirectToAction("Index", "Home");
                 }
 
