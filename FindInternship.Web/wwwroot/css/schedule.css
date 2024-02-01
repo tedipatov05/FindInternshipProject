@@ -33,7 +33,7 @@
     display: grid;
     grid-template-rows: repeat(var(--numHours), var(--timeHeight));
     border-radius: 5px;
-    background: var(--calBgColor);
+    background: #e8e7e5;
 }
 
 .start-10 {
