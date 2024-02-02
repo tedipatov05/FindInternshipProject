@@ -10,24 +10,24 @@
                     <div class="row align-items-center" style="height: 250px;">
                         <div class="col-md-3">
                             <div class="text-center border-end">
-                                @if(Model.ProfilePictureUrl == null)
+                                @if (Model.ProfilePictureUrl == null)
                                 {
                                     <img src="~/img/blank-profile-picture.png"
-                                    class="img-fluid avatar-xxl rounded-circle" alt="">
+                                         class="img-fluid avatar-xxl rounded-circle" alt="">
                                 }
                                 else
                                 {
                                     <img src="@Model.ProfilePictureUrl"
                                          class="img-fluid avatar-xxl rounded-circle" alt="">
                                 }
-                                
+
                                 <h4 class="text-primary font-size-20 mt-3 mb-2">@Model.Name</h4>
                                 <h5 class="text-muted font-size-13 mb-0">ИТ Фирма</h5>
-                                @if(Model.Id == User.GetId())
+                                @if (Model.Id == User.GetId())
                                 {
                                     <a asp-action="Edit" asp-controller="Profile" asp-route-userId="@Model.Id" class="btn btn-primary">Промени</a>
                                 }
-                               
+
                             </div>
                         </div>
                         <div class="col-md-9">
@@ -64,7 +64,7 @@
             </div>
 
             <div class="card">
-                
+
                 <div class="tab-content p-4">
                     <div class="tab-pane active show" id="projects-tab" role="tabpanel">
                         <div style="flex-direction: row; display: flex;">
@@ -73,11 +73,15 @@
                                     <h4 class="card-title mb-4">Преподаватели</h4>
                                 </div>
                             </div>
-                            <div class="add-lector">
-                                <a asp-controller="Lector" asp-action="Add">+</a>
+                            @if (User.GetId() == Model.Id)
+                            {
+                                <div class="add-lector">
+                                    <a asp-controller="Lector" asp-action="Add">+</a>
 
-                            </div>
-        
+                                </div>
+                            }
+
+
                         </div>
 
                         <div class="row" id="all-projects">
@@ -123,12 +127,12 @@
                         <p>
                             @Model.Description
                         </p>
-                       
+
                     </div>
                     <div class="pt-2">
                         <h4 class="card-title mb-4">Технологии</h4>
                         <div class="d-flex gap-2 flex-wrap">
-                            @foreach(var technology in Model.Technologies)
+                            @foreach (var technology in Model.Technologies)
                             {
                                 <span class="badge badge-soft-secondary p-2">@technology</span>
                             }
@@ -167,6 +171,6 @@
     </div>
 </div>
 
-@section Styles{
+@section Styles {
     <link rel="stylesheet" href="~/css/companyProfile.css" asp-append-version="true" />
 }

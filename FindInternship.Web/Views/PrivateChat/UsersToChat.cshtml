@@ -2,7 +2,6 @@
 @model List<FindInternship.Core.Models.PrivateChat.UsersToChatViewModel>
 
 
-
 <h1 class="text-center text-dark" style="margin-top: 20px">Чатове</h1>
 <div class="card-stacked" style="margin-top: 30px;">
     <div class="card shadow-line mb-3 chat">
@@ -29,7 +28,7 @@
                     foreach (var user in Model.Where(u => u != null))
                     {
                         string message = user.LastMessageToUser == null ? "" : $"{user.LastMessageToUser.User.UserName}: {user.LastMessageToUser.Content}";
-                        string lastMessage = message.Contains("<a>") || message.Contains("<span>") ? "Прикачен файл" : message;
+                        string lastMessage = message.Contains("<a") || message.Contains("<span") ? "Прикачен файл" : message;
 
                         <a asp-action="Chat" asp-controller="PrivateChat" asp-route-toUsername="@user.Name" asp-route-group="@user.Name-@User.GetUsername()">
                             <div class="chat-item d-flex pl-3 pr-0 pt-3 pb-3">

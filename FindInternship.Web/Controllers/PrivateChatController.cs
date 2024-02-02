@@ -111,7 +111,7 @@ namespace FindInternship.Web.Controllers
             {
                 FromUser = await userManager.GetUserAsync(this.HttpContext.User),
                 ToUser = await userManager.FindByIdAsync(toUserId),
-                ChatMessages =messages , 
+                ChatMessages = messages , 
                 Group = groupName == null ? group : groupName,
 
             };

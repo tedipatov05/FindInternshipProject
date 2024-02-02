@@ -21,19 +21,19 @@ namespace FindInternship.Core.Services
     {
         private Dictionary<string, string> iconsFiles = new Dictionary<string, string>()
         {
-            {"PDF", "bi bi-file-pdf-fill"},
-            {"PNG", "bi bi-file-earmark-image"},
-            {"JPG", "bi bi-file-earmark-image"},
-            {"JPEG", "bi bi-file-earmark-image"},
-            {"ZIP", "bi bi-file-zip"},
-            {"RAR", "bi bi-file-zip"},
-            {"DOCX", "bi bi-file-earmark-fill"},
-            {"DOC", "bi bi-file-earmark-fill"},
-            {"PPT", "bi bi-filetype-ppt"},
-            {"TXT", "bi bi-file-text"},
-            {"TEXT", "bi bi-file-text"},
-            {"XLS", "bi bi-filetype-xls"},
-            {"XLSX", "bi bi-filetype-xlsx"},
+            {".PDF", "bi bi-file-pdf-fill"},
+            {".PNG", "bi bi-file-earmark-image"},
+            {".JPG", "bi bi-file-earmark-image"},
+            {".JPEG", "bi bi-file-earmark-image"},
+            {".ZIP", "bi bi-file-zip"},
+            {".RAR", "bi bi-file-zip"},
+            {".DOCX", "bi bi-file-earmark-fill"},
+            {".DOC", "bi bi-file-earmark-fill"},
+            {".PPT", "bi bi-filetype-ppt"},
+            {".TXT", "bi bi-file-text"},
+            {".TEXT", "bi bi-file-text"},
+            {".XLS", "bi bi-filetype-xls"},
+            {".XLSX", "bi bi-filetype-xlsx"},
         };
 
 
@@ -309,12 +309,12 @@ namespace FindInternship.Core.Services
                 }
                 else
                 {
-                    var fileExtension = Path.GetExtension(file.Name);
+                    var fileExtension = Path.GetExtension(file.FileName);
 
                     fileUrl = await documentService.UploadDocumentAsync(file, "projectDocuments");
                     chatFile.Name = file.FileName;
 
-                    filesContent.AppendLine($"<a href=\"{fileUrl}\">\r\n<span class=\"input-group-text pl-2 pr-2\" style=\"margin-left: 10px;\">\r\n<div style=\"display: flex; flex-direction: row;\">\r\n<i class=\"{iconsFiles[fileExtension.ToUpper()]}\"></i>\r\n<div class=\"pl-1 pt-1 text-dark\" style=\"font-size: small;\">{file.FileName}</div>\r\n\r\n</div>\r\n\r\n      </span>\r\n\r\n</a>");
+                    filesContent.AppendLine($"<a target=\"_blank\" href=\"{fileUrl}\">\r\n<span class=\"input-group-text pl-2 pr-2\" style=\"margin-left: 10px;\">\r\n<div style=\"display: flex; flex-direction: row;\">\r\n<i class=\"{iconsFiles[fileExtension.ToUpper()]}\"></i>\r\n<div class=\"pl-1 pt-1 text-dark\" style=\"font-size: small;\">{file.FileName}</div>\r\n\r\n</div>\r\n\r\n      </span>\r\n\r\n</a>");
 
                     
 
@@ -343,7 +343,7 @@ namespace FindInternship.Core.Services
                 }
             }
 
-            chatMessage.Content = new HtmlSanitizer().Sanitize(messageContent.ToString().Trim());
+            chatMessage.Content = messageContent.ToString().Trim();  /*new HtmlSanitizer().Sanitize(messageContent.ToString().Trim());*/
 
             await hubContext.Clients.User(toUserId).SendAsync("ReceiveMessage", fromUser.UserName,
                 fromUser.ProfilePictureUrl, messageContent.ToString().Trim());
