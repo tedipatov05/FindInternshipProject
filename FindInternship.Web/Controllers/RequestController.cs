@@ -74,7 +74,7 @@ namespace FindInternship.Web.Controllers
             try
             {
 
-                string classId = await teacherService.GetTeacherClassIdAsync(User.GetId());
+                string classId = await teacherService.GetTeacherClassIdAsync(User.GetId()!);
                 string companyId = await companyService.GetCompanyIdAsync(companyUserId);
                 CreateRequestModel model = new CreateRequestModel();
 
@@ -123,7 +123,7 @@ namespace FindInternship.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> ClassRequests()
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
 
             bool isTeacher = await teacherService.IsTeacherAsync(userId);
             if(!isTeacher)
@@ -142,7 +142,7 @@ namespace FindInternship.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditStatus(string newStatus, string id)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
 
             bool isCompany = await companyService.IsCompanyAsync(userId);
 

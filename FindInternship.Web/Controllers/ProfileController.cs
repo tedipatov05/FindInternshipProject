@@ -8,11 +8,11 @@ namespace FindInternship.Web.Controllers
 {
     public class ProfileController : Controller
     {
-        private IProfileService profileService;
-        private IUserService userService;
-        private IStudentService studentService;
-        private ITeacherService teacherService;
-        private ICompanyService companyService;
+        private readonly IProfileService profileService;
+        private readonly IUserService userService;
+        private readonly IStudentService studentService;
+        private readonly ITeacherService teacherService;
+        private readonly ICompanyService companyService;
         public ProfileController(IProfileService profileService, IUserService userService, IStudentService studentService, ITeacherService teacherService, ICompanyService companyService)
         { 
             this.profileService = profileService;

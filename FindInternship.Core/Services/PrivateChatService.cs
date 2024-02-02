@@ -364,7 +364,7 @@ namespace FindInternship.Core.Services
             var targetUser = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName == userName);
 
-            var groupUser = new List<string>() { targetUser.UserName, user.UserName };
+            var groupUser = new List<string>() { targetUser!.UserName, user.UserName };
 
             var targetGroup1 = string.Join('-', groupUser);
 

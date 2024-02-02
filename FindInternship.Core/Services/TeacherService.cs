@@ -59,7 +59,7 @@ namespace FindInternship.Core.Services
             var teacher = await repo.All<Teacher>()
                 .FirstOrDefaultAsync(t => t.UserId == userId);
 
-            return teacher!.ClassId;
+            return teacher!.ClassId!;
         }
 
         public async Task<string> GetTeacherIdAsync(string userId)
@@ -81,23 +81,23 @@ namespace FindInternship.Core.Services
         public async Task<string> GetTeacherUserIdByMeetingIdAsync(string meetingId)
         {
             var teacher = await repo.All<Teacher>()
-                .Include(t => t.Class.Meetings)
-                .Where(t => t.Class.Meetings.Any(m => m.Id == meetingId))
+                .Include(t => t.Class!.Meetings)
+                .Where(t => t.Class!.Meetings.Any(m => m.Id == meetingId))
                 .FirstOrDefaultAsync();
 
-            return teacher.UserId;    
+            return teacher!.UserId;    
         }
 
         public async Task<TeacherStudentsViewModel> GetTeacherStudentsAsync(string teacherId)
         {
             var teacher = await repo.All<Teacher>()
                 .Include(s => s.Class)
-                .Include(s => s.Class.School)
+                .Include(s => s.Class!.School)
                 .FirstOrDefaultAsync(s => s.Id == teacherId && s.User.IsActive == true);
                 
             var model = new TeacherStudentsViewModel();
             model.Id = teacher!.Id;
-            model.Class = teacher.Class.Grade;
+            model.Class = teacher.Class!.Grade;
             model.ClassSpeciality = teacher.Class.Speciality;
             model.School = teacher.Class.School.Name;
 

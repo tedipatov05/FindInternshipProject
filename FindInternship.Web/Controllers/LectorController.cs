@@ -26,7 +26,7 @@ namespace FindInternship.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
             {
@@ -43,7 +43,7 @@ namespace FindInternship.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddLectorViewModel model)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
             {
@@ -66,14 +66,14 @@ namespace FindInternship.Web.Controllers
             {
                 string companyId = await companyService.GetCompanyIdAsync(userId);
 
-                string profilePicture = await imageService.UploadImageAsync(model.ProfilePicture, "projectImages", model.Name);
+                string profilePicture = await imageService.UploadImageAsync(model.ProfilePicture!, "projectImages", model.Name);
 
                 await companyService.AddLectorToCompany(companyId, model, profilePicture);
 
                 TempData[SuccessMessage] = "Успешно добавен преподаватели";
                 return RedirectToAction("MyProfile", "Profile", new { userId = userId});
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return RedirectToAction("MyProfile", "Profile", new { userId = userId });
             }
@@ -82,7 +82,7 @@ namespace FindInternship.Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
             {
@@ -105,7 +105,7 @@ namespace FindInternship.Web.Controllers
                 TempData[SuccessMessage] = "Успешно изтрит преподавател";
                 return RedirectToAction("MyProfile", "Profile", new { userId });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 TempData[ErrorMessage] = "Неочаквана грешка възникна";
                 return RedirectToAction("MyProfile", "Profile", new { userId });

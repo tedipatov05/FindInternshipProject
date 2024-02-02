@@ -84,16 +84,16 @@ namespace FindInternship.Core.Services
                 .Where(s => s.Id == studentId && s.User.IsActive == true)
                 .Include(s => s.User)
                 .Include(s => s.Class)
-                .Include(s => s.Class.School)
+                .Include(s => s.Class!.School)
                 .FirstOrDefaultAsync();
 
             var model = new StudentProfileViewModel()
             {
-                Id = student.User.Id,
+                Id = student!.User.Id,
                 Name = student.User.Name,
                 Abilities = await studentService.GetStudentAbilitiesAsync(studentId),
                 ProfilePictureUrl = student.User.ProfilePictureUrl,
-                Class = student.Class.Grade,
+                Class = student.Class!.Grade,
                 Email = student.User.Email,
                 PhoneNumber = student.User.PhoneNumber,
                 City = student.User.City,
@@ -112,21 +112,21 @@ namespace FindInternship.Core.Services
         {
             var teacher = await repo.All<Teacher>()
                 .Include(t => t.User)
-                .Include(t => t.Class.Students)
+                .Include(t => t.Class!.Students)
 				.Where(t => t.Id == teacherId && t.User.IsActive == true)
 				.FirstOrDefaultAsync();
 
             var students = await repo.All<Student>()
                 .Include(s => s.User)
                 .Include(s => s.Class)
-                .Where(s => s.Class.TeacherId ==  teacherId && s.User.IsActive == true)
+                .Where(s => s.Class!.TeacherId ==  teacherId && s.User.IsActive == true)
                 .Select(s => s.User.Name)
                 .ToListAsync();
 
 
             var model = new TeacherProfileViewModel()
             {
-                Id = teacher.User.Id,
+                Id = teacher!.User.Id,
                 Name = teacher.User.Name,
                 Email = teacher.User.Email,
                 PhoneNumber = teacher.User.PhoneNumber,
@@ -134,7 +134,7 @@ namespace FindInternship.Core.Services
                 Country = teacher.User.Country,
                 Address = teacher.User.Address,
                 ProfilePictureUrl = teacher.User.ProfilePictureUrl,
-                Class = teacher.Class.Grade,
+                Class = teacher.Class!.Grade,
                 StudentsNames = students
 
             };

@@ -28,13 +28,13 @@ namespace FindInternship.Core.Services
         {
             var toUser = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName == toUserName);
-            string toId = toUser.Id;
-            string toImage = toUser.ProfilePictureUrl;
+            string toId = toUser!.Id;
+            string toImage = toUser.ProfilePictureUrl!;
 
             var fromUser = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName == fromUserName);
-            string fromId = fromUser.Id;
-            string fromImage = fromUser.ProfilePictureUrl;
+            string fromId = fromUser!.Id;
+            string fromImage = fromUser.ProfilePictureUrl!;
 
 
             var group = await repo.All<Group>()
@@ -81,13 +81,13 @@ namespace FindInternship.Core.Services
                 .Include(u => u.UserGroups)
                 .FirstOrDefaultAsync(u => u.Id == receiverId && u.IsActive);
 
-            var userGroups = user.UserGroups.Select(g => g.GroupId).ToHashSet();
-            var receiverGroups = receiver.UserGroups.Select(g => g.GroupId).ToHashSet();
+            var userGroups = user!.UserGroups.Select(g => g.GroupId).ToHashSet();
+            var receiverGroups = receiver!.UserGroups.Select(g => g.GroupId).ToHashSet();
 
             userGroups.IntersectWith(receiverGroups);
 
 
-            return userGroups.FirstOrDefault();
+            return userGroups.FirstOrDefault()!;
         }
 
         public async Task<string> GetGroupNameByIdAsync(string groupId)
@@ -95,7 +95,7 @@ namespace FindInternship.Core.Services
             var group = await repo.All<Group>()
                 .FirstOrDefaultAsync(g => g.Id == groupId);
 
-            return group == null ? null : group.Name;
+            return group! == null ? null : group!.Name!;
         }
     }
 }

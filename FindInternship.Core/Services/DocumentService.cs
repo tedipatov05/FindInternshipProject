@@ -18,7 +18,7 @@ namespace FindInternship.Core.Services
     public class DocumentService : IDocumentService
     {
         private Cloudinary cloudinary;
-        private IRepository repo;
+        private readonly IRepository repo;
 
         public DocumentService(Cloudinary cloudinary, IRepository repo)
         {

@@ -57,7 +57,7 @@ namespace FindInternship.Core.Services
                 .Include(s => s.Class)
                 .FirstOrDefaultAsync(s => s.Id == studentId);
 
-            return student.Class.TeacherId;
+            return student!.Class!.TeacherId!;
                 
         }
 
@@ -67,7 +67,7 @@ namespace FindInternship.Core.Services
                 .Include(c => c.Students)
                 .FirstOrDefaultAsync(c => c.CompanyId == companyId && c.Id == classId);
 
-            var studentIds = classModel.Students.Select(s => s.UserId).ToList();
+            var studentIds = classModel!.Students.Select(s => s.UserId).ToList();
 
 
             return studentIds;
@@ -82,7 +82,7 @@ namespace FindInternship.Core.Services
                 .Where(c => c.CompanyId == companyId && c.Meetings.Any(m => m.Id == meetingId))
                 .FirstOrDefaultAsync();
 
-            return cl.Students.Select(s => s.UserId).ToList();
+            return cl!.Students.Select(s => s.UserId).ToList();
         }
 
         public async Task<string> GetStudentClassIdAsync(string studentId)
@@ -90,14 +90,14 @@ namespace FindInternship.Core.Services
             var student = await repo.All<Student>()
                 .FirstOrDefaultAsync(s => s.Id == studentId);
 
-            return student.ClassId;
+            return student!.ClassId!;
 
         }
 
         public async Task<List<StudentViewModel>> GetTeacherStudentsAsync(string id)
         {
             var students = await repo.All<Student>()
-                .Where(s => s.Class.Id == id && s.User.IsActive == true)
+                .Where(s => s.Class!.Id == id && s.User.IsActive == true)
                 .Include(s => s.Abilities)
                 .Select(s => new StudentViewModel()
                 {

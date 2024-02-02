@@ -32,7 +32,13 @@ namespace FindInternship.Web.Controllers
         {
 
             AllMeetingsViewModel model = new AllMeetingsViewModel();
-            string userId = User.GetId();
+            string userId = User.GetId()!;
+            if (string.IsNullOrEmpty(userId))
+            {
+                TempData[ErrorMessage] = "Неправилен потребител";
+                return RedirectToAction("Login", "Account");
+            }
+
             try
             {
                 bool isTeacher = await teacherService.IsTeacherAsync(userId);
@@ -92,7 +98,7 @@ namespace FindInternship.Web.Controllers
         [Route("Meeting/Create")]
         public async Task<IActionResult> Create(string classId, string title, DateTime start, DateTime end, string address)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
 
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
@@ -145,7 +151,7 @@ namespace FindInternship.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
             {
@@ -172,7 +178,7 @@ namespace FindInternship.Web.Controllers
         public async Task<IActionResult> Edit([FromRoute] string id, string title, DateTime start, DateTime end,
             string address)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
             {
@@ -213,7 +219,7 @@ namespace FindInternship.Web.Controllers
         [Route("/Meeting/Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute]string id)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
 
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)
@@ -239,7 +245,7 @@ namespace FindInternship.Web.Controllers
         [Route("/Meeting/Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] string id, PreDeleteMeetingViewModel model)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
 
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (!isCompany)

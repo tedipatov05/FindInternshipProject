@@ -9,9 +9,9 @@ namespace FindInternship.Web.Controllers
 {
     public class CompanyController : Controller
     {
-        private ICompanyService companyService;
-        private ITeacherService teacherService;
-        private IAbilityService abilityService;
+        private readonly ICompanyService companyService;
+        private readonly ITeacherService teacherService;
+        private readonly IAbilityService abilityService;
 
         public CompanyController(ICompanyService companyService, ITeacherService teacherService, IAbilityService abilityService)
         {
@@ -23,7 +23,7 @@ namespace FindInternship.Web.Controllers
 
         public async Task<IActionResult> All([FromQuery]CompanyQueryModel model)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
 
             bool IsTeacher = await teacherService.IsTeacherAsync(userId);
             if(!IsTeacher) 

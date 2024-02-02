@@ -13,8 +13,8 @@ namespace FindInternship.Web.Controllers
 {
 	public class ClassController : Controller
 	{
-		private IClassService classService;
-		private ICompanyService companyService;
+		private readonly IClassService classService;
+		private readonly ICompanyService companyService;
 
 		public ClassController(IClassService classService, ICompanyService companyService)
 		{
@@ -25,7 +25,7 @@ namespace FindInternship.Web.Controllers
 		public async Task<IActionResult> CompanyClasses()
 		{
 
-			string userId = User.GetId();
+			string userId = User.GetId()!;
 			string companyId = await companyService.GetCompanyIdAsync(userId);
 
 			bool IsCompany = await companyService.IsCompanyAsync(userId);

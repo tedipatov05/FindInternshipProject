@@ -36,7 +36,7 @@ namespace FindInternship.Web.Controllers
 
         public async Task<IActionResult> UsersToChat()
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
             bool isTeacher = await teacherService.IsTeacherAsync(userId);
             bool isStudent = await studentService.IsStudent(userId);
@@ -92,7 +92,7 @@ namespace FindInternship.Web.Controllers
 
         public async Task<IActionResult> Chat(string toUsername, string group)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
             string toUserId = await userService.GetUserIdByUsernameAsync(toUsername);
 
             if (toUserId == null)

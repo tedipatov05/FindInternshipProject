@@ -13,9 +13,9 @@ namespace FindInternship.Core.Services
 {
     public class AbilityService : IAbilityService
     {
-        private IRepository repo;
-        private IStudentService studentService;
-        private ICompanyService companyService;
+        private readonly IRepository repo;
+        private readonly IStudentService studentService;
+        private readonly ICompanyService companyService;
 
 
         public AbilityService(IRepository repo, IStudentService studentService, ICompanyService companyService)

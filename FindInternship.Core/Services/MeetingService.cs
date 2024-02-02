@@ -45,7 +45,7 @@ namespace FindInternship.Core.Services
             var meeting = await repo.All<Meeting>()
                 .FirstOrDefaultAsync(m => m.Id == meetingId);
 
-            meeting.IsActive = false;
+            meeting!.IsActive = false;
 
             await repo.SaveChangesAsync();
 
@@ -84,7 +84,7 @@ namespace FindInternship.Core.Services
                 })
                 .FirstOrDefaultAsync();
 
-            return meeting;
+            return meeting!;
 
 
         }
@@ -103,14 +103,14 @@ namespace FindInternship.Core.Services
                 .FirstOrDefaultAsync();
 
 
-            return meeting;
+            return meeting!;
         }
 
         public async Task EditMeetingAsync(string id, FormMeetingViewModel model)
         {
             var meeting = await repo.GetByIdAsync<Meeting>(id);
 
-            meeting.Address = model.Address;
+            meeting!.Address = model.Address;
             meeting.Title = model.Title;
             meeting.EndTime = model.End;
             meeting.StartTime = model.Start;

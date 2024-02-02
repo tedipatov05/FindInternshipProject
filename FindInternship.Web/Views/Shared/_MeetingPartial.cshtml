@@ -2,6 +2,7 @@
 @model List<MeetingViewModel>
 
 @{
+
     Dictionary<string, string> hours = new Dictionary<string, string>()
     {
         {"09", "9"},
@@ -16,8 +17,8 @@
         {"18", "6"}
 
     };
-    var day = Model.FirstOrDefault() != null ? Model.FirstOrDefault().Number : DateTime.Now.Day;
-    var dayText = Model.FirstOrDefault() != null ? Model.FirstOrDefault().Day : DateTime.Now.DayOfWeek.ToString();
+    var day = Model.FirstOrDefault() != null ? Model.FirstOrDefault()!.Number : DateTime.Now.Day;
+    var dayText = Model.FirstOrDefault() != null ? Model.FirstOrDefault()!.Day : DateTime.Now.DayOfWeek.ToString();
 }
 
 
@@ -32,17 +33,15 @@
             if (meeting.Title != null)
             {
                 <div class="event start-@hours[meeting.StartHour] end-@hours[meeting.EndHour] corp-fi" id="@meeting.Id" style="height: fit-content;margin-top: 20px;">
-                    <p class="title">@meeting.Title</p>
-                    <p class="title">@meeting.Address</p>
-                    <p class="time" style="margin-bottom: 5px">@meeting.StartHour ч. - @meeting.EndHour ч.</p>
-                    
+                    <p class="title"><i class="bi bi-card-heading"></i> @meeting.Title</p>
+                    <p class="title"><i class="bi bi-building"></i> @meeting.Address</p>
+                    <p class="time" style="margin-bottom: 5px"><i class="bi bi-clock"></i> @meeting.StartHour ч. - @meeting.EndHour ч.</p>
                     
                     @if (User.IsInRole("Company"))
                     {
-                        <a class="btn btn-warning" style="color:#fff; background-color:#adb5bd; border-color:#232324; margin:1px;" asp-action="Edit" asp-controller="Meeting" asp-route-id="@meeting.Id">Промени</a>
-                        <a class="btn btn-warning" style="color:#fff; background-color:#adb5bd; border-color:#232324; margin:1px;"  asp-action="Delete" asp-controller="Meeting" asp-route-id="@meeting.Id">Изтрий</a>
+                        <a class="button-81-edit"  asp-action="Edit" asp-controller="Meeting" asp-route-id="@meeting.Id">Промени</a>
+                        <a class="button-81-delete" asp-action="Delete" asp-controller="Meeting" asp-route-id="@meeting.Id">Изтрий</a>
                     }
-
 
                 </div>
 

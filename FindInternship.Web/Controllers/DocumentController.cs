@@ -28,7 +28,7 @@ namespace FindInternship.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(IList<IFormFile> files, string requestId)
         {
-            string userId = User.GetId();
+            string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
 
             if(!isCompany)

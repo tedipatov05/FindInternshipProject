@@ -90,7 +90,7 @@ namespace FindInternship.Core.Services
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(c => c.UserId == companyId && c.User.IsActive);
 
-            return company.User.Name;
+            return company!.User.Name;
         }
 
 		public async Task CreateAsync(string userId, string services, string description)
@@ -113,7 +113,7 @@ namespace FindInternship.Core.Services
                 .FirstOrDefaultAsync(c => c.Id == companyId && c.User.IsActive);
 
 
-            return company.Meetings.Any(m => m.Id == meetingId);
+            return company!.Meetings.Any(m => m.Id == meetingId);
 
         }
 
@@ -125,7 +125,7 @@ namespace FindInternship.Core.Services
             var classs = await repo.All<Class>()
                 .FirstOrDefaultAsync(c => c.Id == classId);
 
-            classs.CompanyId = companyId;
+            classs!.CompanyId = companyId;
 
 			await repo.SaveChangesAsync();
 		}
@@ -152,7 +152,7 @@ namespace FindInternship.Core.Services
                 .FirstOrDefaultAsync(c => c.Id == companyId && c.User.IsActive);
 
 
-            return company.Lectors.Any(l => l.IsActive && l.Id == lectorId);
+            return company!.Lectors.Any(l => l.IsActive && l.Id == lectorId);
 
 
         }

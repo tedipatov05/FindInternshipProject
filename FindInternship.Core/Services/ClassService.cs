@@ -16,7 +16,7 @@ namespace FindInternship.Core.Services
 {
     public class ClassService : IClassService
     {
-        private IRepository repo;
+        private readonly IRepository repo;
 
         public ClassService(IRepository repo)
         {
@@ -42,7 +42,7 @@ namespace FindInternship.Core.Services
             var user = await repo.All<Student>()
                 .FirstOrDefaultAsync(t => t.UserId == userId);
 
-            return user!.ClassId;
+            return user!.ClassId!;
         }
 
         public async Task<string> GetClassIdByTeacherUserIdAsync(string userId)
@@ -50,7 +50,7 @@ namespace FindInternship.Core.Services
             var user = await repo.All<Teacher>()
                 .FirstOrDefaultAsync(t => t.UserId == userId);
 
-            return user!.ClassId;
+            return user!.ClassId!;
         }
 
         public async Task<List<string>> GetClassIdsByCompanyUserIdAsync(string userId)
@@ -250,7 +250,7 @@ namespace FindInternship.Core.Services
 
             if(company  != null)
             {
-                company.Classes.Remove(classModel);
+                company.Classes.Remove(classModel!);
             }
 
 
