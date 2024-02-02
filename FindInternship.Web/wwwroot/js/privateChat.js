@@ -4,6 +4,9 @@ var connection = new signalR.HubConnectionBuilder()
     .withUrl("/privateChatHub")
     .build();
 
+$(document).ready(function () {
+    $('#chat-body')[0].scroll(0, $('#chat-body')[0].scrollHeight);
+})
 
 async function start() {
     try {
