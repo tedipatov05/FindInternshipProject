@@ -32,7 +32,7 @@ namespace FindInternship.Core.Services
         {
             var user = await repo.GetByIdAsync<User>(userId);
 
-            user.Name = model.Name;
+            user!.Name = model.Name;
             user.Email = model.Email;
             user.Address = model.Address;
             user.PhoneNumber = model.PhoneNumber;

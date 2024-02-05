@@ -10,6 +10,7 @@ using FindInternship.Core.Models.PrivateChat;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Ganss.Xss;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -59,7 +60,7 @@ namespace FindInternship.Core.Services
                 .Include(u => u.ChatMessages)
                 .FirstOrDefaultAsync(u => u.Id == currentUserId);
 
-            Func<string, List<ChatMessage>> predicate = (username) => currentUser.ChatMessages.Where(m =>
+            Func<string, List<ChatMessage>> predicate = (username) => currentUser!.ChatMessages.Where(m =>
                 m.UserId == currentUserId && m.ReceiverUsername == username).ToList();
 
             var users = repo.All<Student>()
@@ -73,7 +74,7 @@ namespace FindInternship.Core.Services
                     Name = s.User.UserName,
                     ProfilePicture = s.User.ProfilePictureUrl,
                     LastMessageToUser = s.User.ChatMessages
-                        .Where(c => c.UserId == s.UserId && c.ReceiverUsername == currentUser.UserName)
+                        .Where(c => c.UserId == s.UserId && c.ReceiverUsername == currentUser!.UserName)
                         .Union(predicate(s.User.UserName))
                         .OrderBy(m => m.SendedOn)
                         .LastOrDefault()
@@ -95,7 +96,7 @@ namespace FindInternship.Core.Services
                 .Include(u => u.ChatMessages)
                 .FirstOrDefaultAsync(u => u.Id == currentUserId);
 
-            Func<string, List<ChatMessage>> predicate = (username) => currentUser.ChatMessages.Where(m =>
+            Func<string, List<ChatMessage>> predicate = (username) => currentUser!.ChatMessages.Where(m =>
                 m.UserId == currentUserId && m.ReceiverUsername == username).ToList();
 
             var teacher = repo.All<Teacher>()
@@ -108,7 +109,7 @@ namespace FindInternship.Core.Services
                     UserId = t.UserId,
                     Name = t.User.UserName,
                     ProfilePicture = t.User.ProfilePictureUrl,
-                    LastMessageToUser = t.User.ChatMessages.Where(c => c.UserId == t.UserId && c.ReceiverUsername == currentUser.UserName)
+                    LastMessageToUser = t.User.ChatMessages.Where(c => c.UserId == t.UserId && c.ReceiverUsername == currentUser!.UserName)
                         .Union(predicate(t.User.UserName))
                         .OrderBy(m => m.SendedOn).LastOrDefault()
 
@@ -116,7 +117,7 @@ namespace FindInternship.Core.Services
                 })
                 .FirstOrDefault();
 
-            return teacher;
+            return teacher!;
 
         }
 
@@ -126,7 +127,7 @@ namespace FindInternship.Core.Services
                 .Include(c => c.ChatMessages)
                 .FirstOrDefaultAsync(u => u.Id == currentUserId);
 
-            Func<string, List<ChatMessage>> predicate = (username) => currentUser.ChatMessages.Where(m =>
+            Func<string, List<ChatMessage>> predicate = (username) => currentUser!.ChatMessages.Where(m =>
                 m.UserId == currentUserId && m.ReceiverUsername == username).ToList();
 
 
@@ -141,7 +142,7 @@ namespace FindInternship.Core.Services
                     Name = t.User.UserName,
                     ProfilePicture = t.User.ProfilePictureUrl,
                     LastMessageToUser = t.User.ChatMessages
-                        .Where(c => c.UserId == t.UserId && c.ReceiverUsername == currentUser.UserName)
+                        .Where(c => c.UserId == t.UserId && c.ReceiverUsername == currentUser!.UserName)
                         .Union(predicate(t.User.UserName))
                         .OrderBy(m => m.SendedOn)
                         .LastOrDefault()
@@ -149,7 +150,7 @@ namespace FindInternship.Core.Services
                 })
                 .FirstOrDefault();
 
-            return company;
+            return company!;
         }
 
         public async Task<ICollection<ChatMessage>> ExtractAllMessagesAsync(string groupName)
@@ -193,7 +194,7 @@ namespace FindInternship.Core.Services
                         Id = m.Id,
                         Content = m.Content,
                         CurrentUsername = user.UserName,
-                        FromImageUrl = m.User.ProfilePictureUrl,
+                        FromImageUrl = m.User.ProfilePictureUrl == null ? "/img/blank-profile-picture.png" : m.User.ProfilePictureUrl,
                         FromUsername = m.User.UserName,
                         SendedOn = m.SendedOn.ToLocalTime().ToString("dd/mm/yyyy hh:mm")
                     })
@@ -219,11 +220,11 @@ namespace FindInternship.Core.Services
 
             var newMessage = new ChatMessage()
             {
-                User = fromUser,
-                Group = targetGroup,
+                User = fromUser!,
+                Group = targetGroup!,
                 SendedOn = DateTime.Now,
                 Content = new HtmlSanitizer().Sanitize(message.Trim()),
-                ReceiverImageUrl = toUser.ProfilePictureUrl == null ? "/img/blank-profile-picture.png" : toUser.ProfilePictureUrl,
+                ReceiverImageUrl = toUser!.ProfilePictureUrl == null ? "/img/blank-profile-picture.png" : toUser.ProfilePictureUrl,
                 ReceiverUsername = toUser.UserName,
 
             };
@@ -232,7 +233,7 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
 
             await hubContext.Clients.User(toUser.Id).SendAsync("ReceiveMessage", fromUsername,
-                fromUser.ProfilePictureUrl, new HtmlSanitizer().Sanitize(message.Trim()));
+                fromUser!.ProfilePictureUrl, new HtmlSanitizer().Sanitize(message.Trim()));
 
 
         }
@@ -241,12 +242,9 @@ namespace FindInternship.Core.Services
         {
             var fromUser = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName.ToLower() == fromUsername.ToLower());
+            string fromId = fromUser!.Id;
+            string fromUserImage = fromUser!.ProfilePictureUrl == null ? "/img/blank-profile-picture.png" : fromUser.ProfilePictureUrl;
 
-            string fromId = fromUser.Id;
-            string fromUserImage = fromUser.ProfilePictureUrl;
-
-
-            
             await hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUser.Id, fromUsername, fromUserImage, message.Trim());
         }
 
@@ -255,11 +253,11 @@ namespace FindInternship.Core.Services
 
             var toUser = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName == toUsername && u.IsActive);
-            var toUserId = toUser.Id;
+            var toUserId = toUser!.Id;
 
             var fromUser = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName == fromUsername && u.IsActive);
-            var fromUserId = fromUser.Id;
+            var fromUserId = fromUser!.Id;
 
             var targetGroup = await repo.All<Group>()
                 .FirstOrDefaultAsync(g => g.Name.ToUpper() == group.ToUpper());
@@ -267,7 +265,7 @@ namespace FindInternship.Core.Services
             var chatMessage = new ChatMessage()
             {
                 User = fromUser,
-                Group = targetGroup,
+                Group = targetGroup!,
                 SendedOn = DateTime.Now,
                 ReceiverUsername = toUsername,
                 ReceiverImageUrl = toUser.ProfilePictureUrl == null ? "/img/blank-profile-picture.png" : toUser.ProfilePictureUrl
@@ -292,11 +290,11 @@ namespace FindInternship.Core.Services
                 var chatFile = new ChatImage()
                 {
                     ChatMessageId = chatMessage.Id,
-                    GroupId = targetGroup.Id,
+                    GroupId = targetGroup!.Id,
 
                 };
 
-                string fileUrl = null;
+                string? fileUrl = null;
 
                 if (file.ContentType.Contains("image", StringComparison.CurrentCultureIgnoreCase))
                 {

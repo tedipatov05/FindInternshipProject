@@ -96,11 +96,11 @@
                             <div class="d-flex flex-row mb-3 navigation-mobile scrollable-chat-panel chat-panel-scroll" id="chat-body" style="height: 490px">
 
                                 <div class="w-100 p-3" id="chatHolder">
-                                    @if (Model.ChatMessages != null || @Model.ChatMessages.Count() != 0)
+                                    @if (Model.ChatMessages != null || @Model.ChatMessages!.Count() != 0)
                                     {
                                         <div class="svg36 loader-animate3 horizontal-margin-auto mb-2" id="loader" style="display: none"></div>
 
-                                        @foreach (var message in Model.ChatMessages)
+                                        @foreach (var message in Model.ChatMessages!)
                                         {
                                             if (message.ReceiverUsername == Model.ToUser.UserName && message.User.UserName != Model.ToUser.UserName)
                                             {
@@ -169,7 +169,7 @@
                                             }
                                         }
                                     }
-                                    <input id="messagesSkipCount" type="hidden" value="@this.Model.ChatMessages.Count" />
+                                    <input id="messagesSkipCount" type="hidden" value="@this.Model.ChatMessages!.Count" />
 
 
                                     <div class="svg36 loader-animate3 horizontal-margin-auto mb-2" id="preloader" style="display: none"></div>

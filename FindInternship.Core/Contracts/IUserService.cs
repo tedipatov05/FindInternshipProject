@@ -14,7 +14,7 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> IsExistsByIdAsync(string id);
 
-        Task<string> GetUserIdByUsernameAsync(string username);
+        Task<string?> GetUserIdByUsernameAsync(string username);
 
         Task<bool> IsExistsByUsernameAsync(string username);
 

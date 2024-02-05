@@ -27,12 +27,12 @@ namespace FindInternship.Core.Services
             return isExists;
         }
 
-        public async Task<string> GetUserIdByUsernameAsync(string username)
+        public async Task<string?> GetUserIdByUsernameAsync(string username)
         {
             var user = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName == username);
 
-            return user!.Id;
+            return user == null ? null : user.Id;
         }
 
         public async Task<bool> IsExistsByUsernameAsync(string username)

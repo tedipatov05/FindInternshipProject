@@ -33,28 +33,27 @@ namespace FindInternship.Data
 
         }
 
-        public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Ability> Abilities { get; set; }
-        public DbSet<Class> Classes { get; set; }
-        public DbSet<StudentAbility> StudentAbilities { get; set; }
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<ChatImage> ChatImages { get; set; }
-        public DbSet<ChatMessage> ChatMessages { get; set; }
-        public DbSet<UserGroup> UserGroups { get; set; }
-        public DbSet<Request> Requests { get; set; }
-        public DbSet<Meeting> Meetings { get; set; }
-        public DbSet<Document> Documents { get; set; }
+        public DbSet<Teacher> Teachers { get; set; } = null!;
+        public DbSet<Student> Students { get; set; } = null!;
+        public DbSet<Ability> Abilities { get; set; } = null!;
+        public DbSet<Class> Classes { get; set; } = null!;
+        public DbSet<StudentAbility> StudentAbilities { get; set; } = null!;
+        public DbSet<Group> Groups { get; set; } = null!;
+        public DbSet<Company> Companies { get; set; } = null!;
+        public DbSet<ChatImage> ChatImages { get; set; } = null!;
+        public DbSet<ChatMessage> ChatMessages { get; set; } = null!;
+        public DbSet<UserGroup> UserGroups { get; set; } = null!;
+        public DbSet<Request> Requests { get; set; } = null!;
+        public DbSet<Meeting> Meetings { get; set; } = null!;
+        public DbSet<Document> Documents { get; set; } = null!;
 
-        public DbSet<Lector> Lectors { get; set; }
+        public DbSet<Lector> Lectors { get; set; } = null!;
 
-        public DbSet<School> Schools { get; set; }
-        public DbSet<CompanyAbility> Technologies { get; set; }
+        public DbSet<School> Schools { get; set; } = null!;
+        public DbSet<CompanyAbility> Technologies { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
 
             builder.Entity<User>()
                 .Property(u => u.BirthDate)

@@ -15,7 +15,7 @@ namespace FindInternship.Test.Mock
             get
             {
                 var options = new DbContextOptionsBuilder<FindInternshipDbContext>()
-                    .UseInMemoryDatabase("FindInternshipInMemoryDb" + DateTime.Now.Ticks.ToString())
+                    .UseInMemoryDatabase("FindInternshipInMemoryDb" + Guid.NewGuid().ToString())
                     .Options;
 
                 return new FindInternshipDbContext(options, false);

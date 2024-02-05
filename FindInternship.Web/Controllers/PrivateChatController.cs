@@ -93,7 +93,7 @@ namespace FindInternship.Web.Controllers
         public async Task<IActionResult> Chat(string toUsername, string group)
         {
             string userId = User.GetId()!;
-            string toUserId = await userService.GetUserIdByUsernameAsync(toUsername);
+            var toUserId = await userService.GetUserIdByUsernameAsync(toUsername);
 
             if (toUserId == null)
             {

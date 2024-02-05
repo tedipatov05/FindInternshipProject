@@ -17,7 +17,6 @@ namespace FindInternship.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> All()
         {
-            string userId = User.GetId();
             if (!User.IsInRole("Admin"))
             {
                 TempData[ErrorMessage] = "Трябва да си администратор, за да имаш достъп.";
@@ -32,7 +31,6 @@ namespace FindInternship.Web.Areas.Admin.Controllers
         [Route("/Ability/Add")]
         public async Task<IActionResult> AddAbility(string ability)
         {
-            string userId = User.GetId();
             if (!User.IsInRole("Admin"))
             {
                 TempData[ErrorMessage] = "Трябва да си администратор, за да имаш достъп.";
