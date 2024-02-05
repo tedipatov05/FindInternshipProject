@@ -32,13 +32,15 @@ namespace FindInternship.Core.Services
         {
             var emailMessage = new MimeMessage();
             emailMessage.From.Add(new MailboxAddress(null, message.From));
-            emailMessage.To.Add(new MailboxAddress(null, emailConfig.To));
+            emailMessage.To.Add(new MailboxAddress(null, emailConfig.UserName));
             emailMessage.Subject = message.Subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = $"{message.From}: {message.Content}" };
+
             return emailMessage;
         }
         private async Task SendAsync(MimeMessage mailMessage)
         {
+
             using (var client = new SmtpClient())
             {
                 try
@@ -48,9 +50,8 @@ namespace FindInternship.Core.Services
                     await client.AuthenticateAsync(emailConfig.UserName, emailConfig.Password);
                     await client.SendAsync(mailMessage);
                 }
-                catch(Exception) 
+                catch (Exception)
                 {
-                    //log an error message or throw an exception, or both.
                     throw;
                 }
                 finally
