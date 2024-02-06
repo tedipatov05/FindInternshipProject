@@ -74,7 +74,7 @@ namespace FindInternship.Web.Controllers
             try
             {
 
-                string classId = await teacherService.GetTeacherClassIdAsync(User.GetId()!);
+                string? classId = await teacherService.GetTeacherClassIdAsync(User.GetId()!);
                 string companyId = await companyService.GetCompanyIdAsync(companyUserId);
                 CreateRequestModel model = new CreateRequestModel();
 
@@ -132,7 +132,7 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            string classId = await teacherService.GetTeacherClassIdAsync(userId);
+            string? classId = await teacherService.GetTeacherClassIdAsync(userId);
             var classRequests = await requestService.GetAllClassRequestsByIdAsync(classId);
 
             return View("All", classRequests);

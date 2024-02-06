@@ -1,6 +1,7 @@
 ﻿using FindInternship.Data;
 using FindInternship.Data.Models;
 using FindInternship.Data.Models.Enums;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace FindInternship.Test.UnitTest
 {
     public static class DatabaseSeeder
     {
+
         public static void SeedDatabase(FindInternshipDbContext context)
         {
             SeedUsers(context);
@@ -30,6 +32,25 @@ namespace FindInternship.Test.UnitTest
 
         public static void SeedUsers(FindInternshipDbContext context) 
         {
+            var admin = new User()
+            {
+                Id = "501889c2-7883-473b-9333-c55267249071",
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
+                Email = "admin@abv.bg",
+                NormalizedEmail = "ADMIN@ABV.BG",
+                PhoneNumber = "0887654263",
+                Name = "Админ",
+                City = "Казанлък",
+                Country = "България",
+                Address = "ул.Възраждане 6 ет.2 ап.8",
+                Gender = Gender.Мъж.ToString(),
+                RegisteredOn = DateTime.UtcNow,
+                BirthDate = DateTime.ParseExact("2005-05-20 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                ProfilePictureUrl = null, 
+                IsActive = true
+            };
+
             var student = new User()
             {
                 Id = "bae65efa-6885-4144-9786-0719b0e2ebc4",
@@ -45,7 +66,8 @@ namespace FindInternship.Test.UnitTest
                 Gender = Gender.Мъж.ToString(),
                 RegisteredOn = DateTime.UtcNow,
                 BirthDate = DateTime.ParseExact("2007-06-10 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
-                ProfilePictureUrl = null
+                ProfilePictureUrl = null,
+                IsActive = true
             };
 
             var teacher = new User()
@@ -63,7 +85,9 @@ namespace FindInternship.Test.UnitTest
                 Gender = Gender.Мъж.ToString(),
                 RegisteredOn = DateTime.UtcNow,
                 BirthDate = DateTime.ParseExact("1988-02-08 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
-                ProfilePictureUrl = null
+                ProfilePictureUrl = null,
+                IsApproved = false,
+                IsActive = true
             };
 
             var company = new User()
@@ -82,9 +106,14 @@ namespace FindInternship.Test.UnitTest
                 Gender = Gender.Мъж.ToString(),
                 RegisteredOn = DateTime.UtcNow,
                 BirthDate = DateTime.ParseExact("2001-02-08 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
-                ProfilePictureUrl = null, 
+                ProfilePictureUrl = null,
+                IsApproved = false,
+                IsActive = true
+
             };
 
+
+            context.Users.Add(admin);
             context.Users.Add(student);
             context.Users.Add(teacher);
             context.Users.Add(company);

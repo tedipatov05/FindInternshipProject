@@ -13,18 +13,18 @@ namespace FindInternship.Core.Contracts
     {
         Task<bool> IsTeacherAsync(string userId);
 
-        Task<string> GetTeacherIdAsync(string userId);
+        Task<string?> GetTeacherIdAsync(string userId);
 
-        Task<string> GetTeacherUserIdAsync(string teacherId);
+        Task<string?> GetTeacherUserIdAsync(string teacherId);
 
-        Task<string> GetTeacherClassIdAsync(string userId);
+        Task<string?> GetTeacherClassIdAsync(string userId);
 
-        Task<string> GetTeacherUserIdByMeetingIdAsync(string meetingId);
+        Task<string?> GetTeacherUserIdByMeetingIdAsync(string meetingId);
 
         Task<TeacherStudentsViewModel> GetTeacherStudentsAsync(string teacherId);
 
         Task Create(RegisterTeacherViewModel model, string userId);
 
-        Task<string> GetTeacherUserIdByClassAsync(string classId);
+        Task<string?> GetTeacherUserIdByClassAsync(string classId);
     }
 }

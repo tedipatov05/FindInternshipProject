@@ -71,8 +71,8 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            string teacherId = await teacherService.GetTeacherIdAsync(string.IsNullOrEmpty(id) ? userId : id);
-            var model = await teacherService.GetTeacherStudentsAsync(teacherId);
+            string? teacherId = await teacherService.GetTeacherIdAsync(string.IsNullOrEmpty(id) ? userId : id);
+            var model = await teacherService.GetTeacherStudentsAsync(teacherId!);
 
             return View(model);
         }

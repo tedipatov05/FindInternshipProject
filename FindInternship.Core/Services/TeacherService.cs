@@ -29,7 +29,7 @@ namespace FindInternship.Core.Services
 
         public async Task Create(RegisterTeacherViewModel model, string userId)
         {
-            string classId = classService.GetClassIdIfExistsAsync(model.Class.Trim(), model.School);
+            string classId = classService.GetClassIdIfExistsAsync(model.Class.Trim(), model.School)!;
             int? schoolId =  schoolService.GetSchoolIdIfExistsAsync(model.School);
 
             if(schoolId == null) 
@@ -54,38 +54,40 @@ namespace FindInternship.Core.Services
 
         }
 
-        public async Task<string> GetTeacherClassIdAsync(string userId)
+        public async Task<string?> GetTeacherClassIdAsync(string userId)
         {
             var teacher = await repo.All<Teacher>()
                 .FirstOrDefaultAsync(t => t.UserId == userId);
 
-            return teacher!.ClassId!;
+            return teacher== null || teacher.ClassId == null ? null : teacher.ClassId;
         }
 
-        public async Task<string> GetTeacherIdAsync(string userId)
+        public async Task<string?> GetTeacherIdAsync(string userId)
         {
             var teacher= await repo.All<Teacher>().FirstOrDefaultAsync(t => t.UserId == userId && t.User.IsActive == true);
 
-            return teacher!.Id;
+            return teacher == null ? null : teacher.Id;
         }
 
-		public async Task<string> GetTeacherUserIdByClassAsync(string classId)
+		public async Task<string?> GetTeacherUserIdByClassAsync(string classId)
 		{
 			var teacher = await repo.All<Teacher>()
                 .FirstOrDefaultAsync(t => t.ClassId == classId);
 
-            return teacher!.UserId;
+            
+
+            return teacher == null ? null : teacher.UserId;
                 
 		}
 
-        public async Task<string> GetTeacherUserIdByMeetingIdAsync(string meetingId)
+        public async Task<string?> GetTeacherUserIdByMeetingIdAsync(string meetingId)
         {
             var teacher = await repo.All<Teacher>()
                 .Include(t => t.Class!.Meetings)
                 .Where(t => t.Class!.Meetings.Any(m => m.Id == meetingId))
                 .FirstOrDefaultAsync();
 
-            return teacher!.UserId;    
+            return teacher == null ? null : teacher.UserId;    
         }
 
         public async Task<TeacherStudentsViewModel> GetTeacherStudentsAsync(string teacherId)
@@ -107,12 +109,13 @@ namespace FindInternship.Core.Services
                 
         }
 
-        public async Task<string> GetTeacherUserIdAsync(string teacherId)
+        public async Task<string?> GetTeacherUserIdAsync(string teacherId)
         {
             var teacher = await repo.All<Teacher>()
                 .FirstOrDefaultAsync(t => t.Id == teacherId || t.UserId == teacherId);
 
-            return teacher!.UserId;
+
+            return teacher == null ? null : teacher.UserId;
         }
 
         public async Task<bool> IsTeacherAsync(string userId)

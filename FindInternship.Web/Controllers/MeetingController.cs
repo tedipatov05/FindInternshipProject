@@ -47,13 +47,13 @@ namespace FindInternship.Web.Controllers
 
                 if (isTeacher)
                 {
-                    string teacherId = await teacherService.GetTeacherIdAsync(userId);
+                    string? teacherId = await teacherService.GetTeacherIdAsync(userId);
                     model.ClassId = await teacherService.GetTeacherClassIdAsync(userId);
-                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(0, teacherId);
-                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(1, teacherId);
-                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(2, teacherId);
-                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(3, teacherId);
-                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(4, teacherId);
+                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(0, teacherId!);
+                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(1, teacherId!);
+                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(2, teacherId!);
+                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(3, teacherId!);
+                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(4, teacherId!);
 
                 }
                 else if (isCompany)
@@ -110,12 +110,12 @@ namespace FindInternship.Web.Controllers
             try
             {
 
-                string teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
+                string? teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
                 string companyId = await companyService.GetCompanyIdAsync(userId);
                
                 List<string> receiversIds = await studentService.GetStudentCompanyIdsAsync(companyId, classId);
 
-                receiversIds.Add(teacherUserId);
+                receiversIds.Add(teacherUserId!);
 
                 FormMeetingViewModel model = new FormMeetingViewModel()
                 {
@@ -197,9 +197,9 @@ namespace FindInternship.Web.Controllers
 
 
             var receiversIds = await studentService.GetCompanyStudentIdsAsync(companyId, id);
-            string teacherUserId = await teacherService.GetTeacherUserIdByMeetingIdAsync(id);
+            string? teacherUserId = await teacherService.GetTeacherUserIdByMeetingIdAsync(id);
 
-            receiversIds.Add(teacherUserId);
+            receiversIds.Add(teacherUserId!);
 
             FormMeetingViewModel model = new FormMeetingViewModel()
             {
@@ -263,9 +263,9 @@ namespace FindInternship.Web.Controllers
             }
 
             var receiversIds = await studentService.GetCompanyStudentIdsAsync(companyId, id);
-            string teacherUserId = await teacherService.GetTeacherUserIdByMeetingIdAsync(id);
+            string? teacherUserId = await teacherService.GetTeacherUserIdByMeetingIdAsync(id);
 
-            receiversIds.Add(teacherUserId);
+            receiversIds.Add(teacherUserId!);
 
             await meetingService.DeleteMeetingAsync(id);
 

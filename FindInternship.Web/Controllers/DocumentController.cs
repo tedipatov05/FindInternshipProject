@@ -40,7 +40,7 @@ namespace FindInternship.Web.Controllers
             HashSet<string> documentsIds = new HashSet<string>();
 
             string classId = await classService.GetClassIdAsync(requestId);
-            string teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
+            string? teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
 
             try
             {

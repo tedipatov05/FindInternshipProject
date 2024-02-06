@@ -90,12 +90,12 @@ namespace FindInternship.Core.Services
             return userGroups.FirstOrDefault()!;
         }
 
-        public async Task<string> GetGroupNameByIdAsync(string groupId)
+        public async Task<string?> GetGroupNameByIdAsync(string groupId)
         {
             var group = await repo.All<Group>()
                 .FirstOrDefaultAsync(g => g.Id == groupId);
 
-            return group! == null ? null : group!.Name!;
+            return group == null ? null : group!.Name!;
         }
     }
 }

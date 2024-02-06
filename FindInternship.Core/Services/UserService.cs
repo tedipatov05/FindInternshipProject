@@ -103,6 +103,11 @@ namespace FindInternship.Core.Services
         {
             var user = await repo.GetByIdAsync<User>(userId);
 
+            if (user == null)
+            {
+                return;
+            }
+
             user!.IsApproved = true;
 
             await repo.SaveChangesAsync();
@@ -112,6 +117,11 @@ namespace FindInternship.Core.Services
         public async Task DeleteUserAsync(string userId)
         {
             var user = await repo.GetByIdAsync<User>(userId);
+
+            if(user == null)
+            {
+                return;
+            }
 
             user!.IsApproved = false;
             user!.IsActive = false;

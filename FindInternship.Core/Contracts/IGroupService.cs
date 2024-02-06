@@ -12,6 +12,6 @@ namespace FindInternship.Core.Contracts
 
         Task<string> GetGroupBetweenUsersAsync(string userId, string receiverId);
 
-        Task<string> GetGroupNameByIdAsync(string groupId);
+        Task<string?> GetGroupNameByIdAsync(string groupId);
     }
 }
