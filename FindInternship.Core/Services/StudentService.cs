@@ -43,21 +43,21 @@ namespace FindInternship.Core.Services
             return abilitites;
         }
 
-        public async Task<string> GetStudentId(string userId)
+        public async Task<string?> GetStudentId(string userId)
         {
             var student = await repo.All<Student>()
                 .FirstOrDefaultAsync(student => student.UserId == userId);
 
-            return student!.Id;
+            return student == null ? null : student.Id;
         }
 
-        public async Task<string> GetStudentTeacherIdAsync(string studentId)
+        public async Task<string?> GetStudentTeacherIdAsync(string studentId)
         {
             var student = await repo.All<Student>()
                 .Include(s => s.Class)
                 .FirstOrDefaultAsync(s => s.Id == studentId);
 
-            return student!.Class!.TeacherId!;
+            return student == null ? null : student.Class!.TeacherId!;
                 
         }
 
@@ -66,6 +66,11 @@ namespace FindInternship.Core.Services
             var classModel = await repo.All<Class>()
                 .Include(c => c.Students)
                 .FirstOrDefaultAsync(c => c.CompanyId == companyId && c.Id == classId);
+
+            if(classModel == null)
+            {
+                return new List<string>();
+            }
 
             var studentIds = classModel!.Students.Select(s => s.UserId).ToList();
 
@@ -82,15 +87,15 @@ namespace FindInternship.Core.Services
                 .Where(c => c.CompanyId == companyId && c.Meetings.Any(m => m.Id == meetingId))
                 .FirstOrDefaultAsync();
 
-            return cl!.Students.Select(s => s.UserId).ToList();
+            return cl == null ? new List<string>() : cl!.Students.Select(s => s.UserId).ToList();
         }
 
-        public async Task<string> GetStudentClassIdAsync(string studentId)
+        public async Task<string?> GetStudentClassIdAsync(string studentId)
         {
             var student = await repo.All<Student>()
                 .FirstOrDefaultAsync(s => s.Id == studentId);
 
-            return student!.ClassId!;
+            return student == null ? null : student.ClassId;
 
         }
 

@@ -28,7 +28,7 @@ namespace FindInternship.Core.Services
         public async Task AddAbilitiesToStudentAsync(List<string> abilities, string userId)
         {
 
-            string studentId = await studentService.GetStudentId(userId);
+            string? studentId = await studentService.GetStudentId(userId);
 
             var abilityStudents = new List<StudentAbility>();
             foreach (var ability in abilities)
@@ -36,7 +36,7 @@ namespace FindInternship.Core.Services
                 abilityStudents.Add(new StudentAbility()
                 {
                     AbilityId = int.Parse(ability),
-                    StudentId = studentId
+                    StudentId = studentId!
                 });
 
             }

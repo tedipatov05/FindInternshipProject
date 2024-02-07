@@ -34,7 +34,7 @@ namespace FindInternship.Core.Services
 
         public int? GetSchoolIdIfExistsAsync(string schoolName)
         {
-            Func<string, string> concatedName = (str) => string.Join("", str).ToLower();
+            Func<string, string> concatedName = (str) => string.Join("", str.Split(' ')).ToLower();
 
             var school = repo.All<School>()
                 .AsEnumerable()

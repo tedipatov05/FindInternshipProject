@@ -69,8 +69,8 @@ namespace FindInternship.Web.Controllers
                 }
                 else if (isStudent)
                 {
-                    string studentId = await studentService.GetStudentId(userId);
-                    string studentTeacherId = await studentService.GetStudentTeacherIdAsync(studentId);
+                    string?  studentId = await studentService.GetStudentId(userId);
+                    string? studentTeacherId = await studentService.GetStudentTeacherIdAsync(studentId!);
                     model.ClassId = await studentService.GetStudentClassIdAsync(studentId);
                     model.DayNow = await meetingService.GetClassMeetingsForDayAsync(0, studentTeacherId);
                     model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(1, studentTeacherId);

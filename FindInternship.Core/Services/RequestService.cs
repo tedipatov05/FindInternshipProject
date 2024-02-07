@@ -22,11 +22,11 @@ namespace FindInternship.Core.Services
     public class RequestService : IRequestService
     {
         private IRepository repo;
-        private IHubContext<RequestHub> hubContext;
-        public RequestService(IRepository repo, IHubContext<RequestHub> hubContext)
+       
+        public RequestService(IRepository repo)
         {
             this.repo = repo;
-            this.hubContext = hubContext;
+            
         }
 
         public async Task<string> Create(CreateRequestModel model)
@@ -65,7 +65,9 @@ namespace FindInternship.Core.Services
 
         public async Task<int> GetAcceptedRequestCountAsync()
         {
-            var requests = await repo.All<Request>().CountAsync();
+            var requests = await repo.All<Request>()
+                .Where(r => r.Status == RequestStatusEnum.Accepted.ToString())
+                .CountAsync();
 
             return requests;
         }

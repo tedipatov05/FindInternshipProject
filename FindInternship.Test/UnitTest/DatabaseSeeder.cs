@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +27,8 @@ namespace FindInternship.Test.UnitTest
             SeedStudentAbilities(context);
             SeedCompanyAbilities(context);
             SeedStudent(context);
+            SeedMeeting(context);
+            SeedRequest(context);
 
             context.SaveChanges();
         }
@@ -132,6 +135,39 @@ namespace FindInternship.Test.UnitTest
             };
 
             context.Companies.Add(company);
+        }
+        public static void SeedMeeting(FindInternshipDbContext context)
+        {
+            var meeting = new Meeting()
+            {
+                Id = "862db3a5-4126-41e7-9ea0-7bf052215571",
+                Title = "test meeting",
+                Address = "Bulgaria, Kazanlak",
+                StartTime = DateTime.UtcNow,
+                EndTime = DateTime.UtcNow.AddHours(2),
+                CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
+                ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                IsActive = true
+
+            };
+
+            context.Meetings.Add(meeting);
+        }
+
+        public static void SeedRequest(FindInternshipDbContext context)
+        {
+            var request = new Request()
+            {
+                Id = "bf13bfe6-b1be-4dc8-b8e8-2a0e3ff2af4a",
+                Topic = "Test request",
+                ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                Status = RequestStatusEnum.Waiting.ToString(),
+                Message = "test message",
+                CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
+                CreatedOn = DateTime.UtcNow,
+            };
+
+            context.Requests.Add(request);
         }
 
         public static void SeedSchool(FindInternshipDbContext context)

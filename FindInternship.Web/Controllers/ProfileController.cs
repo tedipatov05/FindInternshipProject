@@ -34,8 +34,8 @@ namespace FindInternship.Web.Controllers
             bool isStudent = await studentService.IsStudent(userId);
             if(isStudent)
             {
-                string studentId = await studentService.GetStudentId(userId);
-                var studentModel = await profileService.GetStudentProfileAsync(studentId);
+                string? studentId = await studentService.GetStudentId(userId);
+                var studentModel = await profileService.GetStudentProfileAsync(studentId!);
 
                 return View("Student", studentModel);
 
