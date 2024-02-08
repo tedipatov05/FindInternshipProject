@@ -66,6 +66,7 @@ namespace FindInternship.Core.Services
         {
             var classes = await repo.All<Class>()
                 .Include(c => c.Teacher)
+                .Include(c => c.Students)
                 .Where(c => c.CompanyId == companyId)
                 .Select(c => new ClassViewModel()
                 {
@@ -73,7 +74,7 @@ namespace FindInternship.Core.Services
                     Name = c.Grade,
                     School = c.School.Name,
                     Teacher = c.Teacher!.User.Name,
-                    Students = c.Students.Count,
+                    Students = c.Students.Where(s => s.User.IsActive).Count(),
                     TeacherId = c.Teacher.UserId
 
                 })
@@ -177,13 +178,14 @@ namespace FindInternship.Core.Services
         {
             var classes = await repo.All<Class>()
                 .Include(c => c.Teacher)
+                .Include(c => c.Students)
                 .Select(c => new ClassViewModel()
                 {
                     Id = c.Id,
                     Name = c.Grade,
                     School = c.School.Name,
                     Teacher = c.Teacher!.User.Name,
-                    Students = c.Students.Count,
+                    Students = c.Students.Where(s => s.User.IsActive).Count(),
                     TeacherId = c.Teacher.UserId
                 
                 })
