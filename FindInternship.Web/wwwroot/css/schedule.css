@@ -4,7 +4,7 @@
     --timeHeight: 60px;
     --calBgColor: #fff1f8;
     --eventBorderColor: #f2d3d8;
-    --eventColor1: #ffd6d1;
+    --eventColor1: #f5f5dd;
     --eventColor2: #fafaa3;
     --eventColor3: #e2f8ff;
     --eventColor4: #d1ffe6;
@@ -89,7 +89,7 @@
     display: grid;
     grid-template-rows: repeat(var(--numHours), var(--timeHeight));
     border-radius: 5px;
-    background: #e8e7e5;
+    background: #d2cebcd6;
 }
 
 .start-10 {
