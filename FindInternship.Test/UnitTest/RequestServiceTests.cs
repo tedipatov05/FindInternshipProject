@@ -123,6 +123,120 @@ namespace FindInternship.Test.UnitTest
 
             Assert.That(result, Is.EqualTo(expectedCount));
         }
+        [Test]
+        public async Task GetAllClassRequestsByIdAsyncShouldReturnCorrectResult()
+        {
+            string classId = "90bd5987-e991-4dfd-be1a-a57464b9d697";
+
+            var result = await requestService.GetAllClassRequestsByIdAsync(classId);
+
+            var expectedResult = new AllRequestsViewModel()
+            {
+                Id = "bf13bfe6-b1be-4dc8-b8e8-2a0e3ff2af4a",
+                Message = "test message",
+                Status = RequestStatusEnum.Waiting.ToString(),
+                Topic = "Test request",
+                DateCreated = DateTime.UtcNow.ToString("dd MMMM, yyyy"),
+                CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
+                TeacherId = "28a172eb-6e0d-43ed-9a42-fb28025e1659",
+
+            };
+
+            CollectionAssert.IsNotEmpty(result);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Id, Is.EqualTo(expectedResult.Id));
+                Assert.That(result[0].CompanyId, Is.EqualTo(expectedResult.CompanyId));
+                Assert.That(result[0].TeacherId, Is.EqualTo(expectedResult.TeacherId));
+            });
+            CollectionAssert.IsEmpty(result[0].Documents);
+        }
+
+        [Test]
+        [TestCase("7493d4c1-251f-4e9a-aaba-c11d5c4da798")]
+        [TestCase("28a172eb-6e0d-43ed-9a42-fb28025e1659")]
+        public async Task GetAllClassRequestsByIdAsyncShouldReturnEmptyCollection(string classId)
+        {
+            var result = await requestService.GetAllClassRequestsByIdAsync(classId);
+
+            CollectionAssert.IsEmpty(result);
+        }
+
+        [Test]
+        public async Task GetAllCompanyRequestsByIdAsyncShouldReturnCorrectResult()
+        {
+            string companyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798";
+
+            var result = await requestService.GetAllCompanyRequestsByIdAsync(companyId);
+
+            var expectedResult = new AllRequestsViewModel()
+            {
+                Id = "bf13bfe6-b1be-4dc8-b8e8-2a0e3ff2af4a",
+                Message = "test message",
+                Status = RequestStatusEnum.Waiting.ToString(),
+                Topic = "Test request",
+                DateCreated = DateTime.UtcNow.ToString("dd MMMM, yyyy"),
+                CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
+                TeacherId = "28a172eb-6e0d-43ed-9a42-fb28025e1659",
+
+            };
+
+            CollectionAssert.IsNotEmpty(result);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Id, Is.EqualTo(expectedResult.Id));
+                Assert.That(result[0].CompanyId, Is.EqualTo(expectedResult.CompanyId));
+                Assert.That(result[0].TeacherId, Is.EqualTo(expectedResult.TeacherId));
+            });
+            CollectionAssert.IsEmpty(result[0].Documents);
+        }
+
+        [Test]
+        [TestCase("90bd5987-e991-4dfd-be1a-a57464b9d697")]
+        [TestCase("28a172eb-6e0d-43ed-9a42-fb28025e1659")]
+        public async Task GetAllCompanyRequestsByIdAsyncShouldReturnEmptyCollection(string companyId)
+        {
+            var result = await requestService.GetAllCompanyRequestsByIdAsync(companyId);
+
+            CollectionAssert.IsEmpty(result);
+        }
+
+        [Test]
+        public async Task GetRequestByIdAsyncShouldReturnCorrectResult()
+        {
+            string requestId = "bf13bfe6-b1be-4dc8-b8e8-2a0e3ff2af4a";
+
+            var result = await requestService.GetRequestByIdAsync(requestId);
+
+            var expectedResult = new AllRequestsViewModel()
+            {
+                Id = "bf13bfe6-b1be-4dc8-b8e8-2a0e3ff2af4a",
+                Message = "test message",
+                Status = RequestStatusEnum.Waiting.ToString(),
+                Topic = "Test request",
+                DateCreated = DateTime.UtcNow.ToString("dd MMMM, yyyy"),
+                CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
+                TeacherId = "28a172eb-6e0d-43ed-9a42-fb28025e1659",
+
+            };
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Id, Is.EqualTo(expectedResult.Id));
+                Assert.That(result.CompanyId, Is.EqualTo(expectedResult.CompanyId));
+                Assert.That(result.TeacherId, Is.EqualTo(expectedResult.TeacherId));
+            });
+        }
+
+        [Test]
+        [TestCase("90bd5987-e991-4dfd-be1a-a57464b9d697")]
+        [TestCase("28a172eb-6e0d-43ed-9a42-fb28025e1659")]
+        public async Task GetRequestByIdAsyncShouldReturnNull(string requestId)
+        {
+            var result = await requestService.GetRequestByIdAsync(requestId);
+
+            Assert.Null(result);
+        }
 
     }
 }

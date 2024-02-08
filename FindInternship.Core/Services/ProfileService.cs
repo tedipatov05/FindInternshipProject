@@ -32,6 +32,11 @@ namespace FindInternship.Core.Services
         {
             var user = await repo.GetByIdAsync<User>(userId);
 
+            if(user == null)
+            {
+                return;
+            }
+
             user!.Name = model.Name;
             user.Email = model.Email;
             user.Address = model.Address;
@@ -73,7 +78,12 @@ namespace FindInternship.Core.Services
                 })
                 .FirstOrDefaultAsync();
 
-            company!.Technologies = await abilityService.GetCompanyAbilityNamesAsync(companyId);
+            if(company != null )
+            {
+                company!.Technologies = await abilityService.GetCompanyAbilityNamesAsync(companyId);
+
+            }
+
 
             return company;
         }
@@ -86,6 +96,11 @@ namespace FindInternship.Core.Services
                 .Include(s => s.Class)
                 .Include(s => s.Class!.School)
                 .FirstOrDefaultAsync();
+
+            if(student == null)
+            {
+                return null;
+            }
 
             var model = new StudentProfileViewModel()
             {

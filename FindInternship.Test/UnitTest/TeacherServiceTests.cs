@@ -15,6 +15,8 @@ using FindInternship.Core.Models.Student;
 using FindInternship.Core.Models.Account;
 using FindInternship.Data.Models;
 using System.Diagnostics.Metrics;
+using FindInternship.Data.Models.Enums;
+using System.Globalization;
 
 namespace FindInternship.Test.UnitTest
 {
@@ -215,5 +217,52 @@ namespace FindInternship.Test.UnitTest
             Assert.IsNull(result);
 
         }
+        [Test]
+        public async Task GetTeacherUserIdByMeetingIdAsyncShouldReturnCorrectResult()
+        {
+            string meetingId = "862db3a5-4126-41e7-9ea0-7bf052215571";
+
+            var result = await teacherService.GetTeacherUserIdByMeetingIdAsync(meetingId);
+
+            string expectedResult = "28a172eb-6e0d-43ed-9a42-fb28025e1659";
+
+            Assert.IsNotNull(result);
+            Assert.That(result, Is.EqualTo(expectedResult));
+
+        }
+
+        [Test]
+        [TestCase("bae65efa-6885-4144-9786-0719b0e2ebc4")]
+        [TestCase("eb8fc718-655e-4d32-9a0a-d905fa3956e7")]
+        public async Task GetTeacherUserIdByMeetingIdAsyncShouldReturnNull(string meetingId)
+        {
+            var result = await teacherService.GetTeacherUserIdByMeetingIdAsync(meetingId);
+
+            Assert.IsNull(result);
+        }
+
+        //[Test]
+        //public async Task CreateShouldCreateTeacherCorrectly()
+        //{
+          
+
+        //    RegisterTeacherViewModel model = new RegisterTeacherViewModel()
+        //    {
+        //        Name = "Test Create Teacher",
+        //        Email = "newTeacher@abv.bg",
+        //        Password = "123456",
+        //        PasswordRepeat = "123456",
+        //        School = "ППМГ Никола Обрешков",
+        //        PhoneNumber = "0889876483",
+        //        Country = "Bulgaria",
+        //        City = "Казанлък",
+        //        Address = "Test Address",
+        //        Class = "12 Б",
+        //        Speciality = "Приложен програмист",
+        //        BirthDate = DateTime.Now,
+        //        Gender = "Мъж",
+        //        ProfilePicture = null
+        //    };
+        //}
     }
 }

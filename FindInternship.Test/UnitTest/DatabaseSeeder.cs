@@ -115,7 +115,6 @@ namespace FindInternship.Test.UnitTest
 
             };
 
-
             context.Users.Add(admin);
             context.Users.Add(student);
             context.Users.Add(teacher);
