@@ -16,6 +16,7 @@ using FindInternship.Core.Models.Ability;
 
 namespace FindInternship.Test.UnitTest
 {
+    [TestFixture]
     public class AbilityServiceTests
     {
         private DbContextOptions<FindInternshipDbContext> dbOptions;

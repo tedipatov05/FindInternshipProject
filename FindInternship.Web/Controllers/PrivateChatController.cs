@@ -69,7 +69,7 @@ namespace FindInternship.Web.Controllers
             }
             else if (isStudent)
             {
-                string classId = await classService.GetClassIdByStudentUserIdAsync(userId);
+                string? classId = await classService.GetClassIdByStudentUserIdAsync(userId);
                 var users = await privateChatService.GetUsersToChatAsync(classId, userId);
                 var studentTeacher = await privateChatService.GetTeacherToChatAsync(classId, userId);
                 var company = await privateChatService.GetCompanyToChatAsync(classId, userId);
