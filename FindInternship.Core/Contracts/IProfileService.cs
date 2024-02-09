@@ -9,13 +9,13 @@ namespace FindInternship.Core.Contracts
 {
     public interface IProfileService
     {
-        Task<StudentProfileViewModel> GetStudentProfileAsync(string studentId);
+        Task<StudentProfileViewModel?> GetStudentProfileAsync(string studentId);
 
-        Task<TeacherProfileViewModel> GetTeacherProfileAsync(string teacherId);
+        Task<TeacherProfileViewModel?> GetTeacherProfileAsync(string teacherId);
 
-        Task<CompanyProfileViewModel> GetCompanyProfileAsync(string companyId);
+        Task<CompanyProfileViewModel?> GetCompanyProfileAsync(string companyId);
 
-        Task<EditProfileModel> GetUserForEditAsync(string userId);
+        Task<EditProfileModel?> GetUserForEditAsync(string userId);
 
         Task EditProfileAsync(string userId, EditProfileModel model);
     }

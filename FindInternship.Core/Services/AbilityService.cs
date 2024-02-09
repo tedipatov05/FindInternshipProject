@@ -3,6 +3,7 @@ using FindInternship.Core.Models.Ability;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,14 +31,25 @@ namespace FindInternship.Core.Services
 
             string? studentId = await studentService.GetStudentId(userId);
 
+            if (studentId == null)
+            {
+                return;
+            }
+
             var abilityStudents = new List<StudentAbility>();
             foreach (var ability in abilities)
             {
-                abilityStudents.Add(new StudentAbility()
+                bool isExists = await repo.All<Ability>().AnyAsync(a => a.Id == int.Parse(ability));
+                
+                if(isExists)
                 {
-                    AbilityId = int.Parse(ability),
-                    StudentId = studentId!
-                });
+                    abilityStudents.Add(new StudentAbility()
+                    {
+                        AbilityId = int.Parse(ability),
+                        StudentId = studentId!
+                    });
+                }
+                
 
             }
 
@@ -60,14 +72,22 @@ namespace FindInternship.Core.Services
 		{
             string companyId = await companyService.GetCompanyIdAsync(userId);
 
+            if(companyId == null) { return; }
+
             var companyTechnologies = new List<CompanyAbility>();
             foreach(var tech in technologies)
             {
-                companyTechnologies.Add(new CompanyAbility()
+                bool isExists = await repo.All<Ability>().AnyAsync(a => a.Id == int.Parse(tech));
+
+                if(isExists)
                 {
-                    AbilityId = int.Parse(tech),
-                    CompanyId = companyId
-                });
+                    companyTechnologies.Add(new CompanyAbility()
+                    {
+                        AbilityId = int.Parse(tech),
+                        CompanyId = companyId
+                    });
+                }
+                
             }
 
             await repo.AddRangeAsync(companyTechnologies);

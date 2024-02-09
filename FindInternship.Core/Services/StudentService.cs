@@ -46,7 +46,8 @@ namespace FindInternship.Core.Services
         public async Task<string?> GetStudentId(string userId)
         {
             var student = await repo.All<Student>()
-                .FirstOrDefaultAsync(student => student.UserId == userId);
+                .Include(s => s.User)
+                .FirstOrDefaultAsync(student => student.UserId == userId && student.User.IsActive);
 
             return student == null ? null : student.Id;
         }

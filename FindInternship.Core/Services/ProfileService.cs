@@ -51,7 +51,7 @@ namespace FindInternship.Core.Services
                 
         }
 
-        public async Task<CompanyProfileViewModel> GetCompanyProfileAsync(string companyId)
+        public async Task<CompanyProfileViewModel?> GetCompanyProfileAsync(string companyId)
         {
             var company = await repo.All<Company>()
                 .Where(c => c.Id == companyId )
@@ -88,7 +88,7 @@ namespace FindInternship.Core.Services
             return company;
         }
 
-        public async Task<StudentProfileViewModel> GetStudentProfileAsync(string studentId)
+        public async Task<StudentProfileViewModel?> GetStudentProfileAsync(string studentId)
         {
             var student = await repo.All<Student>()
                 .Where(s => s.Id == studentId && s.User.IsActive == true)
@@ -123,7 +123,7 @@ namespace FindInternship.Core.Services
             
         }
 
-        public async Task<TeacherProfileViewModel> GetTeacherProfileAsync(string teacherId)
+        public async Task<TeacherProfileViewModel?> GetTeacherProfileAsync(string teacherId)
         {
             var teacher = await repo.All<Teacher>()
                 .Include(t => t.User)
@@ -137,6 +137,11 @@ namespace FindInternship.Core.Services
                 .Where(s => s.Class!.TeacherId ==  teacherId && s.User.IsActive == true)
                 .Select(s => s.User.Name)
                 .ToListAsync();
+
+            if(teacher == null)
+            {
+                return null;
+            }
 
 
             var model = new TeacherProfileViewModel()
@@ -157,10 +162,15 @@ namespace FindInternship.Core.Services
             return model;
         }
 
-        public async Task<EditProfileModel> GetUserForEditAsync(string userId)
+        public async Task<EditProfileModel?> GetUserForEditAsync(string userId)
         {
             var u = await repo.All<User>()
                 .FirstOrDefaultAsync(s => s.Id == userId && s.IsActive == true);
+
+            if(u == null)
+            {
+                return null;
+            }
 
             var user = new EditProfileModel()
             {
@@ -170,7 +180,6 @@ namespace FindInternship.Core.Services
                 City = u.City,
                 Country = u.Country,
                 Address = u.Address,
-
             };
                 
 
