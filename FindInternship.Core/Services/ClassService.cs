@@ -50,10 +50,15 @@ namespace FindInternship.Core.Services
             return user!.ClassId!;
         }
 
-        public async Task<string> GetClassIdByTeacherUserIdAsync(string userId)
+        public async Task<string?> GetClassIdByTeacherUserIdAsync(string userId)
         {
             var user = await repo.All<Teacher>()
                 .FirstOrDefaultAsync(t => t.UserId == userId);
+
+            if(user == null)
+            {
+                return null;
+            }
 
             return user!.ClassId!;
         }
@@ -63,6 +68,11 @@ namespace FindInternship.Core.Services
             var user = await repo.All<Company>()
                 .Include(c => c.Classes)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            if(user == null)
+            {
+                return new List<string>();
+            }
 
             return user!.Classes.Select(c => c.Id).ToList();
         }
@@ -105,17 +115,22 @@ namespace FindInternship.Core.Services
             return c.Id;
         }
 
-        public async Task<string> GetClassIdAsync(string requestId)
+        public async Task<string?> GetClassIdAsync(string requestId)
         {
             var requestModel = await repo.All<Request>()
                 .FirstOrDefaultAsync(r => r.Id == requestId);
+
+            if(requestModel == null)
+            {
+                return null;
+            }
 
             return requestModel!.ClassId;
         }
 
         public string? GetClassIdIfExistsAsync(string className, string school)
         {
-            Func<string, string> concatedName = (str) => string.Join("", str).ToLower();
+            Func<string, string> concatedName = (str) => string.Join("", str.Split(' ')).ToLower();
 
             var c = repo.All<Class>()
                 .Include(c => c.School)
@@ -137,26 +152,42 @@ namespace FindInternship.Core.Services
             var cl = await repo.All<Class>()
                 .FirstOrDefaultAsync(cl => cl.Id == classId);
 
+            if(cl == null)
+            {
+                return;
+            }
+
             cl!.TeacherId = teacherId;
 
             await repo.SaveChangesAsync();
         }
 
-        public async Task<bool> ExistsClassByNameAndSchoolAsync(string className, string schoolName)
+        public bool ExistsClassByNameAndSchoolAsync(string className, string schoolName)
         {
-            var isExists = await repo.All<Class>()
+            Func<string, string> concatedName = (str) => string.Join("", str.Split(' ')).ToLower();
+
+            string concatedClass = concatedName(className);
+            string concatedSchool = concatedName(schoolName);
+
+            var isExists = repo.All<Class>()
                 .Include(c => c.School)
-                .AnyAsync(c => c.Grade.ToUpper() == className.ToUpper() && c.School.Name.ToUpper() == schoolName.ToUpper());
+                .AsEnumerable()
+                .Any(c => concatedName(c.Grade) == concatedClass && concatedName( c.School.Name) == concatedSchool);
 
             return isExists;
 
         }
 
-        public async Task<string> GetClassIdByClassNameAsync(string className, string schoolName)
+        public async Task<string?> GetClassIdByClassNameAsync(string className, string schoolName)
         {
             var class1 = await repo.All<Class>()
                  .Include(c => c.School)
                  .FirstOrDefaultAsync(c => c.Grade == className && c.School.Name == schoolName);
+
+            if(class1 == null)
+            {
+                return null;
+            }
 
             return class1!.Id;
         }
@@ -229,7 +260,6 @@ namespace FindInternship.Core.Services
             var classModel = await repo.All<Class>()
                 .FirstOrDefaultAsync();
 
-            await repo.DeleteAsync<Class>(classId);
 
             var classStudents = await repo.All<Student>()
                 .Include(s => s.User)
@@ -255,11 +285,12 @@ namespace FindInternship.Core.Services
                 .Include(s => s.Classes)
                 .FirstOrDefaultAsync(c => c.Classes.Any(c => c.Id == classId));
 
-            if(company  != null)
+            if(company != null)
             {
                 company.Classes.Remove(classModel!);
             }
 
+            await repo.DeleteAsync<Class>(classId);
 
             await repo.SaveChangesAsync();
 

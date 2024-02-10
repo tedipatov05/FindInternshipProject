@@ -126,7 +126,7 @@ namespace FindInternship.Web.Controllers
 		{
 			RegisterTeacherViewModel model = new RegisterTeacherViewModel();
 
-			return View(model);
+			return await Task.Run(() =>  View(model));
 		}
 
         [HttpPost]
@@ -143,7 +143,8 @@ namespace FindInternship.Web.Controllers
 
             }
 
-            if (await classService.ExistsClassByNameAndSchoolAsync(model.Class, model.School))
+            //TODO: Check does it work
+            if (classService.ExistsClassByNameAndSchoolAsync(model.Class, model.School))
             {
                 TempData[ErrorMessage] = "Този клас вече си има учител";
                 return View(model);

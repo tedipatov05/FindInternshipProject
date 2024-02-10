@@ -17,30 +17,30 @@ namespace FindInternship.Core.Contracts
 
         Task<List<StudentViewModel>> GetClassStudentsAsync(string classId);
 
-        Task<string> GetClassIdAsync(string requestId);
+        Task<string?> GetClassIdAsync(string requestId);
 
         Task<List<ClassMeetingViewModel>> GetClassMeetingAsync(string companyId);
 
-        Task<string> GetClassIdByClassNameAsync(string className, string schoolName);
+        Task<string?> GetClassIdByClassNameAsync(string className, string schoolName);
 
         Task<string?> GetClassIdByStudentUserIdAsync(string userId);
 
-        Task<string> GetClassIdByTeacherUserIdAsync(string userId);
+        Task<string?> GetClassIdByTeacherUserIdAsync(string userId);
 
         Task<List<string>> GetClassIdsByCompanyUserIdAsync(string userId);
 
         Task<List<ClassViewModel>> GetAllCompanyClassesAsync(string companyId);
 
-		string? GetClassIdIfExistsAsync(string className, string school);
+        string? GetClassIdIfExistsAsync(string className, string school);
 
         Task<string> CreateAsync(string className, string specialtiy, int schoolId);
 
         Task UpdateAsync(string classId, string teacherId);
 
-        Task<bool> ExistsClassByNameAndSchoolAsync(string className, string schoolName);
+        bool ExistsClassByNameAndSchoolAsync(string className, string schoolName);
 
         Task<bool> IsClassExistsByIdAsync(string classId);
 
-       Task DeleteAsync(string classId);
+        Task DeleteAsync(string classId);
     }
 }
