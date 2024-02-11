@@ -12,7 +12,8 @@ namespace FindInternship.Core.Models.Company
 	{
         public CompanyQueryModel()
         {
-            Companies = new List<CompanyViewModel>();
+            this.Companies = new List<CompanyViewModel>();
+			this.Technologies = new List<string>();
         }
 
         public string? SearchString { get; set; }

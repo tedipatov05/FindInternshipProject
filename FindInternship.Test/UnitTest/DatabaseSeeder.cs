@@ -110,7 +110,7 @@ namespace FindInternship.Test.UnitTest
                 RegisteredOn = DateTime.UtcNow,
                 BirthDate = DateTime.ParseExact("2001-02-08 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
                 ProfilePictureUrl = null,
-                IsApproved = false,
+                IsApproved = true,
                 IsActive = true
 
             };

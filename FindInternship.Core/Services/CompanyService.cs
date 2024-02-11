@@ -30,18 +30,18 @@ namespace FindInternship.Core.Services
             IQueryable<Company> companyQuery = repo.All<Company>()
                 .Where(c => c.User.IsActive == true && c.User.IsApproved == true);
 
-            if(!string.IsNullOrEmpty(model.SearchString))
+            if (!string.IsNullOrEmpty(model.SearchString))
             {
 
-				string wildCard = $"%{model.SearchString.ToLower()}%";
+                string wildCard = $"%{model.SearchString.ToLower()}%";
 
                 companyQuery = companyQuery
                     .Where(c => EF.Functions.Like(c.User.Name, wildCard) ||
                                 EF.Functions.Like(c.Description, wildCard) ||
                                 EF.Functions.Like(c.Services, wildCard));
-			}
+            }
 
-            if(!string.IsNullOrEmpty(model.Technology))
+            if (!string.IsNullOrEmpty(model.Technology))
             {
                 companyQuery = companyQuery
                     .Where(c => c.Technologies.Select(t => t.Ability.AbilityText).Contains(model.Technology));
@@ -51,30 +51,40 @@ namespace FindInternship.Core.Services
                 .Select(c => new CompanyViewModel()
                 {
                     Id = c.User.Id,
-                    Name = c.User.Name, 
+                    Name = c.User.Name,
                     ProfilePictureUrl = c.User.ProfilePictureUrl,
-                    Address = c.User.Address, 
+                    Address = c.User.Address,
                     Description = c.Description
                 })
                 .ToListAsync();
 
             return companies;
-               
+
         }
 
-        public async Task<string> GetCompanyIdAsync(string userId)
+        public async Task<string?> GetCompanyIdAsync(string userId)
         {
             var company = await repo.All<Company>()
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
+            if (company == null)
+            {
+                return null;
+            }
+
             return company!.Id;
         }
 
-        public async Task<string> GetCompanyIdByNameAsync(string companyName)
+        public async Task<string?> GetCompanyIdByNameAsync(string companyName)
         {
             var company = await repo.All<Company>()
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(c => c.User.Name == companyName && c.User.IsActive);
+
+            if (company == null)
+            {
+                return null;
+            }
 
             return company!.User.Id;
         }
@@ -84,17 +94,22 @@ namespace FindInternship.Core.Services
             return await repo.All<Company>().AnyAsync(c => c.UserId == userId);
         }
 
-        public async Task<string> GetCompanyNameByIdAsync(string companyId)
+        public async Task<string?> GetCompanyNameByIdAsync(string companyId)
         {
             var company = await repo.All<Company>()
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(c => c.UserId == companyId && c.User.IsActive);
 
+            if (company == null)
+            {
+                return null;
+            }
+
             return company!.User.Name;
         }
 
-		public async Task CreateAsync(string userId, string services, string description)
-		{
+        public async Task CreateAsync(string userId, string services, string description)
+        {
             var company = new Company()
             {
                 UserId = userId,
@@ -104,7 +119,7 @@ namespace FindInternship.Core.Services
 
             await repo.AddAsync(company);
             await repo.SaveChangesAsync();
-		}
+        }
 
         public async Task<bool> IsInCompanyScheduleAsync(string companyId, string meetingId)
         {
@@ -112,23 +127,33 @@ namespace FindInternship.Core.Services
                 .Include(c => c.Meetings)
                 .FirstOrDefaultAsync(c => c.Id == companyId && c.User.IsActive);
 
+            if(company == null)
+            {
+                return false;
+            }
+
 
             return company!.Meetings.Any(m => m.Id == meetingId);
 
         }
 
-       
+
 
 
         public async Task AddClassToCompany(string classId, string companyId)
-		{
+        {
             var classs = await repo.All<Class>()
                 .FirstOrDefaultAsync(c => c.Id == classId);
 
+            if(classs == null)
+            {
+                return;
+            }
+
             classs!.CompanyId = companyId;
 
-			await repo.SaveChangesAsync();
-		}
+            await repo.SaveChangesAsync();
+        }
 
         public async Task AddLectorToCompany(string companyId, AddLectorViewModel model, string profilePicture)
         {
@@ -136,7 +161,7 @@ namespace FindInternship.Core.Services
             {
                 Name = model.Name,
                 Description = model.Description,
-                CompanyId = companyId, 
+                CompanyId = companyId,
                 ProfilePictureUrl = profilePicture
             };
 
@@ -150,6 +175,11 @@ namespace FindInternship.Core.Services
                 .Include(c => c.Lectors)
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(c => c.Id == companyId && c.User.IsActive);
+
+            if(company == null)
+            {
+                return false;
+            }
 
 
             return company!.Lectors.Any(l => l.IsActive && l.Id == lectorId);

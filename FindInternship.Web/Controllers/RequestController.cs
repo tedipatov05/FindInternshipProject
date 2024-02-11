@@ -36,7 +36,7 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("All", "Company");
             }
 
-            string companyName = await companyService.GetCompanyNameByIdAsync(companyUserId);
+            string? companyName = await companyService.GetCompanyNameByIdAsync(companyUserId);
 
             bool isTeacher = await teacherService.IsTeacherAsync(User.GetId()!);
            
@@ -54,9 +54,9 @@ namespace FindInternship.Web.Controllers
         [Route("Request/Create")]
         public async Task<IActionResult> Create(string company, string topic, string message)
         {
-            string companyUserId = await companyService.GetCompanyIdByNameAsync(company);
+            string? companyUserId = await companyService.GetCompanyIdByNameAsync(company);
 
-            bool isCompany = await companyService.IsCompanyAsync(companyUserId);
+            bool isCompany = await companyService.IsCompanyAsync(companyUserId!);
             if (!isCompany)
             {
                 TempData[ErrorMessage] = "Тази фирма не съществува";
