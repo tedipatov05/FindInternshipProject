@@ -143,7 +143,7 @@ namespace FindInternship.Test.UnitTest
                 Title = "test meeting",
                 Address = "Bulgaria, Kazanlak",
                 StartTime = DateTime.UtcNow,
-                EndTime = DateTime.UtcNow.AddHours(2),
+                EndTime = DateTime.UtcNow.AddHours(3),
                 CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
                 ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
                 IsActive = true

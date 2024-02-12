@@ -15,14 +15,14 @@ namespace FindInternship.Core.Contracts
 
         Task<string> CreateAsync(FormMeetingViewModel model, string companyId, string classId);
 
-        Task<MeetingViewModel> GetMeetingByIdAsync(string meetingId);
+        Task<MeetingViewModel?> GetMeetingByIdAsync(string meetingId);
 
-        Task<FormMeetingViewModel> GetMeetingForEditAsync(string meetingId);
+        Task<FormMeetingViewModel?> GetMeetingForEditAsync(string meetingId);
 
         Task EditMeetingAsync(string id, FormMeetingViewModel model);
         Task DeleteMeetingAsync(string meetingId);
 
-        Task<PreDeleteMeetingViewModel> GetMeetingForDeleteAsync(string meetingId);
+        Task<PreDeleteMeetingViewModel?> GetMeetingForDeleteAsync(string meetingId);
 
         Task<int> GetMeetingsCountAsync();
 

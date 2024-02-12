@@ -158,8 +158,8 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Трябва да си фирма за да реедактираш срещи";
                 return this.RedirectToAction("All");
             }
-            string companyId = await companyService.GetCompanyIdAsync(userId);
-            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId, id);
+            string? companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId!, id);
 
             if (!isInCompanySchedule)
             {
@@ -168,6 +168,12 @@ namespace FindInternship.Web.Controllers
             }
 
             var meeting = await meetingService.GetMeetingForEditAsync(id);
+
+            if(meeting == null)
+            {
+                TempData[ErrorMessage] = "Тази среща не съществува";
+                return this.RedirectToAction("All");
+            }
 
             return View(meeting);
 
@@ -186,8 +192,8 @@ namespace FindInternship.Web.Controllers
                 return this.RedirectToAction("All");
             }
 
-            string companyId = await companyService.GetCompanyIdAsync(userId);
-            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId, id);
+            string? companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId!, id);
 
             if (!isInCompanySchedule)
             {
@@ -196,7 +202,7 @@ namespace FindInternship.Web.Controllers
             }
 
 
-            var receiversIds = await studentService.GetCompanyStudentIdsAsync(companyId, id);
+            var receiversIds = await studentService.GetCompanyStudentIdsAsync(companyId!, id);
             string? teacherUserId = await teacherService.GetTeacherUserIdByMeetingIdAsync(id);
 
             receiversIds.Add(teacherUserId!);
@@ -227,8 +233,8 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Ти трябва да бъдеш фирма, за да изтриваш срещи";
                 return this.RedirectToAction("All");
             }
-            string companyId = await companyService.GetCompanyIdAsync(userId);
-            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId, id);
+            string? companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId!, id);
 
             if (!isInCompanySchedule)
             {
@@ -237,6 +243,12 @@ namespace FindInternship.Web.Controllers
             }
 
             var model = await meetingService.GetMeetingForDeleteAsync(id);
+
+            if (model == null)
+            {
+                TempData[ErrorMessage] = "Тази среща не съществува";
+                return this.RedirectToAction("All");
+            }
 
             return View(model);
         }
@@ -253,8 +265,8 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Ти трябва да бъдеш фирма, за да изтриваш срещи";
                 return this.RedirectToAction("All");
             }
-            string companyId = await companyService.GetCompanyIdAsync(userId);
-            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId, id);
+            string? companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId!, id);
 
             if (!isInCompanySchedule)
             {
@@ -262,7 +274,7 @@ namespace FindInternship.Web.Controllers
                 return this.RedirectToAction("All");
             }
 
-            var receiversIds = await studentService.GetCompanyStudentIdsAsync(companyId, id);
+            var receiversIds = await studentService.GetCompanyStudentIdsAsync(companyId!, id);
             string? teacherUserId = await teacherService.GetTeacherUserIdByMeetingIdAsync(id);
 
             receiversIds.Add(teacherUserId!);

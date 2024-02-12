@@ -244,6 +244,7 @@ namespace FindInternship.Test.UnitTest
         [Test]
         [TestCase("7493d4c1-251f-4e9a-aaba-c11d5c4da798", "bf13bfe6-b1be-4dc8-b8e8-2a0e3ff2af4a")]
         [TestCase("90bd5987-e991-4dfd-be1a-a57464b9d697", "862db3a5-4126-41e7-9ea0-7bf052215571")]
+        [TestCase(null, null)]
         public async Task IsInCompanyScheduleAsyncShouldReturnFalse(string companyId, string meetingId)
         {
             var result = await companyService.IsInCompanyScheduleAsync(companyId, meetingId);
