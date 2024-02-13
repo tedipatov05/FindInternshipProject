@@ -5,6 +5,14 @@
     string display = User.IsInRole("Company") ? "block" : "none";
 }
 
+<div style="margin-top: 20px;position: relative; direction: rtl;">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days + 5)">Следващата седмица</a></li>
+            <li class="page-item"><a class="page-link" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days - 5)">Предишната седмица</a></li>
+        </ul>
+    </nav>
+</div>
 
 <div class="calendar">
 
@@ -61,6 +69,9 @@
         <div class="time-marker">17:00</div>
         <div class="time-marker">18:00</div>
     </div>
+
+    
+
     <div class="days @Model.ClassId">
 
         <partial name="_MeetingPartial" model="@Model.DayNow" />

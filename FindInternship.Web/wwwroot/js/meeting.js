@@ -90,8 +90,12 @@ function create(e) {
                             console.error(err);
                         }
 
+                        let url = window.location;
+                        let params = (new URL(url)).searchParams;
+                        let days = params.get('days')
+                        
 
-                        window.location = `https://localhost:7256/Meeting/All`
+                        window.location = `https://localhost:7256/Meeting/All?days=${days}`
 
                     }
 

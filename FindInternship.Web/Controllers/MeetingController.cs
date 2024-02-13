@@ -28,10 +28,11 @@ namespace FindInternship.Web.Controllers
         }
 
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int days = 0)
         {
 
             AllMeetingsViewModel model = new AllMeetingsViewModel();
+            model.Days = days;
             string userId = User.GetId()!;
             if (string.IsNullOrEmpty(userId))
             {
@@ -49,34 +50,34 @@ namespace FindInternship.Web.Controllers
                 {
                     string? teacherId = await teacherService.GetTeacherIdAsync(userId);
                     model.ClassId = await teacherService.GetTeacherClassIdAsync(userId);
-                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(0, teacherId!);
-                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(1, teacherId!);
-                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(2, teacherId!);
-                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(3, teacherId!);
-                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(4, teacherId!);
+                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(days, teacherId!);
+                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(days + 1, teacherId!);
+                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(days + 2, teacherId!);
+                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(days + 3, teacherId!);
+                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(days + 4, teacherId!);
 
                 }
                 else if (isCompany)
                 {
-                    string companyId = await companyService.GetCompanyIdAsync(userId);
-                    model.DayNow = await meetingService.GetAllCompanyMeetingsForDayAsync(0, companyId);
-                    model.DayTomorrow = await meetingService.GetAllCompanyMeetingsForDayAsync(1, companyId);
-                    model.Day2 = await meetingService.GetAllCompanyMeetingsForDayAsync(2, companyId);
-                    model.Day3 = await meetingService.GetAllCompanyMeetingsForDayAsync(3, companyId);
-                    model.Day4 = await meetingService.GetAllCompanyMeetingsForDayAsync(4, companyId);
-                    model.CompanyClasses = await classService.GetClassMeetingAsync(companyId);
+                    string? companyId = await companyService.GetCompanyIdAsync(userId);
+                    model.DayNow = await meetingService.GetAllCompanyMeetingsForDayAsync(days, companyId!);
+                    model.DayTomorrow = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 1, companyId!);
+                    model.Day2 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 2, companyId!);
+                    model.Day3 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 3, companyId!);
+                    model.Day4 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 4, companyId!);
+                    model.CompanyClasses = await classService.GetClassMeetingAsync(companyId!);
 
                 }
                 else if (isStudent)
                 {
                     string?  studentId = await studentService.GetStudentId(userId);
                     string? studentTeacherId = await studentService.GetStudentTeacherIdAsync(studentId!);
-                    model.ClassId = await studentService.GetStudentClassIdAsync(studentId);
-                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(0, studentTeacherId);
-                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(1, studentTeacherId);
-                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(2, studentTeacherId);
-                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(3, studentTeacherId);
-                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(4, studentTeacherId);
+                    model.ClassId = await studentService.GetStudentClassIdAsync(studentId!);
+                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(days + 0, studentTeacherId!);
+                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(days + 1, studentTeacherId!);
+                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(days + 2, studentTeacherId!);
+                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(days + 3, studentTeacherId!);
+                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(days + 4, studentTeacherId!);
 
                 }
                 else
@@ -111,9 +112,9 @@ namespace FindInternship.Web.Controllers
             {
 
                 string? teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
-                string companyId = await companyService.GetCompanyIdAsync(userId);
+                string? companyId = await companyService.GetCompanyIdAsync(userId);
                
-                List<string> receiversIds = await studentService.GetStudentCompanyIdsAsync(companyId, classId);
+                List<string> receiversIds = await studentService.GetStudentCompanyIdsAsync(companyId!, classId);
 
                 receiversIds.Add(teacherUserId!);
 
