@@ -56,6 +56,7 @@ function deleteMeeting(e) {
                 } catch (err) {
                     console.error(err);
                 }
+                toastr.success(`Успешно изтрита среща`);
                 
                 window.location = `https://localhost:7256/Meeting/All`;
             }

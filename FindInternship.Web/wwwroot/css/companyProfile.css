@@ -155,7 +155,7 @@
 
 @media(min-width: 768px) {
     .module-single-trainer-info-img-container {
-        grid-row: 1/span 3;
+       /* grid-row: 1/span 3;*/
         position: static;
         transform: none
     }

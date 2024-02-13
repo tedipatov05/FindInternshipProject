@@ -25,7 +25,7 @@
                                 <h5 class="text-muted font-size-13 mb-0">ИТ Фирма</h5>
                                 @if (Model.Id == User.GetId())
                                 {
-                                    <a asp-action="Edit" asp-controller="Profile" asp-route-userId="@Model.Id" class="btn btn-primary">Промени</a>
+                                    <a asp-action="Edit" asp-controller="Profile" asp-route-userId="@Model.Id" class="btn btn-warning" style="margin: 10px 0px">Промени</a>
                                 }
 
                             </div>
@@ -91,7 +91,7 @@
                                     <article class="module-trainers one-trainer">
                                         <section class="module-trainer-info module-single-trainer-info desktop">
                                             <article class="module-trainer-info-img-container module-single-trainer-info-img-container">
-                                                <img class="module-trainer-info-img" alt="Profile Picture" src="@lector.ProfilePicturUrl" />
+                                                <img class="module-trainer-info-img" alt="Profile Picture" src="@lector.ProfilePicturUrl" style="height: 100%" />
                                             </article>
                                             <p class="module-trainer-info-name">
                                                 @lector.Name
