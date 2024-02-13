@@ -78,8 +78,16 @@
                         {
                             <div class="item1" style="margin-bottom: 10px;">
                                 <div class="media-left">
+                                    @if(user.ProfilePictureUrl == null)
+                                    {
                                     <img src="~/img/blank-profile-picture.png"
-                                         class="rounded-circle shadow avatar-md mr-3" alt="Profile Picture">
+            class="rounded-circle shadow avatar-md mr-3" alt="Profile Picture">
+                                    }
+                                    else
+                                    {
+                                        <img src="@user.ProfilePictureUrl"
+                                             class="rounded-circle shadow avatar-md mr-3" alt="Profile Picture">
+                                    }
                                 </div>
                                 <h3 class="t-op-nextlvl ml-40">@user.Name</h3>
                                 <h3 class="t-op-nextlvl ml-40">@user.Email</h3>
