@@ -212,5 +212,14 @@ namespace FindInternship.Core.Services
             return meetingsCount;
                 
         }
+
+        public async Task<bool> IsMeetingExists(DateTime start, DateTime end, string classId)
+        {
+
+            var isExists = await repo.All<Meeting>()
+                .AnyAsync(m => (DateTime.Compare( m.StartTime, start) == 0 || DateTime.Compare( m.EndTime, end) == 0) && m.ClassId == classId);
+
+            return isExists;
+        }
     }
 }

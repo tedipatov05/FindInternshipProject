@@ -24,16 +24,16 @@ namespace FindInternship.Common
             public const int PasswordMinLength = 3;
             public const int PasswordMaxLength = 16;
 
-            public const int CityMaxLength = 169;
-            public const int CityMinLength = 1;
+            public const int CityMaxLength = 160;
+            public const int CityMinLength = 2;
 
             public const int CountryMaxLength = 56;
-            public const int CountryMinLength = 4;
+            public const int CountryMinLength = 2;
 
             public const int SchoolNameMinLength = 5;
             public const int SchoolNameMaxLength = 50;
 
-            public const int SpecialityMinLength = 10;
+            public const int SpecialityMinLength = 3;
             public const int SpecialityMaxLength = 50;
 
             

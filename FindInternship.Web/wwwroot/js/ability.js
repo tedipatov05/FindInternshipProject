@@ -41,11 +41,11 @@ document.getElementById('btn-add').addEventListener('click', function () {
     let abilityConcated = ability.split().join('').toLowerCase();
 
     if (ability == '') {
-        toastr.error(`\xd0\x9d\xd0\xbe\xd0\xb2\xd0\xbe\xd1\x82\xd0\xbe\x20\xd1\x83\xd0\xbc\xd0\xb5\xd0\xbd\xd0\xb8\xd0\xb5\x20\xd0\xbd\xd0\xb5\x20\xd0\xbc\xd0\xbe\xd0\xb6\xd0\xb5\x20\xd0\xb4\xd0\xb0\x20\xd0\xb5\x20\xd0\xbf\xd1\x80\xd0\xb0\xd0\xb7\xd0\xbd\xd0\xbe`);
+        toastr.error(`\u041d\u043e\u0432\u043e\u0442\u043e\u0020\u0443\u043c\u0435\u043d\u0438\u0435\u0020\u043d\u0435\u0020\u043c\u043e\u0436\u0435\u0020\u0434\u0430\u0020\u0435\u0020\u043f\u0440\u0430\u0437\u043d\u043e`.normalize());
         changeVisibilityNormal();
     }
     else if (lanIcons[abilityConcated] == null) {
-        toastr.error(`\xd0\x9d\xd0\xbe\xd0\xb2\xd0\xbe\xd1\x82\xd0\xbe\x20\xd1\x83\xd0\xbc\xd0\xb5\xd0\xbd\xd0\xb8\xd0\xb5\x20\xd0\xbd\xd0\xb5\x20\xd1\x81\xd1\x8a\xd1\x89\xd0\xb5\xd1\x81\xd1\x82\xd0\xb2\xd1\x83\xd0\xb2\xd0\xb0`);
+        toastr.error(`\u041d\u043e\u0432\u043e\u0442\u043e\u0020\u0443\u043c\u0435\u043d\u0438\u0435\u0020\u043d\u0435\u0020\u0441\u044a\u0449\u0435\u0441\u0442\u0432\u0443\u0432\u0430`.normalize());
         changeVisibilityNormal();
     }
     else {
@@ -73,6 +73,9 @@ document.getElementById('btn-add').addEventListener('click', function () {
                                     </p>`;
 
                     document.getElementById('abilities-container').appendChild(div);
+                }
+                else if (data.isExists) {
+                    toastr.error('\u0422\u043e\u0432\u0430\u0020\u0443\u043c\u0435\u043d\u0438\u0435\u0020\u0432\u0435\u0447\u0435\u0020\u0441\u044a\u0449\u0435\u0441\u0442\u0432\u0443\u0432\u0430'.normalize())
                 }
 
             },

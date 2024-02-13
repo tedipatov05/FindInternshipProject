@@ -107,6 +107,11 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Този потребител не може да добавя срещи";
                 return RedirectToAction("All", "Meeting");
             }
+            bool isExists = await meetingService.IsMeetingExists(start, end, classId);
+            if (isExists)
+            {
+                return new JsonResult(new {isExists});
+            }
 
             try
             {
@@ -136,7 +141,7 @@ namespace FindInternship.Web.Controllers
                 string meetingId = await meetingService.CreateAsync(model, companyId, classId);
 
                 TempData[SuccessMessage] = "Успешно добавена среща";
-                return new JsonResult(new { MeetingId=meetingId, ReceiversIds = receiversIds });
+                return new JsonResult(new { MeetingId=meetingId, ReceiversIds = receiversIds, isExists=false });
 
 
             }

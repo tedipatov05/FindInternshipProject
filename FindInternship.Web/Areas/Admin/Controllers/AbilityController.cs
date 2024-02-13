@@ -37,6 +37,13 @@ namespace FindInternship.Web.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Home", new { Area = "Admin" });
             }
 
+            bool isExists = await abilityService.IsAbilityExistsAsync(ability);
+
+            if (isExists) 
+            {
+                return new JsonResult(new { isExists });
+            }
+
             try
             {
                 await abilityService.AddNewAbilityAsync(ability);

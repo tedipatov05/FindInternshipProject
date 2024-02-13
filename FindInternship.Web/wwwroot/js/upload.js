@@ -104,18 +104,13 @@ document.getElementById("update").addEventListener("click", function (ev) {
 
             try {
                 await connection.invoke("SendDocuments", data.documents, data.receiver, data.requestId);
-
-
+                
             } catch (err) {
                 console.error(err)
             }
 
-
-
             window.location = `https://localhost:7256/Request/CompanyRequests`
-
-
-
+            
         },
         error: function (error) {
             console.error(error.statusCode);

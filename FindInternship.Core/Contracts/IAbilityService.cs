@@ -21,6 +21,8 @@ namespace FindInternship.Core.Contracts
 
         Task AddNewAbilityAsync(string ability);
 
+        Task<bool> IsAbilityExistsAsync(string ability);
+
         
     }
 }
