@@ -34,7 +34,9 @@ document.getElementById('btn-add').addEventListener('click', function () {
         "oracle": "devicon-oracle-original colored",
         "rust": "devicon-rust-plain colored",
         "typescript": "devicon-typescript-plain colored",
-        "unreal engine": "devicon-unrealengine-original colored"
+        "unreal engine": "devicon-unrealengine-original colored", 
+        "js": "devicon-javascript-plain", 
+        "javascript": "devicon-javascript-plain"
     }
 
     let ability = document.getElementById('ability-text').value;

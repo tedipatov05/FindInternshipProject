@@ -62,12 +62,12 @@
                                     <div class="w-100 d-flex pl-0">
                                         @if (Model.ToUser.ProfilePictureUrl == null)
                                         {
-                                            <img class="rounded-circle shadow avatar-sm mr-3 chat-profile-picture" src="~/img/blank-profile-picture.png">
+                                            <img class="rounded-circle shadow avatar-sm mr-3 chat-profile-picture" src="~/img/blank-profile-picture.png" />
 
                                         }
                                         else
                                         {
-                                            <img class="rounded-circle shadow avatar-sm mr-3 chat-profile-picture" src="@Model.ToUser.ProfilePictureUrl">
+                                            <img class="rounded-circle shadow avatar-sm mr-3 chat-profile-picture" src="@Model.ToUser.ProfilePictureUrl" />
 
                                         }
                                         <div class="mr-3">
@@ -109,12 +109,12 @@
                                                         @if (message.User.ProfilePictureUrl == null)
                                                         {
                                                             <img src="~/img/blank-profile-picture.png" class="rounded-circle shadow avatar-sm mr-3"
-                                                                 alt="Profile Picture">
+                                                                 alt="Profile Picture" />
                                                         }
                                                         else
                                                         {
                                                             <img src="@message.User.ProfilePictureUrl" class="rounded-circle shadow avatar-sm mr-3"
-                                                                 alt="Profile Picture">
+                                                                 alt="Profile Picture" />
                                                         }
 
                                                     </div>
@@ -146,12 +146,12 @@
                                                         <div style="margin-right: 15px">
                                                             @if (@message.User.ProfilePictureUrl == null)
                                                             {
-                                                                <img src="~/img/blank-profile-picture.png" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture">
+                                                                <img src="~/img/blank-profile-picture.png" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture" />
 
                                                             }
                                                             else
                                                             {
-                                                                <img src="@message.User.ProfilePictureUrl" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture">
+                                                                <img src="@message.User.ProfilePictureUrl" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture" />
 
                                                             }
 

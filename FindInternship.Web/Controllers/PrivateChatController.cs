@@ -53,31 +53,47 @@ namespace FindInternship.Web.Controllers
                         users.Add(teacher);
                         usersToChat.AddRange(users);
                     }
-                } 
-                
+                }
+
+                usersToChat = usersToChat
+                    .OrderByDescending(u => u.LastMessageToUser != null)
+                    .ThenByDescending(u => u.LastMessageToUser?.SendedOn)
+                    .ToList();
+
+
                 return View(usersToChat);
 
             }
             else if (isTeacher)
             {
                 string? classId = await classService.GetClassIdByTeacherUserIdAsync(userId);
-                var users = await privateChatService.GetUsersToChatAsync(classId, userId);
-                var company = await privateChatService.GetCompanyToChatAsync(classId, userId);
+                var users = await privateChatService.GetUsersToChatAsync(classId!, userId);
+                var company = await privateChatService.GetCompanyToChatAsync(classId!, userId);
                 users.Add(company);
+
+                users = users
+                    .OrderByDescending(u => u.LastMessageToUser != null)
+                    .ThenByDescending(u => u.LastMessageToUser?.SendedOn)
+                    .ToList();
 
                 return View(users);
             }
             else if (isStudent)
             {
                 string? classId = await classService.GetClassIdByStudentUserIdAsync(userId);
-                var users = await privateChatService.GetUsersToChatAsync(classId, userId);
-                var studentTeacher = await privateChatService.GetTeacherToChatAsync(classId, userId);
-                var company = await privateChatService.GetCompanyToChatAsync(classId, userId);
+                var users = await privateChatService.GetUsersToChatAsync(classId!, userId);
+                var studentTeacher = await privateChatService.GetTeacherToChatAsync(classId!, userId);
+                var company = await privateChatService.GetCompanyToChatAsync(classId!, userId);
                 users.Add(studentTeacher);
                 if(company != null)
                 {
                     users.Add(company);
                 }
+
+                users = users
+                    .OrderByDescending(u => u.LastMessageToUser != null)
+                    .ThenByDescending(u => u.LastMessageToUser?.SendedOn)
+                    .ToList();
 
                 return View(users);
 

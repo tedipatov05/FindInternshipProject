@@ -131,7 +131,7 @@ namespace FindInternship.Core.Services
         public async Task<bool> IsAbilityExistsAsync(string ability)
         {
             var isExists = await repo.All<Ability>()
-                .AnyAsync(a => a.AbilityText == ability);
+                .AnyAsync(a => a.AbilityText.ToLower() == ability.ToLower());
 
             return isExists;
         }
