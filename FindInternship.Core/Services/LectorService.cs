@@ -23,6 +23,11 @@ namespace FindInternship.Core.Services
             var lector = await repo.All<Lector>()
                 .FirstOrDefaultAsync(l => l.Id == id && l.IsActive);
 
+            if(lector == null)
+            {
+                return;
+            }
+
             lector!.IsActive = false;
 
             await repo.SaveChangesAsync();

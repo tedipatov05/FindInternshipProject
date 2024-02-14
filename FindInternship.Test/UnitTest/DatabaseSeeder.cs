@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -31,6 +32,7 @@ namespace FindInternship.Test.UnitTest
             SeedRequest(context);
             SeedGroup(context);
             SeedUserGroups(context);
+            SeedLectors(context);
 
             context.SaveChanges();
         }
@@ -132,6 +134,21 @@ namespace FindInternship.Test.UnitTest
             };
 
             context.Groups.Add(group);
+        }
+
+        public static void SeedLectors(FindInternshipDbContext context)
+        {
+            var lector = new Lector()
+            {
+                Id = "724ebe11-96f9-4dfb-b255-da3041d887d5",
+                Name = "Test Lector",
+                Description = "Test lector description",
+                ProfilePictureUrl = "some url",
+                CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
+                IsActive = true
+            };
+
+            context.Lectors.Add(lector);
         }
 
         public static void SeedUserGroups(FindInternshipDbContext context)
