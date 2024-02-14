@@ -86,6 +86,43 @@ namespace FindInternship.Test.UnitTest
 
             Assert.That(result, Is.False);
         }
+        [Test]
+        [TestCase("tesst")]
+        [TestCase("username")]
+        [TestCase("user")]
+        public async Task AddUserToGroupShouldDoNothingWithIncorrectFromUsername(string fromUsername)
+        {
+            string groupName = "testGroup2";
+            string toUsername = "teacherTest";
+            await groupService.AddUserToGroup(groupName, toUsername, fromUsername);
+
+            var result = await repo.All<Group>()
+                .AnyAsync(g => g.Name == groupName);
+
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public async Task AddUserToGroupShouldAddNewGroupIfThatDoesNotExists()
+        {
+            string groupName = "newTestGroup";
+            string fromUsername = "teacherTest";
+            string toUsername = "companyTest";
+            await groupService.AddUserToGroup(groupName, toUsername, fromUsername);
+
+            var result = await repo.All<Group>()
+               .AnyAsync(g => g.Name == groupName);
+
+            var resultToUser = await repo.All<Group>()
+                .Include(g => g.UsersGroups)
+                .AnyAsync(g => g.UsersGroups.Any(u => u.User.UserName == toUsername));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(resultToUser, Is.True);
+            });
+
+        }
 
         [Test]
         public async Task GetGroupBetweenUsersAsyncShouldReturnCorrectResult()

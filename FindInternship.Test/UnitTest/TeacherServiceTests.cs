@@ -241,28 +241,63 @@ namespace FindInternship.Test.UnitTest
             Assert.IsNull(result);
         }
 
-        //[Test]
-        //public async Task CreateShouldCreateTeacherCorrectly()
-        //{
-          
+        [Test]
+        public async Task CreateShouldCreateTeacherCorrectly()
+        {
+            var user = new User()
+            {
+                Id = "f34361d0-3db5-4807-bfc7-8248bd7e972c",
+                Name = "Test Create Teacher",
+                UserName = "newTeacher",
+                NormalizedUserName = "NEWTEACHER",
+                Email = "newTeacher@abv.bg",
+                NormalizedEmail = "NEWTEACHER@ABV.BG",
+                PhoneNumber = "0889876483",
+                Country = "Bulgaria",
+                City = "Казанлък",
+                Address = "Test Address",
+                BirthDate = DateTime.ParseExact("1993-02-08 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                RegisteredOn = DateTime.Now, 
+                Gender = "Мъж",
+                ProfilePictureUrl = null
+            };
 
-        //    RegisterTeacherViewModel model = new RegisterTeacherViewModel()
-        //    {
-        //        Name = "Test Create Teacher",
-        //        Email = "newTeacher@abv.bg",
-        //        Password = "123456",
-        //        PasswordRepeat = "123456",
-        //        School = "ППМГ Никола Обрешков",
-        //        PhoneNumber = "0889876483",
-        //        Country = "Bulgaria",
-        //        City = "Казанлък",
-        //        Address = "Test Address",
-        //        Class = "12 Б",
-        //        Speciality = "Приложен програмист",
-        //        BirthDate = DateTime.Now,
-        //        Gender = "Мъж",
-        //        ProfilePicture = null
-        //    };
-        //}
+            await repo.AddAsync(user);
+            await repo.SaveChangesAsync();
+
+            RegisterTeacherViewModel model = new RegisterTeacherViewModel()
+            {
+                Name = "Test Create Teacher",
+                Email = "newTeacher@abv.bg",
+                Password = "123456",
+                PasswordRepeat = "123456",
+                School = "ППМГ Никола Обрешков",
+                PhoneNumber = "0889876483",
+                Country = "Bulgaria",
+                City = "Казанлък",
+                Address = "Test Address",
+                Class = "12 Б",
+                Speciality = "Приложен програмист",
+                BirthDate = DateTime.Now,
+                Gender = "Мъж",
+                ProfilePicture = null
+            };
+
+            //string classId = "90bd5987-e991-4dfd-be1a-a57464b9d697";
+
+            await teacherService.Create(model, user.Id);
+
+            var result = await repo.All<User>()
+                .AnyAsync(u => u.Id == user.Id);
+
+             var resultTeacher = await repo.All<Teacher>()
+                .AnyAsync(t => t.UserId == user.Id);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(result, Is.True);
+            });
+        }
     }
 }
