@@ -213,7 +213,7 @@ namespace FindInternship.Core.Services
                 
         }
 
-        public async Task<bool> IsMeetingExists(DateTime start, DateTime end, string classId)
+        public async Task<bool> IsMeetingExistsAsync(DateTime start, DateTime end, string classId)
         {
 
             var isExists = await repo.All<Meeting>()

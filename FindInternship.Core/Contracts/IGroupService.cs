@@ -10,7 +10,7 @@ namespace FindInternship.Core.Contracts
     {
         Task AddUserToGroup(string groupName, string toUserName, string fromUserName);
 
-        Task<string> GetGroupBetweenUsersAsync(string userId, string receiverId);
+        Task<string?> GetGroupBetweenUsersAsync(string userId, string receiverId);
 
         Task<string?> GetGroupNameByIdAsync(string groupId);
     }

@@ -251,7 +251,29 @@ namespace FindInternship.Test.UnitTest
             CollectionAssert.IsEmpty(result);
         }
 
-        
+        [Test]
+        [TestCase("C#")]
+        [TestCase("c#")]
+        [TestCase("js")]
+        public async Task IsAbilityExistsAsyncShouldReturnTrue(string ability)
+        {
+            var result = await abilityService.IsAbilityExistsAsync(ability);
+
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        [TestCase("C #")]
+        [TestCase("c #")]
+        [TestCase("java script")]
+        public async Task IsAbilityExistsAsyncShouldReturnFalse(string ability)
+        {
+            var result = await abilityService.IsAbilityExistsAsync(ability);
+
+            Assert.That(result, Is.False);
+        }
+
+
 
 
 

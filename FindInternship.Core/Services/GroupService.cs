@@ -28,11 +28,20 @@ namespace FindInternship.Core.Services
         {
             var toUser = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName == toUserName);
+
+            if(toUser == null)
+            {
+                return;
+            }
             string toId = toUser!.Id;
             string toImage = toUser.ProfilePictureUrl!;
 
             var fromUser = await repo.All<User>()
                 .FirstOrDefaultAsync(u => u.UserName == fromUserName);
+            if(fromUser == null)
+            {
+                return;
+            }
             string fromId = fromUser!.Id;
             string fromImage = fromUser.ProfilePictureUrl!;
 
@@ -67,19 +76,28 @@ namespace FindInternship.Core.Services
                 await repo.SaveChangesAsync();
             }
 
-            //await hubContext.Clients.Group(groupName).SendAsync("SendMessage", fromId,fromUserName, fromImage,
-            //    $"{fromUserName} се присъедини към {groupName}");
+            
         }
 
-        public async Task<string> GetGroupBetweenUsersAsync(string userId, string receiverId)
+        public async Task<string?> GetGroupBetweenUsersAsync(string userId, string receiverId)
         {
             var user = await repo.All<User>()
                 .Include(u => u.UserGroups)
                 .FirstOrDefaultAsync(u => u.Id == userId && u.IsActive);
 
+            if(user == null)
+            {
+                return null;
+            }
+
             var receiver = await repo.All<User>()
                 .Include(u => u.UserGroups)
                 .FirstOrDefaultAsync(u => u.Id == receiverId && u.IsActive);
+
+            if(receiver == null)
+            {
+                return null;
+            }
 
             var userGroups = user!.UserGroups.Select(g => g.GroupId).ToHashSet();
             var receiverGroups = receiver!.UserGroups.Select(g => g.GroupId).ToHashSet();

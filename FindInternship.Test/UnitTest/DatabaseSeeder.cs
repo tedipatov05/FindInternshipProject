@@ -29,6 +29,8 @@ namespace FindInternship.Test.UnitTest
             SeedStudent(context);
             SeedMeeting(context);
             SeedRequest(context);
+            SeedGroup(context);
+            SeedUserGroups(context);
 
             context.SaveChanges();
         }
@@ -120,6 +122,35 @@ namespace FindInternship.Test.UnitTest
             context.Users.Add(teacher);
             context.Users.Add(company);
 
+        }
+        public static void SeedGroup(FindInternshipDbContext context)
+        {
+            var group = new Group()
+            {
+                Id = "bd0fd8e0-70ca-4475-9bef-d6ca66daefa1",
+                Name = "testGroup"
+            };
+
+            context.Groups.Add(group);
+        }
+
+        public static void SeedUserGroups(FindInternshipDbContext context)
+        {
+            var userGroups = new List<UserGroup>()
+            {
+                new UserGroup()
+                {
+                    UserId = "28a172eb-6e0d-43ed-9a42-fb28025e1659",
+                    GroupId = "bd0fd8e0-70ca-4475-9bef-d6ca66daefa1"
+                }, 
+                new UserGroup()
+                {
+                    UserId = "eb8fc718-655e-4d32-9a0a-d905fa3956e7", 
+                    GroupId = "bd0fd8e0-70ca-4475-9bef-d6ca66daefa1"
+                }
+            };
+
+            context.UserGroups.AddRange(userGroups);
         }
 
         public static void SeedCompanies(FindInternshipDbContext context)

@@ -18,6 +18,7 @@ namespace FindInternship.Test.UnitTest
     [TestFixture]
     public class MeetingServiceTests
     {
+        
         private DbContextOptions<FindInternshipDbContext> dbOptions;
         private FindInternshipDbContext dbContext;
         private IRepository repo;
@@ -379,6 +380,43 @@ namespace FindInternship.Test.UnitTest
 
             });
         }
+
+        [Test]
+        public async Task IsMeetingExistsAsyncShouldReturnTrue()
+        {
+            string classId = "90bd5987-e991-4dfd-be1a-a57464b9d697";
+
+            var meeting = new Meeting()
+            {
+                Id = "747ad88f-6c9e-402a-97dc-b9a9360adc71",
+                Title = "test meeting2",
+                Address = "Bulgaria, Kazanlak",
+                StartTime = DateTime.UtcNow,
+                EndTime = DateTime.UtcNow.AddHours(3),
+                CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
+                ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                IsActive = true
+            };
+
+            await repo.AddAsync(meeting);
+            await repo.SaveChangesAsync();
+
+            var result = await meetingService.IsMeetingExistsAsync(meeting.StartTime, meeting.EndTime, classId);
+
+            Assert.That(result, Is.True);
+        }
+
+
+        [Test]
+        [TestCase("17cd4d78-a621-4bf3-a4a4-9d7d3af085d2")]
+        [TestCase("90ba5987-e991-4dfd-be1a-a57464b9d697")]
+        public async Task IsMeetingExistsAsyncShouldReturnFalse(string classId)
+        {
+            var result = await meetingService.IsMeetingExistsAsync(DateTime.Now, DateTime.Now, classId);
+
+            Assert.That(result, Is.False);
+        }
+
 
 
 

@@ -107,7 +107,7 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Този потребител не може да добавя срещи";
                 return RedirectToAction("All", "Meeting");
             }
-            bool isExists = await meetingService.IsMeetingExists(start, end, classId);
+            bool isExists = await meetingService.IsMeetingExistsAsync(start, end, classId);
             if (isExists)
             {
                 return new JsonResult(new {isExists});
