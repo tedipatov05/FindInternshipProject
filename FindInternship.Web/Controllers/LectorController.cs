@@ -64,11 +64,11 @@ namespace FindInternship.Web.Controllers
             
             try
             {
-                string companyId = await companyService.GetCompanyIdAsync(userId);
+                string? companyId = await companyService.GetCompanyIdAsync(userId);
 
                 string profilePicture = await imageService.UploadImageAsync(model.ProfilePicture!, "projectImages", model.Name);
 
-                await companyService.AddLectorToCompany(companyId, model, profilePicture);
+                await companyService.AddLectorToCompany(companyId!, model, profilePicture);
 
                 TempData[SuccessMessage] = "Успешно добавен преподаватели";
                 return RedirectToAction("MyProfile", "Profile", new { userId = userId});
@@ -90,8 +90,15 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("MyProfile", "Profile", new { userId });
             }
 
-            string companyId = await companyService.GetCompanyIdAsync(userId);
-            bool isInCompanyLectors = await companyService.IsLectorInCompany(companyId, id);
+            bool isLectorExists = await lectorService.IsLectorExistsAsync(userId);
+            if (!isLectorExists)
+            {
+                TempData[ErrorMessage] = "Този преподавател не съществува";
+                return RedirectToAction("MyProfile", "Profile", new { userId });
+            }
+
+            string? companyId = await companyService.GetCompanyIdAsync(userId);
+            bool isInCompanyLectors = await companyService.IsLectorInCompany(companyId!, id);
             if (!isInCompanyLectors)
             {
                 TempData[ErrorMessage] = "Този преподавател не е в твоята фирма";

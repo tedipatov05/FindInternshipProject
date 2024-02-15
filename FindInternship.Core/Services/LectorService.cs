@@ -32,5 +32,13 @@ namespace FindInternship.Core.Services
 
             await repo.SaveChangesAsync();
         }
+
+        public async Task<bool> IsLectorExistsAsync(string id)
+        {
+            var isExists = await repo.All<Lector>()
+                .AnyAsync(l => l.Id == id);
+
+            return isExists;
+        }
     }
 }

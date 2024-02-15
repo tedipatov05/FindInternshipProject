@@ -144,7 +144,7 @@ namespace FindInternship.Web.Controllers
 
                 }
 
-                string meetingId = await meetingService.CreateAsync(model, companyId, classId);
+                string meetingId = await meetingService.CreateAsync(model, companyId!, classId);
 
                 TempData[SuccessMessage] = "Успешно добавена среща";
                 return new JsonResult(new { MeetingId=meetingId, ReceiversIds = receiversIds, isExists=false, ClassIdNull = false });

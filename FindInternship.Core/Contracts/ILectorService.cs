@@ -9,5 +9,7 @@ namespace FindInternship.Core.Contracts
     public interface ILectorService
     {
         Task DeleteAsync(string id);
+
+        Task<bool> IsLectorExistsAsync(string id);
     }
 }

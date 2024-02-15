@@ -42,8 +42,16 @@ namespace FindInternship.Web.Controllers
            
             if(!isTeacher)
             {
-                TempData[ErrorMessage] = "Трябва да бъдеш учител за да узпращаш молби за практика ";
+                TempData[ErrorMessage] = "Трябва да бъдеш учител за да изпращаш молби за практика ";
                 return RedirectToAction("All", "Company");
+            }
+
+            bool haveCompany = await teacherService.IsTeacherClassHaveCompanyAsync(User.GetId()!);
+            if (haveCompany)
+            {
+                TempData[ErrorMessage] = "Вашият клас вече има фирма за стаж";
+                return RedirectToAction("All", "Company");
+
             }
 
             return View("Create", companyName);
@@ -75,7 +83,7 @@ namespace FindInternship.Web.Controllers
             {
 
                 string? classId = await teacherService.GetTeacherClassIdAsync(User.GetId()!);
-                string companyId = await companyService.GetCompanyIdAsync(companyUserId);
+                string? companyId = await companyService.GetCompanyIdAsync(companyUserId!);
                 CreateRequestModel model = new CreateRequestModel();
 
                 model.Message = message;

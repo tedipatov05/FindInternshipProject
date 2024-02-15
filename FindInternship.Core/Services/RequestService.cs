@@ -146,5 +146,13 @@ namespace FindInternship.Core.Services
 
             return request!;
         }
+
+        public async Task<bool> IsRequestExistsByIdAsync(string requestId)
+        {
+            var isExists = await repo.All<Request>()
+                .AnyAsync(r => r.Id == requestId);
+
+            return isExists;
+        }
     }
 }

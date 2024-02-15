@@ -125,5 +125,16 @@ namespace FindInternship.Core.Services
 
             return isTeacher;
         }
+
+        public async Task<bool> IsTeacherClassHaveCompanyAsync(string userId)
+        {
+            var teacher = await repo.All<Teacher>()
+                .Include(t => t.Class)
+                .FirstOrDefaultAsync(t => t.UserId == userId);
+
+            if(teacher == null) return false;
+
+            return teacher.Class?.CompanyId != null;
+        }
     }
 }

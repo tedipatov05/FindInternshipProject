@@ -26,5 +26,7 @@ namespace FindInternship.Core.Contracts
         Task Create(RegisterTeacherViewModel model, string userId);
 
         Task<string?> GetTeacherUserIdByClassAsync(string classId);
+
+        Task<bool> IsTeacherClassHaveCompanyAsync(string userId);
     }
 }

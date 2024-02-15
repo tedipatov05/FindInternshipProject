@@ -102,14 +102,21 @@ document.getElementById("update").addEventListener("click", function (ev) {
         },
         success: async function (data) {
 
-            try {
-                await connection.invoke("SendDocuments", data.documents, data.receiver, data.requestId);
-                
-            } catch (err) {
-                console.error(err)
+            if (data.isRequestExists == false) {
+                toastr.error('\u0422\u0430\u0437\u0438\u0020\u043c\u043e\u043b\u0431\u0430\u0020\u043d\u0435\u0020\u0441\u044a\u0449\u0435\u0441\u0442\u0432\u0443\u0432\u0430'.normalize())
+            }
+            else {
+                try {
+                    await connection.invoke("SendDocuments", data.documents, data.receiver, data.requestId);
+
+                } catch (err) {
+                    console.error(err)
+                }
+
+                window.location = `https://localhost:7256/Request/CompanyRequests`
             }
 
-            window.location = `https://localhost:7256/Request/CompanyRequests`
+            
             
         },
         error: function (error) {

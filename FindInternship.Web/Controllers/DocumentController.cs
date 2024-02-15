@@ -15,14 +15,16 @@ namespace FindInternship.Web.Controllers
         private ITeacherService teacherService;
         private ICompanyService companyService;
         private IClassService classService;
+        private IRequestService requestService;
 
-        public DocumentController(IDocumentService documentService, ITeacherService teacherService, ICompanyService companyService, IClassService classService)
+        public DocumentController(IDocumentService documentService, ITeacherService teacherService, ICompanyService companyService, IClassService classService, IRequestService requestService)
         {
            
             this.documentService = documentService;
             this.teacherService = teacherService;
             this.companyService = companyService;
             this.classService = classService;
+            this.requestService = requestService;
         }
 
         [HttpPost]
@@ -37,10 +39,16 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("ClassRequests", "Request");
             }
 
+            bool isRequestExists = await requestService.IsRequestExistsByIdAsync(requestId);
+            if (requestId == null || !isRequestExists)
+            {
+                return new JsonResult(new { IsRequestExists = false });
+            }
+
             HashSet<string> documentsIds = new HashSet<string>();
 
             string? classId = await classService.GetClassIdAsync(requestId);
-            string? teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
+            string? teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId!);
 
             try
             {
@@ -48,7 +56,7 @@ namespace FindInternship.Web.Controllers
                 foreach (var file in files)
                 {
                     string url = await documentService.UploadDocumentAsync(file, "projectDocuments");
-                    string id = await documentService.Create(url, classId, file.FileName);
+                    string id = await documentService.Create(url, classId!, file.FileName);
                     documentsIds.Add(id);
                 }
 
@@ -60,7 +68,7 @@ namespace FindInternship.Web.Controllers
             }
 
 
-            return new JsonResult(new { Documents = documentsIds, Receiver = teacherUserId, RequestId = requestId});
+            return new JsonResult(new { Documents = documentsIds, Receiver = teacherUserId, RequestId = requestId, IsRequestExists = true});
             
         }
 
