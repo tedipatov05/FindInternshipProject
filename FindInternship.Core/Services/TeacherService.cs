@@ -59,7 +59,7 @@ namespace FindInternship.Core.Services
             var teacher = await repo.All<Teacher>()
                 .FirstOrDefaultAsync(t => t.UserId == userId);
 
-            return teacher== null || teacher.ClassId == null ? null : teacher.ClassId;
+            return teacher == null || teacher.ClassId == null ? null : teacher.ClassId;
         }
 
         public async Task<string?> GetTeacherIdAsync(string userId)
