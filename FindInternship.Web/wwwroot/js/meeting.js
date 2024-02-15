@@ -178,7 +178,7 @@ connection.on("ReceiveMeeting", function (meeting, id) {
     divChild.classList.add(`corp-fi`);
     divChild.id = id;
 
-    divChild.innerHTML = ` <p class="title">${meeting.title}</p>
+    divChild.innerHTML = ` <p class="title">${meeting.title} \u002d ${meeting.class}</p>
                        <p class="title">${meeting.address}</p>
                        <p class="time">${meeting.startHour} \u0447. - ${meeting.endHour} \u0447.</p>
                        `.normalize();

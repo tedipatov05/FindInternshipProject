@@ -80,6 +80,7 @@ namespace FindInternship.Core.Services
         public async Task<MeetingViewModel?> GetMeetingByIdAsync(string meetingId)
         {
             var meeting = await repo.All<Meeting>()
+                .Include(m => m.Class)
                 .Where(m => m.Id == meetingId && m.IsActive == true)
                 .Select(m => new MeetingViewModel()
                 {
@@ -89,7 +90,8 @@ namespace FindInternship.Core.Services
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
                     Number = m.StartTime.Day,
                     StartHour = m.StartTime.ToString("HH"),
-                    EndHour = m.EndTime.ToString("HH")
+                    EndHour = m.EndTime.ToString("HH"), 
+                    Class = m.Class.Grade
                 })
                 .FirstOrDefaultAsync();
 
@@ -147,6 +149,7 @@ namespace FindInternship.Core.Services
         public async Task<List<MeetingViewModel>> GetAllCompanyMeetingsForDayAsync(int days, string companyId)
         {
             var meetings = await repo.All<Meeting>()
+                .Include(m => m.Class)
                 .OrderBy(m => m.StartTime)
                 .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear &&
                 m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.CompanyId == companyId && m.IsActive)
@@ -158,7 +161,9 @@ namespace FindInternship.Core.Services
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
                     Number = m.StartTime.Day,
                     StartHour = m.StartTime.ToString("HH"),
-                    EndHour = m.EndTime.ToString("HH")
+                    EndHour = m.EndTime.ToString("HH"), 
+                    Class = m.Class.Grade
+
                 })
                 .ToListAsync();
 
@@ -189,7 +194,8 @@ namespace FindInternship.Core.Services
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
                     Number = m.StartTime.Day,
                     StartHour = m.StartTime.ToString("HH"),
-                    EndHour = m.EndTime.ToString("HH")
+                    EndHour = m.EndTime.ToString("HH"), 
+                    Class = m.Class.Grade
                 })
                 .ToListAsync();
 
@@ -215,9 +221,8 @@ namespace FindInternship.Core.Services
 
         public async Task<bool> IsMeetingExistsAsync(DateTime start, DateTime end, string classId)
         {
-
             var isExists = await repo.All<Meeting>()
-                .AnyAsync(m => (DateTime.Compare( m.StartTime, start) == 0 || DateTime.Compare( m.EndTime, end) == 0) && m.ClassId == classId && m.IsActive);
+                .AnyAsync(m => ((DateTime.Compare(m.StartTime, start) == 0 || DateTime.Compare(m.EndTime, end) == 0 || (DateTime.Compare(m.StartTime, start) > 0 && DateTime.Compare(m.StartTime, end) < 0) || (DateTime.Compare(m.EndTime, start) > 0 && DateTime.Compare(m.EndTime, end) < 0)) && m.ClassId == classId && m.IsActive));
 
             return isExists;
         }

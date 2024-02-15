@@ -71,7 +71,12 @@ function edit(e) {
                         console.error(err);
                     }
                     
-                    window.location = `https://localhost:7256/Meeting/All`;
+                    let url = window.location;
+                    let params = (new URL(url)).searchParams;
+                    let days = parseInt(params.get('days'))
+
+
+                    window.location = `https://localhost:7256/Meeting/All?days=${days}`
                 }
             },
             error: function (err) {

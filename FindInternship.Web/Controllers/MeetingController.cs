@@ -4,6 +4,7 @@ using FindInternship.Core.Models.Meeting;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using static FindInternship.Common.NotificationConstants;
 
 namespace FindInternship.Web.Controllers
@@ -33,6 +34,7 @@ namespace FindInternship.Web.Controllers
 
             AllMeetingsViewModel model = new AllMeetingsViewModel();
             model.Days = days;
+            model.Month = DateTime.Now.AddDays(days).ToString("MMMM", CultureInfo.InvariantCulture); 
             string userId = User.GetId()!;
             if (string.IsNullOrEmpty(userId))
             {
