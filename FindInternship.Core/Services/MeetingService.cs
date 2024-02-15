@@ -217,7 +217,7 @@ namespace FindInternship.Core.Services
         {
 
             var isExists = await repo.All<Meeting>()
-                .AnyAsync(m => (DateTime.Compare( m.StartTime, start) == 0 || DateTime.Compare( m.EndTime, end) == 0) && m.ClassId == classId);
+                .AnyAsync(m => (DateTime.Compare( m.StartTime, start) == 0 || DateTime.Compare( m.EndTime, end) == 0) && m.ClassId == classId && m.IsActive);
 
             return isExists;
         }

@@ -110,7 +110,7 @@ function create(e) {
                             }
                             let url = window.location;
                             let params = (new URL(url)).searchParams;
-                            let days = parseint(params.get('days'))
+                            let days = parseInt(params.get('days'))
 
 
                             window.location = `https://localhost:7256/Meeting/All?days=${days}`
