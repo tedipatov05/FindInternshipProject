@@ -54,6 +54,13 @@ namespace FindInternship.Web.Controllers
                         usersToChat.AddRange(users);
                     }
                 }
+                else
+                {
+                    var allTeachers = await privateChatService.GetAllTeachersToChatAsync(userId);
+
+                    usersToChat.AddRange(allTeachers);
+                }
+
 
                 usersToChat = usersToChat
                     .OrderByDescending(u => u.LastMessageToUser != null)
@@ -118,7 +125,7 @@ namespace FindInternship.Web.Controllers
             }
 
             var groupId = await groupService.GetGroupBetweenUsersAsync(userId, toUserId);
-            string? groupName = await groupService.GetGroupNameByIdAsync(groupId);
+            string? groupName = await groupService.GetGroupNameByIdAsync(groupId!);
 
             var messages = await privateChatService.ExtractAllMessagesAsync(groupName == null ? group : groupName);
 

@@ -8,9 +8,9 @@ namespace FindInternship.Core.Models.Meeting
 {
     public class PreDeleteMeetingViewModel
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
 
-        public string Address { get; set; }
+        public string Address { get; set; } = null!;
 
         public DateTime Start { get; set; }
 

@@ -238,5 +238,25 @@ namespace FindInternship.Test.UnitTest
             Assert.Null(result);
         }
 
+        [Test]
+        public async Task IsRequestExistsByIdAsyncShouldReturnTrue()
+        {
+            string requestId = "bf13bfe6-b1be-4dc8-b8e8-2a0e3ff2af4a";
+
+            var result = await requestService.IsRequestExistsByIdAsync(requestId);
+
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        [TestCase("90bd5987-e991-4dfd-be1a-a57464b9d697")]
+        [TestCase("28a172eb-6e0d-43ed-9a42-fb28025e1659")]
+        public async Task IsRequestExistsByIdAsyncShouldReturnFalse(string requestId)
+        {
+            var result = await requestService.IsRequestExistsByIdAsync(requestId);
+
+            Assert.That(result, Is.False);
+        }
+
     }
 }

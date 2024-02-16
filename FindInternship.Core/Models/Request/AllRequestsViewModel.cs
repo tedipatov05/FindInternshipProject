@@ -9,7 +9,7 @@ namespace FindInternship.Core.Models.Request
 {
     public class AllRequestsViewModel
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         public string Topic { get; set; } = null!;
 

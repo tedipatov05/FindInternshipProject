@@ -26,7 +26,7 @@ namespace FindInternship.Web.Controllers
 		{
 
 			string userId = User.GetId()!;
-			string companyId = await companyService.GetCompanyIdAsync(userId);
+			string? companyId = await companyService.GetCompanyIdAsync(userId!);
 
 			bool IsCompany = await companyService.IsCompanyAsync(userId);
 			if (!IsCompany)
@@ -35,7 +35,7 @@ namespace FindInternship.Web.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 
-			var classes = await classService.GetAllCompanyClassesAsync(companyId);
+			var classes = await classService.GetAllCompanyClassesAsync(companyId!);
 
 			return View(classes);
 

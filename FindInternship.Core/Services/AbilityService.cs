@@ -70,7 +70,7 @@ namespace FindInternship.Core.Services
 
         public async Task AddTechnologiesToCompanyAsync(List<string> technologies, string userId)
 		{
-            string companyId = await companyService.GetCompanyIdAsync(userId);
+            string? companyId = await companyService.GetCompanyIdAsync(userId);
 
             if(companyId == null) { return; }
 

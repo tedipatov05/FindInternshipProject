@@ -52,8 +52,8 @@ namespace FindInternship.Web.Controllers
             bool isCompany = await companyService.IsCompanyAsync(userId);
             if (isCompany)
             {
-                string companyId = await companyService.GetCompanyIdAsync(userId);
-                var companyModel = await profileService.GetCompanyProfileAsync(companyId);
+                string? companyId = await companyService.GetCompanyIdAsync(userId);
+                var companyModel = await profileService.GetCompanyProfileAsync(companyId!);
 
                 return View("Company",  companyModel);
             }

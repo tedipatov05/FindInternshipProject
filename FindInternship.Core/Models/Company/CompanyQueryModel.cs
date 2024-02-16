@@ -17,7 +17,7 @@ namespace FindInternship.Core.Models.Company
         }
 
         public string? SearchString { get; set; }
-		public string Technology { get; set; }
+		public string? Technology { get; set; }
 
 		public List<string> Technologies { get; set; }
 

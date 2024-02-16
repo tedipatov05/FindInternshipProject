@@ -87,6 +87,38 @@ namespace FindInternship.Core.Services
 
 
         }
+        public async Task<List<UsersToChatViewModel>> GetAllTeachersToChatAsync(string currentUserId)
+        {
+            var currentUser = await repo.All<User>()
+                .Include(u => u.ChatMessages)
+                .FirstOrDefaultAsync(u => u.Id == currentUserId);
+
+            Func<string, List<ChatMessage>> predicate = (username) => currentUser!.ChatMessages.Where(m =>
+                m.UserId == currentUserId && m.ReceiverUsername == username).ToList();
+
+            var companies = repo.All<Teacher>()
+               .Include(t => t.User)
+               .Include(t => t.User.ChatMessages)
+               .Where(c => c.User.IsActive)
+               .AsEnumerable()
+               .Select(t => new UsersToChatViewModel()
+               {
+                   UserId = t.UserId,
+                   Name = t.User.UserName,
+                   ProfilePicture = t.User.ProfilePictureUrl,
+                   LastMessageToUser = t.User.ChatMessages
+                       .Where(c => c.UserId == t.UserId && c.ReceiverUsername == currentUser!.UserName)
+                       .Union(predicate(t.User.UserName))
+                       .OrderBy(m => m.SendedOn)
+                       .LastOrDefault()
+
+               })
+               .ToList();
+                
+
+            return companies;
+
+        }
 
 
         public async Task<UsersToChatViewModel> GetTeacherToChatAsync(string classId, string currentUserId)
@@ -389,5 +421,7 @@ namespace FindInternship.Core.Services
 
             return messagesCount;
         }
+
+      
     }
 }

@@ -8,11 +8,11 @@ namespace FindInternship.Core.Models.Lector
 {
     public class LectorViewModel
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public string Id { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
-        public string ProfilePicturUrl { get; set; }
+        public string ProfilePicturUrl { get; set; } = null!;
     }
 }

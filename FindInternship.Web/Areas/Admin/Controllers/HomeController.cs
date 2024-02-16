@@ -32,7 +32,7 @@ namespace FindInternship.Web.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            model.Users = await userService.GetFilteredUsersAsync(model, User.GetId());
+            model.Users = await userService.GetFilteredUsersAsync(model, User.GetId()!);
             model.UsersCount = await userService.GetUsersCountAsync();
             model.AcceptedRequestsCount = await requestService.GetAcceptedRequestCountAsync();
             model.MessagesCount = await privateChatService.GetMessagesCountAsync();

@@ -121,8 +121,8 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            string companyId = await companyService.GetCompanyIdAsync(userId);
-            var companyRequests = await requestService.GetAllCompanyRequestsByIdAsync(companyId);
+            string? companyId = await companyService.GetCompanyIdAsync(userId);
+            var companyRequests = await requestService.GetAllCompanyRequestsByIdAsync(companyId!);
 
             return View("All", companyRequests);
 
@@ -141,7 +141,7 @@ namespace FindInternship.Web.Controllers
             }
 
             string? classId = await teacherService.GetTeacherClassIdAsync(userId);
-            var classRequests = await requestService.GetAllClassRequestsByIdAsync(classId);
+            var classRequests = await requestService.GetAllClassRequestsByIdAsync(classId!);
 
             return View("All", classRequests);
 
@@ -168,7 +168,7 @@ namespace FindInternship.Web.Controllers
 
                 var classId = await classService.GetClassIdAsync(id);
 
-                await companyService.AddClassToCompany(classId, companyId);
+                await companyService.AddClassToCompany(classId!, companyId!);
 
                 //TODO: Remove comments :)
 

@@ -20,7 +20,7 @@
         <div class="col-md-6">
             <div class="profile-head">
                 <h5>
-                    @Model.Name;
+                    @Model.Name
                 </h5>
                 <h6>
                     Учител
@@ -29,14 +29,20 @@
                 <br />
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">About</a>
                     </li>
                 </ul>
             </div>
         </div>
+
         <div class="col-md-2">
-            <a asp-controller="Profile" asp-action="Edit" asp-route-userId="@Model.Id" class="profile-edit-btn" name="btnAddMore">Промени</a>
+            @if (User.GetId() == Model.Id)
+            {
+                <a asp-controller="Profile" asp-action="Edit" asp-route-userId="@Model.Id" class="profile-edit-btn" name="btnAddMore">Промени</a>
+            }
         </div>
+
+
     </div>
     <div class="row">
         <div class="col-md-8">
@@ -96,8 +102,8 @@
     </div>
 </div>
 
-@section Styles{
+@section Styles {
     <link rel="stylesheet" href="~/css/teacher.css" />
 
- }
+}
 
