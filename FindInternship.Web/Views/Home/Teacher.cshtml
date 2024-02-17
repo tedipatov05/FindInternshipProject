@@ -66,55 +66,62 @@
             </div>
 
             <div class="row">
-                @foreach (var student in Model.Students)
+                @if (Model.Students.Count == 0)
                 {
-                    <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="member d-flex align-items-start">
-                            <div class="pic">
-                                @if (student.ProfilePictureUrl == null)
-                                {
-                                    <img src="~/img/blank-profile-picture.png" width="180" height="240" class="img-fluid" alt="">
-
-                                }
-                                else
-                                {
-                                    <img src="@student.ProfilePictureUrl" width="180" height="240" class="img-fluid" alt="">
-
-                                }
-                            </div>
-                            <div class="member-info">
-                                <h4>@student.Name</h4>
-                                @if (OnlineUserMiddleware.CheckIfUserIsOnline(student.Id))
-                                {
-                                    <span class="online">Онлайн</span>
-                                }
-                                else
-                                {
-                                    <span class="offline">Офлайн</span>
-                                }
-
-                                <p>@Model.School</p>
-                                <div class="social">
-                                    @foreach (var ability in student.Abilities)
+                    <h2 class="text-center text-dark">Все още няма ученици във вашия клас</h2>
+                }
+                else
+                {
+                    @foreach (var student in Model.Students)
+                    {
+                        <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="member d-flex align-items-start">
+                                <div class="pic">
+                                    @if (student.ProfilePictureUrl == null)
                                     {
-                                        if (abilityImage.ContainsKey(ability))
-                                        {
+                                        <img src="~/img/blank-profile-picture.png" width="180" height="240" class="img-fluid" alt="">
 
+                                    }
+                                    else
+                                    {
+                                        <img src="@student.ProfilePictureUrl" width="180" height="240" class="img-fluid" alt="">
 
-                                            <a href=""><img src="~/img/@abilityImage[ability]" width="24" height="24" alt=""></a>
-                                        }
-                                        else
-                                        {
-                                            string abConcat = string.Join("", ability.Split(' ')).ToLower();
-
-                                            <a href=""><i class="@lanIcons[abConcat]"></i></a>
-                                        }
+                                    }
+                                </div>
+                                <div class="member-info">
+                                    <h4>@student.Name</h4>
+                                    @if (OnlineUserMiddleware.CheckIfUserIsOnline(student.Id))
+                                    {
+                                        <span class="online">Онлайн</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="offline">Офлайн</span>
                                     }
 
+                                    <p>@Model.School</p>
+                                    <div class="social">
+                                        @foreach (var ability in student.Abilities)
+                                        {
+                                            if (abilityImage.ContainsKey(ability))
+                                            {
+
+
+                                                <a href=""><img src="~/img/@abilityImage[ability]" width="24" height="24" alt=""></a>
+                                            }
+                                            else
+                                            {
+                                                string abConcat = string.Join("", ability.Split(' ')).ToLower();
+
+                                                <a href=""><i class="@lanIcons[abConcat]"></i></a>
+                                            }
+                                        }
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
 
 
@@ -124,6 +131,6 @@
     </section>
 </main>
 
-@section Styles{
+@section Styles {
     <link rel="stylesheet" href="~/css/teacherStudents.css" asp-append-version="true" />
 }
