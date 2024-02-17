@@ -19,7 +19,7 @@ namespace FindInternship.Core.Services
         private IStudentService studentService;
         private IImageService imageService;
         private IAbilityService abilityService;
-       
+
         public ProfileService(IRepository repo, IStudentService studentService, IImageService imageService, IAbilityService abilityService)
         {
             this.repo = repo;
@@ -32,7 +32,7 @@ namespace FindInternship.Core.Services
         {
             var user = await repo.GetByIdAsync<User>(userId);
 
-            if(user == null)
+            if (user == null)
             {
                 return;
             }
@@ -48,13 +48,13 @@ namespace FindInternship.Core.Services
                 user.ProfilePictureUrl = await imageService.UploadImage(model.ProfilePicture, "projectImages", user);
 
             await repo.SaveChangesAsync();
-                
+
         }
 
         public async Task<CompanyProfileViewModel?> GetCompanyProfileAsync(string companyId)
         {
             var company = await repo.All<Company>()
-                .Where(c => c.Id == companyId )
+                .Where(c => c.Id == companyId)
                 .Select(c => new CompanyProfileViewModel()
                 {
                     Id = c.User.Id,
@@ -66,19 +66,19 @@ namespace FindInternship.Core.Services
                     Email = c.User.Email,
                     PhoneNumber = c.User.PhoneNumber,
                     ProfilePictureUrl = c.User.ProfilePictureUrl,
-                    Services = c.Services, 
+                    Services = c.Services,
                     Lectors = c.Lectors.Where(l => l.IsActive).Select(l => new LectorViewModel()
                     {
                         Id = l.Id,
-                        Description = l.Description, 
-                        Name = l.Name, 
+                        Description = l.Description,
+                        Name = l.Name,
                         ProfilePicturUrl = l.ProfilePictureUrl
                     }).ToList()
 
                 })
                 .FirstOrDefaultAsync();
 
-            if(company != null )
+            if (company != null)
             {
                 company!.Technologies = await abilityService.GetCompanyAbilityNamesAsync(companyId);
 
@@ -97,7 +97,7 @@ namespace FindInternship.Core.Services
                 .Include(s => s.Class!.School)
                 .FirstOrDefaultAsync();
 
-            if(student == null)
+            if (student == null)
             {
                 return null;
             }
@@ -120,7 +120,7 @@ namespace FindInternship.Core.Services
 
             return model;
 
-            
+
         }
 
         public async Task<TeacherProfileViewModel?> GetTeacherProfileAsync(string teacherId)
@@ -128,17 +128,18 @@ namespace FindInternship.Core.Services
             var teacher = await repo.All<Teacher>()
                 .Include(t => t.User)
                 .Include(t => t.Class!.Students)
-				.Where(t => t.Id == teacherId && t.User.IsActive == true)
-				.FirstOrDefaultAsync();
+                .Include(t => t.User.ChatMessages)
+                .Where(t => t.Id == teacherId && t.User.IsActive == true)
+                .FirstOrDefaultAsync();
 
             var students = await repo.All<Student>()
                 .Include(s => s.User)
                 .Include(s => s.Class)
-                .Where(s => s.Class!.TeacherId ==  teacherId && s.User.IsActive == true)
+                .Where(s => s.Class!.TeacherId == teacherId && s.User.IsActive == true)
                 .Select(s => s.User.Name)
                 .ToListAsync();
 
-            if(teacher == null)
+            if (teacher == null)
             {
                 return null;
             }
@@ -146,8 +147,10 @@ namespace FindInternship.Core.Services
 
             var model = new TeacherProfileViewModel()
             {
+
                 Id = teacher!.User.Id,
                 Name = teacher.User.Name,
+                Username = teacher.User.UserName,
                 Email = teacher.User.Email,
                 PhoneNumber = teacher.User.PhoneNumber,
                 City = teacher.User.City,
@@ -155,7 +158,11 @@ namespace FindInternship.Core.Services
                 Address = teacher.User.Address,
                 ProfilePictureUrl = teacher.User.ProfilePictureUrl,
                 Class = teacher.Class!.Grade,
-                StudentsNames = students
+                StudentsNames = students,
+                StudentsCount = teacher.Class.Students.Count(),
+                MessagesCount = teacher.User.ChatMessages.Count(),
+                Years = (int)DateTime.Now.Subtract(teacher.User.BirthDate).TotalDays / 365
+
 
             };
 
@@ -167,7 +174,7 @@ namespace FindInternship.Core.Services
             var u = await repo.All<User>()
                 .FirstOrDefaultAsync(s => s.Id == userId && s.IsActive == true);
 
-            if(u == null)
+            if (u == null)
             {
                 return null;
             }
@@ -181,7 +188,7 @@ namespace FindInternship.Core.Services
                 Country = u.Country,
                 Address = u.Address,
             };
-                
+
 
             return user;
         }

@@ -2,99 +2,135 @@
 @model TeacherProfileViewModel;
 
 
-<div class="container emp-profile">
-    <div class="row" style="height: 190px">
-        <div class="col-md-4">
-            <div class="profile-img">
-                @if (Model.ProfilePictureUrl != null)
-                {
-                    <img src="@Model.ProfilePictureUrl" alt="" />
-                }
-                else
-                {
-                    <img src="/img/blank-profile-picture.png" alt="" />
-                }
+<div class="main-content" style="margin-top: 200px;">
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
 
+                                @if(Model.ProfilePictureUrl != null)
+                                {
+                                    <img src="@Model.ProfilePictureUrl"
+                                    class="rounded-circle">
+                                }
+                                else
+                                {
+                                    <img src="~/img/blank-profile-picture.png"
+                                         class="rounded-circle">
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                                    <div>
+                                        <span class="heading">@Model.StudentsCount</span>
+                                        <span class="description">Ученици</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">@Model.MessagesCount</span>
+                                        <span class="description">Съобщения</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h3>
+                                @Model.Name<span class="font-weight-light">, @Model.Years</span>
+                            </h3>
+                            <div class="h5 font-weight-300">
+                                <i class="ni location_pin mr-2"></i>@Model.Country, @Model.City
+                            </div>
+                            <div class="h5 mt-4">
+                                <i class="ni business_briefcase-24 mr-2"></i>Teacher @Model.Class
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="profile-head">
-                <h5>
-                    @Model.Name
-                </h5>
-                <h6>
-                    Учител
-                </h6>
-                <br />
-                <br />
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">About</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+            <div class="col-xl-8 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Моят акаунт</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
 
-        <div class="col-md-2">
-            @if (User.GetId() == Model.Id)
-            {
-                <a asp-controller="Profile" asp-action="Edit" asp-route-userId="@Model.Id" class="profile-edit-btn" name="btnAddMore">Промени</a>
-            }
-        </div>
+                        <h6 class="heading-small text-muted mb-4">Информация</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="input-username">Име</label>
+                                        <span id="input-username" class="form-control form-control-alternative">
+                                            @Model.Username
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">
+                                            Имейл
+                                        </label>
+                                        <span id="input-email"
+                                              class="form-control form-control-alternative">test@abv.bg</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="input-first-name">
+                                            Име
+                                        </label>
+                                        <span id="input-first-name"
+                                              class="form-control form-control-alternative">@Model.Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <h6 class="heading-small text-muted mb-4">Контакти</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="input-address">Адрес</label>
+                                        <span id="input-address"
+                                              class="form-control form-control-alternative">@Model.Address</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="input-city">Град</label>
+                                        <span id="input-city"
+                                              class="form-control form-control-alternative">@Model.City</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="input-country">Държава</label>
+                                        <span id="input-country" class="form-control form-control-alternative">@Model.Country</span>
+                                    </div>
+                                </div>
 
+                            </div>
+                        </div>
 
-    </div>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="tab-content profile-tab" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab" style="padding-left:200px">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Име</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>@Model.Name</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Имейл</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>@Model.Email</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Телефонен номер</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>@Model.PhoneNumber</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Адрес</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>@Model.Address</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Град</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>@Model.City</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Държава</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>@Model.Country</p>
-                        </div>
                     </div>
                 </div>
             </div>
