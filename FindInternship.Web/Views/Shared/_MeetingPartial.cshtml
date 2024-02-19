@@ -19,13 +19,26 @@
     };
     var day = Model.FirstOrDefault() != null ? Model.FirstOrDefault()!.Number : DateTime.Now.Day;
     var dayText = Model.FirstOrDefault() != null ? Model.FirstOrDefault()!.Day : DateTime.Now.DayOfWeek.ToString();
+
+    Dictionary<string, string> days = new Dictionary<string, string>()
+    {
+        {"Mon", "Пон"},
+        {"Tue", "Втор"},
+        {"Wed", "Ср"},
+        {"Thu", "Чет"},
+        {"Fri", "Пет"},
+        {"Sat", "Съб"},
+        {"Sun", "Нед"},
+
+    };
+
 }
 
 
 <div class="day-@dayText">
     <div class="date">
         <p class="date-num">@day</p>
-        <p class="date-day">@dayText</p>
+        <p class="date-day">@days[dayText]</p>
     </div>
     <div class="events">
         @foreach (var meeting in Model)

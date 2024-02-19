@@ -218,6 +218,7 @@ body {
 .date {
     display: flex;
     gap: 1em;
+    justify-content: center;
 }
 
 .date-num {

@@ -3,6 +3,22 @@
 
 @{
     string display = User.IsInRole("Company") ? "block" : "none";
+
+    Dictionary<string, string> month = new Dictionary<string, string>()
+    {
+        {"January", "Януари"},
+        {"February", "Февруари"},
+        {"March", "Март"},
+        {"April", "Април"},
+        {"May", "Май"},
+        {"June", "Юни"},
+        {"July", "Юли"},
+        {"August", "Август"},
+        {"September", "Септември"},
+        {"October", "Октомври"},
+        {"November", "Ноември"},
+        {"December", "Декември"},
+    };
 }
 
 <div style="margin-top: 20px;position: relative; direction: rtl;">
@@ -14,7 +30,7 @@
     </nav>
 </div>
 
-<h2 class="text-center text-dark">@Model.Month</h2>
+<h2 class="text-center text-dark">@month[Model.Month]</h2>
 
 <div class="calendar">
 
