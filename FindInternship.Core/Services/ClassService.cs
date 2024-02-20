@@ -281,14 +281,28 @@ namespace FindInternship.Core.Services
 
             classTeacher!.User.IsActive = false;
 
-            var company = await repo.All<Company>()
-                .Include(s => s.Classes)
-                .FirstOrDefaultAsync(c => c.Classes.Any(c => c.Id == classId));
+            var documents = await repo.All<Document>()
+                .Where(d => d.ClassId == classId)
+                .ToListAsync();
 
-            if(company != null)
+            repo.DeleteRange(documents);
+
+            var requests = await repo.All<Request>()
+                .Where(d => d.ClassId == classId)
+                .ToListAsync();
+
+            repo.DeleteRange(requests);
+
+            var meetings = await repo.All<Meeting>()
+                .Where(d => d.ClassId == classId)
+                .ToListAsync();
+
+            foreach(var meeting in meetings)
             {
-                company.Classes.Remove(classModel!);
+                meeting.IsActive = false;
             }
+
+
 
             await repo.DeleteAsync<Class>(classId);
 
