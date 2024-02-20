@@ -14,7 +14,7 @@ namespace FindInternship.Common.Extensions
                 var attribs = memberInfo[0].GetCustomAttributes(typeof(DisplayAttribute), false);
                 if ((attribs != null && attribs.Count() > 0))
                 {
-                    return ((DisplayAttribute)attribs.ElementAt(0)).Name;
+                    return ((DisplayAttribute)attribs.ElementAt(0)).Name!;
                 }
             }
             return GenericEnum.ToString();

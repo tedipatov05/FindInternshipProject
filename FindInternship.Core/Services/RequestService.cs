@@ -91,7 +91,7 @@ namespace FindInternship.Core.Services
                     .Select(d => new DocumentViewModel()
                     {
                         Type = d.Type,
-                        Url = d.DocumentUrl
+                        Url = d.DocumentUrl!
                     }).ToList()
                 })
                 .ToListAsync();

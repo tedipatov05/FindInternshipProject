@@ -18,20 +18,20 @@ namespace FindInternship.Data.Models
         }
 
         [Key]
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         [MaxLength(NameMaxLength)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [ForeignKey(nameof(Company))]
-        public string CompanyId { get; set; }
+        public string CompanyId { get; set; } = null!;
 
-        public Company Company { get; set; }
+        public Company Company { get; set; } = null!;
 
         [MaxLength(DescriptionMaxLength)]
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
-        public string ProfilePictureUrl { get; set; }
+        public string ProfilePictureUrl { get; set; } = null!;
 
         public bool IsActive { get; set; }
     }

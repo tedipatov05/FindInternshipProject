@@ -17,27 +17,27 @@ namespace FindInternship.Data.Models
             this.Images = new HashSet<ChatImage>();
         }
         [Key]
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
 
 
         [Required]
-        public string Content { get; set; }
+        public string Content { get; set; } = null!;
 
         [ForeignKey(nameof(Group))]
-        public string GroupId { get; set; }
+        public string GroupId { get; set; } = null!;
 
-        public Group Group { get; set; }
+        public Group Group { get; set; } = null!;
 
         [ForeignKey(nameof(User))]
         //Sender Id
-        public string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
-        public User User { get; set; }
+        public User User { get; set; } = null!;
 
         [MaxLength(ReceiverUserNameMaxLength)]
-        public string ReceiverUsername { get; set; }
+        public string ReceiverUsername { get; set; } = null!;
 
-        public string ReceiverImageUrl { get; set; }
+        public string? ReceiverImageUrl { get; set; }
 
         public DateTime SendedOn { get; set; }
 
