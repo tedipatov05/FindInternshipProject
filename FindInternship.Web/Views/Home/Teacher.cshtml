@@ -65,7 +65,7 @@
                 <h3>@Model.ClassSpeciality</h3>
             </div>
 
-            <div class="row">
+            <div class="row" style="margin-bottom: 3rem;">
                 @if (Model.Students.Count == 0)
                 {
                     <h2 class="text-center text-dark">Все още няма ученици в този клас</h2>
@@ -79,12 +79,12 @@
                                 <div class="pic">
                                     @if (student.ProfilePictureUrl == null)
                                     {
-                                        <img src="~/img/blank-profile-picture.png" width="180" height="240" class="img-fluid" alt="">
+                                        <img src="~/img/blank-profile-picture.png" width="180" height="240" style="max-width:100%" alt="">
 
                                     }
                                     else
                                     {
-                                        <img src="@student.ProfilePictureUrl" width="180" height="240" class="img-fluid" alt="">
+                                        <img src="@student.ProfilePictureUrl" width="180" height="240" style="max-width:100%" alt="">
 
                                     }
                                 </div>

@@ -33,8 +33,8 @@ namespace FindInternship.Core.Services
             {".PPT", "bi bi-filetype-ppt"},
             {".TXT", "bi bi-file-text"},
             {".TEXT", "bi bi-file-text"},
-            {".XLS", "bi bi-filetype-xls"},
-            {".XLSX", "bi bi-filetype-xlsx"},
+            {".XLS", "bi bi-file-earmark-minus-fill"},
+            {".XLSX", "bi bi-file-earmark-minus-fill"},
         };
 
 
@@ -344,7 +344,7 @@ namespace FindInternship.Core.Services
                     fileUrl = await documentService.UploadDocumentAsync(file, "projectDocuments");
                     chatFile.Name = file.FileName;
 
-                    filesContent.AppendLine($"<a target=\"_blank\" href=\"{fileUrl}\">\r\n<span class=\"input-group-text pl-2 pr-2\" style=\"margin-left: 10px;\">\r\n<div style=\"display: flex; flex-direction: row;\">\r\n<i class=\"{iconsFiles[fileExtension.ToUpper()]}\"></i>\r\n<div class=\"pl-1 pt-1 text-dark\" style=\"font-size: small;\">{file.FileName}</div>\r\n\r\n</div>\r\n\r\n      </span>\r\n\r\n</a>");
+                    filesContent.AppendLine($"<a target=\"_blank\" href=\"{fileUrl}\">\r\n<div class=\"input-group-text pl-2 pr-2\" style=\"margin-left: 10px;\">\r\n<div style=\"display: flex; flex-direction: row;\">\r\n<i class=\"{iconsFiles[fileExtension.ToUpper()]}\" style=\"margin-right: 0.5rem;\"></i>\r\n<div class=\"pl-1 pt-1 text-dark\" style=\"font-size: small;\">{file.FileName}</div>\r\n\r\n</div>\r\n\r\n</div>\r\n\r\n</a>");
 
                     
 
