@@ -71,12 +71,16 @@ function edit(e) {
                         console.error(err);
                     }
                     
-                    let url = window.location;
-                    let params = (new URL(url)).searchParams;
+                    let url = new URL( window.location);
+                    let params = url.searchParams;
                     let days = parseInt(params.get('days'))
 
+                    if (isNaN(days)) {
+                        days = 0;
+                    }
 
-                    window.location = `https://localhost:7256/Meeting/All?days=${days}`
+                    
+                    window.location = `${url.origin}/Meeting/All?days=${days}`
                 }
             },
             error: function (err) {

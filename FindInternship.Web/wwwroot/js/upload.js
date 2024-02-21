@@ -113,7 +113,11 @@ document.getElementById("update").addEventListener("click", function (ev) {
                     console.error(err)
                 }
 
-                window.location = `https://localhost:7256/Request/CompanyRequests`
+                let url = new URL(window.location);
+                let params = url.searchParams;
+
+
+                window.location = `${url.origin}/Request/CompanyRequests`
             }
 
             

@@ -71,7 +71,11 @@ document.getElementById('send').addEventListener('click', function (event) {
                     catch (err) {
                         console.error(err)
                     }
-                    window.location = `https://localhost:7256/Company/All`
+
+                    let url = new URL(window.location);
+                    let params = url.searchParams;
+
+                    window.location = `${url.origin}/Company/All`
                    
                 }
 
