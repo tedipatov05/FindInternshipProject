@@ -46,7 +46,7 @@
             if (meeting.Title != null)
             {
                 <div class="event start-@hours[meeting.StartHour!] end-@hours[meeting.EndHour!] corp-fi" id="@meeting.Id" style="margin-top: 10px;">
-                    <p class="title"><i class="bi bi-card-heading"></i> @meeting.Title - @meeting.Class</p>
+                    <p class="title"><i class="bi bi-card-heading" style="margin-right: 0.3rem;"></i> @meeting.Title - @meeting.Class</p>
                     <p class="title"><i class="bi bi-building"></i> @meeting.Address</p>
                     <p class="time" style="margin-bottom: 5px"><i class="bi bi-clock"></i> @meeting.StartHour ч. - @meeting.EndHour ч.</p>
                     
