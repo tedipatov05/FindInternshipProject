@@ -1,4 +1,10 @@
 
+$(document).ready(function () {
+    document.getElementById('load').style.display = 'none';
+    document.getElementsByClassName('calendar')[0].style.display = 'grid'
+});
+
+
 var connection = new signalR.HubConnectionBuilder()
     .withUrl("/meetingHub")
     .build();
@@ -148,10 +154,11 @@ connection.on("ReceiveDelete", function (meetingId) {
 });
 
 connection.on("ReceiveEditedMeeting", async function (meetingId, receivers) {
-
+    
     var divMeeting = document.getElementById(`${meetingId}`);
 
     divMeeting.parentNode.removeChild(divMeeting);
+
 
     try {
         await connection.invoke("SendMeeting", meetingId, receivers);
@@ -194,6 +201,7 @@ connection.on("ReceiveMeeting", function (meeting, id) {
 
 
     divParent.appendChild(divChild);
+
 
 
 

@@ -231,6 +231,7 @@ namespace FindInternship.Web.Controllers
 
             await meetingService.EditMeetingAsync(id, model);
 
+            TempData[SuccessMessage] = "Успешно променена среща";
 
             return new JsonResult(new { MeetingId = id, Model = model, ReceiversIds = receiversIds });
         }
@@ -294,6 +295,8 @@ namespace FindInternship.Web.Controllers
             receiversIds.Add(teacherUserId!);
 
             await meetingService.DeleteMeetingAsync(id);
+
+            TempData[SuccessMessage] = "Успешно изтрита среща";
 
             return new JsonResult(new {ReceiversIds = receiversIds, meetingId = id });
 

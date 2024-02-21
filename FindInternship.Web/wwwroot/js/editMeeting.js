@@ -47,15 +47,15 @@ function edit(e) {
 
         let t = $("input[name='__RequestVerificationToken']").val();
         $.ajax({
-            type: "POST", 
+            type: "POST",
             url: path,
             data: {
-                'title': title, 
-                'start': start, 
-                'end': end, 
+                'title': title,
+                'start': start,
+                'end': end,
                 'address': address
             },
-            dataType: 'json', 
+            dataType: 'json',
             headers: {
                 "RequestVerificationToken": t
             },
@@ -70,17 +70,17 @@ function edit(e) {
                     } catch (err) {
                         console.error(err);
                     }
-                    
-                    let url = new URL( window.location);
+
+                    let url = new URL(window.location);
                     let params = url.searchParams;
                     let days = parseInt(params.get('days'))
 
                     if (isNaN(days)) {
                         days = 0;
                     }
-
                     
                     window.location = `${url.origin}/Meeting/All?days=${days}`
+
                 }
             },
             error: function (err) {

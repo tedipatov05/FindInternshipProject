@@ -66,8 +66,6 @@ function deleteMeeting(e) {
                     days = 0;
                 }
 
-
-
                 window.location = `${url.origin}/Meeting/All?days=${days}`
                 
             }
