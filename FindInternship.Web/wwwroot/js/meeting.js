@@ -196,8 +196,8 @@ connection.on("ReceiveMeeting", function (meeting, id) {
     divChild.id = id;
 
     divChild.innerHTML = ` <p class="title"><i class="bi bi-card-heading" style="margin-right: 0.3rem;"></i>${meeting.title} \u002d ${meeting.class}</p>
-                       <p class="title"><i class="bi bi-building"></i>${meeting.address}</p>
-                       <p class="time" style="margin-bottom: 5px"><i class="bi bi-clock"></i>${meeting.startHour} \u0447. - ${meeting.endHour} \u0447.</p>
+                       <p class="title"><i class="bi bi-building" style="margin-right: 0.3rem;"></i>${meeting.address}</p>
+                       <p class="time" style="margin-bottom: 5px"><i class="bi bi-clock" style="margin-right: 0.3rem;"></i>${meeting.startHour} \u0447. - ${meeting.endHour} \u0447.</p>
                        `.normalize();
 
 

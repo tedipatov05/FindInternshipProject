@@ -311,5 +311,18 @@ namespace FindInternship.Core.Services
             
 
         }
+
+        public async Task<bool> IsClassHaveAlreadyCompanyAsync(string classId)
+        {
+            var clModel = await repo.All<Class>()
+                .FirstOrDefaultAsync(c => c.Id == classId);
+
+            if (clModel == null)
+            {
+                return false;
+            }
+
+            return clModel.CompanyId != null;
+        }
     }
 }

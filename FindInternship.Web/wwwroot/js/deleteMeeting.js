@@ -56,7 +56,6 @@ function deleteMeeting(e) {
                 } catch (err) {
                     console.error(err);
                 }
-                toastr.success(`Успешно изтрита среща`);
 
                 let url = new URL(window.location);
                 let params = url.searchParams;

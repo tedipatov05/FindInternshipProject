@@ -153,16 +153,16 @@ function changeStatus(newStatus, id) {
                 $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: async function (data) {
-            if (data.isEdited) {
+            if (!data.haveCompany && data.isEdited) {
 
                 try {
-                   await connection.invoke("ChangeRequestStatus", id, newStatus);
+                    await connection.invoke("ChangeRequestStatus", id, newStatus);
                 }
                 catch (err) {
                     console.error(err)
                 }
 
-                
+
 
                 let oldStatus = document.getElementById(`status-${id}`).textContent.trim();
                 document.getElementById(`status-${id}`).textContent = newStatus;
@@ -171,19 +171,24 @@ function changeStatus(newStatus, id) {
 
 
 
-                if(newStatus == "Accepted") {
+                if (newStatus == "Accepted") {
                     document.getElementById(`btn-documents-${id}`).style.display = 'block';
                     document.getElementById(`btn-class-${id}`).style.display = 'none'
                     document.getElementById(`dropdown-${id}`).getElementsByClassName('dropdown-menu')[0].style.display = 'none'
-                    
+
                 }
-                else {
+                else if (newStatus == "Rejected") {
                     document.getElementById(`btn-documents-${id}`).style.display = 'none';
                     document.getElementById(`btn-class-${id}`).style.display = 'block'
-                    document.getElementById(`dropdown-${id}`).getElementsByClassName('dropdown-menu')[0].style.display = 'block'
+                    document.getElementById(`dropdown-${id}`).getElementsByClassName('dropdown-menu')[0].style.display = 'none'
                 }
+               
 
 
+            }
+            else if (data.haveCompany) {
+
+                toastr.error('\u0422\u043e\u0437\u0438\u0020\u043a\u043b\u0430\u0441\u0020\u0432\u0435\u0447\u0435\u0020\u0441\u0438\u0020\u0438\u043c\u0430\u0020\u0444\u0438\u0440\u043c\u0430\u0020\u0437\u0430\u0020\u0441\u0442\u0430\u0436'.normalize())
             }
         },
         error: function (msg) {

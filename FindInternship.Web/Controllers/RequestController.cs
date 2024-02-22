@@ -160,27 +160,36 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            bool result = await requestService.EditRequestStatus(newStatus, id);
 
-            if(newStatus == RequestStatusEnum.Accepted.ToString())
+            if (newStatus == RequestStatusEnum.Accepted.ToString())
             {
                 var companyId = await companyService.GetCompanyIdAsync(userId);
 
                 var classId = await classService.GetClassIdAsync(id);
 
-                await companyService.AddClassToCompany(classId!, companyId!);
+                bool haveCompany = await classService.IsClassHaveAlreadyCompanyAsync(classId!);
 
-                //TODO: Remove comments :)
+                if(haveCompany)
+                {
 
-                //var studentIds = await studentService.GetStudentCompanyIdsAsync(companyId, classId);
+                    return new JsonResult(new { IsEdited = false, CompanyUserId = userId, haveCompany = true });
+                }
+                else
+                {
+                    bool resultAccepted = await requestService.EditRequestStatus(newStatus, id);
 
+                    await companyService.AddClassToCompany(classId!, companyId!);
 
-                //return new JsonResult(new { IsEdited = result, CompanyUserId = userId, ClassId = classId, StudentIds = studentIds });
+                    return new JsonResult(new { IsEdited = resultAccepted, CompanyUserId = userId, haveCompany = false });
+                }
 
             }
 
+            bool result = await requestService.EditRequestStatus(newStatus, id);
 
-            return new JsonResult(new { IsEdited = result, CompanyUserId = userId });
+
+
+            return new JsonResult(new { IsEdited = result, CompanyUserId = userId, haveCompany = false });
 
         }
     }
