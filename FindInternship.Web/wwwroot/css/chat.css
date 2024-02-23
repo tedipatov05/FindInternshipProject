@@ -1,6 +1,29 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&;display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&;display=swap');
 
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid black;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+} 
+
+
+
 body {
     font-size: 14px;
     font-weight: 300;

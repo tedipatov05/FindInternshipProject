@@ -5,6 +5,11 @@ var connection = new signalR.HubConnectionBuilder()
     .build();
 
 $(document).ready(function () {
+    document.getElementById("loader-div").style.display = 'none';
+    document.getElementById("loader-div").style.marginTop = '0px';
+    document.getElementById('loader-main').style.display = 'none';
+    document.getElementById('chat-body').style.visibility = 'visible';
+
     $('#chat-body')[0].scroll(0, $('#chat-body')[0].scrollHeight);
 })
 
