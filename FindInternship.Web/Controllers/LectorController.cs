@@ -90,7 +90,7 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("MyProfile", "Profile", new { userId });
             }
 
-            bool isLectorExists = await lectorService.IsLectorExistsAsync(userId);
+            bool isLectorExists = await lectorService.IsLectorExistsAsync(id);
             if (!isLectorExists)
             {
                 TempData[ErrorMessage] = "Този преподавател не съществува";

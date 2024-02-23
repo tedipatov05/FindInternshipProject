@@ -3,12 +3,18 @@
 @model List<AllRequestsViewModel>
 
 @{
-
     var statusClass = new Dictionary<string, string>()
     {
         {"Waiting", "warning"},
         {"Rejected", "danger"},
         {"Accepted", "success"}
+    };
+
+    var statusBg = new Dictionary<string, string>()
+    {
+        {"Waiting", "Чакащ"},
+        {"Rejected", "Отказан"},
+        {"Accepted", "Приет"}
     };
 
 }
@@ -129,14 +135,14 @@
                                         {
                                             <div class="dropdown" id="dropdown-@request.Id">
                                                 <a class="badge badge-soft-@statusClass[request.Status] p-2 team-status dropdown-toggle" id="status-@request.Id" style="text-decoration: none; font-size: 1rem" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    @request.Status
+                                                    @statusBg[request.Status]
                                                 </a>
 
                                                 @if (request.Status != RequestStatusEnum.Accepted.ToString())
                                                 {
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" onclick="changeStatus('Accepted', '@request.Id')">Accept</a></li>
-                                                        <li><a class="dropdown-item" onclick="changeStatus('Rejected', '@request.Id')">Reject</a></li>
+                                                        <li><a class="dropdown-item" onclick="changeStatus('Accepted', '@request.Id')">Приеми</a></li>
+                                                        <li><a class="dropdown-item" onclick="changeStatus('Rejected', '@request.Id')">Откажи</a></li>
                                                     </ul>
                                                 }
 
@@ -148,7 +154,7 @@
                                         }
                                         else if (User.IsInRole("Teacher"))
                                         {
-                                            <span class="badge badge-soft-@statusClass[request.Status] p-2 team-status" id="status-@request.Id" style="font-size: 1rem">@request.Status</span>
+                                            <span class="badge badge-soft-@statusClass[request.Status] p-2 team-status" id="status-@request.Id" style="font-size: 1rem">@statusBg[request.Status]</span>
                                         }
 
                                     </div>

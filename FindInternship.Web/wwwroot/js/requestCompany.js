@@ -88,6 +88,11 @@ connection.on("ReceiveDocuments", function (documents, requestId) {
 
 });
 
+let statusBg = {
+    "Accepted": "\u041f\u0440\u0438\u0435\u0442".normalize(),
+    "Rejected": "\u041e\u0442\u043a\u0430\u0437\u0430\u043d".normalize()
+}
+
 connection.on("ReceiveNewStatus", function (newStatus, id) {
 
     let statusStyles = {
@@ -96,9 +101,12 @@ connection.on("ReceiveNewStatus", function (newStatus, id) {
         "Accepted": "success"
     };
 
+    
+
     let oldStatus = document.getElementById(`status-${id}`).textContent.trim();
-    document.getElementById(`status-${id}`).textContent = newStatus;
-    document.getElementById(`status-${id}`).classList.remove(`badge-soft-${statusStyles[oldStatus]}`);
+
+    document.getElementById(`status-${id}`).textContent = statusBg[newStatus];
+    document.getElementById(`status-${id}`).classList.remove(`badge-soft-warning`);
     document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
 
     if (newStatus == "Accepted") {
@@ -128,7 +136,7 @@ connection.onclose(async () => {
 });
 
 
-start()
+start();
 
 
 
@@ -162,11 +170,10 @@ function changeStatus(newStatus, id) {
                     console.error(err)
                 }
 
-
-
                 let oldStatus = document.getElementById(`status-${id}`).textContent.trim();
-                document.getElementById(`status-${id}`).textContent = newStatus;
-                document.getElementById(`status-${id}`).classList.remove(`badge-soft-${statusStyles[oldStatus]}`);
+
+                document.getElementById(`status-${id}`).textContent = statusBg[newStatus];
+                document.getElementById(`status-${id}`).classList.remove(`badge-soft-warning`);
                 document.getElementById(`status-${id}`).classList.add(`badge-soft-${statusStyles[newStatus]}`);
 
 

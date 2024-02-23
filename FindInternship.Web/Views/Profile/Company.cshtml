@@ -70,7 +70,7 @@
                         <div style="flex-direction: row; display: flex;">
                             <div class="d-flex align-items-center">
                                 <div class="flex-1">
-                                    <h4 class="card-title mb-4">Преподаватели</h4>
+                                    <h4 class="card-title mb-4">Лектори</h4>
                                 </div>
                             </div>
                             @if (User.GetId() == Model.Id)
@@ -97,12 +97,12 @@
                                                 @lector.Name
                                             </p>
                                             <p class="module-trainer-info-role">
-                                                Преподавател
+                                                Лектор
                                             </p>
                                             <article class="module-single-trainer-description">
                                                 @lector.Description
                                             </article>
-                                            <a asp-action="Delete" asp-controller="Lector" asp-route-id="@lector.Id" class="btn btn-danger">Delete</a>
+                                            <a asp-action="Delete" asp-controller="Lector" asp-route-id="@lector.Id" class="btn btn-danger">Изтрий</a>
                                         </section>
                                     </article>
                                 </section>
