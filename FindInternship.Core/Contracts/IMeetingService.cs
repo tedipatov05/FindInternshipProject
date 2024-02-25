@@ -28,5 +28,7 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> IsMeetingExistsAsync(DateTime start, DateTime end, string classId);
 
+        Task<bool> IsMeetingExistsInCompanyAsync(DateTime start, DateTime end, string companyId, string classId);
+
     }
 }

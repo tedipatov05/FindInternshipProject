@@ -24,7 +24,7 @@ function edit(e) {
 
     let data = new FormData(e.target);
 
-    let classId = document.getElementById('classId').value;
+    let companyId = document.getElementById('companyId').value;
 
     let { title, start, end, address } = Object.fromEntries(data);
 
@@ -56,7 +56,7 @@ function edit(e) {
                 'start': start,
                 'end': end,
                 'address': address, 
-                'classId': classId
+                'companyId': companyId
             },
             dataType: 'json',
             headers: {

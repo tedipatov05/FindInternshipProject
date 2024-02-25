@@ -126,7 +126,14 @@ namespace FindInternship.Web.Controllers
 
                 string? teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
                 string? companyId = await companyService.GetCompanyIdAsync(userId);
-               
+
+                bool isExistsInCompany = await meetingService.IsMeetingExistsInCompanyAsync(start, end, companyId!, classId);
+                if (isExistsInCompany)
+                {
+                    return new JsonResult(new { isExists = true, ClassIdNull = false });
+                }
+
+
                 List<string> receiversIds = await studentService.GetStudentCompanyIdsAsync(companyId!, classId);
 
                 receiversIds.Add(teacherUserId!);
@@ -196,7 +203,7 @@ namespace FindInternship.Web.Controllers
         [HttpPost]
         [Route("Meeting/Edit/{id}")]
         public async Task<IActionResult> Edit([FromRoute] string id, string title, DateTime start, DateTime end,
-            string address, string classId)
+            string address, string companyId)
         {
             string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
@@ -206,7 +213,7 @@ namespace FindInternship.Web.Controllers
                 return this.RedirectToAction("All");
             }
 
-            string? companyId = await companyService.GetCompanyIdAsync(userId);
+            //string? companyId = await companyService.GetCompanyIdAsync(userId);
             bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId!, id);
 
             if (!isInCompanySchedule)
@@ -230,12 +237,12 @@ namespace FindInternship.Web.Controllers
                 Title = title,
             };
 
-            bool isExists = await meetingService.IsMeetingExistsAsync(start, end, classId);
-            if (isExists && (DateTime.Compare(meetingOld!.Start, model.Start) != 0 || DateTime.Compare(meetingOld.End, model.End) != 0))
+            bool isExistsInCompany = await meetingService.IsMeetingExistsInCompanyAsync(start, end, companyId!, "");
+            if (isExistsInCompany && (DateTime.Compare(meetingOld!.Start, model.Start) != 0 || DateTime.Compare(meetingOld.End, model.End) != 0))
             {
-                TempData[ErrorMessage] = "Среща по това време вече съществува";
-                return new JsonResult(new { MeetingId = id, Model = model, ReceiversIds = receiversIds, IsExists = true });
+                return new JsonResult(new { isExists = true});
             }
+
 
             await meetingService.EditMeetingAsync(id, model);
 
