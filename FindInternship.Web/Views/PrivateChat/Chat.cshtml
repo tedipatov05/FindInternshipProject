@@ -132,7 +132,7 @@
                                                         <div class="message-options dark">
                                                             <div class="message-time">
                                                                 <div class="d-flex flex-row">
-                                                                    <div class="mr-2">@message.SendedOn.ToString("yyyy-MM-dd HH:mm")</div>
+                                                                    <div class="mr-2">@message.SendedOn.ToString("dd-MM-yyyy HH:mm")</div>
 
                                                                 </div>
                                                             </div>
@@ -164,7 +164,7 @@
 
                                                             <p class="mb-3 mr-3 pr-4">@Html.Raw(message.Content)</p>
                                                             <div class="message-options">
-                                                                <div class="message-time">@message.SendedOn.ToString("yyyy-MM-dd HH:mm")</div>
+                                                                <div class="message-time">@message.SendedOn.ToString("dd-MM-yyyy HH:mm")</div>
                                                                 <div class="message-arrow"><i class="text-muted la la-angle-down fs-17"></i></div>
                                                             </div>
                                                         </div>
