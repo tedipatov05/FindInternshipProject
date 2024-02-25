@@ -46,7 +46,7 @@ function create(e) {
 
     e.preventDefault();
     let formData = new FormData(e.target);
-    let { classId, title, start, end, address } = Object.fromEntries(formData);
+    let { classId, title, start, end, address} = Object.fromEntries(formData);
 
     let dataArr = [classId, title, start, end, address]
 

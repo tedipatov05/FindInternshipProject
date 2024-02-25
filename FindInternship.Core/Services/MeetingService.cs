@@ -114,7 +114,8 @@ namespace FindInternship.Core.Services
                     Address = m.Address, 
                     End = m.EndTime,
                     Start = m.StartTime, 
-                    Title = m.Title
+                    Title = m.Title, 
+                    ClassId = m.ClassId,
                 })
                 .FirstOrDefaultAsync();
 
@@ -222,7 +223,7 @@ namespace FindInternship.Core.Services
         public async Task<bool> IsMeetingExistsAsync(DateTime start, DateTime end, string classId)
         {
             var isExists = await repo.All<Meeting>()
-                .AnyAsync(m => ((DateTime.Compare(m.StartTime, start) == 0 || DateTime.Compare(m.EndTime, end) == 0 || (DateTime.Compare(m.StartTime, start) > 0 && DateTime.Compare(m.StartTime, end) < 0) || (DateTime.Compare(m.EndTime, start) > 0 && DateTime.Compare(m.EndTime, end) < 0)) && m.IsActive));
+                .AnyAsync(m => ((DateTime.Compare(m.StartTime, start) == 0 || DateTime.Compare(m.EndTime, end) == 0 || (DateTime.Compare(m.StartTime, start) > 0 && DateTime.Compare(m.StartTime, end) < 0) || (DateTime.Compare(m.EndTime, start) > 0 && DateTime.Compare(m.EndTime, end) < 0)) && m.IsActive && m.ClassId == classId));
 
             return isExists;
         }

@@ -16,6 +16,8 @@ namespace FindInternship.Core.Models.Meeting
 
         public DateTime End { get; set; }
 
+        public string? ClassId { get; set; }
+
 
     }
 }

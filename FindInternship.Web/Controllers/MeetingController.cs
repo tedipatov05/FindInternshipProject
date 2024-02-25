@@ -183,7 +183,7 @@ namespace FindInternship.Web.Controllers
 
             var meeting = await meetingService.GetMeetingForEditAsync(id);
 
-            if(meeting == null)
+            if (meeting == null)
             {
                 TempData[ErrorMessage] = "Тази среща не съществува";
                 return this.RedirectToAction("All");
@@ -196,7 +196,7 @@ namespace FindInternship.Web.Controllers
         [HttpPost]
         [Route("Meeting/Edit/{id}")]
         public async Task<IActionResult> Edit([FromRoute] string id, string title, DateTime start, DateTime end,
-            string address)
+            string address, string classId)
         {
             string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
@@ -215,11 +215,12 @@ namespace FindInternship.Web.Controllers
                 return this.RedirectToAction("All");
             }
 
-
             var receiversIds = await studentService.GetCompanyStudentIdsAsync(companyId!, id);
             string? teacherUserId = await teacherService.GetTeacherUserIdByMeetingIdAsync(id);
 
             receiversIds.Add(teacherUserId!);
+
+            var meetingOld = await meetingService.GetMeetingForEditAsync(id);
 
             FormMeetingViewModel model = new FormMeetingViewModel()
             {
@@ -229,11 +230,18 @@ namespace FindInternship.Web.Controllers
                 Title = title,
             };
 
+            bool isExists = await meetingService.IsMeetingExistsAsync(start, end, classId);
+            if (isExists && (DateTime.Compare(meetingOld!.Start, model.Start) != 0 || DateTime.Compare(meetingOld.End, model.End) != 0))
+            {
+                TempData[ErrorMessage] = "Среща по това време вече съществува";
+                return new JsonResult(new { MeetingId = id, Model = model, ReceiversIds = receiversIds, IsExists = true });
+            }
+
             await meetingService.EditMeetingAsync(id, model);
 
             TempData[SuccessMessage] = "Успешно променена среща";
 
-            return new JsonResult(new { MeetingId = id, Model = model, ReceiversIds = receiversIds });
+            return new JsonResult(new { MeetingId = id, Model = model, ReceiversIds = receiversIds, IsExists = false });
         }
 
         [HttpGet]

@@ -24,6 +24,8 @@ function edit(e) {
 
     let data = new FormData(e.target);
 
+    let classId = document.getElementById('classId').value;
+
     let { title, start, end, address } = Object.fromEntries(data);
 
     let dataArr = [title, start, end, address]
@@ -53,7 +55,8 @@ function edit(e) {
                 'title': title,
                 'start': start,
                 'end': end,
-                'address': address
+                'address': address, 
+                'classId': classId
             },
             dataType: 'json',
             headers: {
@@ -61,7 +64,7 @@ function edit(e) {
             },
             success: async function (data) {
 
-                if (data) {
+                if (!data.isExists) {
 
                     try {
 
@@ -78,9 +81,12 @@ function edit(e) {
                     if (isNaN(days)) {
                         days = 0;
                     }
-                    
+
                     window.location = `${url.origin}/Meeting/All?days=${days}`
 
+                }
+                else {
+                    toastr.error('\u0421\u0440\u0435\u0449\u0430\u0020\u043f\u043e\u0020\u0442\u043e\u0432\u0430\u0020\u0432\u0440\u0435\u043c\u0435\u0020\u0432\u0435\u0447\u0435\u0020\u0441\u044a\u0449\u0435\u0441\u0442\u0432\u0443\u0432\u0430'.normalize())
                 }
             },
             error: function (err) {
