@@ -44,20 +44,19 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id, teac
                                     <div class="align-self-end">
                                         <div class="dropdown" id="dropdown-${id}">
                                             <a class="badge badge-soft-${colors[status]} p-2 team-status dropdown-toggle" id="status-${id}" style="text-decoration: none; font-size: 1rem" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                ${status}
+                                                ${statusBg[status]}
                                             </a>
 
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" onclick="changeStatus('Accepted', '${id}')">Accept</a></li>
-                                                <li><a class="dropdown-item" onclick="changeStatus('Rejected', '${id}')">Reject</a></li>
-                                                <li><a class="dropdown-item" onclick="changeStatus('Waiting', '${id}')">Waiting</a></li>
+                                                <li><a class="dropdown-item" onclick="changeStatus('Accepted', '${id}')">\u041f\u0440\u0438\u0435\u0442</a></li>
+                                                <li><a class="dropdown-item" onclick="changeStatus('Rejected', '${id}')">\u041e\u0442\u043a\u0430\u0436\u0438</a></li>
                                             </ul>
                                         </div>
                                          
                                     </div>
                                 </div>
                             </div>
-                        </div>`
+                        </div>`.normalize()
 
     document.getElementById('all-projects').appendChild(div);
 
@@ -90,7 +89,8 @@ connection.on("ReceiveDocuments", function (documents, requestId) {
 
 let statusBg = {
     "Accepted": "\u041f\u0440\u0438\u0435\u0442".normalize(),
-    "Rejected": "\u041e\u0442\u043a\u0430\u0437\u0430\u043d".normalize()
+    "Rejected": "\u041e\u0442\u043a\u0430\u0437\u0430\u043d".normalize(), 
+    "Waiting": "\u0427\u0430\u043a\u0430\u0449".normalize()
 }
 
 connection.on("ReceiveNewStatus", function (newStatus, id) {
