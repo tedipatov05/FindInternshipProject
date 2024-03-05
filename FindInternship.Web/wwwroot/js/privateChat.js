@@ -257,9 +257,7 @@ function addFiles(files) {
 
         appendFiles.appendChild(span);
 
-
-
-
+        
     }
 
 
