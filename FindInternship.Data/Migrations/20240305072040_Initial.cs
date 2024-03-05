@@ -43,13 +43,14 @@ namespace FindInternship.Data.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    City = table.Column<string>(type: "nvarchar(169)", maxLength: 169, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: false),
                     Country = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "DATE", nullable: false),
                     RegisteredOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -80,6 +81,20 @@ namespace FindInternship.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Groups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schools",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schools", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -213,11 +228,11 @@ namespace FindInternship.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReceiverUsername = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ReceiverImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReceiverImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SendedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -265,9 +280,9 @@ namespace FindInternship.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Speciality = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    School = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SchoolId = table.Column<int>(type: "int", nullable: false),
                     Grade = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TeacherId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TeacherId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -275,6 +290,33 @@ namespace FindInternship.Data.Migrations
                     table.PrimaryKey("PK_Classes", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Classes_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Classes_Schools_SchoolId",
+                        column: x => x.SchoolId,
+                        principalTable: "Schools",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lectors",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
+                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lectors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lectors_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id");
@@ -309,20 +351,14 @@ namespace FindInternship.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ChatMessageId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ChatMessageId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ChatImages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ChatImages_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ChatImages_ChatMessages_ChatMessageId",
                         column: x => x.ChatMessageId,
@@ -338,30 +374,22 @@ namespace FindInternship.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Meetings",
+                name: "Documents",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DocumentUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClassId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Meetings", x => x.Id);
+                    table.PrimaryKey("PK_Documents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Meetings_Classes_ClassId",
+                        name: "FK_Documents_Classes_ClassId",
                         column: x => x.ClassId,
                         principalTable: "Classes",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Meetings_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -399,7 +427,7 @@ namespace FindInternship.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClassId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ClassId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -423,7 +451,7 @@ namespace FindInternship.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClassId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ClassId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -442,22 +470,40 @@ namespace FindInternship.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Documents",
+                name: "Meetings",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DocumentUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClassId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LectorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Documents", x => x.Id);
+                    table.PrimaryKey("PK_Meetings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Documents_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
+                        name: "FK_Meetings_Classes_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Classes",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Meetings_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Meetings_Lectors_LectorId",
+                        column: x => x.LectorId,
+                        principalTable: "Lectors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -482,6 +528,26 @@ namespace FindInternship.Data.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MeetingMaterials",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DocumentUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MeetingId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeetingMaterials", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MeetingMaterials_Meetings_MeetingId",
+                        column: x => x.MeetingId,
+                        principalTable: "Meetings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
             migrationBuilder.InsertData(
                 table: "Abilities",
                 columns: new[] { "Id", "AbilityText" },
@@ -502,27 +568,27 @@ namespace FindInternship.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "03f3054b-c9a2-4198-a6c9-a96f3142ff53", "37823b69-02f1-452e-a35a-0e01f0d49859", "Student", "STUDENT" },
-                    { "36ae84ad-bb53-48ad-9503-bfe33221785d", "8e42d16d-6590-45cc-8b77-a37790bf81c6", "Teacher", "TEACHER" },
-                    { "e2f6cb22-631b-47c7-9ac0-19f89455b2a5", "e61fa67c-4b08-45a3-bc84-3eea8a2a670b", "Admin", "ADMIN" },
-                    { "e6fc051f-3440-4f69-89e1-8a696c027fc2", "494564ec-4ba1-4680-978c-8616086b5b52", "Company", "COMPANY" }
+                    { "03f3054b-c9a2-4198-a6c9-a96f3142ff53", "3229e2b5-2472-4269-b185-f0ab0cf0ea46", "Student", "STUDENT" },
+                    { "36ae84ad-bb53-48ad-9503-bfe33221785d", "877d8099-f2df-4ee8-86c6-8e5d33e5e7c4", "Teacher", "TEACHER" },
+                    { "e2f6cb22-631b-47c7-9ac0-19f89455b2a5", "a055007b-d58d-4509-8682-bf7fee4fc643", "Admin", "ADMIN" },
+                    { "e6fc051f-3440-4f69-89e1-8a696c027fc2", "c8dcce8f-60f7-479f-95f3-84a6af3b1626", "Company", "COMPANY" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Address", "BirthDate", "City", "ConcurrencyStamp", "Country", "Email", "EmailConfirmed", "Gender", "IsActive", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfilePictureUrl", "RegisteredOn", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Address", "BirthDate", "City", "ConcurrencyStamp", "Country", "Email", "EmailConfirmed", "Gender", "IsActive", "IsApproved", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfilePictureUrl", "RegisteredOn", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "080a469a-b5a2-44cc-a660-eea8e6fd05a5", 0, "ул. Ал. Стамболийски 30 ет.3 ап.11", new DateTime(2008, 4, 12, 13, 24, 0, 0, DateTimeKind.Unspecified), "Казанлък", "683d8a4d-b0d4-4271-9c99-c2a474729c09", "България", "petarpetrov@abv.bg", false, "Мъж", true, false, null, "Петър Петров", "PETARPETROV@ABV.BG", "PETAR", "AQAAAAEAACcQAAAAEAhFSJ/NwE/xMjZ4DDjwxDbOBY4yK6AxNAvJKxyFhE+ZMwOxT1ycL7ksP9wsQwkb0Q==", "0885763826", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697607303/projectImages/xbhwflepot9qpwmiiq6u.jpg", new DateTime(2023, 11, 9, 6, 58, 9, 547, DateTimeKind.Utc).AddTicks(3949), "555a5573-9819-4bde-9e2c-afb5f7a5cc9e", false, "petar" },
-                    { "20dcf707-dfd9-4aae-b8c3-f3b9844e09d8", 0, "ул. Незабравка 3", new DateTime(2015, 7, 18, 11, 20, 0, 0, DateTimeKind.Unspecified), "Енина", "386f5e6c-c206-4d69-8c55-e649ca24fdd1", "България", "admin@abv.bg", false, "Мъж", true, false, null, "Admin", "ADMIN@ABV.BG", "ADMIN", "AQAAAAEAACcQAAAAEE0d5MG96yl1D+6F8A4ao2eKNjv175LaDq/2M/yLKaQ9kS4y4E+xKAStW6FfOiA+VQ==", "0889864842", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697617373/projectImages/pyb6v86l6myou9h1sxca.jpg", new DateTime(2023, 11, 9, 6, 58, 9, 550, DateTimeKind.Utc).AddTicks(8658), "3cfe5cf5-b941-484f-8821-5e102583978b", false, "Admin" },
-                    { "93418f37-da3b-4c78-b0ae-8f0022b09681", 0, "ул.Възраждане 6 ет.2 ап.8", new DateTime(1968, 2, 8, 11, 20, 0, 0, DateTimeKind.Unspecified), "Казанлък", "31f9a865-71f9-4711-887d-62d336160841", "България", "georgidimitrov@abv.bg", false, "Мъж", true, false, null, "Георги Димитров", "GEORGIDIMITROV@ABV.BG", "GEORGI", "AQAAAAEAACcQAAAAEKqRzqxPcA55zHwJUvAoiF141sJzuOkUKgqmkuVWviMxeRgI/mQMO/CP77Z5QCrGAg==", "0885789826", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697608565/projectImages/mvorrsshjbw1e8bzfzgq.jpg", new DateTime(2023, 11, 9, 6, 58, 9, 548, DateTimeKind.Utc).AddTicks(5778), "df27ba18-6ef2-44f5-b0a8-3dd24da90e1c", false, "georgi" },
-                    { "cb5ee792-90f6-4e50-8af1-da2f99d9f892", 0, "ул. Стара планина 63", new DateTime(2015, 5, 9, 11, 20, 0, 0, DateTimeKind.Unspecified), "Казанлък", "67ec84fa-2258-434e-bdab-4f7b5299eaf4", "България", "newtechies@abv.bg", false, null, true, false, null, "New Techies", "NEWTECHIES@ABV.BG", "NEWTECHIES", "AQAAAAEAACcQAAAAEDOyT8+62lFb8G3aU1+/KHm8n9N+c9JnYc0H+wxNyKyMjq9K2U2+PKTgUGPc5YR9mw==", "0885789546", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1699129335/projectImages/d1bplska8t4sv6rlkkoa.png", new DateTime(2023, 11, 9, 6, 58, 9, 549, DateTimeKind.Utc).AddTicks(7381), "6f16af2e-6358-49a4-aa69-44062ea4f651", false, "NewTechies" }
+                    { "080a469a-b5a2-44cc-a660-eea8e6fd05a5", 0, "ул. Ал. Стамболийски 30 ет.3 ап.11", new DateTime(2008, 4, 12, 13, 24, 0, 0, DateTimeKind.Unspecified), "Казанлък", "156a1415-d3bd-42a4-b19f-151832c4ec49", "България", "petarpetrov@abv.bg", false, "Мъж", true, true, false, null, "Петър Петров", "PETARPETROV@ABV.BG", "PETAR", "AQAAAAEAACcQAAAAEHdCuybyKBvgviPseNZEieLGwEAgsUh45SW4nKjSIpDFQABGalVXY7FjvVcVJUqIXw==", "0885763826", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697607303/projectImages/xbhwflepot9qpwmiiq6u.jpg", new DateTime(2024, 3, 5, 7, 20, 40, 44, DateTimeKind.Utc).AddTicks(1236), "db01f74f-3018-4d6a-b408-b974a046a204", false, "petar" },
+                    { "20dcf707-dfd9-4aae-b8c3-f3b9844e09d8", 0, "ул. Незабравка 3", new DateTime(2015, 7, 18, 11, 20, 0, 0, DateTimeKind.Unspecified), "Енина", "9a6363d4-8130-43a9-8026-4ce72732e926", "България", "admin@abv.bg", false, "Мъж", true, true, false, null, "Admin", "ADMIN@ABV.BG", "ADMIN", "AQAAAAEAACcQAAAAEKBwS4yqQ+81F7CczB5MAVHnit5imY9S9BCUXTr8FRZtIL/mvLD3BI0EXHYBX1a6bA==", "0889864842", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697617373/projectImages/pyb6v86l6myou9h1sxca.jpg", new DateTime(2024, 3, 5, 7, 20, 40, 49, DateTimeKind.Utc).AddTicks(3907), "c832e96d-a271-46b9-9fb7-9ada0e21f710", false, "Admin" },
+                    { "93418f37-da3b-4c78-b0ae-8f0022b09681", 0, "ул.Възраждане 6 ет.2 ап.8", new DateTime(1968, 2, 8, 11, 20, 0, 0, DateTimeKind.Unspecified), "Казанлък", "fc873e52-d123-4796-b44e-2358c1aaa5a0", "България", "georgidimitrov@abv.bg", false, "Мъж", true, true, false, null, "Георги Димитров", "GEORGIDIMITROV@ABV.BG", "GEORGI", "AQAAAAEAACcQAAAAEI8Wk51LjxRNXuj8nWollLTHaj4zMEavBjvGPid1I/BCqTxmLzdTIrmgYOCozrjOrQ==", "0885789826", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1697608565/projectImages/mvorrsshjbw1e8bzfzgq.jpg", new DateTime(2024, 3, 5, 7, 20, 40, 47, DateTimeKind.Utc).AddTicks(2923), "b51c8210-ceca-4dce-81ce-ad4a04629b5f", false, "georgi" },
+                    { "cb5ee792-90f6-4e50-8af1-da2f99d9f892", 0, "ул. Стара планина 63", new DateTime(2015, 5, 9, 11, 20, 0, 0, DateTimeKind.Unspecified), "Казанлък", "47d40efe-6bbe-4fc4-acdb-e0785b0a6de8", "България", "newtechies@abv.bg", false, null, true, true, false, null, "New Techies", "NEWTECHIES@ABV.BG", "NEWTECHIES", "AQAAAAEAACcQAAAAECyQ5Z6ikb9O+lnrJnxA+Baocp6fCifaQm0xteGOMJmiP9c7LdWrHnkus5Bedcds0g==", "0885789546", false, "https://res.cloudinary.com/ddriqreo7/image/upload/v1699781438/projectImages/pblz1onyuacbk2ds4g8n.png", new DateTime(2024, 3, 5, 7, 20, 40, 48, DateTimeKind.Utc).AddTicks(3780), "12d0561b-4fbc-44c1-9e29-261c46edf034", false, "NewTechies" }
                 });
 
             migrationBuilder.InsertData(
-                table: "Classes",
-                columns: new[] { "Id", "CompanyId", "Grade", "School", "Speciality", "TeacherId" },
-                values: new object[] { "0edc45cb-b2f1-48a2-8f6b-17910e09a147", null, "12 Б", "ППМГ Никола Обрешков", "Приложен програмист", "2644afb5-f916-4b3f-b451-9ff86c881de3" });
+                table: "Schools",
+                columns: new[] { "Id", "City", "Name" },
+                values: new object[] { 1, "Казанлък", "ППМГ Никола Обрешков" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -534,6 +600,11 @@ namespace FindInternship.Data.Migrations
                     { "36ae84ad-bb53-48ad-9503-bfe33221785d", "93418f37-da3b-4c78-b0ae-8f0022b09681" },
                     { "e6fc051f-3440-4f69-89e1-8a696c027fc2", "cb5ee792-90f6-4e50-8af1-da2f99d9f892" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Classes",
+                columns: new[] { "Id", "CompanyId", "Grade", "SchoolId", "Speciality", "TeacherId" },
+                values: new object[] { "0edc45cb-b2f1-48a2-8f6b-17910e09a147", null, "12 Б", 1, "Приложен програмист", "2644afb5-f916-4b3f-b451-9ff86c881de3" });
 
             migrationBuilder.InsertData(
                 table: "Companies",
@@ -553,17 +624,12 @@ namespace FindInternship.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Technologies",
                 columns: new[] { "AbilityId", "CompanyId" },
-                values: new object[] { 2, "e309dc7e-dad7-42cc-b83b-febb316cc49e" });
-
-            migrationBuilder.InsertData(
-                table: "Technologies",
-                columns: new[] { "AbilityId", "CompanyId" },
-                values: new object[] { 3, "e309dc7e-dad7-42cc-b83b-febb316cc49e" });
-
-            migrationBuilder.InsertData(
-                table: "Technologies",
-                columns: new[] { "AbilityId", "CompanyId" },
-                values: new object[] { 4, "e309dc7e-dad7-42cc-b83b-febb316cc49e" });
+                values: new object[,]
+                {
+                    { 2, "e309dc7e-dad7-42cc-b83b-febb316cc49e" },
+                    { 3, "e309dc7e-dad7-42cc-b83b-febb316cc49e" },
+                    { 4, "e309dc7e-dad7-42cc-b83b-febb316cc49e" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -615,11 +681,6 @@ namespace FindInternship.Data.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChatImages_UserId",
-                table: "ChatImages",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ChatMessages_GroupId",
                 table: "ChatMessages",
                 column: "GroupId");
@@ -635,14 +696,29 @@ namespace FindInternship.Data.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Classes_SchoolId",
+                table: "Classes",
+                column: "SchoolId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Companies_UserId",
                 table: "Companies",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Documents_StudentId",
+                name: "IX_Documents_ClassId",
                 table: "Documents",
-                column: "StudentId");
+                column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lectors_CompanyId",
+                table: "Lectors",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MeetingMaterials_MeetingId",
+                table: "MeetingMaterials",
+                column: "MeetingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meetings_ClassId",
@@ -653,6 +729,11 @@ namespace FindInternship.Data.Migrations
                 name: "IX_Meetings_CompanyId",
                 table: "Meetings",
                 column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Meetings_LectorId",
+                table: "Meetings",
+                column: "LectorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requests_ClassId",
@@ -683,7 +764,8 @@ namespace FindInternship.Data.Migrations
                 name: "IX_Teachers_ClassId",
                 table: "Teachers",
                 column: "ClassId",
-                unique: true);
+                unique: true,
+                filter: "[ClassId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teachers_UserId",
@@ -725,7 +807,7 @@ namespace FindInternship.Data.Migrations
                 name: "Documents");
 
             migrationBuilder.DropTable(
-                name: "Meetings");
+                name: "MeetingMaterials");
 
             migrationBuilder.DropTable(
                 name: "Requests");
@@ -749,6 +831,9 @@ namespace FindInternship.Data.Migrations
                 name: "ChatMessages");
 
             migrationBuilder.DropTable(
+                name: "Meetings");
+
+            migrationBuilder.DropTable(
                 name: "Students");
 
             migrationBuilder.DropTable(
@@ -758,10 +843,16 @@ namespace FindInternship.Data.Migrations
                 name: "Groups");
 
             migrationBuilder.DropTable(
+                name: "Lectors");
+
+            migrationBuilder.DropTable(
                 name: "Classes");
 
             migrationBuilder.DropTable(
                 name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "Schools");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

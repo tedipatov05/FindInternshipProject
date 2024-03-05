@@ -31,7 +31,9 @@ namespace FindInternship.Core.Services
                 ClassId = classId,
                 CompanyId = companyId,
                 EndTime = model.End,
-                StartTime = model.Start
+                StartTime = model.Start, 
+                Description = model.Description,
+                LectorId = model.LectorId,
 
             };
 

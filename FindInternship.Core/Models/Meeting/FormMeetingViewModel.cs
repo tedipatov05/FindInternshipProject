@@ -18,6 +18,10 @@ namespace FindInternship.Core.Models.Meeting
 
         public string? CompanyId { get; set; }
 
+        public string LectorId { get; set; } = null!;
+
+        public string Description { get; set; } = null!;
+
 
     }
 }

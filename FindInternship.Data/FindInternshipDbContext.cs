@@ -47,6 +47,8 @@ namespace FindInternship.Data
         public DbSet<Meeting> Meetings { get; set; } = null!;
         public DbSet<Document> Documents { get; set; } = null!;
 
+        public DbSet<MeetingMaterial> MeetingMaterials { get; set; } = null!;
+
         public DbSet<Lector> Lectors { get; set; } = null!;
 
         public DbSet<School> Schools { get; set; } = null!;

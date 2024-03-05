@@ -46,9 +46,25 @@ function create(e) {
 
     e.preventDefault();
     let formData = new FormData(e.target);
-    let { classId, title, start, end, address} = Object.fromEntries(formData);
+    let { classId,lectorId ,title, start, end, address, description} = Object.fromEntries(formData);
 
-    let dataArr = [classId, title, start, end, address]
+    let dataArr = [classId, lectorId, title, start, end, address, description]
+
+    let files = document.getElementById('files').files;
+
+    let data = new FormData();
+    data.append('classId', classId);
+    data.append('lectorId', lectorId);
+    data.append('title', title);
+    data.append('start', start);
+    data.append('end', end);
+    data.append('address', address);
+    data.append('description', description);
+
+    for (let i = 0; i < files.length; i++) {
+        data.append('files', files[i]);
+    }
+    
 
     let validationSpans = document.getElementsByClassName('text-danger');
 
@@ -91,14 +107,9 @@ function create(e) {
             $.ajax({
                 type: "POST",
                 url: `/Meeting/Create`,
-                data: {
-                    'classId': classId,
-                    'title': title,
-                    'start': start,
-                    'end': end,
-                    'address': address
-                },
-                dataType: "json",
+                data: data,
+                processData: false,
+                contentType: false,
                 headers: {
                     "RequestVerificationToken": t
 

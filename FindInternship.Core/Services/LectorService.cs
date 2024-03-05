@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Lector;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,20 @@ namespace FindInternship.Core.Services
             lector!.IsActive = false;
 
             await repo.SaveChangesAsync();
+        }
+
+        public async Task<List<LectorMeetingViewModel>> GetAllCompanyLectorsAsync(string companyId)
+        {
+            var lectors = await repo.All<Lector>()
+                .Where(l => l.CompanyId == companyId)
+                .Select(l => new LectorMeetingViewModel()
+                {
+                    Id = l.Id,
+                    Name = l.Name,
+                })
+                .ToListAsync();
+
+            return lectors;
         }
 
         public async Task<bool> IsLectorExistsAsync(string id)

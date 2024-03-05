@@ -1,6 +1,7 @@
 ﻿using FindInternship.Common;
 using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.Meeting;
+using FindInternship.Core.Services;
 using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -17,8 +18,11 @@ namespace FindInternship.Web.Controllers
         private readonly ITeacherService teacherService;
         private readonly IStudentService studentService;
         private readonly IClassService classService;
+        private readonly ILectorService lectorService;
+        private readonly IDocumentService documentService;
+        private readonly IMaterialService materialService;
 
-        public MeetingController(IMeetingService meetingService, IUserService userService, ICompanyService companyService, ITeacherService teacherService, IStudentService studentService, IClassService classService)
+        public MeetingController(IMeetingService meetingService, IUserService userService, ICompanyService companyService, ITeacherService teacherService, IStudentService studentService, IClassService classService, ILectorService lectorService, IDocumentService documentService, IMaterialService materialService)
         {
             this.meetingService = meetingService;
             this.userService = userService;
@@ -26,6 +30,9 @@ namespace FindInternship.Web.Controllers
             this.teacherService = teacherService;
             this.studentService = studentService;
             this.classService = classService;
+            this.lectorService = lectorService;
+            this.documentService = documentService;
+            this.materialService = materialService;
         }
 
 
@@ -68,6 +75,8 @@ namespace FindInternship.Web.Controllers
                     model.Day3 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 3, companyId!);
                     model.Day4 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 4, companyId!);
                     model.CompanyClasses = await classService.GetClassMeetingAsync(companyId!);
+                    model.CompanyLectors = await lectorService.GetAllCompanyLectorsAsync(companyId!);
+
 
                 }
                 else if (isStudent)
@@ -99,7 +108,7 @@ namespace FindInternship.Web.Controllers
 
         [HttpPost]
         [Route("Meeting/Create")]
-        public async Task<IActionResult> Create(string classId, string title, DateTime start, DateTime end, string address)
+        public async Task<IActionResult> Create(string classId, string lectorId, string title, DateTime start, DateTime end, string address, string description, List<IFormFile> files)
         {
             string userId = User.GetId()!;
 
@@ -133,7 +142,6 @@ namespace FindInternship.Web.Controllers
                     return new JsonResult(new { isExists = true, ClassIdNull = false });
                 }
 
-
                 List<string> receiversIds = await studentService.GetStudentCompanyIdsAsync(companyId!, classId);
 
                 receiversIds.Add(teacherUserId!);
@@ -143,7 +151,9 @@ namespace FindInternship.Web.Controllers
                     Title = title,
                     Start = start,
                     End = end,
-                    Address = address
+                    Address = address, 
+                    LectorId = lectorId, 
+                    Description = description,
                 };
 
                 if (start >= end)
@@ -154,6 +164,16 @@ namespace FindInternship.Web.Controllers
                 }
 
                 string meetingId = await meetingService.CreateAsync(model, companyId!, classId);
+
+
+                List<string> materialsIds = new();
+
+                foreach (var file in files)
+                {
+                    string url = await documentService.UploadDocumentAsync(file, "projectDocuments");
+                    string id = await materialService.CreateAsync(url, file.FileName, meetingId);
+                }
+
 
                 TempData[SuccessMessage] = "Успешно добавена среща";
                 return new JsonResult(new { MeetingId=meetingId, ReceiversIds = receiversIds, isExists=false, ClassIdNull = false });

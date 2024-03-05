@@ -15,6 +15,7 @@ namespace FindInternship.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.IsActive = true;
+            this.Meetings = new HashSet<Meeting>();
         }
 
         [Key]
@@ -34,5 +35,7 @@ namespace FindInternship.Data.Models
         public string ProfilePictureUrl { get; set; } = null!;
 
         public bool IsActive { get; set; }
+
+        public ICollection<Meeting> Meetings { get; set; }
     }
 }

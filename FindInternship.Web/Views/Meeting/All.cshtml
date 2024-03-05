@@ -39,38 +39,81 @@
 
 <div class="calendar" style="display: none">
 
-    <div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display: none; width: 750px; position: absolute;height: fit-content;
-    padding-top: 40px" id="meeting-form">
+    <div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display:none;width: 750px; position: absolute;height: fit-content;
+padding-top: 40px" id="meeting-form">
 
         <h2 class="text-light text-center">Създай среща</h2>
 
         <form class="requires-validation" id="addEvent">
 
-            <select placeholder="Клас" type="text" name="classId">
-                @foreach (var cl in Model.CompanyClasses)
-                {
-                    <option value="@cl.Id">@cl.Grade (@cl.School)</option>
-                }
-            </select>
-            <span class="text-danger" id="classValidation" style="display:none; font-weight: bold;">Това поле е задължително</span>
+            <div class="input-group">
+                <select required="" autocomplete="off" class="input" name="classId" id="select-class" style="border-top-right-radius: 1rem;
+                border-bottom-right-radius: 1rem;padding: 10px;">
+                    @foreach(var cl in Model.CompanyClasses)
+                    {
+                        <option style="background-color: black" value="@cl.Id">@cl.Grade (@cl.School)</option>
+                    }
+                </select>
 
-            <input placeholder="Тема на срещата" type="text" name="title">
-            <span class="text-danger" id="titleValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+                <label class="user-label" id="label-class">Клас</label>
+                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            </div>
+            <div class="input-group">
+                <select required="" autocomplete="off" name="lectorId" class="input" id="select-lector" style="border-top-right-radius: 1rem;
+                border-bottom-right-radius: 1rem;padding: 10px;">
+                    @foreach(var lector in Model.CompanyLectors)
+                    {
+                        <option style="background-color: black" value="@lector.Id">@lector.Name</option>
+                    }
+                </select>
 
-            <lable class="text-light" style="margin-top: 10px">Начален час</lable>
-            <input type="datetime-local" name="start" placeholder="start time">
-            <span class="text-danger" id="startValidation" style="display:none; font-weight: bold;">Това поле е задължително</span>
+                <label class="user-label" id="label-lector">Лектор</label>
+                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            </div>
 
-            <label class="text-light" style="margin-top: 10px">Краен час</label>
-            <input type="datetime-local" name="end" placeholder="end time">
-            <span class="text-danger" id="endValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            <div class="input-group">
+                <input required="" type="text" name="title" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+                border-bottom-right-radius: 1rem;">
+                <label class="user-label">Заглавие</label>
+                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            </div>
+            <div class="input-group">
+                <input required="" type="text" id="start-date" name="start" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+                border-bottom-right-radius: 1rem;">
+                <label class="user-label" id="label-start">Начален час</label>
+                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            </div>
+            <div class="input-group">
+                <input required="" type="text" id="end-date" name="end" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+                border-bottom-right-radius: 1rem;">
+                <label class="user-label" id="label-end">Краен час</label>
+                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            </div>
+            <div class="input-group">
+                <input required="" type="text" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+                border-bottom-right-radius: 1rem;">
+                <label class="user-label">Адрес</label>
+                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            </div>
+            <div class="input-group">
+                <input required="" type="text" name="description" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+                border-bottom-right-radius: 1rem;height: 5rem;">
+                <label class="user-label">Описание</label>
+                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            </div>
 
-            <input placeholder="Адрес на срещата" type="text" name="address">
-            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            <div class="form-group file-area">
+                <label for="images">Ресурси</label>
+                <input type="file" name="files" id="files" required="required" multiple="multiple" />
+                <div class="file-dummy" id="files-container">
+                </div>
+            </div>
 
-            <br>
 
-            <button type="submit" class="o-btn js-event__save" id="btn-save">SAVE <span class="fa fa-save"></span></button>
+            <button class="button">
+                <span class="button-content">Добави </span>
+            </button>
+
 
         </form>
 
@@ -120,10 +163,12 @@
 @section Styles {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/schedule.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/meetingForm.css" asp-append-version="true" />
 }
 @section Scripts {
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/meeting.js" asp-append-version="true"></script>
+    <script src="~/js/meetingForm.js" asp-append-version="true"></script>
 
 }

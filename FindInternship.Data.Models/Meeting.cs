@@ -16,6 +16,7 @@ namespace FindInternship.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.IsActive = true;
+            this.Materials = new HashSet<MeetingMaterial>();
         }
         [Key]
         public string Id { get; set; } = null!;
@@ -30,6 +31,9 @@ namespace FindInternship.Data.Models
 
         public DateTime EndTime { get; set; }
 
+        [MaxLength(MeetingDescriptionMaxLength)]
+        public string Description { get; set; } = null!;
+
         [ForeignKey(nameof(Company))]
         public string CompanyId { get; set; } = null!;
 
@@ -40,6 +44,13 @@ namespace FindInternship.Data.Models
 
         public Class Class { get; set; } = null!;
 
+        [ForeignKey(nameof(Lector))]
+        public string LectorId { get; set; } = null!;
+
+        public Lector Lector { get; set; } = null!;
+
         public bool IsActive { get; set; }
+
+        public ICollection<MeetingMaterial> Materials { get; set; }
     }
 }

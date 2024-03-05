@@ -97,6 +97,15 @@ namespace FindInternship.Common
 
             public const int MeetingTitleMaxLength = 50;
             public const int MeetingTitleMinLength = 4;
+
+            public const int MeetingDescriptionMaxLength = 1000;
+            public const int MeetingDescriptionMinLength = 5;
+        }
+
+        public static class MeetingMaterialConstants
+        {
+            public const int MaterialNameMaxLength = 50;
+            public const int MaterialNameMinLength = 4;
         }
 
         public static class LectorConstants
