@@ -23,8 +23,8 @@
 
 <div style="margin-top: 20px;position: relative; direction: rtl;">
     <nav aria-label="Page navigation example">
-        <div class="pagination" >
-            <p class="page-item1"> <a class="page-link1" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days + 5)"><img src="~/img/right.png" style="height:3em; "/></a></p>
+        <div class="pagination">
+            <p class="page-item1"> <a class="page-link1" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days + 5)"><img src="~/img/right.png" style="height:3em; " /></a></p>
             <p class="page-item2"><a class="page-link2" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days - 5)"><img src="~/img/left.png" style="height:3em; " /></a></p>
         </div>
     </nav>
@@ -32,143 +32,187 @@
 
 <h2 class="text-center text-dark">@month[Model.Month]</h2>
 
-<div class="d-flex justify-content-center mt-lg-5" >
+<div class="d-flex justify-content-center mt-lg-5">
     <span class="loader" id="load"></span>
 
 </div>
 
-<div class="calendar" style="display: none">
 
-    <div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display:none;width: 750px; position: absolute;height: fit-content;
+<div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display:none;width: 750px; position: absolute;height: fit-content;
 padding-top: 40px" id="meeting-form">
 
-        <h2 class="text-light text-center">Създай среща</h2>
+    <h2 class="text-light text-center">Създай среща</h2>
 
-        <form class="requires-validation" id="addEvent">
+    <form class="requires-validation" id="addEvent">
 
-            <div class="input-group">
-                <select required="" autocomplete="off" class="input" name="classId" id="select-class" style="border-top-right-radius: 1rem;
+        <div class="input-group">
+            <select required="" autocomplete="off" class="input" name="classId" id="select-class" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;padding: 10px;">
-                    @foreach(var cl in Model.CompanyClasses)
-                    {
-                        <option style="background-color: black" value="@cl.Id">@cl.Grade (@cl.School)</option>
-                    }
-                </select>
+                @foreach (var cl in Model.CompanyClasses)
+                {
+                    <option style="background-color: black" value="@cl.Id">@cl.Grade (@cl.School)</option>
+                }
+            </select>
 
-                <label class="user-label" id="label-class">Клас</label>
-                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
-            </div>
-            <div class="input-group">
-                <select required="" autocomplete="off" name="lectorId" class="input" id="select-lector" style="border-top-right-radius: 1rem;
+            <label class="user-label" id="label-class">Клас</label>
+            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+        </div>
+        <div class="input-group">
+            <select required="" autocomplete="off" name="lectorId" class="input" id="select-lector" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;padding: 10px;">
-                    @foreach(var lector in Model.CompanyLectors)
-                    {
-                        <option style="background-color: black" value="@lector.Id">@lector.Name</option>
-                    }
-                </select>
+                @foreach (var lector in Model.CompanyLectors)
+                {
+                    <option style="background-color: black" value="@lector.Id">@lector.Name</option>
+                }
+            </select>
 
-                <label class="user-label" id="label-lector">Лектор</label>
-                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
-            </div>
+            <label class="user-label" id="label-lector">Лектор</label>
+            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+        </div>
 
-            <div class="input-group">
-                <input required="" type="text" name="title" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+        <div class="input-group">
+            <input type="text" required="" name="title" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;">
-                <label class="user-label">Заглавие</label>
-                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
-            </div>
-            <div class="input-group">
-                <input required="" type="text" id="start-date" name="start" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+            <label class="user-label">Заглавие</label>
+            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+        </div>
+        <div class="input-group">
+            <input type="text" required="" id="start-date" name="start" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;">
-                <label class="user-label" id="label-start">Начален час</label>
-                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
-            </div>
-            <div class="input-group">
-                <input required="" type="text" id="end-date" name="end" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+            <label class="user-label" id="label-start">Начален час</label>
+            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+        </div>
+        <div class="input-group">
+            <input type="text" required="" id="end-date" name="end" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;">
-                <label class="user-label" id="label-end">Краен час</label>
-                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
-            </div>
-            <div class="input-group">
-                <input required="" type="text" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+            <label class="user-label" id="label-end">Краен час</label>
+            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+        </div>
+        <div class="input-group">
+            <input type="text" required="" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;">
-                <label class="user-label">Адрес</label>
-                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
-            </div>
-            <div class="input-group">
-                <input required="" type="text" name="description" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+            <label class="user-label">Адрес</label>
+            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+        </div>
+        <div class="input-group">
+            <input type="text" required="" name="description" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;height: 5rem;">
-                <label class="user-label">Описание</label>
-                <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+            <label class="user-label">Описание</label>
+            <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
+        </div>
+
+        <div class="form-group file-area">
+            <label for="images">Ресурси</label>
+            <input type="file" name="files" id="files" required="required" multiple="multiple" />
+            <div class="file-dummy" id="files-container">
             </div>
-
-            <div class="form-group file-area">
-                <label for="images">Ресурси</label>
-                <input type="file" name="files" id="files" required="required" multiple="multiple" />
-                <div class="file-dummy" id="files-container">
-                </div>
-            </div>
-
-
-            <button class="button">
-                <span class="button-content">Добави </span>
-            </button>
-
-
-        </form>
-
-
-    </div>
-
-
-
-    <div class="timeline">
-        <div class="spacer"></div>
-        <div class="time-marker">9:00</div>
-        <div class="time-marker">10:00</div>
-        <div class="time-marker">11:00</div>
-        <div class="time-marker">12:00</div>
-        <div class="time-marker">13:00</div>
-        <div class="time-marker">14:00</div>
-        <div class="time-marker">15:00</div>
-        <div class="time-marker">16:00</div>
-        <div class="time-marker">17:00</div>
-        <div class="time-marker">18:00</div>
-    </div>
-
-    
-
-    <div class="days @Model.ClassId">
-
-        <partial name="_MeetingPartial" model="@Model.DayNow" />
-        <partial name="_MeetingPartial" model="@Model.DayTomorrow" />
-        <partial name="_MeetingPartial" model="@Model.Day2" />
-        <partial name="_MeetingPartial" model="@Model.Day3" />
-        <partial name="_MeetingPartial" model="@Model.Day4" />
-
-        <div id="ignoreOverflow" style="display:@display">
-            <a data-fancybox data-src="#meeting-form" class="float" id="addMeeting">
-                <div class="plus">+</div>
-                <div class="ink-visual-container">
-                    <div class="ink-visual-static"></div>
-                </div>
-            </a>
         </div>
 
 
+        <button class="button" id="addMeeting">
+            <span class="button-content">Добави </span>
+        </button>
+
+
+    </form>
+
+
+</div>
+
+@if (User.IsInRole("Company"))
+{
+    <div class="div-btn" data-fancybox data-src="#meeting-form" id="add-btn" style="display: none">
+        <a class="cssbuttons-io-button">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path>
+            </svg>
+            <span>Добави среща</span>
+        </a>
     </div>
+
+}
+
+
+<div class="cd-schedule loading" id="schedule" style="display: none">
+
+    <div class="timeline">
+        <ul>
+            <li><span>09:00</span></li>
+            <li><span>09:30</span></li>
+            <li><span>10:00</span></li>
+            <li><span>10:30</span></li>
+            <li><span>11:00</span></li>
+            <li><span>11:30</span></li>
+            <li><span>12:00</span></li>
+            <li><span>12:30</span></li>
+            <li><span>13:00</span></li>
+            <li><span>13:30</span></li>
+            <li><span>14:00</span></li>
+            <li><span>14:30</span></li>
+            <li><span>15:00</span></li>
+            <li><span>15:30</span></li>
+            <li><span>16:00</span></li>
+            <li><span>16:30</span></li>
+            <li><span>17:00</span></li>
+            <li><span>17:30</span></li>
+            <li><span>18:00</span></li>
+        </ul>
+    </div>
+
+
+
+    <div class="events">
+
+        <ul class="wrap">
+
+            <partial name="_MeetingPartial" model="@Model.DayNow" />
+            <partial name="_MeetingPartial" model="@Model.DayTomorrow" />
+            <partial name="_MeetingPartial" model="@Model.Day2" />
+            <partial name="_MeetingPartial" model="@Model.Day3" />
+            <partial name="_MeetingPartial" model="@Model.Day4" />
+            <partial name="_MeetingPartial" model="@Model.Day5" />
+            <partial name="_MeetingPartial" model="@Model.Day6" />
+
+        </ul>
+
+    </div>
+
+    <div class="event-modal">
+        <header class="header">
+            <div class="content">
+                <span class="event-date"></span>
+                <h3 class="event-name"></h3>
+            </div>
+            <div class="d-flex" id="asctions" style="justify-content: center;">
+            </div>
+
+            <div class="header-bg"></div>
+        </header>
+
+        <div class="body">
+            <div class="event-info"></div>
+            <div class="body-bg"></div>
+        </div>
+
+        <a href="#0" class="close">Close</a>
+    </div>
+
+    <div class="cover-layer"></div>
 
 </div>
 
 @section Styles {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="~/css/schedule.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/newSchedule.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/meetingForm.css" asp-append-version="true" />
 }
 @section Scripts {
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="~/js/meeting.js" asp-append-version="true"></script>
     <script src="~/js/meetingForm.js" asp-append-version="true"></script>
+    <script src="~/js/schedule.js" asp-append-version="true"></script>
+    <script src="~/js/meeting.js" asp-append-version="true"></script>
+
 
 }

@@ -41,7 +41,7 @@ namespace FindInternship.Web.Controllers
 
             AllMeetingsViewModel model = new AllMeetingsViewModel();
             model.Days = days;
-            model.Month = DateTime.Now.AddDays(days).ToString("MMMM", CultureInfo.InvariantCulture); 
+            model.Month = DateTime.Now.AddDays(days).ToString("MMMM", CultureInfo.InvariantCulture);
             string userId = User.GetId()!;
             if (string.IsNullOrEmpty(userId))
             {
@@ -64,6 +64,8 @@ namespace FindInternship.Web.Controllers
                     model.Day2 = await meetingService.GetClassMeetingsForDayAsync(days + 2, teacherId!);
                     model.Day3 = await meetingService.GetClassMeetingsForDayAsync(days + 3, teacherId!);
                     model.Day4 = await meetingService.GetClassMeetingsForDayAsync(days + 4, teacherId!);
+                    model.Day5 = await meetingService.GetClassMeetingsForDayAsync(days + 5, teacherId!);
+                    model.Day6 = await meetingService.GetClassMeetingsForDayAsync(days + 6, teacherId!);
 
                 }
                 else if (isCompany)
@@ -74,6 +76,10 @@ namespace FindInternship.Web.Controllers
                     model.Day2 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 2, companyId!);
                     model.Day3 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 3, companyId!);
                     model.Day4 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 4, companyId!);
+                    model.Day5 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 5, companyId!);
+                    model.Day6 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 6, companyId!);
+
+
                     model.CompanyClasses = await classService.GetClassMeetingAsync(companyId!);
                     model.CompanyLectors = await lectorService.GetAllCompanyLectorsAsync(companyId!);
 
@@ -81,7 +87,7 @@ namespace FindInternship.Web.Controllers
                 }
                 else if (isStudent)
                 {
-                    string?  studentId = await studentService.GetStudentId(userId);
+                    string? studentId = await studentService.GetStudentId(userId);
                     string? studentTeacherId = await studentService.GetStudentTeacherIdAsync(studentId!);
                     model.ClassId = await studentService.GetStudentClassIdAsync(studentId!);
                     model.DayNow = await meetingService.GetClassMeetingsForDayAsync(days + 0, studentTeacherId!);
@@ -89,6 +95,8 @@ namespace FindInternship.Web.Controllers
                     model.Day2 = await meetingService.GetClassMeetingsForDayAsync(days + 2, studentTeacherId!);
                     model.Day3 = await meetingService.GetClassMeetingsForDayAsync(days + 3, studentTeacherId!);
                     model.Day4 = await meetingService.GetClassMeetingsForDayAsync(days + 4, studentTeacherId!);
+                    model.Day5 = await meetingService.GetClassMeetingsForDayAsync(days + 5, studentTeacherId!);
+                    model.Day6 = await meetingService.GetClassMeetingsForDayAsync(days + 6, studentTeacherId!);
 
                 }
                 else
@@ -122,10 +130,10 @@ namespace FindInternship.Web.Controllers
             bool isExists = await meetingService.IsMeetingExistsAsync(start, end, classId);
             if (isExists)
             {
-                return new JsonResult(new {isExists, ClassIdNull = false });
+                return new JsonResult(new { isExists, ClassIdNull = false });
             }
 
-            if(classId == null)
+            if (classId == null)
             {
                 return new JsonResult(new { ClassIdNull = true });
             }
@@ -151,8 +159,8 @@ namespace FindInternship.Web.Controllers
                     Title = title,
                     Start = start,
                     End = end,
-                    Address = address, 
-                    LectorId = lectorId, 
+                    Address = address,
+                    LectorId = lectorId,
                     Description = description,
                 };
 
@@ -176,7 +184,7 @@ namespace FindInternship.Web.Controllers
 
 
                 TempData[SuccessMessage] = "Успешно добавена среща";
-                return new JsonResult(new { MeetingId=meetingId, ReceiversIds = receiversIds, isExists=false, ClassIdNull = false });
+                return new JsonResult(new { MeetingId = meetingId, ReceiversIds = receiversIds, isExists = false, ClassIdNull = false });
 
 
             }
@@ -186,7 +194,7 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("All", "Meeting");
             }
 
-           
+
         }
 
         [HttpGet]
@@ -260,7 +268,7 @@ namespace FindInternship.Web.Controllers
             bool isExistsInCompany = await meetingService.IsMeetingExistsInCompanyAsync(start, end, companyId!, "");
             if (isExistsInCompany && (DateTime.Compare(meetingOld!.Start, model.Start) != 0 || DateTime.Compare(meetingOld.End, model.End) != 0))
             {
-                return new JsonResult(new { isExists = true});
+                return new JsonResult(new { isExists = true });
             }
 
 
@@ -273,7 +281,7 @@ namespace FindInternship.Web.Controllers
 
         [HttpGet]
         [Route("/Meeting/Delete/{id}")]
-        public async Task<IActionResult> Delete([FromRoute]string id)
+        public async Task<IActionResult> Delete([FromRoute] string id)
         {
             string userId = User.GetId()!;
 
@@ -333,8 +341,57 @@ namespace FindInternship.Web.Controllers
 
             TempData[SuccessMessage] = "Успешно изтрита среща";
 
-            return new JsonResult(new {ReceiversIds = receiversIds, meetingId = id });
+            return new JsonResult(new { ReceiversIds = receiversIds, meetingId = id });
 
+
+        }
+        [HttpGet]
+        [Route("/Meeting/Details/{id}")]
+        public async Task<IActionResult> Details([FromRoute] string id)
+        {
+            string? userId = User.GetId();
+            bool isCompany = await companyService.IsCompanyAsync(userId!);
+            bool isTeacher = await teacherService.IsTeacherAsync(userId!);
+            bool isStudent = await studentService.IsStudent(userId!);
+
+
+            bool isMeetingExists = await meetingService.IsExistsByIdAsync(id!);
+
+            if (isCompany)
+            {
+                string? companyId = await companyService.GetCompanyIdAsync(userId!);
+                bool isInCompanySchedule = await companyService.IsInCompanyScheduleAsync(companyId!, id);
+                if (!isInCompanySchedule)
+                {
+                    TempData[ErrorMessage] = "Тази среща не е в твоя график";
+                    return new JsonResult(new { isExists = false });
+                }
+                if (!isMeetingExists)
+                {
+                    TempData[ErrorMessage] = "Тази среща не съществува";
+                    return new JsonResult(new { isExists = false });
+                }
+
+                var meeting = await meetingService.GetDetailsForMeetingAsync(id);
+
+                return new JsonResult(new { meeting, isExists = true, isCompany });
+
+
+            }
+            else if (isTeacher || isStudent)
+            {
+                if (!isMeetingExists)
+                {
+                    TempData[ErrorMessage] = "Тази среща не съществува";
+                    return new JsonResult(new { isExists = false });
+                }
+
+                var meeting = await meetingService.GetDetailsForMeetingAsync(id);
+
+                return new JsonResult(new { meeting, isExists = true, isCompany = false });
+            }
+
+            return new JsonResult(new { isExists = isMeetingExists});
 
         }
 

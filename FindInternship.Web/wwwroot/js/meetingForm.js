@@ -3,15 +3,12 @@ $(document).ready(function ($) {
     document.getElementById('start-date').addEventListener('focus', function () {
         this.type = 'datetime-local'
         document.getElementById('label-start').style = 'transform: translateY(-50%) scale(0.8);background-color: #212121; padding: 0 0.2em; color: #2196f3;'
-    })
+    });
 
     document.getElementById('end-date').addEventListener('focus', function () {
         this.type = 'datetime-local'
         document.getElementById('label-end').style = 'transform: translateY(-50%) scale(0.8);background-color: #212121; padding: 0 0.2em; color: #2196f3;'
-    })
-
-
-
+    });
 
     document.getElementById('select-class').value = '';
     document.getElementById('select-class').addEventListener('input', function () {
@@ -39,7 +36,7 @@ $(document).ready(function ($) {
                 div.classList.add('pr-2');
                 div.style = 'margin-left: 10px; margin-top: 0.5rem;';
 
-                div.innerHTML = `<div style="display: flex; flex-direction: row;"><img src="/images/google-docs.png" style="height: 26px; width: 26px"></img>
+                div.innerHTML = `<div style="display: flex; flex-direction: row;"><img src="/img/google-docs.png" style="height: 26px; width: 26px"></img>
                                     <div class="pl-1 pt-1 text-dark" style="font-size: medium; padding-top:2px; margin-left: 0.5rem">${file.name}</div>
                                  </div>`
 

@@ -1,4 +1,6 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Lector;
+using FindInternship.Core.Models.Materials;
 using FindInternship.Core.Models.Meeting;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
@@ -31,7 +33,7 @@ namespace FindInternship.Core.Services
                 ClassId = classId,
                 CompanyId = companyId,
                 EndTime = model.End,
-                StartTime = model.Start, 
+                StartTime = model.Start,
                 Description = model.Description,
                 LectorId = model.LectorId,
 
@@ -92,7 +94,7 @@ namespace FindInternship.Core.Services
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
                     Number = m.StartTime.Day,
                     StartHour = m.StartTime.ToString("HH"),
-                    EndHour = m.EndTime.ToString("HH"), 
+                    EndHour = m.EndTime.ToString("HH"),
                     Class = m.Class.Grade
                 })
                 .FirstOrDefaultAsync();
@@ -113,15 +115,15 @@ namespace FindInternship.Core.Services
                 .Where(me => me.Id == meetingId && me.IsActive == true)
                 .Select(m => new FormMeetingViewModel()
                 {
-                    Address = m.Address, 
+                    Address = m.Address,
                     End = m.EndTime,
-                    Start = m.StartTime, 
-                    Title = m.Title, 
+                    Start = m.StartTime,
+                    Title = m.Title,
                     CompanyId = m.CompanyId,
                 })
                 .FirstOrDefaultAsync();
 
-            if(meeting == null) 
+            if (meeting == null)
             {
                 return null;
             }
@@ -135,7 +137,7 @@ namespace FindInternship.Core.Services
             var meeting = await repo.All<Meeting>()
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if(meeting == null)
+            if (meeting == null)
             {
                 return;
             }
@@ -163,8 +165,8 @@ namespace FindInternship.Core.Services
                     Address = m.Address,
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
                     Number = m.StartTime.Day,
-                    StartHour = m.StartTime.ToString("HH"),
-                    EndHour = m.EndTime.ToString("HH"), 
+                    StartHour = m.StartTime.ToString("H:mm"),
+                    EndHour = m.EndTime.ToString("H:mm"),
                     Class = m.Class.Grade
 
                 })
@@ -188,7 +190,7 @@ namespace FindInternship.Core.Services
             var meetings = await repo.All<Meeting>()
                 .Include(m => m.Class)
                 .OrderBy(m => m.StartTime)
-                .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear && m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.Class.TeacherId==teacherId && m.IsActive)
+                .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear && m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.Class.TeacherId == teacherId && m.IsActive)
                 .Select(m => new MeetingViewModel()
                 {
                     Id = m.Id,
@@ -197,7 +199,7 @@ namespace FindInternship.Core.Services
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
                     Number = m.StartTime.Day,
                     StartHour = m.StartTime.ToString("HH"),
-                    EndHour = m.EndTime.ToString("HH"), 
+                    EndHour = m.EndTime.ToString("HH"),
                     Class = m.Class.Grade
                 })
                 .ToListAsync();
@@ -219,7 +221,7 @@ namespace FindInternship.Core.Services
             var meetingsCount = await repo.All<Meeting>().CountAsync();
 
             return meetingsCount;
-                
+
         }
 
         public async Task<bool> IsMeetingExistsAsync(DateTime start, DateTime end, string classId)
@@ -234,6 +236,53 @@ namespace FindInternship.Core.Services
         {
             var isExists = await repo.All<Meeting>()
                .AnyAsync(m => ((DateTime.Compare(m.StartTime, start) == 0 || DateTime.Compare(m.EndTime, end) == 0 || (DateTime.Compare(m.StartTime, start) > 0 && DateTime.Compare(m.StartTime, end) < 0) || (DateTime.Compare(m.EndTime, start) > 0 && DateTime.Compare(m.EndTime, end) < 0)) && m.IsActive && m.CompanyId == companyId));
+
+            return isExists;
+        }
+
+        public async Task<DetailsMeetingViewModel?> GetDetailsForMeetingAsync(string meetingId)
+        {
+            var meeting = await repo.All<Meeting>()
+                .Include(m => m.Materials)
+                .Include(m => m.Lector)
+                .Include(m => m.Class)
+                .FirstOrDefaultAsync(m => m.Id == meetingId);
+
+            if (meeting == null)
+            {
+                return null;
+            }
+
+            var model = new DetailsMeetingViewModel()
+            {
+                Id = meeting.Id,
+                Description = meeting.Description,
+                Address = meeting.Address,
+                Class = meeting.Class.Grade,
+                Lector = new LectorDetailsMeetingViewModel()
+                {
+                    Name = meeting.Lector.Name,
+                    ProfilePictureUrl = meeting.Lector.ProfilePictureUrl,
+                },
+                Materials = meeting.Materials
+                .Select(m => new MaterialViewModel()
+                {
+                    Name = m.Name,
+                    Url = m.DocumentUrl
+                }).ToList(),
+            };
+
+            return model;
+
+
+
+
+        }
+
+        public async Task<bool> IsExistsByIdAsync(string meetingId)
+        {
+            bool isExists = await repo.All<Meeting>()
+                .AnyAsync(m => m.Id == meetingId);
 
             return isExists;
         }

@@ -34,7 +34,7 @@
 
 }
 
-
+@* 
 <div class="day-@dayText">
     <div class="date">
         <p class="date-num">@day</p>
@@ -63,3 +63,22 @@
         }
     </div>
 </div>
+ *@
+
+<li class="events-group" id="day-@dayText">
+    <div class="top-info"><span class="text-dark" style="font-weight: bold;">@day @days[dayText]</span></div>
+
+    <ul>
+        @foreach(var meeting in Model.Where(m => !string.IsNullOrEmpty(m.Title)))
+        {
+            <li class="single-event" data-start="@meeting.StartHour" data-end="@meeting.EndHour" data-content="@meeting.Title"
+                data-event="event-1">
+                <a href="#0" id="@meeting.Id">
+                    <em class="event-name mt-2">@meeting.Title</em>
+                    <em class="event-name mt-2" style="font-size: 1rem;">@meeting.Class (ППМГ Никола Обрешков)</em>
+                </a>
+            </li>
+        }
+        
+    </ul>
+</li>

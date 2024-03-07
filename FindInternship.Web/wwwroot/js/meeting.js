@@ -1,7 +1,9 @@
 
 $(document).ready(function () {
     document.getElementById('load').style.display = 'none';
-    document.getElementsByClassName('calendar')[0].style.display = 'grid'
+    document.getElementById('load').classList.remove('mt-lg-5');
+    document.getElementById('schedule').style.display = 'block';
+    document.getElementById('add-btn').style.display = 'flex';
 });
 
 
@@ -196,20 +198,33 @@ connection.on("ReceiveMeeting", function (meeting, id) {
         "18": "6"
     }
 
-    let divParent = document.querySelector(`div.day-${meeting.day} div.events`);
+    let divParent = document.querySelector(`#day-${meeting.day} ul`);
 
-    let divChild = document.createElement('div');
-    divChild.classList.add(`event`);
-    divChild.classList.add(`start-${hours[meeting.startHour]}`);
-    divChild.classList.add(`end-${hours[meeting.endHour]}`);
-    divChild.classList.add(`corp-fi`);
-    divChild.style.marginTop = "10px";
-    divChild.id = id;
+    //let divChild = document.createElement('div');
+    //divChild.classList.add(`event`);
+    //divChild.classList.add(`start-${hours[meeting.startHour]}`);
+    //divChild.classList.add(`end-${hours[meeting.endHour]}`);
+    //divChild.classList.add(`corp-fi`);
+    //divChild.style.marginTop = "10px";
+    //divChild.id = id;
 
-    divChild.innerHTML = ` <p class="title"><i class="bi bi-card-heading" style="margin-right: 0.3rem;"></i>${meeting.title} \u002d ${meeting.class}</p>
-                       <p class="title"><i class="bi bi-building" style="margin-right: 0.3rem;"></i>${meeting.address}</p>
-                       <p class="time" style="margin-bottom: 5px"><i class="bi bi-clock" style="margin-right: 0.3rem;"></i>${meeting.startHour} \u0447. - ${meeting.endHour} \u0447.</p>
-                       `.normalize();
+    //divChild.innerHTML = ` <p class="title"><i class="bi bi-card-heading" style="margin-right: 0.3rem;"></i>${meeting.title} \u002d ${meeting.class}</p>
+    //                   <p class="title"><i class="bi bi-building" style="margin-right: 0.3rem;"></i>${meeting.address}</p>
+    //                   <p class="time" style="margin-bottom: 5px"><i class="bi bi-clock" style="margin-right: 0.3rem;"></i>${meeting.startHour} \u0447. - ${meeting.endHour} \u0447.</p>
+    //                   `.normalize();
+
+    let li = document.createElement('li');
+    li.classList.add('single-event');
+    li.setAttribute('data-start', meeting.startHour);
+    li.setAttribute('data-end', meeting.endHour);
+    li.setAttribute('data-content', meeting.title);
+    li.setAttribute('data-event', 'event-1');
+    li.setAttribute('id', id);
+
+    li.innerHTML = `<a href="#0" id="${id}">
+                        <em class="event-name mt-2">${meeting.title} \u002d ${meeting.class}</em>
+                    </a>`.normalize();
+
 
 
     divParent.appendChild(divChild);
@@ -220,6 +235,4 @@ connection.on("ReceiveMeeting", function (meeting, id) {
 });
 
 document.getElementById('addEvent').addEventListener('submit', create);
-
-
 
