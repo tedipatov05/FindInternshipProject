@@ -2,6 +2,17 @@ var connection = new signalR.HubConnectionBuilder()
     .withUrl("/meetingHub")
     .build();
 
+$(document).ready(function () {
+
+    let divs = Array.from( document.getElementsByClassName('input-group'));
+    for (let div of divs) {
+        div.children[0].disabled = true
+        div.children[1].style = 'transform: translateY(-50%) scale(0.8);background-color: #212121;padding: 0 .2em;color: #2196f3;'
+
+    }
+
+});
+
 async function start() {
     try {
         await connection.start();

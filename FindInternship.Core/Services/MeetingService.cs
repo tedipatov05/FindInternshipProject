@@ -64,12 +64,22 @@ namespace FindInternship.Core.Services
         {
             var meeting = await repo.All<Meeting>()
                 .Where(m => m.Id == meetingId && m.IsActive)
+                .Include(m => m.Materials)
+                .Include(m => m.Lector)
                 .Select(m => new PreDeleteMeetingViewModel()
                 {
                     Address = m.Address,
                     End = m.EndTime,
                     Start = m.StartTime,
                     Title = m.Title,
+                    Description = m.Description,
+                    Lector = m.Lector.Name,
+                    Materials = m.Materials.Select(m => new MaterialViewModel()
+                    {
+                        Name = m.Name,
+                        Url = m.DocumentUrl
+                    })
+                    .ToList(),
                 })
                 .FirstOrDefaultAsync();
 
@@ -93,8 +103,8 @@ namespace FindInternship.Core.Services
                     Address = m.Address,
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
                     Number = m.StartTime.Day,
-                    StartHour = m.StartTime.ToString("HH"),
-                    EndHour = m.EndTime.ToString("HH"),
+                    StartHour = m.StartTime.ToString("H:mm"),
+                    EndHour = m.EndTime.ToString("H:mm"),
                     Class = m.Class.Grade
                 })
                 .FirstOrDefaultAsync();
@@ -198,8 +208,8 @@ namespace FindInternship.Core.Services
                     Address = m.Address,
                     Day = m.StartTime.DayOfWeek.ToString().Substring(0, 3),
                     Number = m.StartTime.Day,
-                    StartHour = m.StartTime.ToString("HH"),
-                    EndHour = m.EndTime.ToString("HH"),
+                    StartHour = m.StartTime.ToString("H:mm"),
+                    EndHour = m.EndTime.ToString("H:mm"),
                     Class = m.Class.Grade
                 })
                 .ToListAsync();

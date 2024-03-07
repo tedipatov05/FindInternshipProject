@@ -3,7 +3,11 @@ $(document).ready(function () {
     document.getElementById('load').style.display = 'none';
     document.getElementById('load').classList.remove('mt-lg-5');
     document.getElementById('schedule').style.display = 'block';
-    document.getElementById('add-btn').style.display = 'flex';
+
+    if (document.getElementById('add-btn') != null) {
+        document.getElementById('add-btn').style.display = 'flex';
+
+    }
 });
 
 
@@ -229,6 +233,7 @@ connection.on("ReceiveMeeting", function (meeting, id) {
 
     divParent.appendChild(divChild);
 
+    schedule.initSchedule();
 
 
 
