@@ -34,37 +34,6 @@
 
 }
 
-@* 
-<div class="day-@dayText">
-    <div class="date">
-        <p class="date-num">@day</p>
-        <p class="date-day">@days[dayText]</p>
-    </div>
-    <div class="events">
-        @foreach (var meeting in Model)
-        {
-            if (meeting.Title != null)
-            {
-                <div class="event start-@hours[meeting.StartHour!] end-@hours[meeting.EndHour!] corp-fi" id="@meeting.Id" style="margin-top: 10px;">
-                    <p class="title"><i class="bi bi-card-heading" style="margin-right: 0.3rem;"></i> @meeting.Title - @meeting.Class</p>
-                    <p class="title"><i class="bi bi-building"></i> @meeting.Address</p>
-                    <p class="time" style="margin-bottom: 5px"><i class="bi bi-clock"></i> @meeting.StartHour ч. - @meeting.EndHour ч.</p>
-                    
-                    @if (User.IsInRole("Company"))
-                    {
-                        <a class="button-81-edit"  asp-action="Edit" asp-controller="Meeting" asp-route-id="@meeting.Id">Промени</a>
-                        <a class="button-81-delete" asp-action="Delete" asp-controller="Meeting" asp-route-id="@meeting.Id">Изтрий</a>
-                    }
-
-                </div>
-
-            }
-
-        }
-    </div>
-</div>
- *@
-
 <li class="events-group" id="day-@dayText">
     <div class="top-info"><span class="text-dark" style="font-weight: bold;">@day @days[dayText]</span></div>
 
@@ -75,7 +44,7 @@
                 data-event="event-1">
                 <a href="#0" id="@meeting.Id">
                     <em class="event-name mt-2">@meeting.Title</em>
-                    <em class="event-name mt-2" style="font-size: 1rem;">@meeting.Class (ППМГ Никола Обрешков)</em>
+                    <em class="event-name mt-2" style="font-size: 1rem;">@meeting.Class (@meeting.School)</em>
                 </a>
             </li>
         }

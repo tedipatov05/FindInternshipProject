@@ -95,6 +95,7 @@ namespace FindInternship.Core.Services
         {
             var meeting = await repo.All<Meeting>()
                 .Include(m => m.Class)
+                .Include(m => m.Class.School)
                 .Where(m => m.Id == meetingId && m.IsActive == true)
                 .Select(m => new MeetingViewModel()
                 {
@@ -105,7 +106,8 @@ namespace FindInternship.Core.Services
                     Number = m.StartTime.Day,
                     StartHour = m.StartTime.ToString("H:mm"),
                     EndHour = m.EndTime.ToString("H:mm"),
-                    Class = m.Class.Grade
+                    Class = m.Class.Grade, 
+                    School = m.Class.School.Name
                 })
                 .FirstOrDefaultAsync();
 
@@ -165,6 +167,7 @@ namespace FindInternship.Core.Services
         {
             var meetings = await repo.All<Meeting>()
                 .Include(m => m.Class)
+                .Include(m => m.Class.School)
                 .OrderBy(m => m.StartTime)
                 .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear &&
                 m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.CompanyId == companyId && m.IsActive)
@@ -177,7 +180,8 @@ namespace FindInternship.Core.Services
                     Number = m.StartTime.Day,
                     StartHour = m.StartTime.ToString("H:mm"),
                     EndHour = m.EndTime.ToString("H:mm"),
-                    Class = m.Class.Grade
+                    Class = m.Class.Grade, 
+                    School = m.Class.School.Name
 
                 })
                 .ToListAsync();
@@ -199,6 +203,7 @@ namespace FindInternship.Core.Services
         {
             var meetings = await repo.All<Meeting>()
                 .Include(m => m.Class)
+                .Include(m => m.Class.School)
                 .OrderBy(m => m.StartTime)
                 .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear && m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.Class.TeacherId == teacherId && m.IsActive)
                 .Select(m => new MeetingViewModel()
@@ -210,7 +215,8 @@ namespace FindInternship.Core.Services
                     Number = m.StartTime.Day,
                     StartHour = m.StartTime.ToString("H:mm"),
                     EndHour = m.EndTime.ToString("H:mm"),
-                    Class = m.Class.Grade
+                    Class = m.Class.Grade,
+                    School = m.Class.School.Name
                 })
                 .ToListAsync();
 

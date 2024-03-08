@@ -131,19 +131,19 @@ jQuery(document).ready(function ($) {
 
 
                     self.modalBody.find('.event-info').html(`<div>
-                                                    <h4>Materials</h4>
+                                                    <h4>Материали</h4>
                                                     <div style="margin-top: 1rem;" id="materials">
                                                        
                                                     </div> 
-                                                    <h4 style="margin-top: 1.4rem;">Description</h4>
+                                                    <h4 style="margin-top: 1.4rem;">Описание</h4>
                                                     <div style="margin-top: 0.5rem; margin-left: 1rem;font-weight: 400;">
                                                         ${data.meeting.description}
                                                     </div>
-                                                    <h4 style="margin-top: 2rem;">Address</h4>
+                                                    <h4 style="margin-top: 2rem;">Адрес</h4>
                                                     <div style="margin-top: 0.5rem; margin-left: 1rem;font-weight: 400;">
                                                         ${data.meeting.address}
                                                     </div>
-                                                    <h4 style="margin-top: 10px">Lector</h4>
+                                                    <h4 style="margin-top: 10px">Лектор</h4>
                                                     <div class="img-div">
                                                         <img class="image--cover" src="${data.meeting.lector.profilePictureUrl}"></img>
                                                         <div style="margin-left: 1rem;font-weight: 400;">${data.meeting.lector.name}</div>
@@ -151,7 +151,7 @@ jQuery(document).ready(function ($) {
                                                    
                                                  </div>`);
 
-                  
+                    
 
     
 

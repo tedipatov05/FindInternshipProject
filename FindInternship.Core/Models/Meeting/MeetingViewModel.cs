@@ -22,9 +22,7 @@ namespace FindInternship.Core.Models.Meeting
 
         public string? Class { get; set; }
 
-        //public string? CompanyId { get; set; }
-
-        //public string? ClassId { get; set; }
+        public string? School { get; set; }
 
     }
 }

@@ -1,4 +1,10 @@
 
+
+var transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
+var transitionsSupported = ($('.csstransitions').length > 0);
+
+if (!transitionsSupported) transitionEnd = 'noTransition';
+
 $(document).ready(function () {
     document.getElementById('load').style.display = 'none';
     document.getElementById('load').classList.remove('mt-lg-5');
@@ -166,7 +172,7 @@ connection.on("ReceiveDelete", function (meetingId) {
 
     var divMeeting = document.getElementById(`${meetingId}`);
 
-    divMeeting.parentNode.removeChild(divMeeting);
+    divMeeting.parentNode.parentNode.removeChild(divMeeting.parentNode);
 
 });
 
@@ -203,20 +209,7 @@ connection.on("ReceiveMeeting", function (meeting, id) {
     }
 
     let divParent = document.querySelector(`#day-${meeting.day} ul`);
-
-    //let divChild = document.createElement('div');
-    //divChild.classList.add(`event`);
-    //divChild.classList.add(`start-${hours[meeting.startHour]}`);
-    //divChild.classList.add(`end-${hours[meeting.endHour]}`);
-    //divChild.classList.add(`corp-fi`);
-    //divChild.style.marginTop = "10px";
-    //divChild.id = id;
-
-    //divChild.innerHTML = ` <p class="title"><i class="bi bi-card-heading" style="margin-right: 0.3rem;"></i>${meeting.title} \u002d ${meeting.class}</p>
-    //                   <p class="title"><i class="bi bi-building" style="margin-right: 0.3rem;"></i>${meeting.address}</p>
-    //                   <p class="time" style="margin-bottom: 5px"><i class="bi bi-clock" style="margin-right: 0.3rem;"></i>${meeting.startHour} \u0447. - ${meeting.endHour} \u0447.</p>
-    //                   `.normalize();
-
+    
     let li = document.createElement('li');
     li.classList.add('single-event');
     li.setAttribute('data-start', meeting.startHour);
@@ -226,18 +219,306 @@ connection.on("ReceiveMeeting", function (meeting, id) {
     li.setAttribute('id', id);
 
     li.innerHTML = `<a href="#0" id="${id}">
-                        <em class="event-name mt-2">${meeting.title} \u002d ${meeting.class}</em>
-                    </a>`.normalize();
+                        <em class="event-name mt-2">${meeting.title} </em>
+                        <em class="event-name mt-2" style="font-size: 1rem;">${meeting.class} (${meeting.school})</em>
+                    </a>`;
 
 
 
-    divParent.appendChild(divChild);
+    divParent.appendChild(li);
 
-    schedule.initSchedule();
-
+    initEvent(id);
+    placeEvents();
 
 
 });
 
 document.getElementById('addEvent').addEventListener('submit', create);
+
+let animating = false;
+
+function initEvent(id) {
+    let self = $('#schedule');
+    let modal = $('.event-modal')
+    let singleEvents = $(`#${id}`);
+    let eventsGroup = $('.events-group');
+
+    singleEvents.each(function () {
+
+        var durationLabel = '<span class="event-date">' + $(this).data('start') + ' - ' + $(this).data('end') + '</span>';
+        $(this).children('a').prepend($(durationLabel));
+
+
+        $(this).on('click', 'a', function (event) {
+            event.preventDefault();
+            if (!animating) openModal($(this));
+        });
+    });
+
+
+    modal.on('click', '.close', function (event) {
+        event.preventDefault();
+        if (!animating) closeModal(eventsGroup.find('.selected-event'));
+    });
+    self.on('click', '.cover-layer', function (event) {
+        if (!animating && self.hasClass('modal-is-open')) closeModal(eventsGroup.find('.selected-event'));
+    });
+};
+
+function placeEvents() {
+
+    let self = $('#schedule');
+    let singleEvents = $('.single-event');
+    let timeline = self.find('.timeline');
+    let timelineItems = timeline.find('li');
+    let eventsGroup = $('.events-group');
+    let eventSlotHeight = eventsGroup.eq(0).children('.top-info').outerHeight();
+    let timelineUnitDuration = getScheduleTimestamp(timelineItems.eq(1).text()) - getScheduleTimestamp(timelineItems.eq(0).text());
+    let timelineStart = getScheduleTimestamp(timelineItems.eq(0).text());
+    singleEvents.each(function () {
+
+        var start = getScheduleTimestamp($(this).attr('data-start')),
+            duration = getScheduleTimestamp($(this).attr('data-end')) - start;
+
+        var eventTop = eventSlotHeight * (start - timelineStart) / timelineUnitDuration,
+            eventHeight = eventSlotHeight * duration / timelineUnitDuration;
+
+        $(this).css({
+            top: (eventTop - 1) + 'px',
+            height: (eventHeight + 1) + 'px'
+        });
+    });
+
+    self.removeClass('loading');
+};
+function openModal(event) {
+
+    let self = $('#schedule');
+    let modal = $('.event-modal')
+    let modalHeaderBg = modal.find('.header-bg');
+    let modalHeader = modal.find('.header');
+    let modalBody = modal.find('.body');
+    let modalBodyBg = modal.find('.body-bg');
+    let modalMaxWidth = 800;
+    let modalMaxHeight = 480;
+    
+    animating = true;
+
+    let meetingId = event.attr('id');
+
+    let display = meetingId == '' ? 'none' : 'flex';
+
+    let t = $("input[name='__RequestVerificationToken']").val();
+
+    $.ajax({
+        type: 'GET',
+        url: `/Meeting/Details/${meetingId}`,
+        dataType: 'json',
+        headers: {
+            "RequestVerificationToken": t
+        },
+        success: function (data) {
+            if (data.isExists) {
+                //update event name and time
+                modalHeader.find('.event-name').text(event.find('.event-name').text());
+                modalHeader.find('.event-date').text(event.find('.event-date').text());
+                if (data.isCompany) {
+
+                    modalHeader.find('.d-flex').html(`<div class="mt-4" style="display: flex; z-index:3; "><a href="/Meeting/Delete/${meetingId}" class="btn btn-danger" style="font-size: large;margin-right: 1rem;">Delete</a><a href="/Meeting/Edit/${meetingId}" class="btn btn-warning"  style="font-size: large">Edit</a></div>`)
+                }
+                modal.attr('data-event', event.parent().attr('data-event'));
+
+                //update event content
+                let value = event.parent().attr('data-content');
+
+
+                modalBody.find('.event-info').html(`<div>
+                                                    <h4>Материали</h4>
+                                                    <div style="margin-top: 1rem;" id="materials">
+                                                       
+                                                    </div> 
+                                                    <h4 style="margin-top: 1.4rem;">Описание</h4>
+                                                    <div style="margin-top: 0.5rem; margin-left: 1rem;font-weight: 400;">
+                                                        ${data.meeting.description}
+                                                    </div>
+                                                    <h4 style="margin-top: 2rem;">Адрес</h4>
+                                                    <div style="margin-top: 0.5rem; margin-left: 1rem;font-weight: 400;">
+                                                        ${data.meeting.address}
+                                                    </div>
+                                                    <h4 style="margin-top: 10px">Лектор</h4>
+                                                    <div class="img-div">
+                                                        <img class="image--cover" src="${data.meeting.lector.profilePictureUrl}"></img>
+                                                        <div style="margin-left: 1rem;font-weight: 400;">${data.meeting.lector.name}</div>
+                                                    </div>
+                                                   
+                                                 </div>`);
+
+                modalBody.find('.event-info').css('opacity: 1');
+
+                for (let material of data.meeting.materials) {
+                    let a = document.createElement('a');
+                    a.setAttribute('target', '_blank');
+                    a.setAttribute('href', material.url);
+                    a.style = 'margin-top:0.5 rem';
+                    a.innerHTML = ` <div class="input-group-text pl-2 pr-2" style="margin-left: 10px; margin-top: 0.5rem;">
+                                            <div style="display: flex; flex-direction: row;"><img src="/img/google-docs.png" style="height: 26px; width: 26px"></img>
+                                                <div class="pl-1 pt-1 text-dark" style="font-size: medium; padding-top:2px; margin-left: 0.5rem">${material.name}</div>
+                                            </div>
+                                       </div>`;
+
+
+                    document.getElementById('materials').appendChild(a);
+
+                }
+
+
+
+
+                self.addClass('content-loaded');
+
+                self.addClass('modal-is-open');
+
+                setTimeout(function () {
+                    event.parent('li').addClass('selected-event');
+                }, 10);
+
+
+                var eventTop = event.offset().top - $(window).scrollTop(),
+                    eventLeft = event.offset().left,
+                    eventHeight = event.innerHeight(),
+                    eventWidth = event.innerWidth();
+
+                var windowWidth = $(window).width(),
+                    windowHeight = $(window).height();
+
+                var modalWidth = (windowWidth * .8 > modalMaxWidth) ? modalMaxWidth : windowWidth * .8,
+                    modalHeight = (windowHeight * .8 > modalMaxHeight) ? modalMaxHeight : windowHeight * .8;
+
+                var modalTranslateX = parseInt((windowWidth - modalWidth) / 2 - eventLeft),
+                    modalTranslateY = parseInt((windowHeight - modalHeight) / 2 - eventTop);
+
+                var HeaderBgScaleY = modalHeight / eventHeight,
+                    BodyBgScaleX = (modalWidth - eventWidth);
+
+                modal.css({
+                    top: eventTop + 'px',
+                    left: eventLeft + 'px',
+                    height: modalHeight + 'px',
+                    width: modalWidth + 'px',
+                });
+                transformElement(modal, 'translateY(' + modalTranslateY + 'px) translateX(' + modalTranslateX + 'px)');
+
+                modalHeader.css({
+                    width: eventWidth + 'px',
+                });
+                modalBody.css({
+                    marginLeft: eventWidth + 'px',
+                });
+
+                modalHeaderBg.css({
+                    height: eventHeight + 'px',
+                    width: eventWidth + 'px',
+                });
+                transformElement(modalHeaderBg, 'scaleY(' + HeaderBgScaleY + ')');
+
+                modalHeaderBg.one(transitionEnd, function () {
+                    modalHeaderBg.off(transitionEnd);
+                    animating = false;
+                    self.addClass('animation-completed');
+                });
+
+
+                
+                if (!transitionsSupported) modal.add(modalHeaderBg).trigger(transitionEnd);
+
+
+
+            }
+            else {
+                toastr.error('\u0422\u0430\u0437\u0438\u0020\u0441\u0440\u0435\u0449\u0430\u0020\u043d\u0435\u0020\u0441\u044a\u0449\u0435\u0441\u0442\u0432\u0443\u0432\u0430'.normalize());
+            }
+
+        }
+
+
+    })
+
+
+
+};
+
+function closeModal(event) {
+    let self = $('#schedule');
+    let modal = $('.event-modal')
+    let modalHeaderBg = modal.find('.header-bg');
+    let modalHeader = modal.find('.header');
+    let modalBody = modal.find('.body');
+    let modalBodyBg = modal.find('.body-bg');
+
+
+    animating = true;
+
+    var eventTop = event.offset().top - $(window).scrollTop(),
+        eventLeft = event.offset().left,
+        eventHeight = event.innerHeight(),
+        eventWidth = event.innerWidth();
+
+    var modalTop = Number(modal.css('top').replace('px', '')),
+        modalLeft = Number(modal.css('left').replace('px', ''));
+
+    var modalTranslateX = eventLeft - modalLeft,
+        modalTranslateY = eventTop - modalTop;
+
+    self.element.removeClass('animation-completed modal-is-open');
+
+    modal.css({
+        width: eventWidth + 'px',
+        height: eventHeight + 'px'
+    });
+    transformElement(modal, 'translateX(' + modalTranslateX + 'px) translateY(' + modalTranslateY + 'px)');
+
+    transformElement(modalBodyBg, 'scaleX(0) scaleY(1)');
+    transformElement(modalHeaderBg, 'scaleY(1)');
+
+    modalHeaderBg.one(transitionEnd, function () {
+        modalHeaderBg.off(transitionEnd);
+        modal.addClass('no-transition');
+        setTimeout(function () {
+           modal.add(modalHeader).add(modalBody).add(modalHeaderBg).add(modalBodyBg).attr('style', '');
+        }, 10);
+        setTimeout(function () {
+            self.modal.removeClass('no-transition');
+        }, 20);
+
+        animating = false;
+        self.removeClass('content-loaded');
+        event.removeClass('selected-event');
+    });
+
+
+    if (!transitionsSupported) modal.add(modalHeaderBg).trigger(transitionEnd);
+}
+
+function getScheduleTimestamp(time) {
+
+    time = time.replace(/ /g, '');
+    var timeArray = time.split(':');
+    var timeStamp = parseInt(timeArray[0]) * 60 + parseInt(timeArray[1]);
+    return timeStamp;
+}
+
+function transformElement(element, value) {
+    element.css({
+        '-moz-transform': value,
+        '-webkit-transform': value,
+        '-ms-transform': value,
+        '-o-transform': value,
+        'transform': value
+    });
+}
+
+
+
+
+
 
