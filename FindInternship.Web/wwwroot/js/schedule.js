@@ -118,7 +118,13 @@ jQuery(document).ready(function ($) {
             success: function (data) {
                 if (data.isExists) {
                     //update event name and time
-                    self.modalHeader.find('.event-name').text(event.find('.event-name').text());
+                    let eventName = '';
+                    event.find('.event-name').each(function () {
+                        eventName += $(this).text() + ' ';
+                    });
+
+
+                    self.modalHeader.find('.event-name').text(eventName);
                     self.modalHeader.find('.event-date').text(event.find('.event-date').text());
                     if (data.isCompany) {
 

@@ -320,7 +320,12 @@ function openModal(event) {
         success: function (data) {
             if (data.isExists) {
                 //update event name and time
-                modalHeader.find('.event-name').text(event.find('.event-name').text());
+                let eventName = '';
+                event.find('.event-name').each(function () {
+                    eventName += $(this).text() + ' ';
+                });
+
+                modalHeader.find('.event-name').text(eventName);
                 modalHeader.find('.event-date').text(event.find('.event-date').text());
                 if (data.isCompany) {
 
