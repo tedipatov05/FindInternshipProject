@@ -26,9 +26,11 @@ function edit(e) {
 
     let companyId = document.getElementById('companyId').value;
 
-    let { title, start, end, address } = Object.fromEntries(data);
+    let { title, start, end, address, description } = Object.fromEntries(data);
 
-    let dataArr = [title, start, end, address]
+    let dataArr = [title, start, end, address, description]
+
+    let files = document.getElementById('files').files;
 
     let validationSpans = document.getElementsByClassName('text-danger');
 
@@ -42,6 +44,18 @@ function edit(e) {
     });
 
     if (!Array.from(validationSpans).some(v => v.style.display == 'block')) {
+
+        let data = new FormData();
+        data.append('title', title);
+        data.append('start', start);
+        data.append('end', end);
+        data.append('address', address);
+        data.append('description', description);
+        data.append('companyId', companyId);
+        for (let i = 0; i < files.length; i++) {
+            data.append('files', files[i]);
+        }
+
 
         let url = new URL(window.location);
         let path = url.pathname;
@@ -86,14 +100,9 @@ function edit(e) {
             $.ajax({
                 type: "POST",
                 url: path,
-                data: {
-                    'title': title,
-                    'start': start,
-                    'end': end,
-                    'address': address,
-                    'companyId': companyId
-                },
-                dataType: 'json',
+                data: data, 
+                processData: false,
+                contentType: false,
                 headers: {
                     "RequestVerificationToken": t
                 },

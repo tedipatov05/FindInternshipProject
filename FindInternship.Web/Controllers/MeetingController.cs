@@ -223,6 +223,8 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Тази среща не съществува";
                 return this.RedirectToAction("All");
             }
+            meeting.Materials = await materialService.GetAllMeetingMatrialsAsync(id);
+
 
             return View(meeting);
 
@@ -231,7 +233,7 @@ namespace FindInternship.Web.Controllers
         [HttpPost]
         [Route("Meeting/Edit/{id}")]
         public async Task<IActionResult> Edit([FromRoute] string id, string title, DateTime start, DateTime end,
-            string address, string companyId)
+            string address, string companyId, string description, List<IFormFile> files)
         {
             string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
@@ -263,6 +265,7 @@ namespace FindInternship.Web.Controllers
                 End = end,
                 Start = start,
                 Title = title,
+                Description = description,
             };
 
             bool isExistsInCompany = await meetingService.IsMeetingExistsInCompanyAsync(start, end, companyId!, "");
@@ -273,6 +276,17 @@ namespace FindInternship.Web.Controllers
 
 
             await meetingService.EditMeetingAsync(id, model);
+
+            if (files.Count != 0)
+            {
+                await materialService.DeleteAllMeetingMaterials(id);
+                foreach (var file in files)
+                {
+                    string url = await documentService.UploadDocumentAsync(file, "projectDocuments");
+                    string materialId = await materialService.CreateAsync(url, file.FileName, id);
+                }
+
+            }
 
             TempData[SuccessMessage] = "Успешно променена среща";
 

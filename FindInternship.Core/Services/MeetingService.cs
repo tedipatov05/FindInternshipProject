@@ -132,6 +132,7 @@ namespace FindInternship.Core.Services
                     Start = m.StartTime,
                     Title = m.Title,
                     CompanyId = m.CompanyId,
+                    Description = m.Description,
                 })
                 .FirstOrDefaultAsync();
 
@@ -158,7 +159,6 @@ namespace FindInternship.Core.Services
             meeting.Title = model.Title;
             meeting.EndTime = model.End;
             meeting.StartTime = model.Start;
-
 
             await repo.SaveChangesAsync();
         }

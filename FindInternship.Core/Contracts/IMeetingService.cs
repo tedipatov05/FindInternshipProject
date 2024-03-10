@@ -34,5 +34,6 @@ namespace FindInternship.Core.Contracts
 
         Task<DetailsMeetingViewModel?> GetDetailsForMeetingAsync(string meetingId);
 
+
     }
 }

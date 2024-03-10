@@ -6,6 +6,7 @@ var transitionsSupported = ($('.csstransitions').length > 0);
 if (!transitionsSupported) transitionEnd = 'noTransition';
 
 $(document).ready(function () {
+
     document.getElementById('load').style.display = 'none';
     document.getElementById('load').classList.remove('mt-lg-5');
     document.getElementById('schedule').style.display = 'block';
@@ -180,7 +181,7 @@ connection.on("ReceiveEditedMeeting", async function (meetingId, receivers) {
     
     var divMeeting = document.getElementById(`${meetingId}`);
 
-    divMeeting.parentNode.removeChild(divMeeting);
+    divMeeting.parentNode.parentNode.removeChild(divMeeting.parentNode);
 
 
     try {
@@ -459,6 +460,8 @@ function closeModal(event) {
     let modalHeader = modal.find('.header');
     let modalBody = modal.find('.body');
     let modalBodyBg = modal.find('.body-bg');
+
+    document.getElementById('materials').innerHTML = '';
 
 
     animating = true;

@@ -1,6 +1,8 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Materials;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,32 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
 
             return material.Id;
+        }
+
+        public async Task DeleteAllMeetingMaterials(string meetingId)
+        {
+            var materials = await repo.All<MeetingMaterial>()
+                .Where(m => m.MeetingId == meetingId)
+                .ToListAsync();
+
+            repo.DeleteRange<MeetingMaterial>(materials);
+
+            await repo.SaveChangesAsync();
+
+        }
+
+        public async Task<List<MaterialViewModel>> GetAllMeetingMatrialsAsync(string meetingId)
+        {
+            var meetingMaterials = await repo.All<MeetingMaterial>()
+                .Where(m =>  m.MeetingId == meetingId)
+                .Select(m => new MaterialViewModel()
+                {
+                    Name = m.Name,
+                    Url = m.DocumentUrl, 
+                })
+                .ToListAsync();
+
+            return meetingMaterials;
         }
     }
 }
