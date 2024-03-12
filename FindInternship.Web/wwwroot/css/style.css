@@ -510,23 +510,6 @@ a {
         background-color: #000;
     }
 
-/*.light-back {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    background-color: #fff;
-    overflow: hidden;
-    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat-back.svg');
-    background-position: center;
-    background-repeat: repeat;
-    background-size: 4%;
-    height: 100%;
-    width: 100%;
-    transition: all 200ms linear;
-    opacity: 0;
-}*/
-
 .dark-light:checked ~ .light-back {
     opacity: 1;
 }
@@ -546,10 +529,7 @@ a {
     display: -webkit-inline-flex;
     display: -ms-inline-flexbox;
     display: inline-flex;
-    
-   
     align-items: center;
-   
     justify-content: center;
     -ms-flex-pack: center;
     text-align: center;
@@ -557,7 +537,7 @@ a {
     background-color: #ffeba7;
     cursor: pointer;
     color: #102770;
-    box-shadow: 0 12px 35px 0 rgba(255,235,167,.15);
+   /* box-shadow: 0 12px 35px 0 rgba(255,235,167,.15);*/
 }
 
 .dark-light:checked ~ .sec-center .for-dropdown {

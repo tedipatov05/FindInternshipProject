@@ -58,6 +58,9 @@ namespace FindInternship.Test.UnitTest
                 Address = "test address",
                 Start = DateTime.Now,
                 End = DateTime.Now.AddHours(3),
+                Description = "test add new meeting description", 
+                LectorId = "724ebe11-96f9-4dfb-b255-da3041d887d5"
+
             };
 
             string result = await meetingService.CreateAsync(model, companyId, classId);
@@ -395,6 +398,8 @@ namespace FindInternship.Test.UnitTest
                 EndTime = DateTime.UtcNow.AddHours(3),
                 CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
                 ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                Description = "test add new meeting description",
+                LectorId = "724ebe11-96f9-4dfb-b255-da3041d887d5",
                 IsActive = true
             };
 
