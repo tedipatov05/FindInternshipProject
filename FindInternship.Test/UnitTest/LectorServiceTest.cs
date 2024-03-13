@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 using static FindInternship.Test.UnitTest.DatabaseSeeder;
 using FindInternship.Data.Models;
+using FindInternship.Core.Models.Lector;
 
 
 namespace FindInternship.Test.UnitTest
@@ -94,6 +95,41 @@ namespace FindInternship.Test.UnitTest
             var result = await lectorService.IsLectorExistsAsync(lectorId);
 
             Assert.That(result, Is.False);
+        }
+
+        [Test]
+        [TestCase("7493d4c1-251f-4e9a-aaba-c11d5c4da798")]
+        public async Task GetAllCompanyLectorsShouldReturnCorrectResult(string companyId)
+        {
+            var result = await lectorService.GetAllCompanyLectorsAsync(companyId);
+
+            var expectedResult = new List<LectorMeetingViewModel>()
+            {
+                new LectorMeetingViewModel
+                {
+                    Id = "724ebe11-96f9-4dfb-b255-da3041d887d5",
+                    Name = "Test Lector"
+                }
+            };
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Count, Is.EqualTo(expectedResult.Count));
+                Assert.That(result[0].Id, Is.EqualTo(expectedResult[0].Id));
+                Assert.That(result[0].Name, Is.EqualTo(expectedResult[0].Name));
+            });
+            
+        }
+
+        [Test]
+        [TestCase("some id")]
+        [TestCase("17cd4d78-a621-4bf3-a4a4-9d7d3af085d2")]
+        [TestCase("608924f2-e51d-4686-b1eb-1f33b5dd6aa7")]
+        public async Task GetAllCompanyLectorsShouldReturnEmptyCollection(string companyId)
+        {
+            var result = await lectorService.GetAllCompanyLectorsAsync(companyId);
+
+            Assert.That(result, Is.Empty);
         }
     }
 }

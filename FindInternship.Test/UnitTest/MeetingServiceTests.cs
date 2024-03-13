@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using static FindInternship.Test.UnitTest.DatabaseSeeder;
 using FindInternship.Core.Models.Meeting;
 using FindInternship.Data.Models;
+using FindInternship.Core.Models.Lector;
 
 namespace FindInternship.Test.UnitTest
 {
@@ -422,7 +423,90 @@ namespace FindInternship.Test.UnitTest
             Assert.That(result, Is.False);
         }
 
+        [Test]
+        [TestCase("862db3a5-4126-41e7-9ea0-7bf052215571")]
+        public async Task GetDetailsForMeetingAsyncShouldReturnCorrectResult(string meetingId)
+        {
+            var result = await meetingService.GetDetailsForMeetingAsync(meetingId);
 
+            var expectedResult = new DetailsMeetingViewModel()
+            {
+                Id = meetingId,
+                Description = "Test Description",
+                Address = "Bulgaria, Kazanlak",
+                Class = "12 Б",
+                Lector = new LectorDetailsMeetingViewModel()
+                {
+                    Name = "Test Lector",
+                    ProfilePictureUrl = "null"
+                },
+
+            };
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result!.Id, Is.EqualTo(expectedResult.Id));
+                Assert.That(result.Description, Is.EqualTo(expectedResult.Description));
+                Assert.That(result.Class, Is.EqualTo(expectedResult.Class));
+                Assert.That(result.Address, Is.EqualTo(expectedResult.Address));
+                Assert.That(result.Lector.Name, Is.EqualTo(expectedResult.Lector.Name));
+                Assert.That(result.Materials, Is.Empty);
+            });
+
+        }
+
+        [Test]
+        [TestCase("17cd4d78-a621-4bf3-a4a4-9d7d3af085d2")]
+        [TestCase("90ba5987-e991-4dfd-be1a-a57464b9d697")]
+        public async Task GetDetailsForMeetingAsyncShouldReturnFalse(string meetingId)
+        {
+            var result = await meetingService.GetDetailsForMeetingAsync(meetingId);
+
+            Assert.That(result, Is.Null);
+        }
+        [Test]
+        [TestCase("862db3a5-4126-41e7-9ea0-7bf052215571")]
+        public async Task IsExistsByIdAsyncShouldReturnTrue(string meetingId)
+        {
+            var result = await meetingService.IsExistsByIdAsync(meetingId);
+
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        [TestCase("17cd4d78-a621-4bf3-a4a4-9d7d3af085d2")]
+        [TestCase("90ba5987-e991-4dfd-be1a-a57464b9d697")]
+        public async Task IsExistsByIdAsyncShouldReturnFalse(string meetingId)
+        {
+            var result = await meetingService.IsExistsByIdAsync(meetingId);
+
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public async Task IsMeetingExistsInCompanyAsyncShouldReturnTrue()
+        {
+            var result = await meetingService.IsMeetingExistsInCompanyAsync(DateTime.UtcNow, DateTime.UtcNow.AddHours(3), "7493d4c1-251f-4e9a-aaba-c11d5c4da798", "90bd5987-e991-4dfd-be1a-a57464b9d697");
+
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public async Task IsMeetingExistsInCompanyAsyncShouldReturnFalseWithIncorectCompanyIdAndClassId()
+        {
+            var result = await meetingService.IsMeetingExistsInCompanyAsync(DateTime.UtcNow, DateTime.UtcNow.AddHours(3), "7493d4c1-aaba-c11d5c4da798", "90bd5987-be1a-a57464b9d697");
+
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public async Task IsMeetingExistsInCompanyAsyncShouldReturnFalseWithDifferentStartAndEnd()
+        {
+            var result = await meetingService.IsMeetingExistsInCompanyAsync(DateTime.UtcNow.AddHours(3), DateTime.UtcNow.AddHours(6), "7493d4c1-251f-4e9a-aaba-c11d5c4da798", "90bd5987-e991-4dfd-be1a-a57464b9d697");
+
+            Assert.That(result, Is.False);
+        }
 
 
     }
