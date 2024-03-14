@@ -70,7 +70,7 @@ namespace FindInternship.Web.Controllers
 
                 await companyService.AddLectorToCompany(companyId!, model, profilePicture);
 
-                TempData[SuccessMessage] = "Успешно добавен преподаватели";
+                TempData[SuccessMessage] = "Успешно добавен преподавател";
                 return RedirectToAction("MyProfile", "Profile", new { userId = userId});
             }
             catch (Exception )
