@@ -76,7 +76,10 @@ namespace FindInternship.Web.Controllers
                 string? classId = await classService.GetClassIdByTeacherUserIdAsync(userId);
                 var users = await privateChatService.GetUsersToChatAsync(classId!, userId);
                 var company = await privateChatService.GetCompanyToChatAsync(classId!, userId);
-                users.Add(company);
+                if (company != null)
+                {
+                    users.Add(company);
+                }
 
                 users = users
                     .OrderByDescending(u => u.LastMessageToUser != null)
