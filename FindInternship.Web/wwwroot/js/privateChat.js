@@ -159,7 +159,7 @@ connection.on("SendMessage", function (userId, fromUsername, fromUserImage, mess
                         <div class="right-chat-message fs-13 mb-2">
                             <div class="mb-3 mr-3 pr-4">
                                 <div class="d-flex flex-row">
-                                    <div class="pr-2">${msg}</div>
+                                    <div class="pr-2" style="font-size: 1.1rem;">${msg}</div>
                                     <div class="pr-4"></div>
                                 </div>
                             </div>
@@ -203,7 +203,7 @@ connection.on("ReceiveMessage", function (fromUserName, fromUserImage, message) 
                         <img src="${fromUserImage}" class="rounded-circle shadow avatar-sm mr-3" alt="Profile Picture">
                      </div>
                      <div class="left-chat-message fs-13 mb-2">
-                         <p class="mb-3 mr-3 pr-4">${msg}</p>
+                         <p class="mb-3 mr-3 pr-4" style="font-size: 1.1rem;">${msg}</p>
                          <div class="message-options">
                              <div class="message-time">${formattedDate}</div>
                              <div class="message-arrow"><i class="text-muted la la-angle-down fs-17"></i></div>

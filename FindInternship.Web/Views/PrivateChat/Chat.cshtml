@@ -125,7 +125,7 @@
                                                     <div class="right-chat-message fs-13 mb-2">
                                                         <div class="mb-3 mr-3 pr-4">
                                                             <div class="d-flex flex-row">
-                                                                <div class="pr-2">@Html.Raw(message.Content)</div>
+                                                                <div class="pr-2" style="font-size: 1.1rem">@Html.Raw(message.Content)</div>
                                                                 <div class="pr-4"></div>
                                                             </div>
                                                         </div>
@@ -162,7 +162,7 @@
                                                         </div>
                                                         <div class="left-chat-message fs-13 mb-2">
 
-                                                            <p class="mb-3 mr-3 pr-4">@Html.Raw(message.Content)</p>
+                                                            <p class="mb-3 mr-3 pr-4" style="font-size: 1.1rem;">@Html.Raw(message.Content)</p>
                                                             <div class="message-options">
                                                                 <div class="message-time">@message.SendedOn.ToString("dd-MM-yyyy HH:mm")</div>
                                                                 <div class="message-arrow"><i class="text-muted la la-angle-down fs-17"></i></div>
@@ -181,13 +181,14 @@
                                 </div>
 
                             </div>
+                            
                             <div class="chat-search pl-3 pr-3">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Напиши съобщение" id="messageInput">
+                                    <input type="text" class="form-control" style="font-size: 1.1rem;" placeholder="Напиши съобщение" id="messageInput">
                                     <div class="input-group-append prepend-white">
                                         <span class="input-group-text pl-2 pr-2">
                                             <i class="chat-upload-trigger fs-19 bi bi-file-plus ml-2 mr-2"></i>
-                                            <i class="fs-19 bi bi-emoji-smile ml-2 mr-2"></i>
+                                            <i class="fs-19 bi bi-emoji-smile ml-2 mr-2" id="emoji"></i>
                                             <i class="fs-19 bi bi-camera ml-2 mr-2" id="photo-take"></i>
                                             <i class="fs-19 bi bi-cursor ml-2 mr-2" id="send"></i>
                                             <button type="submit" style="display: none" id="sendButton">
@@ -214,21 +215,91 @@
                                     </div>
                                 </div>
 
-
                             </div>
+                           
                             <div class="input-group-append prepend-white" id="appendFiles">
                             </div>
                         </div>
                     </div>
+
+                    <div class="chat-cont" id="emojis-main" style="display: none;bottom: 23rem;padding: 0;">
+                        <div class="emoji-dashboard" style="font-size: 1.3rem;">
+                            <ul class="emojis" id="emojis-container">
+                                <li class="emoji" data-clipboard-text="--1">🙄</li>
+                                <li class="emoji" data-clipboard-text="-1">😀</li>
+                                <li class="emoji" data-clipboard-text="100">😄</li>
+                                <li class="emoji" data-clipboard-text="1234">😁</li>
+                                <li class="emoji" data-clipboard-text="8ball">😆</li>
+                                <li class="emoji" data-clipboard-text="a">😆</li>
+                                <li class="emoji" data-clipboard-text="ab">😅</li>
+                                <li class="emoji" data-clipboard-text="abc">😂</li>
+                                <li class="emoji" data-clipboard-text="abcd">🙂</li>
+                                <li class="emoji" data-clipboard-text="accept">😉</li>
+                                <li class="emoji" data-clipboard-text="aerial_tramway">🥰</li>
+                                <li class="emoji" data-clipboard-text="airplane">🥰</li>
+                                <li class="emoji" data-clipboard-text="alarm_clock">😘</li>
+                                <li class="emoji" data-clipboard-text="alien">👽</li>
+                                <li class="emoji" data-clipboard-text="ambulance">😛</li>
+                                <li class="emoji" data-clipboard-text="anchor">🥳</li>
+                                <li class="emoji" data-clipboard-text="angel">👻</li>
+                                <li class="emoji" data-clipboard-text="anger">🤖</li>
+                                <li class="emoji" data-clipboard-text="angry">😱</li>
+                                <li class="emoji" data-clipboard-text="anguished">⚽</li>
+                                <li class="emoji" data-clipboard-text="ant">🏀</li>
+                                <li class="emoji" data-clipboard-text="arrows_counterclockwise">🏐</li>
+                                <li class="emoji" data-clipboard-text="apple">🥇</li>
+                                <li class="emoji" data-clipboard-text="articulated_lorry">🥈</li>
+                                <li class="emoji" data-clipboard-text="astonished">🥉</li>
+                                <li class="emoji" data-clipboard-text="aquarius">🎰</li>
+                                <li class="emoji" data-clipboard-text="aries">🧠</li>
+                                <li class="emoji" data-clipboard-text="arrow_backward">👋</li>
+                                <li class="emoji" data-clipboard-text="arrow_double_down">👍</li>
+                                <li class="emoji" data-clipboard-text="arrow_double_up">💪</li>
+                                <li class="emoji" data-clipboard-text="arrow_down">⛈️</li>
+                                <li class="emoji" data-clipboard-text="arrow_down_small">😡</li>
+                                <li class="emoji" data-clipboard-text="arrow_forward">💩</li>
+                                <li class="emoji" data-clipboard-text="arrow_heading_down">🤒</li>
+                                <li class="emoji" data-clipboard-text="arrow_heading_up">😎</li>
+                                <li class="emoji" data-clipboard-text="arrow_left">☹️</li>
+                                <li class="emoji" data-clipboard-text="arrow_lower_left">😭</li>
+                                <li class="emoji" data-clipboard-text="arrow_lower_right">🥺</li>
+                                <li class="emoji" data-clipboard-text="arrow_right">😬</li>
+                                <li class="emoji" data-clipboard-text="arrow_right_hook">👺</li>
+                                <li class="emoji" data-clipboard-text="arrow_up">😈</li>
+                                <li class="emoji" data-clipboard-text="arrow_up_down">🛸</li>
+                                <li class="emoji" data-clipboard-text="arrow_up_small">🌍</li>
+                                <li class="emoji" data-clipboard-text="arrow_upper_left">🗺️</li>
+                                <li class="emoji" data-clipboard-text="arrow_upper_right">🌆</li>
+                                <li class="emoji" data-clipboard-text="arrows_clockwise">🗿</li>
+                                <li class="emoji" data-clipboard-text="art">🎮</li>
+                                <li class="emoji" data-clipboard-text="articulated_lorry">🏎️</li>
+                                <li class="emoji" data-clipboard-text="astonished">🚗</li>
+                                <li class="emoji" data-clipboard-text="atm">🚀</li>
+                                <li class="emoji" data-clipboard-text="b">🏁</li>
+                                <li class="emoji" data-clipboard-text="arrow_up">🛰️</li>
+                                <li class="emoji" data-clipboard-text="arrow_up_down">❤️</li>
+                                <li class="emoji" data-clipboard-text="arrow_up_small">☢️</li>
+                                <li class="emoji" data-clipboard-text="arrow_upper_left">☄️</li>
+                                <li class="emoji" data-clipboard-text="arrow_upper_right">🏆</li>
+                                <li class="emoji" data-clipboard-text="arrows_clockwise">🎯</li>
+                                <li class="emoji" data-clipboard-text="art">🎄</li>
+                                <li class="emoji" data-clipboard-text="atm">💻</li>
+                                <li class="emoji" data-clipboard-text="b">💸</li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @section Styles {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/webcam.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/emoji.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 }
 
@@ -241,4 +312,5 @@
     <script src="~/js/chatImagesScript.js" asp-append-version="true"></script>
     <script src="~/js/chatFilesScript.js" asp-append-version="true"></script>
     <script src="~/js/webcam.js" asp-append-version="true"></script>
+    <script src="~/js/emoji.js" asp-append-version="true"></script>
 }

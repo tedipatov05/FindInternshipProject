@@ -1,0 +1,292 @@
+﻿
+.chat-cont {
+    position: relative;
+    z-index: 1;
+    left: 17%;
+    width: 50%;
+    box-shadow: 0 5px 10px -4px rgba(0, 0, 0, 0.5);
+    background: #fff;
+    margin: 20px auto;
+    color: #999;
+}
+
+@media (max-width: 767px) {
+    .body .chat-cont {
+        width: 90%;
+    }
+
+    .body {
+        padding-bottom: 100px;
+    }
+}
+
+.chat-cont > div {
+    padding: 15px;
+    background: #0af;
+    color: #fff;
+}
+
+.chat-cont .chat-body {
+    background: #eee;
+    display: flex;
+    align-items: flex-end;
+    min-height: 350px;
+}
+
+    .chat-cont .chat-body .chats-text-cont {
+        width: 100%;
+        padding: 5px;
+        padding-right: 15px;
+        max-height: 350px;
+        overflow-y: overlay;
+        overflow-x: hidden;
+    }
+
+
+    .chat-cont .chat-body .chat-text {
+        margin-bottom: 15px;
+        text-align: right;
+    }
+
+        .chat-cont .chat-body .chat-text img {
+            height: 26px;
+            padding: 5px;
+        }
+
+        .chat-cont .chat-body .chat-text > span {
+            padding: 5px 15px;
+            border-radius: 10px;
+            background: #0af;
+            display: inline-block;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+.chat-cont .chat-header {
+    display: flex;
+}
+
+.chat-header .name {
+    position: relative;
+    line-height: 40px;
+    display: inline-block;
+    flex: 2;
+    position: relative;
+    padding-left: 50px;
+}
+
+    .chat-header .name:before {
+        content: '';
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        background: #fff url(http://main.buildabazaar.com/img/shrd/html_widget_images/38/14/604/12a5a8d897be2_nobodym.original.jpg.999xx.jpg) center no-repeat / 100%;
+        border-radius: 50%;
+        position: relative;
+        left: 0;
+        top: 0;
+    }
+
+.chat-header .menu {
+    display: flex;
+    position: relative;
+}
+
+    .chat-header .menu .burg-menu ul.list,
+    .emoji-dashboard {
+        padding: 0;
+        position: relative;
+        margin: 0;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+        background: #fff;
+        list-style-type: none;
+        color: #a0a0a0;
+        right: 0;
+        z-index: 9999;
+    }
+
+
+        .chat-header .menu .burg-menu ul.list li {
+            padding: 10px 25px;
+            white-space: nowrap;
+            border-bottom: solid 1px #eee;
+            cursor: pointer;
+        }
+
+            .chat-header .menu .burg-menu ul.list li:last-child {
+                border: none;
+            }
+
+            .chat-header .menu .burg-menu ul.list li:hover {
+                background: #eee;
+            }
+
+    .chat-header .menu .attach,
+    .chat-header .menu .menu-ico {
+        display: inline-block;
+        height: 40px;
+        width: 40px;
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+        margin-left: 10px;
+        overflow: hidden;
+    }
+
+        .chat-header .menu .attach:focus,
+        .chat-header .menu .menu-ico:focus,
+        .chat-header .menu .attach:active,
+        .chat-header .menu .menu-ico:active {
+            background: rgba(255, 255, 255, .2);
+        }
+
+        .chat-header .menu .attach:before,
+        .chat-header .menu .menu-ico:before {
+            content: '';
+            font-family: fontAwesome;
+            line-height: 40px;
+            font-size: 30px;
+            font-weight: normal;
+            -webkit-text-stroke: .5px #0af;
+        }
+
+        .chat-header .menu .attach:before {
+            content: '\f0c6';
+        }
+
+        .chat-header .menu .menu-ico:before {
+            content: '\f142';
+            -webkit-text-stroke: 2px #0af;
+        }
+
+.chat-cont > div.chat-inp {
+    background: #ddd;
+    display: flex;
+    padding: 10px;
+    position: relative;
+}
+
+.chat-inp .chat-input {
+    flex: 2;
+    max-width: calc(100% - 70px);
+    position: relative;
+    z-index: 999;
+}
+
+.input img {
+    height: 25px;
+}
+
+.input br {
+    display: none;
+}
+
+.chat-inp .chat-input input,
+.input {
+    height: 100%;
+    width: 100%;
+    border: solid 1px transparent;
+    padding: 5px;
+    height: 35px;
+    color: #a0a0a0;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .06), 0 2px 10px 0 rgba(0, 0, 0, .02);
+    transition: all .25s;
+    background: #fff;
+    overflow-y: overlay;
+}
+
+.chat-input.lined .input {
+    height: 80px;
+    margin-top: -35px;
+    margin-bottom: -5px;
+}
+
+.chat-inp .chat-input input:focus,
+.input:focus {
+    outline: none;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+}
+
+.chat-inp .emoji {
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+    background: #fff;
+    text-align: center;
+    cursor: pointer;
+    top: 0;
+    left: 10px;
+    bottom: 0;
+    margin: auto;
+}
+
+    .chat-inp .emoji:before {
+        content: '\f118';
+        font-family: fontAwesome;
+        line-height: 35px;
+        font-size: 20px;
+        font-weight: normal;
+        color: #a0a0a0;
+    }
+
+.chat-inp .opts {
+    background: #fff;
+    top: 0;
+    right: 10px;
+    height: 35px;
+    bottom: 0;
+    margin: auto;
+    width: 35px;
+    overflow: hidden;
+}
+
+    .chat-inp .opts a {
+        display: inline-block;
+        height: 35px;
+        width: 35px;
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+        transition: all .25s;
+    }
+
+        .chat-inp .opts a:before {
+            content: '\f118';
+            font-family: fontAwesome;
+            line-height: 35px;
+            font-size: 20px;
+            font-weight: normal;
+            color: #a0a0a0;
+        }
+
+        .chat-inp .opts a.send:before {
+            content: '\f1d9';
+        }
+
+        .chat-inp .opts a.mic:before {
+            content: '\f130';
+        }
+
+.chat-inp .lined + .opts a {
+    transform: translateY(-35px);
+}
+
+a:hover {
+    outline: none;
+    text-decoration: none;
+}
+
+.emoji-dashboard .emojis {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    height: 200px;
+    overflow-y: overlay;
+    overflow-x: hidden;
+}
+
+    .emoji-dashboard .emojis li {
+        margin: 5px 15px;
+        cursor: pointer;
+    }
