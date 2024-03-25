@@ -17,7 +17,6 @@ $(document).ready(function () {
     }
 });
 
-
 var connection = new signalR.HubConnectionBuilder()
     .withUrl("/meetingHub")
     .build();
@@ -302,6 +301,8 @@ function openModal(event) {
     let modalBodyBg = modal.find('.body-bg');
     let modalMaxWidth = 800;
     let modalMaxHeight = 480;
+
+
     
     animating = true;
 
