@@ -136,6 +136,18 @@ namespace FindInternship.Core.Services
             return companyIntern != null ? companyIntern.Teacher.UserId : null;
         }
 
+        public async Task<bool> IsAllStudentsHaveGroupInCompanyAsync(string teacherUserId)
+        {
+            var company = await repo.All<Teacher>()
+                .Include(t => t.Class!.Students)
+                .FirstOrDefaultAsync(s => s.UserId == teacherUserId);
+
+            if(company == null) return false;
+
+
+            return company!.Class!.Students.All(s => s.CompanyInternsId != null);
+        }
+
         //public async Task<bool> IsTeacherClassHaveCompanyAsync(string userId)
         //{
         //    var teacher = await repo.All<Teacher>()

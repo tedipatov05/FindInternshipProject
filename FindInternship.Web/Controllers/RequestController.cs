@@ -49,15 +49,16 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("All", "Company");
             }
 
-            //TODO: Check all students have company
+            string teacherUserId = User.GetId()!;
 
-            //bool haveCompany = await teacherService.IsTeacherClassHaveCompanyAsync(User.GetId()!);
-            //if (haveCompany)
-            //{
-            //    TempData[ErrorMessage] = "Вашият клас вече има фирма за стаж";
-            //    return RedirectToAction("All", "Company");
 
-            //}
+            bool isAllStudentsHaveCompany = await teacherService.IsAllStudentsHaveGroupInCompanyAsync(teacherUserId);
+            if (isAllStudentsHaveCompany)
+            {
+                TempData[ErrorMessage] = "Всички ученици вече имат фирми за стаж";
+                return RedirectToAction("All", "Company");
+
+            }
 
             return View("Create", companyName);
         }
@@ -194,7 +195,7 @@ namespace FindInternship.Web.Controllers
                 TempData[ErrorMessage] = "Трябва да си фирма за да променяш статуса.";
                 return RedirectToAction("Index", "Home");
             }
-            string classId = await classService.GetClassIdAsync(requestId)!;
+            string? classId = await classService.GetClassIdAsync(requestId);
 
             bool isAllStudentsHaveGroup = await classService.AllClassStudentsAreInGroup(classId!);
             if(!isAllStudentsHaveGroup)

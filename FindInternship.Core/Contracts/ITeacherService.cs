@@ -29,6 +29,8 @@ namespace FindInternship.Core.Contracts
 
         Task<string?> GetTeacherUserIdByCompanyInternIdAsync(string companyInternId);
 
+        Task<bool> IsAllStudentsHaveGroupInCompanyAsync(string teacherUserId);
+
         //Task<bool> IsTeacherClassHaveCompanyAsync(string userId);
     }
 }
