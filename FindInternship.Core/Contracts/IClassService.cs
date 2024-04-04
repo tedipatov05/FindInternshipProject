@@ -19,7 +19,7 @@ namespace FindInternship.Core.Contracts
 
         Task<string?> GetClassIdAsync(string requestId);
 
-        Task<List<ClassMeetingViewModel>> GetClassMeetingAsync(string companyId);
+        //Task<List<ClassMeetingViewModel>> GetClassMeetingAsync(string companyId);
 
         Task<string?> GetClassIdByClassNameAsync(string className, string schoolName);
 
@@ -43,6 +43,8 @@ namespace FindInternship.Core.Contracts
 
         Task DeleteAsync(string classId);
 
-        Task<bool> IsClassHaveAlreadyCompanyAsync(string classId);
+        //Task<bool> IsClassHaveAlreadyCompanyAsync(string classId);
+
+        Task<bool> AllClassStudentsAreInGroup(string classId);
     }
 }

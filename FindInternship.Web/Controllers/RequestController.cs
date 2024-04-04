@@ -1,6 +1,9 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.Request;
+using FindInternship.Core.Models.Student;
+using FindInternship.Core.Models.Users;
 using FindInternship.Core.Services;
+using FindInternship.Data.Models;
 using FindInternship.Data.Models.Enums;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -12,25 +15,25 @@ namespace FindInternship.Web.Controllers
     public class RequestController : Controller
     {
         private readonly ICompanyService companyService;
-        private readonly ITeacherService teacherService; 
+        private readonly ITeacherService teacherService;
         private readonly IRequestService requestService;
         private readonly IClassService classService;
         private readonly IStudentService studentService;
 
-		public RequestController(ICompanyService companyService, ITeacherService teacherService, IRequestService requestService, IClassService classService, IStudentService studentService)
-		{
-			this.companyService = companyService;
-			this.teacherService = teacherService;
-			this.requestService = requestService;
-			this.classService = classService;
+        public RequestController(ICompanyService companyService, ITeacherService teacherService, IRequestService requestService, IClassService classService, IStudentService studentService)
+        {
+            this.companyService = companyService;
+            this.teacherService = teacherService;
+            this.requestService = requestService;
+            this.classService = classService;
             this.studentService = studentService;
-		}
+        }
 
-		[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> CreateView(string companyUserId)
         {
             bool isCompany = await companyService.IsCompanyAsync(companyUserId);
-            if(!isCompany) 
+            if (!isCompany)
             {
                 TempData[ErrorMessage] = "Тази фирма не съществува";
                 return RedirectToAction("All", "Company");
@@ -39,20 +42,22 @@ namespace FindInternship.Web.Controllers
             string? companyName = await companyService.GetCompanyNameByIdAsync(companyUserId);
 
             bool isTeacher = await teacherService.IsTeacherAsync(User.GetId()!);
-           
-            if(!isTeacher)
+
+            if (!isTeacher)
             {
                 TempData[ErrorMessage] = "Трябва да бъдеш учител за да изпращаш молби за практика ";
                 return RedirectToAction("All", "Company");
             }
 
-            bool haveCompany = await teacherService.IsTeacherClassHaveCompanyAsync(User.GetId()!);
-            if (haveCompany)
-            {
-                TempData[ErrorMessage] = "Вашият клас вече има фирма за стаж";
-                return RedirectToAction("All", "Company");
+            //TODO: Check all students have company
 
-            }
+            //bool haveCompany = await teacherService.IsTeacherClassHaveCompanyAsync(User.GetId()!);
+            //if (haveCompany)
+            //{
+            //    TempData[ErrorMessage] = "Вашият клас вече има фирма за стаж";
+            //    return RedirectToAction("All", "Company");
+
+            //}
 
             return View("Create", companyName);
         }
@@ -102,8 +107,8 @@ namespace FindInternship.Web.Controllers
             }
 
             TempData[SuccessMessage] = "Успешно изпратена молба за практика";
-            
-            return new JsonResult(new {RequestId=requestId, CompanyUserId = companyUserId});
+
+            return new JsonResult(new { RequestId = requestId, CompanyUserId = companyUserId });
 
         }
 
@@ -112,10 +117,10 @@ namespace FindInternship.Web.Controllers
         {
             string userId = User.GetId()!;
 
-            
+
             bool isCompany = await companyService.IsCompanyAsync(userId);
 
-            if(!isCompany)
+            if (!isCompany)
             {
                 TempData[ErrorMessage] = "Трябва да си фирма за да имаш достъп";
                 return RedirectToAction("Index", "Home");
@@ -134,7 +139,7 @@ namespace FindInternship.Web.Controllers
             string userId = User.GetId()!;
 
             bool isTeacher = await teacherService.IsTeacherAsync(userId);
-            if(!isTeacher)
+            if (!isTeacher)
             {
                 TempData[ErrorMessage] = "Трябва да си учител за да имаш достъп";
                 return RedirectToAction("Index", "Home");
@@ -167,30 +172,79 @@ namespace FindInternship.Web.Controllers
 
                 var classId = await classService.GetClassIdAsync(id);
 
-                bool haveCompany = await classService.IsClassHaveAlreadyCompanyAsync(classId!);
+                bool resultAccepted = await requestService.EditRequestStatus(newStatus, id);
 
-                if(haveCompany)
-                {
-
-                    return new JsonResult(new { IsEdited = false, CompanyUserId = userId, haveCompany = true });
-                }
-                else
-                {
-                    bool resultAccepted = await requestService.EditRequestStatus(newStatus, id);
-
-                    await companyService.AddClassToCompany(classId!, companyId!);
-
-                    return new JsonResult(new { IsEdited = resultAccepted, CompanyUserId = userId, haveCompany = false });
-                }
+                return new JsonResult(new { IsEdited = resultAccepted, CompanyUserId = userId});
 
             }
 
             bool result = await requestService.EditRequestStatus(newStatus, id);
 
-
-
-            return new JsonResult(new { IsEdited = result, CompanyUserId = userId, haveCompany = false });
+            return new JsonResult(new { IsEdited = result, CompanyUserId = userId});
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ChooseStudents(string requestId)
+        {
+            string userId = User.GetId()!;
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+            if (!isCompany)
+            {
+                TempData[ErrorMessage] = "Трябва да си фирма за да променяш статуса.";
+                return RedirectToAction("Index", "Home");
+            }
+            string classId = await classService.GetClassIdAsync(requestId)!;
+
+            bool isAllStudentsHaveGroup = await classService.AllClassStudentsAreInGroup(classId!);
+            if(!isAllStudentsHaveGroup)
+            {
+                TempData[ErrorMessage] = "Всички ученици от този клас за заети";
+                return RedirectToAction("CompanyRequests");
+            }
+
+            bool isRequestExists = await requestService.IsRequestExistsByIdAsync(requestId);
+            if (!isRequestExists)
+            {
+                TempData[ErrorMessage] = "Тази молба за практика не съществува";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var students = await studentService.GetStudentsForChooseAsync(requestId);
+            ChooseStudentViewModel model = new ChooseStudentViewModel();
+            model.Users = students;
+            model.RequestId = requestId;
+
+            return View(model);
+
+        }
+
+        [HttpPost]
+        [Route("/Request/ChooseStudents")]
+        public async Task<IActionResult> ChooseStudents(IList<string> studentIds, string requestId)
+        {
+            string userId = User.GetId()!;
+            bool isCompany = await companyService.IsCompanyAsync(userId);
+            if (!isCompany)
+            {
+                TempData[ErrorMessage] = "Трябва да си фирма за да променяш статуса.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (studentIds.Count == 0)
+            {
+                return new JsonResult(new { isAllExists = false, Result = false, isEditedRequest = false });
+            }
+
+            
+            bool result = await studentService.AddStudentToCompanyIternsAsync(studentIds.ToList(), userId);
+            bool isEditedRequest = await requestService.EditRequestStatus("Accepted", requestId);
+
+            return new JsonResult(new { IsAllExists = true, Result = result, isEditedRequest = true});
+
+
+
+        }
+
     }
 }

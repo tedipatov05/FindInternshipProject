@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Models.Student;
+using FindInternship.Core.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,5 +26,14 @@ namespace FindInternship.Core.Contracts
         Task<List<string>> GetCompanyStudentIdsAsync(string companyId, string meetingId);
 
         Task<string?> GetStudentClassIdAsync(string studentId);
+
+        Task<List<UserViewModel>> GetFilteredStudentsAsync(string classId);
+
+        Task<List<UserViewModel>> GetStudentsForChooseAsync(string classId);
+        
+        Task<bool> AddStudentToCompanyIternsAsync(List<string> students, string companyUserId);
+
+        Task<bool> IsAllStudentsExistsAsync(List<string> studentIds);
+
     }
 }

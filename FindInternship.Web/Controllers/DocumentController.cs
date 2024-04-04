@@ -56,7 +56,7 @@ namespace FindInternship.Web.Controllers
                 foreach (var file in files)
                 {
                     string url = await documentService.UploadDocumentAsync(file, "projectDocuments");
-                    string id = await documentService.Create(url, classId!, file.FileName);
+                    string id = await documentService.Create(url, requestId, file.FileName);
                     documentsIds.Add(id);
                 }
 

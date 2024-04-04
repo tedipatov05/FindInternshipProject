@@ -23,18 +23,17 @@
                         <table class="table project-list-table table-nowrap align-middle table-borderless">
                             <thead>
                                 <tr>
-                                    <th scope="col">Клас</th>
+                                    <th scope="col">Група</th>
                                     <th scope="col">Училище</th>
                                     <th scope="col">Класен ръководител</th>
                                     <th scope="col">Брой ученици</th>
-                                    <th scope="col" style="width: 200px;">График на класа</th>
-                                    <th scope="col" style="width: 200px;">Добави среща</th>
+                                    <th scope="col" style="width: 200px;">График на групата</th>
+                                    <th scope="col" style="width: 200px;">Ученици</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var class1 in Model)
                                 {
-
 
                                     <tr>
 
@@ -46,7 +45,7 @@
                                             <a class="button-81" asp-action="All" asp-controller="Meeting" role="button">График</a>
                                         </td>
                                         <td class="thickness">
-                                            <a class="button-81" asp-route-id="@class1.TeacherId" asp-controller="Home" asp-action="Teacher" role="button">Списък с ученици</a>
+                                            <a class="button-81" asp-route-id="@class1.TeacherId" asp-controller="Company" asp-action="CompanyInterns" asp-route-companyInternId="@class1.Id" role="button">Списък с ученици</a>
                                         </td>
                                     </tr>
                                 }

@@ -82,12 +82,13 @@ namespace FindInternship.Core.Services
 
         public async Task<string?> GetTeacherUserIdByMeetingIdAsync(string meetingId)
         {
-            var teacher = await repo.All<Teacher>()
-                .Include(t => t.Class!.Meetings)
-                .Where(t => t.Class!.Meetings.Any(m => m.Id == meetingId))
+            var meeting = await repo.All<Meeting>()
+                .Where(t => t.Id == meetingId)
+                .Include(t => t.CompanyInterns)
+                .Include(m => m.CompanyInterns.Teacher)
                 .FirstOrDefaultAsync();
 
-            return teacher == null ? null : teacher.UserId;    
+            return meeting == null ? null : meeting.CompanyInterns.Teacher.UserId;    
         }
 
         public async Task<TeacherStudentsViewModel> GetTeacherStudentsAsync(string teacherId)
@@ -126,15 +127,24 @@ namespace FindInternship.Core.Services
             return isTeacher;
         }
 
-        public async Task<bool> IsTeacherClassHaveCompanyAsync(string userId)
+        public async Task<string?> GetTeacherUserIdByCompanyInternIdAsync(string companyInternId)
         {
-            var teacher = await repo.All<Teacher>()
-                .Include(t => t.Class)
-                .FirstOrDefaultAsync(t => t.UserId == userId);
+            var companyIntern = await repo.All<CompanyInterns>()
+                .Include(c => c.Teacher)
+                .FirstOrDefaultAsync(c => c.Id == companyInternId);
 
-            if(teacher == null) return false;
-
-            return teacher.Class?.CompanyId != null;
+            return companyIntern != null ? companyIntern.Teacher.UserId : null;
         }
+
+        //public async Task<bool> IsTeacherClassHaveCompanyAsync(string userId)
+        //{
+        //    var teacher = await repo.All<Teacher>()
+        //        .Include(t => t.Class)
+        //        .FirstOrDefaultAsync(t => t.UserId == userId);
+
+        //    if(teacher == null) return false;
+
+        //    return teacher.Class?.CompanyId != null;
+        //}
     }
 }

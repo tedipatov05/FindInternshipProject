@@ -141,7 +141,7 @@
                                                 @if (request.Status != RequestStatusEnum.Accepted.ToString())
                                                 {
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" onclick="changeStatus('Accepted', '@request.Id')">Приеми</a></li>
+                                                        <li><a class="dropdown-item" asp-action="ChooseStudents" asp-controller="Request" asp-route-requestId="@request.Id">Приеми</a></li>
                                                         <li><a class="dropdown-item" onclick="changeStatus('Rejected', '@request.Id')">Откажи</a></li>
                                                     </ul>
                                                 }

@@ -54,7 +54,7 @@ namespace FindInternship.Core.Services
 
         }
 
-        public async Task<List<UsersToChatViewModel>> GetUsersToChatAsync(string classId, string currentUserId)
+        public async Task<List<UsersToChatViewModel>> GetUsersToChatAsync(string companyInternsId, string currentUserId)
         {
             var currentUser = await repo.All<User>()
                 .Include(u => u.ChatMessages)
@@ -67,7 +67,7 @@ namespace FindInternship.Core.Services
                 .Include(s => s.User)
                 .Include(s => s.User.ChatMessages)
                 .AsEnumerable()
-                .Where(s => s.ClassId == classId && s.User.IsActive && s.UserId != currentUserId)
+                .Where(s => s.CompanyInternsId == companyInternsId && s.User.IsActive && s.UserId != currentUserId)
                 .Select(s => new UsersToChatViewModel()
                 {
                     UserId = s.UserId,
@@ -133,7 +133,8 @@ namespace FindInternship.Core.Services
 
             var teacher = repo.All<Teacher>()
                 .Include(t => t.User)
-                .Where(t => t.ClassId == classId && t.User.IsActive)
+                .Include(t => t.Groups)
+                .Where(t => t.Groups.Select(g => g.Id).Contains(classId) && t.User.IsActive)
                 .Include(t => t.User.ChatMessages)
                 .AsEnumerable()
                 .Select(t => new UsersToChatViewModel()
@@ -153,7 +154,7 @@ namespace FindInternship.Core.Services
 
         }
 
-        public async Task<UsersToChatViewModel> GetCompanyToChatAsync(string classId, string currentUserId)
+        public async Task<UsersToChatViewModel> GetCompanyToChatAsync(string companyInternsId, string currentUserId)
         {
             var currentUser = await repo.All<User>()
                 .Include(c => c.ChatMessages)
@@ -165,7 +166,7 @@ namespace FindInternship.Core.Services
 
             var company = repo.All<Company>()
                 .Include(t => t.User)
-                .Where(t => t.Classes.Any(c => c.Id == classId) && t.User.IsActive)
+                .Where(t => t.CompanyInterns.Any(c => c.Id == companyInternsId) && t.User.IsActive)
                 .Include(t => t.User.ChatMessages)
                 .AsEnumerable()
                 .Select(t => new UsersToChatViewModel()
@@ -422,6 +423,72 @@ namespace FindInternship.Core.Services
             return messagesCount;
         }
 
-      
+        public async Task<List<UsersToChatViewModel>> GetTeacherUsersToChatAsync(string classId, string currentUserId)
+        {
+            var currentUser = await repo.All<User>()
+               .Include(u => u.ChatMessages)
+               .FirstOrDefaultAsync(u => u.Id == currentUserId);
+
+            Func<string, List<ChatMessage>> predicate = (username) => currentUser!.ChatMessages.Where(m =>
+                m.UserId == currentUserId && m.ReceiverUsername == username).ToList();
+
+            var users = repo.All<Student>()
+                .Include(s => s.User)
+                .Include(s => s.User.ChatMessages)
+                .AsEnumerable()
+                .Where(s => s.ClassId == classId && s.User.IsActive && s.UserId != currentUserId)
+                .Select(s => new UsersToChatViewModel()
+                {
+                    UserId = s.UserId,
+                    Name = s.User.UserName,
+                    ProfilePicture = s.User.ProfilePictureUrl,
+                    LastMessageToUser = s.User.ChatMessages
+                        .Where(c => c.UserId == s.UserId && c.ReceiverUsername == currentUser!.UserName)
+                        .Union(predicate(s.User.UserName))
+                        .OrderBy(m => m.SendedOn)
+                        .LastOrDefault()
+
+
+                })
+                .ToList();
+
+            return users;
+        }
+
+        public async Task<List<UsersToChatViewModel>> GetTeacherCompaniesToChatAsync(string currentUserId)
+        {
+            var currentUser = await repo.All<User>()
+               .Include(u => u.ChatMessages)
+               .FirstOrDefaultAsync(u => u.Id == currentUserId);
+
+            var teacher = await repo.All<Teacher>()
+                .Include(t => t.Groups)
+                .FirstOrDefaultAsync(t => t.UserId == currentUserId);
+
+            Func<string, List<ChatMessage>> predicate = (username) => currentUser!.ChatMessages.Where(m =>
+                m.UserId == currentUserId && m.ReceiverUsername == username).ToList();
+
+            var users = repo.All<Company>()
+                .Include(s => s.User)
+                .Include(s => s.User.ChatMessages)
+                .AsEnumerable()
+                .Where(s => teacher!.Groups.Select(g => g.CompanyId).Contains(s.Id) && s.User.IsActive && s.UserId != currentUserId)
+                .Select(s => new UsersToChatViewModel()
+                {
+                    UserId = s.UserId,
+                    Name = s.User.UserName,
+                    ProfilePicture = s.User.ProfilePictureUrl,
+                    LastMessageToUser = s.User.ChatMessages
+                        .Where(c => c.UserId == s.UserId && c.ReceiverUsername == currentUser!.UserName)
+                        .Union(predicate(s.User.UserName))
+                        .OrderBy(m => m.SendedOn)
+                        .LastOrDefault()
+
+
+                })
+                .ToList();
+
+            return users;
+        }
     }
 }

@@ -24,10 +24,10 @@ namespace FindInternship.Data.Models
 
         public string? DocumentUrl { get; set; } 
 
-        [ForeignKey(nameof(Student))]
-        public string ClassId { get; set; } = null!;
+        [ForeignKey(nameof(Request))]
+        public string RequestId { get; set; } = null!;
 
-        public Class Class { get; set; } = null!;
+        public Request Request { get; set; } = null!;
 
 
     }

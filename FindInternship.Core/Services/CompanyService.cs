@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using FindInternship.Core.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using FindInternship.Core.Models.Lector;
+using FindInternship.Core.Models.Teacher;
+using FindInternship.Core.Models.Student;
 
 namespace FindInternship.Core.Services
 {
@@ -138,22 +140,20 @@ namespace FindInternship.Core.Services
         }
 
 
+        //public async Task AddClassToCompany(string classId, string companyId)
+        //{
+        //    var classs = await repo.All<Class>()
+        //        .FirstOrDefaultAsync(c => c.Id == classId);
 
+        //    if(classs == null)
+        //    {
+        //        return;
+        //    }
 
-        public async Task AddClassToCompany(string classId, string companyId)
-        {
-            var classs = await repo.All<Class>()
-                .FirstOrDefaultAsync(c => c.Id == classId);
+        //    classs!.CompanyId = companyId;
 
-            if(classs == null)
-            {
-                return;
-            }
-
-            classs!.CompanyId = companyId;
-
-            await repo.SaveChangesAsync();
-        }
+        //    await repo.SaveChangesAsync();
+        //}
 
         public async Task AddLectorToCompany(string companyId, AddLectorViewModel model, string profilePicture)
         {
@@ -183,6 +183,49 @@ namespace FindInternship.Core.Services
 
 
             return company!.Lectors.Any(l => l.IsActive && l.Id == lectorId);
+
+
+        }
+
+        public async Task<bool> IsCompanyInternExistsByIdAsync(string companyInternId)
+        {
+            return await repo.All<CompanyInterns>()
+                .AnyAsync(c => c.Id == companyInternId);
+        }
+
+        public async Task<CompanyInternGroupViewModel> GetCompanyInternsAsync(string companyInternId)
+        {
+            var students = await repo.All<Student>()
+                .Where(s => s.CompanyInternsId ==  companyInternId)
+                .Include(s => s.Abilities)
+                .Include(s => s.Class)
+                .Include(s => s.Class!.School)
+                .Select(s => new StudentInternViewModel()
+                {
+                    Id = s.User.Id,
+                    Name = s.User.Name,
+                    ProfilePictureUrl = s.User.ProfilePictureUrl,
+                    School = s.Class!.School.Name,
+                    Abilities = s.Abilities.Select(a => a.Ability.AbilityText).ToList()
+                })
+                .ToListAsync();
+
+
+            var companyIntern = await repo.All<CompanyInterns>()
+                .FirstOrDefaultAsync(c => c.Id == companyInternId);
+
+
+            CompanyInternGroupViewModel model = new CompanyInternGroupViewModel()
+            {
+                Id = companyInternId,
+                Name = companyIntern!.Name,
+                Interns = students,
+            };
+
+            return model;
+
+
+
 
 
         }

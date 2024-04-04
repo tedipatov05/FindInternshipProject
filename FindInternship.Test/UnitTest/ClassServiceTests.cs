@@ -344,43 +344,43 @@ namespace FindInternship.Test.UnitTest
             Assert.That(result, Is.Null);
         }
 
-        [Test]
-        public async Task GetClassMeetingAsyncShouldReturnCorrectResult()
-        {
-            string companyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798";
+        //[Test]
+        //public async Task GetClassMeetingAsyncShouldReturnCorrectResult()
+        //{
+        //    string companyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798";
 
-            var result = await classService.GetClassMeetingAsync(companyId);
+        //    var result = await classService.GetClassMeetingAsync(companyId);
 
-            var expected = new List<ClassMeetingViewModel>()
-            {
-                new ClassMeetingViewModel()
-                {
-                    Grade = "12 Б",
-                    Id = "90bd5987-e991-4dfd-be1a-a57464b9d697",
-                    School = "ППМГ Никола Обрешков"
-                }
+        //    var expected = new List<ClassMeetingViewModel>()
+        //    {
+        //        new ClassMeetingViewModel()
+        //        {
+        //            Grade = "12 Б",
+        //            Id = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+        //            School = "ППМГ Никола Обрешков"
+        //        }
 
-            };
+        //    };
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(result[0].Grade, Is.EqualTo(expected[0].Grade));
-                Assert.That(result[0].Id, Is.EqualTo(expected[0].Id));
-                Assert.That(result[0].School, Is.EqualTo(expected[0].School));
-            });
-        }
+        //    Assert.Multiple(() =>
+        //    {
+        //        Assert.That(result[0].Grade, Is.EqualTo(expected[0].Grade));
+        //        Assert.That(result[0].Id, Is.EqualTo(expected[0].Id));
+        //        Assert.That(result[0].School, Is.EqualTo(expected[0].School));
+        //    });
+        //}
 
-        [Test]
-        [TestCase("17cd4d78-a621-4bf3-a4a4-9d7d3af085d2")]
-        [TestCase("28a172eb-6e0d-43ed-9a42-fb28025e1659")]
-        [TestCase("608924f2-e51d-4686-b1eb-1f33b5dd6aa7")]
-        public async Task GetClassMeetingAsyncShouldReturnEmptyCollection(string companyId)
-        {
-            var result = await classService.GetClassMeetingAsync(companyId);
+        //[Test]
+        //[TestCase("17cd4d78-a621-4bf3-a4a4-9d7d3af085d2")]
+        //[TestCase("28a172eb-6e0d-43ed-9a42-fb28025e1659")]
+        //[TestCase("608924f2-e51d-4686-b1eb-1f33b5dd6aa7")]
+        //public async Task GetClassMeetingAsyncShouldReturnEmptyCollection(string companyId)
+        //{
+        //    var result = await classService.GetClassMeetingAsync(companyId);
 
 
-            CollectionAssert.IsEmpty(result);
-        }
+        //    CollectionAssert.IsEmpty(result);
+        //}
 
         [Test]
         public async Task GetAllClassesAsyncShouldReturnCorrectResult()
@@ -518,21 +518,22 @@ namespace FindInternship.Test.UnitTest
             Assert.That(isExists, Is.False);
 
         }
-        [Test]
-        public async Task DeleteAsyncShouldDeleteClassFromCompany()
-        {
-            string classId = "90bd5987-e991-4dfd-be1a-a57464b9d697";
 
-            await classService.DeleteAsync(classId);
+        //[Test]
+        //public async Task DeleteAsyncShouldDeleteClassFromCompany()
+        //{
+        //    string classId = "90bd5987-e991-4dfd-be1a-a57464b9d697";
 
-            var isExists = await repo.All<Company>()
-                .Include(c => c.User)
-                .Include(c => c.Classes)
-                .AnyAsync(c => c.Classes.Any(c => c.Id == classId) && c.User.IsActive);
+        //    await classService.DeleteAsync(classId);
 
-            Assert.That(isExists, Is.False);
+        //    var isExists = await repo.All<Company>()
+        //        .Include(c => c.User)
+        //        .Include(c => c.Classes)
+        //        .AnyAsync(c => c.Classes.Any(c => c.Id == classId) && c.User.IsActive);
 
-        }
+        //    Assert.That(isExists, Is.False);
+
+        //}
 
 
     }

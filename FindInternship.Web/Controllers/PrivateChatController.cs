@@ -50,7 +50,10 @@ namespace FindInternship.Web.Controllers
                     {
                         var users = await privateChatService.GetUsersToChatAsync(id, userId);
                         var teacher = await privateChatService.GetTeacherToChatAsync(id, userId);
-                        users.Add(teacher);
+                        if(teacher != null)
+                        {
+                            users.Add(teacher);
+                        }
                         usersToChat.AddRange(users);
                     }
                 }
@@ -74,12 +77,9 @@ namespace FindInternship.Web.Controllers
             else if (isTeacher)
             {
                 string? classId = await classService.GetClassIdByTeacherUserIdAsync(userId);
-                var users = await privateChatService.GetUsersToChatAsync(classId!, userId);
-                var company = await privateChatService.GetCompanyToChatAsync(classId!, userId);
-                if (company != null)
-                {
-                    users.Add(company);
-                }
+                var users = await privateChatService.GetTeacherUsersToChatAsync(classId!, userId);
+                var companies = await privateChatService.GetTeacherCompaniesToChatAsync(userId);
+                users.AddRange(companies);
 
                 users = users
                     .OrderByDescending(u => u.LastMessageToUser != null)

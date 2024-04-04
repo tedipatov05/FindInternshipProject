@@ -21,8 +21,9 @@ namespace FindInternship.Web.Controllers
         private readonly ILectorService lectorService;
         private readonly IDocumentService documentService;
         private readonly IMaterialService materialService;
+        private readonly ICompanyInternsService companyInternsService;
 
-        public MeetingController(IMeetingService meetingService, IUserService userService, ICompanyService companyService, ITeacherService teacherService, IStudentService studentService, IClassService classService, ILectorService lectorService, IDocumentService documentService, IMaterialService materialService)
+        public MeetingController(IMeetingService meetingService, IUserService userService, ICompanyService companyService, ITeacherService teacherService, IStudentService studentService, IClassService classService, ILectorService lectorService, IDocumentService documentService, IMaterialService materialService, ICompanyInternsService companyInternsService)
         {
             this.meetingService = meetingService;
             this.userService = userService;
@@ -33,6 +34,7 @@ namespace FindInternship.Web.Controllers
             this.lectorService = lectorService;
             this.documentService = documentService;
             this.materialService = materialService;
+            this.companyInternsService = companyInternsService;
         }
 
 
@@ -59,13 +61,13 @@ namespace FindInternship.Web.Controllers
                 {
                     string? teacherId = await teacherService.GetTeacherIdAsync(userId);
                     model.ClassId = await teacherService.GetTeacherClassIdAsync(userId);
-                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(days, teacherId!);
-                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(days + 1, teacherId!);
-                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(days + 2, teacherId!);
-                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(days + 3, teacherId!);
-                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(days + 4, teacherId!);
-                    model.Day5 = await meetingService.GetClassMeetingsForDayAsync(days + 5, teacherId!);
-                    model.Day6 = await meetingService.GetClassMeetingsForDayAsync(days + 6, teacherId!);
+                    model.DayNow = await meetingService.GetCompanyInternsMeetingsForDayAsync(days, teacherId!);
+                    model.DayTomorrow = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 1, teacherId!);
+                    model.Day2 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 2, teacherId!);
+                    model.Day3 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 3, teacherId!);
+                    model.Day4 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 4, teacherId!);
+                    model.Day5 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 5, teacherId!);
+                    model.Day6 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 6, teacherId!);
 
                 }
                 else if (isCompany)
@@ -80,7 +82,7 @@ namespace FindInternship.Web.Controllers
                     model.Day6 = await meetingService.GetAllCompanyMeetingsForDayAsync(days + 6, companyId!);
 
 
-                    model.CompanyClasses = await classService.GetClassMeetingAsync(companyId!);
+                    model.CompanyClasses = await companyInternsService.GetClassMeetingAsync(companyId!);
                     model.CompanyLectors = await lectorService.GetAllCompanyLectorsAsync(companyId!);
 
 
@@ -90,13 +92,13 @@ namespace FindInternship.Web.Controllers
                     string? studentId = await studentService.GetStudentId(userId);
                     string? studentTeacherId = await studentService.GetStudentTeacherIdAsync(studentId!);
                     model.ClassId = await studentService.GetStudentClassIdAsync(studentId!);
-                    model.DayNow = await meetingService.GetClassMeetingsForDayAsync(days + 0, studentTeacherId!);
-                    model.DayTomorrow = await meetingService.GetClassMeetingsForDayAsync(days + 1, studentTeacherId!);
-                    model.Day2 = await meetingService.GetClassMeetingsForDayAsync(days + 2, studentTeacherId!);
-                    model.Day3 = await meetingService.GetClassMeetingsForDayAsync(days + 3, studentTeacherId!);
-                    model.Day4 = await meetingService.GetClassMeetingsForDayAsync(days + 4, studentTeacherId!);
-                    model.Day5 = await meetingService.GetClassMeetingsForDayAsync(days + 5, studentTeacherId!);
-                    model.Day6 = await meetingService.GetClassMeetingsForDayAsync(days + 6, studentTeacherId!);
+                    model.DayNow = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 0, studentTeacherId!);
+                    model.DayTomorrow = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 1, studentTeacherId!);
+                    model.Day2 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 2, studentTeacherId!);
+                    model.Day3 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 3, studentTeacherId!);
+                    model.Day4 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 4, studentTeacherId!);
+                    model.Day5 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 5, studentTeacherId!);
+                    model.Day6 = await meetingService.GetCompanyInternsMeetingsForDayAsync(days + 6, studentTeacherId!);
 
                 }
                 else
@@ -141,7 +143,7 @@ namespace FindInternship.Web.Controllers
             try
             {
 
-                string? teacherUserId = await teacherService.GetTeacherUserIdByClassAsync(classId);
+                string? teacherUserId = await teacherService.GetTeacherUserIdByCompanyInternIdAsync(classId);
                 string? companyId = await companyService.GetCompanyIdAsync(userId);
 
                 bool isExistsInCompany = await meetingService.IsMeetingExistsInCompanyAsync(start, end, companyId!, classId);
@@ -268,11 +270,11 @@ namespace FindInternship.Web.Controllers
                 Description = description,
             };
 
-            bool isExistsInCompany = await meetingService.IsMeetingExistsInCompanyAsync(start, end, companyId!, "");
-            if (isExistsInCompany && (DateTime.Compare(meetingOld!.Start, model.Start) != 0 || DateTime.Compare(meetingOld.End, model.End) != 0))
-            {
-                return new JsonResult(new { isExists = true });
-            }
+            //bool isExistsInCompany = await meetingService.IsMeetingExistsInCompanyAsync(start, end, companyId!, "");
+            //if (isExistsInCompany && (DateTime.Compare(meetingOld!.Start, model.Start) != 0 || DateTime.Compare(meetingOld.End, model.End) != 0))
+            //{
+            //    return new JsonResult(new { isExists = true });
+            //}
 
 
             await meetingService.EditMeetingAsync(id, model);

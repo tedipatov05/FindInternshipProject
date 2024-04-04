@@ -20,6 +20,8 @@ namespace FindInternship.Core.Models.Request
         public string DateCreated { get; set; } = null!;
         public string TeacherId { get; set; } = null!;
 
+        public string ClassId { get; set; } = null!;
+
         public string TeacherName { get; set; } = null!;
 
         public string CompanyId { get; set; } = null!;

@@ -39,10 +39,10 @@ namespace FindInternship.Data.Models
 
         public Company Company { get; set; } = null!;
 
-        [ForeignKey(nameof(Class))]
-        public string ClassId { get; set; } = null!;
+        [ForeignKey(nameof(CompanyInterns))]
+        public string CompanyInternsId { get; set; } = null!;
 
-        public Class Class { get; set; } = null!;
+        public CompanyInterns CompanyInterns { get; set; } = null!;
 
         [ForeignKey(nameof(Lector))]
         public string LectorId { get; set; } = null!;

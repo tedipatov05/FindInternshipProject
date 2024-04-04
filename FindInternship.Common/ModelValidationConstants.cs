@@ -118,6 +118,11 @@ namespace FindInternship.Common
 
            
         }
+        public static class CompanyInternsConstants
+        {
+            public const int NameMaxLength = 100;
+            public const int NameMinLength = 3;
+        }
 
         
     }

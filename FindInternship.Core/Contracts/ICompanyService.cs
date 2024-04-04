@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FindInternship.Core.Models.Lector;
 using FindInternship.Core.Models.Meeting;
+using FindInternship.Core.Models.Teacher;
 
 namespace FindInternship.Core.Contracts
 {
@@ -20,7 +21,7 @@ namespace FindInternship.Core.Contracts
         Task<string?> GetCompanyIdAsync(string userId);
         Task<string?> GetCompanyNameByIdAsync(string companyId);
 
-        Task AddClassToCompany(string classId, string companyId);
+        //Task AddClassToCompany(string classId, string companyId);
 
         Task CreateAsync(string userId, string services, string description);
 
@@ -30,6 +31,9 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> IsLectorInCompany(string companyId, string lectorId);
 
+        Task<bool> IsCompanyInternExistsByIdAsync(string companyInternId);
+
+        Task<CompanyInternGroupViewModel> GetCompanyInternsAsync(string companyId);
 
 
 

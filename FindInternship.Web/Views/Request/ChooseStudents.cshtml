@@ -1,0 +1,90 @@
+﻿@using FindInternship.Core.Models.Student;
+@model ChooseStudentViewModel
+
+<div class="main-container">
+    <div class="main">
+        <div class="report-container">
+            <div class="report-header">
+                <h1 class="recent-Articles">Потребители</h1>
+                @* <form method="get">
+                <div class="searchbar">
+                <input asp-for="@Model.SearchString" type="text" placeholder="Търси">
+                <button class="searchbtn">
+                <img src="~/img/searchIcon.png" class="icn srchicn" alt="search-icon">
+                </button>
+                </div>
+
+                </form> *@
+
+            </div>
+            <form method="post" enctype="multipart/form-data">
+
+                <input type="hidden" asp-for="@Model.ClassId" value="@Model.ClassId" id="class-id" />
+
+                <input type="hidden" asp-for="@Model.RequestId" value="@Model.RequestId" id="request-id" />
+
+                <div class="report-body">
+                    <div class="report-topic-heading">
+                        <h3 class="t-op">Снимка</h3>
+                        <h3 class="t-op">Име</h3>
+                        <h3 class="t-op">Имейл</h3>
+                        <h3 class="t-op">Регистрация</h3>
+                        <h3 class="t-op">Действия</h3>
+                    </div>
+
+                    <div class="items">
+
+                        @if (Model.Users.Count == 0)
+                        {
+                            <p class="text-center">Няма съвпадащи потребители</p>
+                        }
+                        else
+                        {
+                            foreach (var user in Model.Users)
+                            {
+                                <div class="item1" style="margin-bottom: 10px;">
+                                    <div class="media-left">
+                                        @if (user.ProfilePictureUrl == null)
+                                        {
+                                            <img src="~/img/blank-profile-picture.png"
+                                                 class="rounded-circle shadow avatar-md mr-3" alt="Profile Picture">
+                                        }
+                                        else
+                                        {
+                                            <img src="@user.ProfilePictureUrl"
+                                                 class="rounded-circle shadow avatar-md mr-3" alt="Profile Picture">
+                                        }
+                                    </div>
+                                    <h3 class="t-op-nextlvl ml-40">@user.Name</h3>
+                                    <h3 class="t-op-nextlvl ml-40">@user.Email</h3>
+                                    <h3 class="t-op-nextlvl ml-40">@user.RegisteredOn</h3>
+                                    <div style="display: flex; flex-direction: row; margin-bottom: 0.5rem;">
+                                        <a id="@user.Id" class="t-op-nextlvl label-tag" style="text-decoration: none; margin-bottom: 10px;">Вземи на практика</a>
+
+                                        @*   <img src="~/img/check-mark.png" width="20" height="20"/>
+                                <span style="margin-left: 0.4rem;">Избран</span> *@
+                                    </div>
+                                </div>
+                                <hr>
+                            }
+                        }
+
+                    </div>
+                    <div style="display: flex; flex-direction: column;float:right;" id="accept-btn">
+                        <a class="t-op-nextlvl label-tag" style="text-decoration: none; padding: 0.4rem;">Приеми</a>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/adminResponsive.css" asp-append-version="true" />
+}
+@section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chooseStudents.js" asp-append-version="true"></script>
+}

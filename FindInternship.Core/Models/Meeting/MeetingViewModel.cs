@@ -20,9 +20,7 @@ namespace FindInternship.Core.Models.Meeting
 
         public string? EndHour { get; set; }
 
-        public string? Class { get; set; }
-
-        public string? School { get; set; }
+        public string? CompanyInterns { get; set; }
 
     }
 }
