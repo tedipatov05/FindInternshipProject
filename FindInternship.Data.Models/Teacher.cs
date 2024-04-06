@@ -13,6 +13,7 @@ namespace FindInternship.Data.Models
         public Teacher()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Groups = new HashSet<CompanyInterns>();
         }
 
         [Key]
@@ -27,6 +28,8 @@ namespace FindInternship.Data.Models
         public string? ClassId { get; set; } 
         public Class? Class { get; set; }
 
+        public ICollection<CompanyInterns> Groups { get; set; }
+             
 
     }
 }

@@ -48,13 +48,13 @@ namespace FindInternship.Core.Services
 
         }
 
-        public async Task<string> Create(string documentUrl, string classId, string documentName)
+        public async Task<string> Create(string documentUrl, string requestId, string documentName)
         {
             Document document = new Document()
             {
                 Type = documentName,
                 DocumentUrl = documentUrl,
-                ClassId = classId
+                RequestId = requestId
 
             };
 

@@ -47,7 +47,7 @@ namespace FindInternship.Core.Services
                 return null;
             }
 
-            return user!.ClassId!;
+            return user!.CompanyInternsId!;
         }
 
         public async Task<string?> GetClassIdByTeacherUserIdAsync(string userId)
@@ -66,7 +66,7 @@ namespace FindInternship.Core.Services
         public async Task<List<string>> GetClassIdsByCompanyUserIdAsync(string userId)
         {
             var user = await repo.All<Company>()
-                .Include(c => c.Classes)
+                .Include(c => c.CompanyInterns)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
             if(user == null)
@@ -74,24 +74,24 @@ namespace FindInternship.Core.Services
                 return new List<string>();
             }
 
-            return user!.Classes.Select(c => c.Id).ToList();
+            return user!.CompanyInterns.Select(c => c.Id).ToList();
         }
 
         public async Task<List<ClassViewModel>> GetAllCompanyClassesAsync(string companyId)
         {
-            var classes = await repo.All<Class>()
+            var classes = await repo.All<CompanyInterns>()
                 .Include(c => c.Teacher)
+                .Include(c => c.Teacher.Class)
                 .Include(c => c.Students)
-                .Where(c => c.CompanyId == companyId)
+                .Where(c => c.CompanyId == companyId && c.IsActive)
                 .Select(c => new ClassViewModel()
                 {
                     Id = c.Id,
-                    Name = c.Grade,
-                    School = c.School.Name,
+                    Name = c.Name,
+                    School = c.Teacher.Class!.School.Name,
                     Teacher = c.Teacher!.User.Name,
                     Students = c.Students.Where(s => s.User.IsActive).Count(),
                     TeacherId = c.Teacher.UserId
-
                 })
                 .ToListAsync();
 
@@ -192,23 +192,23 @@ namespace FindInternship.Core.Services
             return class1!.Id;
         }
 
-        public async Task<List<ClassMeetingViewModel>> GetClassMeetingAsync(string companyId)
-        {
-            var classes = await repo.All<Class>()
-                .Include(c => c.School)
-                .Where(c => c.CompanyId == companyId)
-                .Select(c => new ClassMeetingViewModel()
-                {
-                    Grade = c.Grade,
-                    Id = c.Id,
-                    School = c.School.Name
+        //public async Task<List<ClassMeetingViewModel>> GetClassMeetingAsync(string companyId)
+        //{
+        //    var classes = await repo.All<CompanyInterns>()
+        //        .Include(c => c.School)
+        //        .Where(c => c.CompanyId == companyId)
+        //        .Select(c => new ClassMeetingViewModel()
+        //        {
+        //            Grade = c.Grade,
+        //            Id = c.Id,
+        //            School = c.School.Name
 
-                })
-                .ToListAsync();
+        //        })
+        //        .ToListAsync();
 
-            return classes;
+        //    return classes;
 
-        }
+        //}
 
         public async Task<List<ClassViewModel>> GetAllClassesAsync()
         {
@@ -281,28 +281,17 @@ namespace FindInternship.Core.Services
 
             classTeacher!.User.IsActive = false;
 
-            var documents = await repo.All<Document>()
-                .Where(d => d.ClassId == classId)
-                .ToListAsync();
+            //var documents = await repo.All<Document>()
+            //    .Where(d => d.ClassId == classId)
+            //    .ToListAsync();
 
-            repo.DeleteRange(documents);
+            //repo.DeleteRange(documents);
 
             var requests = await repo.All<Request>()
                 .Where(d => d.ClassId == classId)
                 .ToListAsync();
 
             repo.DeleteRange(requests);
-
-            var meetings = await repo.All<Meeting>()
-                .Where(d => d.ClassId == classId)
-                .ToListAsync();
-
-            foreach(var meeting in meetings)
-            {
-                meeting.IsActive = false;
-            }
-
-
 
             await repo.DeleteAsync<Class>(classId);
 
@@ -312,17 +301,32 @@ namespace FindInternship.Core.Services
 
         }
 
-        public async Task<bool> IsClassHaveAlreadyCompanyAsync(string classId)
+        //public async Task<bool> IsClassHaveAlreadyCompanyAsync(string classId)
+        //{
+        //    var clModel = await repo.All<Class>()
+        //        .FirstOrDefaultAsync(c => c.Id == classId);
+
+        //    if (clModel == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    return clModel.CompanyId != null;
+        //}
+
+        public async Task<bool> AllClassStudentsAreInGroup(string classId)
         {
             var clModel = await repo.All<Class>()
-                .FirstOrDefaultAsync(c => c.Id == classId);
+                .Where(c => c.Id == classId)
+                .Include(c => c.Students)
+                .FirstOrDefaultAsync();
 
-            if (clModel == null)
+            if(clModel == null)
             {
                 return false;
             }
 
-            return clModel.CompanyId != null;
+            return clModel.Students.Any(s => s.CompanyInternsId == null);
         }
     }
 }

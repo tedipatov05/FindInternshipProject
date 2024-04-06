@@ -19,7 +19,6 @@ namespace FindInternship.Data.Models
             this.Students = new HashSet<Student>();
             this.Requests = new HashSet<Request>();
             this.Meetings = new HashSet<Meeting>();
-            this.Documents = new HashSet<Document>();
         }
 
         [Key]
@@ -40,10 +39,10 @@ namespace FindInternship.Data.Models
 
         public Teacher? Teacher { get; set; } 
 
-        [AllowNull]
-        [ForeignKey(nameof(Company))]
-        public string? CompanyId { get; set; }
-        public Company? Company { get; set; }
+        //[AllowNull]
+        //[ForeignKey(nameof(Company))]
+        //public string? CompanyId { get; set; }
+        //public Company? Company { get; set; }
 
         public ICollection<Student> Students { get; set; }
 
@@ -51,7 +50,6 @@ namespace FindInternship.Data.Models
 
         public ICollection<Meeting> Meetings { get; set; }
 
-        public ICollection<Document> Documents { get; set; }
 
 
     }

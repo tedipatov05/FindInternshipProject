@@ -300,26 +300,26 @@ namespace FindInternship.Test.UnitTest
             });
         }
 
-        [Test]
-        public async Task IsTeacherClassHaveCompanyAsyncShouldReturnTrue()
-        {
-            string teacherUserId = "28a172eb-6e0d-43ed-9a42-fb28025e1659";
+        //[Test]
+        //public async Task IsTeacherClassHaveCompanyAsyncShouldReturnTrue()
+        //{
+        //    string teacherUserId = "28a172eb-6e0d-43ed-9a42-fb28025e1659";
 
-            var result = await teacherService.IsTeacherClassHaveCompanyAsync(teacherUserId);
+        //    var result = await teacherService.IsTeacherClassHaveCompanyAsync(teacherUserId);
 
-            Assert.That(result, Is.True);
-        }
+        //    Assert.That(result, Is.True);
+        //}
 
-        [Test]
-        [TestCase("someId")]
-        [TestCase("bae65efa-6885-4144-9786-0719b0e2ebc4")]
-        [TestCase("eb8fc718-655e-4d32-9a0a-d905fa3956e7")]
-        [TestCase(null)]
-        public async Task IsTeacherClassHaveCompanyAsyncShouldReturnFalse(string teacherUserId)
-        {
-            var result = await teacherService.IsTeacherClassHaveCompanyAsync(teacherUserId);
+        //[Test]
+        //[TestCase("someId")]
+        //[TestCase("bae65efa-6885-4144-9786-0719b0e2ebc4")]
+        //[TestCase("eb8fc718-655e-4d32-9a0a-d905fa3956e7")]
+        //[TestCase(null)]
+        //public async Task IsTeacherClassHaveCompanyAsyncShouldReturnFalse(string teacherUserId)
+        //{
+        //    var result = await teacherService.IsTeacherClassHaveCompanyAsync(teacherUserId);
 
-            Assert.That(result, Is.False);
-        }
+        //    Assert.That(result, Is.False);
+        //}
     }
 }

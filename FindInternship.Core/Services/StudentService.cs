@@ -1,5 +1,6 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.Student;
+using FindInternship.Core.Models.Users;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -62,18 +63,30 @@ namespace FindInternship.Core.Services
                 
         }
 
-        public async Task<List<string>> GetStudentCompanyIdsAsync(string companyId, string classId)
+        public async Task<List<string>> GetStudentCompanyIdsAsync(string companyId, string companyInterns)
         {
-            var classModel = await repo.All<Class>()
+
+            var companyInternStudents = await repo.All<CompanyInterns>()
                 .Include(c => c.Students)
-                .FirstOrDefaultAsync(c => c.CompanyId == companyId && c.Id == classId);
+                .FirstOrDefaultAsync(c => c.Id == companyInterns);
 
-            if(classModel == null)
-            {
-                return new List<string>();
-            }
+            var studentIds = companyInternStudents.Students.Select(s => s.UserId).ToList();
 
-            var studentIds = classModel!.Students.Select(s => s.UserId).ToList();
+
+            //var company = await repo.All<Company>()
+            //    .Include(c => c.CompanyInterns)
+            //    .FirstOrDefaultAsync(c => c.Id == companyId);
+
+            //if (company == null)
+            //{
+            //    return new List<string>();
+            //}
+
+            //var studentIds = new List<string>();
+            //foreach (var interns in company.CompanyInterns)
+            //{
+            //    studentIds.AddRange(interns.Students.Select(s => s.UserId));
+            //}
 
 
             return studentIds;
@@ -82,7 +95,7 @@ namespace FindInternship.Core.Services
 
         public async Task<List<string>> GetCompanyStudentIdsAsync(string companyId, string meetingId)
         {
-            var cl = await repo.All<Class>()
+            var cl = await repo.All<CompanyInterns>()
                 .Include(c => c.Students)
                 .Include(c => c.Meetings)
                 .Where(c => c.CompanyId == companyId && c.Meetings.Any(m => m.Id == meetingId))
@@ -124,6 +137,126 @@ namespace FindInternship.Core.Services
                 .AnyAsync(s => s.UserId == userId && s.User.IsActive == true);
 
             return isStudent;
+        }
+
+        public async Task<List<UserViewModel>> GetFilteredStudentsAsync(string classId)
+        {
+            var students = await repo.All<Student>()
+                .Where(s => s.ClassId == classId)
+                .Include(s => s.User)
+                .Select(s => new UserViewModel()
+                {
+                    Id = s.Id, 
+                    Name = s.User.Name, 
+                    Email = s.User.Email,
+                    RegisteredOn = s.User.RegisteredOn.ToString("dddd, dd MMMM yyyy"),
+                    ProfilePictureUrl = s.User.ProfilePictureUrl,
+                    IsApproved = s.CompanyInternsId != null ? true : false 
+
+                })
+                .ToListAsync();
+
+            return students;
+        }
+
+        public async Task<List<UserViewModel>> GetStudentsForChooseAsync(string requestId)
+        {
+            var classId = await repo.All<Request>()
+                .Where(r => r.Id == requestId)
+                .Select(r => r.ClassId)
+                .FirstOrDefaultAsync();
+
+            var students = await repo.All<Student>()
+                .Where(s => s.ClassId == classId && s.CompanyInternsId == null)
+                .Include(s => s.User)
+                .Select(s => new UserViewModel()
+                {
+                    Id = s.Id,
+                    Name = s.User.Name,
+                    Email = s.User.Email,
+                    RegisteredOn = s.User.RegisteredOn.ToString("dddd, dd MMMM yyyy"),
+                    ProfilePictureUrl = s.User.ProfilePictureUrl,
+                    IsApproved = s.CompanyInternsId != null ? true : false
+
+                })
+                .ToListAsync();
+
+            return students;
+        }
+
+        public async Task<bool> AddStudentToCompanyIternsAsync(List<string> studentIds, string companyUserId)
+        {
+            var company = await repo.All<Company>()
+                .Include(c => c.User)
+                .Where(c => c.UserId == companyUserId)
+                .FirstOrDefaultAsync();
+
+            var cl = await repo.All<Student>()
+                .Include(s => s.Class)
+                .Where(s => s.Id == studentIds.First())
+                .Select(s => s.Class)
+                .FirstOrDefaultAsync();
+          
+            List<Student> students = new List<Student>();
+
+            foreach (var studentId in studentIds)
+            {
+                var student = await repo.All<Student>()
+                    .FirstOrDefaultAsync(s => s.Id == studentId);
+
+                students.Add(student!);
+
+            }
+            string name = $"{cl!.Grade} - {company!.User.Name}";
+
+            CompanyInterns? companyIntern;
+
+            companyIntern = await repo.All<CompanyInterns>()
+                .FirstOrDefaultAsync(c => c.CompanyId == company.Id && c.Name == name);
+
+            if(companyIntern == null) 
+            {
+                companyIntern = new CompanyInterns()
+                {
+                    Name = $"{cl!.Grade} - {company!.User.Name}",
+                    CompanyId = company!.Id,
+                    TeacherId = cl!.TeacherId!,
+                    Students = students
+                };
+
+                await repo.AddAsync(companyIntern);
+                await repo.SaveChangesAsync();
+
+            }
+            else
+            {
+                foreach(var student in students)
+                {
+                    companyIntern.Students.Add(student);
+
+                }
+            }
+
+          
+
+            return true;
+        }
+
+        public async Task<bool> IsAllStudentsExistsAsync(List<string> studentIds)
+        {
+            var students = await repo.All<Student>()
+                .Select(s => s.Id)
+                .ToListAsync();
+
+            foreach(var student in studentIds)
+            {
+                if(!students.Any(s => s == student))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -327,7 +327,7 @@ namespace FindInternship.Test.UnitTest
         {
             string classId = "17cd4d78-a621-4bf3-a4a4-9d7d3af085d2";
 
-            var result = await meetingService.GetClassMeetingsForDayAsync(0, classId);
+            var result = await meetingService.GetCompanyInternsMeetingsForDayAsync(0, classId);
 
             var expectedResult = new List<MeetingViewModel>()
             {
@@ -363,7 +363,7 @@ namespace FindInternship.Test.UnitTest
         {
             string classId = "17cd4d78-a621-4bf3-a4a4-9d7d3af085d2";
 
-            var result = await meetingService.GetClassMeetingsForDayAsync(days, classId);
+            var result = await meetingService.GetCompanyInternsMeetingsForDayAsync(days, classId);
 
             var expectedResult = new List<MeetingViewModel>()
             {
@@ -398,7 +398,7 @@ namespace FindInternship.Test.UnitTest
                 StartTime = DateTime.UtcNow,
                 EndTime = DateTime.UtcNow.AddHours(3),
                 CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
-                ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                //ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
                 Description = "test add new meeting description",
                 LectorId = "724ebe11-96f9-4dfb-b255-da3041d887d5",
                 IsActive = true

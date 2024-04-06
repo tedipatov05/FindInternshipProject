@@ -15,11 +15,12 @@ namespace FindInternship.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             
-            this.Classes = new HashSet<Class>();
+            //this.Classes = new HashSet<Class>();
             this.Requests = new List<Request>();
             this.Meetings = new HashSet<Meeting>();
             this.Technologies = new HashSet<CompanyAbility>();
             this.Lectors = new HashSet<Lector>();
+            this.CompanyInterns = new HashSet<CompanyInterns>();
 
         }
 
@@ -39,7 +40,7 @@ namespace FindInternship.Data.Models
 
         public ICollection<CompanyAbility> Technologies { get; set; }
 
-        public ICollection<Class> Classes { get; set; }
+        //public ICollection<Class> Classes { get; set; }
 
         public ICollection<Request> Requests { get; set; }
 
@@ -47,6 +48,8 @@ namespace FindInternship.Data.Models
 
         public ICollection<Lector> Lectors { get; set; }
 
+        public ICollection<CompanyInterns> CompanyInterns { get; set; }
+             
 
     }
 }

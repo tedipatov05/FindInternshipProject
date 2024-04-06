@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Models.Class;
+using FindInternship.Core.Models.CompanyInterns;
 using FindInternship.Core.Models.Lector;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace FindInternship.Core.Models.Meeting
 
         public string Month { get; set; } = null!;
 
-        public ICollection<ClassMeetingViewModel> CompanyClasses { get; set; } = new HashSet<ClassMeetingViewModel>();
+        public ICollection<CompanyInternsViewModel> CompanyClasses { get; set; } = new HashSet<CompanyInternsViewModel>();
 
         public ICollection<LectorMeetingViewModel> CompanyLectors { get; set; } = new HashSet<LectorMeetingViewModel>();
 

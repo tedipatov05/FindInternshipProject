@@ -38,6 +38,22 @@ namespace FindInternship.Web.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> CompanyInterns(string companyInternId)
+        {
+            bool isCompanyExists = await companyService.IsCompanyInternExistsByIdAsync(companyInternId);
+            if(!isCompanyExists)
+            {
+                TempData[ErrorMessage] = "Тази фирма не съществува";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var model = await companyService.GetCompanyInternsAsync(companyInternId);
+
+            return View(model);
+
+
+        }
+
         
     }
 }

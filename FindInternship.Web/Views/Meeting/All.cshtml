@@ -50,7 +50,7 @@ padding-top: 40px" id="meeting-form">
                 border-bottom-right-radius: 1rem;padding: 10px;">
                 @foreach (var cl in Model.CompanyClasses)
                 {
-                    <option style="background-color: black" value="@cl.Id">@cl.Grade (@cl.School)</option>
+                    <option style="background-color: black" value="@cl.Id">@cl.Name</option>
                 }
             </select>
 

@@ -15,6 +15,7 @@ namespace FindInternship.Data.Models
         public Request()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Documents = new HashSet<Document>();
         }
 
         [Key]
@@ -39,6 +40,8 @@ namespace FindInternship.Data.Models
         public Company Company { get; set; } = null!;
 
         public DateTime CreatedOn { get; set; }
+
+        public ICollection<Document> Documents { get; set; }
 
         
     }

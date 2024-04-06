@@ -26,7 +26,6 @@ namespace FindInternship.Data.Configurations
                 Speciality = "Приложен програмист",
                 SchoolId = 1,
                 TeacherId = "2644afb5-f916-4b3f-b451-9ff86c881de3", 
-                CompanyId = null, 
                 Grade = "12 Б",
 
             });

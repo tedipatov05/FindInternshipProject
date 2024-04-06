@@ -172,7 +172,7 @@ connection.on("ReceiveDelete", function (meetingId) {
 
     var divMeeting = document.getElementById(`${meetingId}`);
 
-    divMeeting.parentNode.parentNode.removeChild(divMeeting.parentNode);
+    divMeeting.parentNode.removeChild(divMeeting.parentNode);
 
 });
 
@@ -220,7 +220,7 @@ connection.on("ReceiveMeeting", function (meeting, id) {
 
     li.innerHTML = `<a href="#0" id="${id}">
                         <em class="event-name mt-2">${meeting.title} </em>
-                        <em class="event-name mt-2" style="font-size: 1rem;">${meeting.class} (${meeting.school})</em>
+                        <em class="event-name mt-2" style="font-size: 1rem;">${meeting.companyInterns}</em>
                     </a>`;
 
 

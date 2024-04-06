@@ -5,10 +5,10 @@ footer, header, hgroup, menu, nav, section, main {
     display: block;
 }
 
-body {
+/*body {
     line-height: 1;
 }
-
+*/
 ol, ul {
     list-style: none;
 }

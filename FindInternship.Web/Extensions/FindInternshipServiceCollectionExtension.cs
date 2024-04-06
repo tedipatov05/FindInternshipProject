@@ -27,6 +27,7 @@ namespace FindInternship.Web.Extensions
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<ILectorService, LectorService>();
             services.AddScoped<IMaterialService, MaterialService>();
+            services.AddScoped<ICompanyInternsService, CompanyInternsService>();
 
             return services;
 

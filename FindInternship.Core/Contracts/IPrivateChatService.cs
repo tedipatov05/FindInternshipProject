@@ -15,6 +15,10 @@ namespace FindInternship.Core.Contracts
 
         Task<List<UsersToChatViewModel>> GetUsersToChatAsync(string classId, string currentUserId);
 
+        Task<List<UsersToChatViewModel>> GetTeacherUsersToChatAsync(string classId, string currentUserId);
+
+        Task<List<UsersToChatViewModel>> GetTeacherCompaniesToChatAsync(string currentUserId);
+
         Task<List<UsersToChatViewModel>> GetAllTeachersToChatAsync(string currentUserId);
 
         Task<UsersToChatViewModel> GetTeacherToChatAsync(string classId, string currentUserId);

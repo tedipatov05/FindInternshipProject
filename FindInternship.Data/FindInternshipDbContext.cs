@@ -54,6 +54,8 @@ namespace FindInternship.Data
         public DbSet<School> Schools { get; set; } = null!;
         public DbSet<CompanyAbility> Technologies { get; set; } = null!;
 
+        public DbSet<CompanyInterns> CompanyInterns { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
@@ -100,18 +102,18 @@ namespace FindInternship.Data
                 .WithOne(s => s.Class)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<Class>()
-                .HasMany(c => c.Meetings)
-                .WithOne(s => s.Class)
-                .OnDelete(DeleteBehavior.NoAction);
+            //builder.Entity<Class>()
+            //    .HasMany(c => c.Meetings)
+            //    .WithOne(s => s.Class)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<Company>()
-                .HasMany(c => c.Classes)
-                .WithOne(c => c.Company)
-                .OnDelete(DeleteBehavior.NoAction);
+            //builder.Entity<Company>()
+            //    .HasMany(c => c.Classes)
+            //    .WithOne(c => c.Company)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Document>()
-                .HasOne(d => d.Class)
+                .HasOne(d => d.Request)
                 .WithMany(s => s.Documents)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -119,6 +121,17 @@ namespace FindInternship.Data
                 .HasOne(l => l.Company)
                 .WithMany(c => c.Lectors)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<CompanyInterns>()
+                .HasOne(c => c.Company)
+                .WithMany(c => c.CompanyInterns)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<CompanyInterns>()
+                .HasOne(c => c.Teacher)
+                .WithMany(t => t.Groups)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             if (seedDb)
             {
