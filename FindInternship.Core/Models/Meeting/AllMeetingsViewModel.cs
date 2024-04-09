@@ -20,7 +20,7 @@ namespace FindInternship.Core.Models.Meeting
         public ICollection<MeetingViewModel> Day5 { get; set; } = new HashSet<MeetingViewModel>();
         public ICollection<MeetingViewModel> Day6 { get; set; } = new HashSet<MeetingViewModel>();
 
-        public string? ClassId { get; set; }
+        public string? GroupId { get; set; }
 
         public int Days { get; set; } = 0;
 

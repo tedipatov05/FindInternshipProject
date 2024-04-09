@@ -1,5 +1,6 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.Account;
+using FindInternship.Core.Models.CompanyInterns;
 using FindInternship.Core.Models.Teacher;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
@@ -146,6 +147,25 @@ namespace FindInternship.Core.Services
 
 
             return company!.Class!.Students.All(s => s.CompanyInternsId != null);
+        }
+
+        public async Task<List<CompanyInternsViewModel>> GetTeacherCompanyInternsAsync(string userId)
+        {
+            var teacher = await repo.All<Teacher>()
+                .Where(t => t.UserId == userId)
+                .Include(t => t.Groups)
+                .FirstOrDefaultAsync();
+
+            var companyInterns = teacher.Groups
+                .Select(g => new CompanyInternsViewModel()
+                {
+                    Id = g.Id, 
+                    Name = g.Name,
+                })
+                .ToList();
+
+            return companyInterns;
+
         }
 
         //public async Task<bool> IsTeacherClassHaveCompanyAsync(string userId)

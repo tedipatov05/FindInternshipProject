@@ -195,12 +195,12 @@ namespace FindInternship.Core.Services
 
         }
 
-        public async Task<List<MeetingViewModel>> GetCompanyInternsMeetingsForDayAsync(int days, string teacherId)
+        public async Task<List<MeetingViewModel>> GetCompanyInternsMeetingsForDayAsync(int days, string groupId)
         {
             var meetings = await repo.All<Meeting>()
                 .Include(m => m.CompanyInterns)
                 .OrderBy(m => m.StartTime)
-                .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear && m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.CompanyInterns.TeacherId == teacherId && m.IsActive)
+                .Where(m => m.StartTime.DayOfYear == DateTime.Today.AddDays(days).DayOfYear && m.StartTime.Year == DateTime.Today.AddDays(days).Year && m.CompanyInternsId == groupId && m.IsActive)
                 .Select(m => new MeetingViewModel()
                 {
                     Id = m.Id,

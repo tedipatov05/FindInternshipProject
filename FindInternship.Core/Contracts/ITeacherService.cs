@@ -1,4 +1,5 @@
 ﻿using FindInternship.Core.Models.Account;
+using FindInternship.Core.Models.CompanyInterns;
 using FindInternship.Core.Models.Teacher;
 using FindInternship.Data.Repository;
 using System;
@@ -30,6 +31,8 @@ namespace FindInternship.Core.Contracts
         Task<string?> GetTeacherUserIdByCompanyInternIdAsync(string companyInternId);
 
         Task<bool> IsAllStudentsHaveGroupInCompanyAsync(string teacherUserId);
+
+        Task<List<CompanyInternsViewModel>> GetTeacherCompanyInternsAsync(string userId);
 
         //Task<bool> IsTeacherClassHaveCompanyAsync(string userId);
     }
