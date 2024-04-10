@@ -48,7 +48,7 @@ connection.on("ReceiveRequest", function (topic, message, status, date, id, teac
                                             </a>
 
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" onclick="changeStatus('Accepted', '${id}')">\u041f\u0440\u0438\u0435\u0442</a></li>
+                                                <li><a class="dropdown-item" href="/Request/ChooseStudents?requestId=${id}">\u041f\u0440\u0438\u0435\u043c\u0438</a></li>
                                                 <li><a class="dropdown-item" onclick="changeStatus('Rejected', '${id}')">\u041e\u0442\u043a\u0430\u0436\u0438</a></li>
                                             </ul>
                                         </div>

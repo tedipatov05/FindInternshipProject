@@ -54,6 +54,11 @@ namespace FindInternship.Common
             public const int GroupNameMaxLength = 100;
         }
 
+        public static class RoomConstants
+        {
+            public const int RoomNameMaxLength = 50;
+        }
+
         public static class CompanyConstants
         {
             public const int CompanyDescriptionMaxLength = 2000;

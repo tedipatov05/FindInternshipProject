@@ -136,7 +136,6 @@ header {
 
         .navbar .dropdown ul li {
             min-width: 200px;
-
         }
 
         .navbar .dropdown ul a {
@@ -461,7 +460,7 @@ a {
     transform: rotate(360deg);
 }
 
-   /* .dark-light:checked + label:after,
+    /* .dark-light:checked + label:after,
     .dark-light:not(:checked) + label:after {
         position: absolute;
         content: '';
@@ -537,7 +536,7 @@ a {
     background-color: #ffeba7;
     cursor: pointer;
     color: #102770;
-   /* box-shadow: 0 12px 35px 0 rgba(255,235,167,.15);*/
+    /* box-shadow: 0 12px 35px 0 rgba(255,235,167,.15);*/
 }
 
 .dark-light:checked ~ .sec-center .for-dropdown {
@@ -630,6 +629,58 @@ a {
     transition: all 200ms linear;
 }
 
+.dropdown:checked ~ .section-dropdown-2 {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.section-dropdown-2 {
+    position: absolute;
+    padding: 5px;
+    background-color: #111;
+    top: 70px;
+    left: 0;
+    width: 20%;
+    border-radius: 4px;
+    display: block;
+    box-shadow: 0 14px 35px 0 rgba(9,9,12,0.4);
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: all 200ms linear;
+}
+
+    .section-dropdown-2:before {
+        position: absolute;
+        top: -20px;
+        left: 0;
+        width: 20%;
+        height: 20px;
+        content: '';
+        display: block;
+        z-index: 1;
+    }
+
+
+    .section-dropdown-2:after {
+        transform: translateY(30px) rotate(271deg);
+        /* transform: translateX(30%); */
+        position: absolute;
+        top: -7px;
+        left: -12px;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid #111;
+        content: '';
+        display: block;
+        z-index: 2;
+        transition: all 200ms linear;
+    }
+
 .dark-light:checked ~ .sec-center .section-dropdown:after {
     border-bottom: 8px solid #fff;
 }
@@ -641,10 +692,10 @@ a {
 }
 
 
-.dark-light:checked ~ .sec-center .section-dropdown a:hover {
-    color: #ffeba7;
-    background-color: #102770;
-}
+    .dark-light:checked ~ .sec-center .section-dropdown a:hover {
+        color: #ffeba7;
+        background-color: #102770;
+    }
 
 a .uil {
     font-size: 22px;
@@ -666,10 +717,8 @@ a .uil {
     text-decoration: none;
     display: -ms-flexbox;
     display: flex;
-  
     align-items: center;
     justify-content: space-between;
- 
     cursor: pointer;
 }
 

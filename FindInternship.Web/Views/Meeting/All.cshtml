@@ -20,15 +20,30 @@
         {"December", "Декември"},
     };
 }
+@if (User.IsInRole("Teacher"))
+{
+    <div style="margin-top: 20px;position: relative; direction: rtl;">
+        <nav aria-label="Page navigation example">
+            <div class="pagination">
+                <p class="page-item1"> <a class="page-link1" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days + 7)" asp-route-groupId="@Model.GroupId"><img src="~/img/right.png" style="height:3em; " /></a></p>
+                <p class="page-item2"><a class="page-link2" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days - 7)" asp-route-groupId="@Model.GroupId"><img src="~/img/left.png" style="height:3em; " /></a></p>
+            </div>
+        </nav>
+    </div>
+}
+else
+{
+    <div style="margin-top: 20px;position: relative; direction: rtl;">
+        <nav aria-label="Page navigation example">
+            <div class="pagination">
+                <p class="page-item1"> <a class="page-link1" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days + 7)"><img src="~/img/right.png" style="height:3em; " /></a></p>
+                <p class="page-item2"><a class="page-link2" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days - 7)"><img src="~/img/left.png" style="height:3em; " /></a></p>
+            </div>
+        </nav>
+    </div>
 
-<div style="margin-top: 20px;position: relative; direction: rtl;">
-    <nav aria-label="Page navigation example">
-        <div class="pagination">
-            <p class="page-item1"> <a class="page-link1" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days + 7)"><img src="~/img/right.png" style="height:3em; " /></a></p>
-            <p class="page-item2"><a class="page-link2" asp-action="All" asp-controller="Meeting" asp-route-days="@(Model.Days - 7)"><img src="~/img/left.png" style="height:3em; " /></a></p>
-        </div>
-    </nav>
-</div>
+}
+
 
 <h2 class="text-center text-dark">@month[Model.Month]</h2>
 

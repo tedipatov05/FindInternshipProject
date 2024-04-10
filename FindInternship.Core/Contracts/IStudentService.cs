@@ -35,5 +35,7 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> IsAllStudentsExistsAsync(List<string> studentIds);
 
+        Task<string?> GetStudentGroupIdAsync(string studentId);
+
     }
 }

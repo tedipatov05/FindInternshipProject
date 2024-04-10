@@ -258,5 +258,14 @@ namespace FindInternship.Core.Services
 
             return true;
         }
+
+        public async Task<string?> GetStudentGroupIdAsync(string studentId)
+        {
+            var student = await repo.All<Student>()
+                .Where(s => s.Id == studentId)
+                .FirstOrDefaultAsync();
+
+            return student!.CompanyInternsId == null ? null : student!.CompanyInternsId;
+        }
     }
 }

@@ -12,6 +12,17 @@
         });
     });
 
+    document.getElementById('schedule-nav').addEventListener('click', function () {
+
+        let subNav = document.getElementsByClassName('section-dropdown-2')[0];
+        if (subNav.style.display == 'none') {
+            subNav.style.display = 'block';
+
+        } else {
+            subNav.style.display = 'none';
+        }
+    });
+
 });
 
 

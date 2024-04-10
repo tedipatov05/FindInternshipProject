@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using FindInternship.Core.Contracts
+@using FindInternship.Core.Services
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -15,8 +17,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     @await RenderSectionAsync("Styles", required: false)
+    @inject ITeacherService teacherService;
 </head>
 <body>
     <header id="header" class="header-top">
@@ -42,8 +44,9 @@
                     {
                         <li class="nav-item"><a class="nav-link scrollto" asp-controller="Company" asp-action="All">Фирми</a></li>
                         <li class="nav-item"><a class="nav-link scrollto" asp-controller="Request" asp-action="ClassRequests">Молби</a></li>
-                        <li class="nav-item"><a class="nav-link scrollto" asp-controller="Meeting" asp-action="All">График</a></li>
+                        <li class="nav-item"><a class="nav-link scrollto" id="schedule-nav">График</a></li>
                         <li class="nav-item"><a class="nav-link scrollto" asp-controller="PrivateChat" asp-action="UsersToChat">Чат</a></li>
+                        
                     }
                     @if (User.IsInRole("Company"))
                     {
@@ -64,6 +67,20 @@
                     }
 
                 </div>
+                @if (User.IsInRole("Teacher"))
+                {
+                    var result = await teacherService.GetTeacherCompanyInternsAsync(User.GetId()!);
+
+                   
+                    <div class="section-dropdown-2" style="margin-left: 20rem;width: 20%;margin-top: 11rem;display:none">
+                        @foreach (var intern in result)
+                        {
+                            <li class="nav-item"><a class="nav-link scrollto" asp-controller="Meeting" asp-action="All" asp-route-groupId="@intern.Id">@intern.Name</a></li>
+
+                        }
+                    </div>
+                }
+                
 
                 <a class="navbar-brand" href="#"></a>
 
