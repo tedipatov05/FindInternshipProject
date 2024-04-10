@@ -102,20 +102,14 @@ namespace FindInternship.Data
                 .WithOne(s => s.Class)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //builder.Entity<Class>()
-            //    .HasMany(c => c.Meetings)
-            //    .WithOne(s => s.Class)
-            //    .OnDelete(DeleteBehavior.NoAction);
-
-            //builder.Entity<Company>()
-            //    .HasMany(c => c.Classes)
-            //    .WithOne(c => c.Company)
-            //    .OnDelete(DeleteBehavior.NoAction);
-
             builder.Entity<Document>()
                 .HasOne(d => d.Request)
                 .WithMany(s => s.Documents)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<RoomParticipant>()
+                .HasKey(rp => new { rp.RoomId, rp.UserId });
+
 
             builder.Entity<Lector>()
                 .HasOne(l => l.Company)

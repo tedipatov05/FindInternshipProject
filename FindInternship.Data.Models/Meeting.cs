@@ -49,6 +49,11 @@ namespace FindInternship.Data.Models
 
         public Lector Lector { get; set; } = null!;
 
+        [ForeignKey(nameof(Room))]
+        public string? RoomId { get; set; }
+
+        public Room? Room { get; set; }
+
         public bool IsActive { get; set; }
 
         public ICollection<MeetingMaterial> Materials { get; set; }
