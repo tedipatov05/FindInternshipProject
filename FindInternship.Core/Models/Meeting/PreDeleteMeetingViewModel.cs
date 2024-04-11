@@ -15,7 +15,7 @@ namespace FindInternship.Core.Models.Meeting
         }
         public string Title { get; set; } = null!;
 
-        public string Address { get; set; } = null!;
+        public string? Address { get; set; }
 
         public DateTime Start { get; set; }
 

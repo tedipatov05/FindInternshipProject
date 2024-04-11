@@ -53,13 +53,21 @@ else
 </div>
 
 
-<div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display:none;width: 750px; position: absolute;height: fit-content;
-padding-top: 40px" id="meeting-form">
+<div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display:none;width: 750px; position: absolute;height: 812px;
+padding-top: 40px;overflow: hidden;" id="meeting-form">
 
     <h2 class="text-light text-center">Създай среща</h2>
 
     <form class="requires-validation" id="addEvent" enctype="multipart/form-data">
-
+        <div class="input-group">
+            <label class="wraper" for="check">
+                <span class="label-text">Онлайн</span>
+                <div class="switch-wrap">
+                    <input type="checkbox" id="check" name="isOnline" />
+                    <div class="switch"></div>
+                </div>
+            </label>
+        </div>
         <div class="input-group">
             <select required="" autocomplete="off" class="input" name="classId" id="select-class" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;padding: 10px;">
@@ -103,8 +111,8 @@ padding-top: 40px" id="meeting-form">
             <label class="user-label" id="label-end">Краен час</label>
             <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
         </div>
-        <div class="input-group">
-            <input type="text" required="" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+        <div class="input-group" id="address">
+            <input type="text" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;">
             <label class="user-label">Адрес</label>
             <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
@@ -221,6 +229,7 @@ padding-top: 40px" id="meeting-form">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/newSchedule.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/meetingForm.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/check.css" asp-append-version="true"/>
 }
 @section Scripts {
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>

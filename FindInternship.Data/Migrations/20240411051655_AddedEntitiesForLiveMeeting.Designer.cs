@@ -4,6 +4,7 @@ using FindInternship.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindInternship.Data.Migrations
 {
     [DbContext(typeof(FindInternshipDbContext))]
-    partial class FindInternshipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411051655_AddedEntitiesForLiveMeeting")]
+    partial class AddedEntitiesForLiveMeeting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -360,6 +362,7 @@ namespace FindInternship.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -383,9 +386,6 @@ namespace FindInternship.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsOnline")
                         .HasColumnType("bit");
 
                     b.Property<string>("LectorId")
@@ -748,7 +748,7 @@ namespace FindInternship.Data.Migrations
                             Address = "ул. Ал. Стамболийски 30 ет.3 ап.11",
                             BirthDate = new DateTime(2008, 4, 12, 13, 24, 0, 0, DateTimeKind.Unspecified),
                             City = "Казанлък",
-                            ConcurrencyStamp = "18377906-db5b-44da-b8ad-e0adf61da8fe",
+                            ConcurrencyStamp = "6a673668-6c20-46bf-9a39-a7c0c3576f78",
                             Country = "България",
                             Email = "petarpetrov@abv.bg",
                             EmailConfirmed = false,
@@ -759,12 +759,12 @@ namespace FindInternship.Data.Migrations
                             Name = "Петър Петров",
                             NormalizedEmail = "PETARPETROV@ABV.BG",
                             NormalizedUserName = "PETAR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBxP5tPsTdfpp9MkHawWyv4rM57DTyNQb1I3CUbfPl3/X4f98bY+dWSCcM+Xyvi9FA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECelpDJSX6bmR6qqt9+PewBwwyv/9gbFwwToVF8xvM24yJIud8/EYjmjth9puRUfsw==",
                             PhoneNumber = "0885763826",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1697607303/projectImages/xbhwflepot9qpwmiiq6u.jpg",
-                            RegisteredOn = new DateTime(2024, 4, 11, 6, 55, 8, 426, DateTimeKind.Utc).AddTicks(4081),
-                            SecurityStamp = "2b864c23-cdef-4616-8618-82be55bb26cd",
+                            RegisteredOn = new DateTime(2024, 4, 11, 5, 16, 54, 654, DateTimeKind.Utc).AddTicks(6196),
+                            SecurityStamp = "e5982f74-4e85-4730-aeda-c59a72f32df3",
                             TwoFactorEnabled = false,
                             UserName = "petar"
                         },
@@ -775,7 +775,7 @@ namespace FindInternship.Data.Migrations
                             Address = "ул.Възраждане 6 ет.2 ап.8",
                             BirthDate = new DateTime(1968, 2, 8, 11, 20, 0, 0, DateTimeKind.Unspecified),
                             City = "Казанлък",
-                            ConcurrencyStamp = "9e3f208e-bed7-4749-831f-68f51f82a3cc",
+                            ConcurrencyStamp = "9c0cea2f-9e05-42f6-9318-f59658fa82ac",
                             Country = "България",
                             Email = "georgidimitrov@abv.bg",
                             EmailConfirmed = false,
@@ -786,12 +786,12 @@ namespace FindInternship.Data.Migrations
                             Name = "Георги Димитров",
                             NormalizedEmail = "GEORGIDIMITROV@ABV.BG",
                             NormalizedUserName = "GEORGI",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHMTi5RtANpc1r3NTHUjtKRdFhvquKF9mpM7ZgqNQQAwvmruZl0xuW44XpBMAqKjzg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBuUsEd4HNohfWMvS7Ysz3jnLOMPE/RNEP1L4Vj/dgy0SjWhcfXKWEKYSZH901ZOdw==",
                             PhoneNumber = "0885789826",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1697608565/projectImages/mvorrsshjbw1e8bzfzgq.jpg",
-                            RegisteredOn = new DateTime(2024, 4, 11, 6, 55, 8, 429, DateTimeKind.Utc).AddTicks(6103),
-                            SecurityStamp = "06cd3b26-04e4-42c4-8d8e-83924a0dca94",
+                            RegisteredOn = new DateTime(2024, 4, 11, 5, 16, 54, 672, DateTimeKind.Utc).AddTicks(5536),
+                            SecurityStamp = "d00afbb5-3163-4654-882c-0ae6be379278",
                             TwoFactorEnabled = false,
                             UserName = "georgi"
                         },
@@ -802,7 +802,7 @@ namespace FindInternship.Data.Migrations
                             Address = "ул. Стара планина 63",
                             BirthDate = new DateTime(2015, 5, 9, 11, 20, 0, 0, DateTimeKind.Unspecified),
                             City = "Казанлък",
-                            ConcurrencyStamp = "7008b62e-ccc8-4ad2-be44-e92e2fe1b7e7",
+                            ConcurrencyStamp = "12e04436-c371-4ef6-a1ee-45f184f10514",
                             Country = "България",
                             Email = "newtechies@abv.bg",
                             EmailConfirmed = false,
@@ -812,12 +812,12 @@ namespace FindInternship.Data.Migrations
                             Name = "New Techies",
                             NormalizedEmail = "NEWTECHIES@ABV.BG",
                             NormalizedUserName = "NEWTECHIES",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDSJ060wJ428X7uLZ9+6fkoKI4Vx1G/9vHrtKwmWtqBmVqivqM/mUCEfxLCoHxo3ZQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDucrYVUS5Gqz+ymRxc5IRwRN4iplMMI+n6BzrAy+MOx1NTpFK8jfUJyacxkpW1UeQ==",
                             PhoneNumber = "0885789546",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1699781438/projectImages/pblz1onyuacbk2ds4g8n.png",
-                            RegisteredOn = new DateTime(2024, 4, 11, 6, 55, 8, 430, DateTimeKind.Utc).AddTicks(6946),
-                            SecurityStamp = "59e16f00-5e6d-4c95-b5cd-2b0acfd5319d",
+                            RegisteredOn = new DateTime(2024, 4, 11, 5, 16, 54, 673, DateTimeKind.Utc).AddTicks(7033),
+                            SecurityStamp = "2e649e62-15a3-435c-bb4a-653d37b9afd1",
                             TwoFactorEnabled = false,
                             UserName = "NewTechies"
                         },
@@ -828,7 +828,7 @@ namespace FindInternship.Data.Migrations
                             Address = "ул. Незабравка 3",
                             BirthDate = new DateTime(2015, 7, 18, 11, 20, 0, 0, DateTimeKind.Unspecified),
                             City = "Енина",
-                            ConcurrencyStamp = "d5c30cbc-4864-4403-aaa1-4a5c38f5d1c9",
+                            ConcurrencyStamp = "4dc681a1-f827-4c23-8e1b-a3258f3e6ffa",
                             Country = "България",
                             Email = "admin@abv.bg",
                             EmailConfirmed = false,
@@ -839,12 +839,12 @@ namespace FindInternship.Data.Migrations
                             Name = "Admin",
                             NormalizedEmail = "ADMIN@ABV.BG",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGLA7ZIcha/xJxDtjKTO7q5rCWIUy9m7lWFlF2cEKQx5GdcBtBvHrYbCncz2lOj4pg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHnvAyCNg53w/+8pXHHOUrn7FIUfKnPuvubUwQSoq5ZANsSGcDNiXdd/+E4PBnmGSA==",
                             PhoneNumber = "0889864842",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://res.cloudinary.com/ddriqreo7/image/upload/v1697617373/projectImages/pyb6v86l6myou9h1sxca.jpg",
-                            RegisteredOn = new DateTime(2024, 4, 11, 6, 55, 8, 431, DateTimeKind.Utc).AddTicks(6536),
-                            SecurityStamp = "ac7a2987-882f-47d3-9bb4-89694b66576f",
+                            RegisteredOn = new DateTime(2024, 4, 11, 5, 16, 54, 674, DateTimeKind.Utc).AddTicks(7820),
+                            SecurityStamp = "adcad4a5-9874-4c53-afd7-b89517e8961f",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -895,28 +895,28 @@ namespace FindInternship.Data.Migrations
                         new
                         {
                             Id = "e6fc051f-3440-4f69-89e1-8a696c027fc2",
-                            ConcurrencyStamp = "a8f5ad7a-d51f-402c-abf6-e27c52dd5f39",
+                            ConcurrencyStamp = "d7123da8-7d48-420c-a9fb-979a19aa1e5f",
                             Name = "Company",
                             NormalizedName = "COMPANY"
                         },
                         new
                         {
                             Id = "03f3054b-c9a2-4198-a6c9-a96f3142ff53",
-                            ConcurrencyStamp = "9af3f575-8941-406d-be0d-1558d975347c",
+                            ConcurrencyStamp = "d97edc97-66d2-45fc-a459-43040b01ef80",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
                             Id = "36ae84ad-bb53-48ad-9503-bfe33221785d",
-                            ConcurrencyStamp = "009a2155-0ae9-4f98-af4b-7c37d223bea6",
+                            ConcurrencyStamp = "908d7921-fd35-4f86-a760-0a6f1d32ce66",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = "e2f6cb22-631b-47c7-9ac0-19f89455b2a5",
-                            ConcurrencyStamp = "d9fe3c83-287d-4162-9f15-0af0b4cc57d0",
+                            ConcurrencyStamp = "d8903531-d6f1-49f3-93cc-9259806c39b5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

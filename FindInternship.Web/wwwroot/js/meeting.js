@@ -52,17 +52,36 @@ function toUnicode(str) {
     return unicodeString;
 }
 
+document.getElementById('check').addEventListener('change', function () {
+    if (this.checked) {
+        document.getElementById('address').style.display = "none";
+    }
+    else {
+        document.getElementById('address').style.display = "flex";
+    }
+});
+
 
 function create(e) {
 
 
     e.preventDefault();
     let formData = new FormData(e.target);
-    let { classId,lectorId ,title, start, end, address, description} = Object.fromEntries(formData);
+    let { classId, lectorId, title, start, end, address, description, isOnline } = Object.fromEntries(formData);
 
-    let dataArr = [classId, lectorId, title, start, end, address, description]
+    let dataArr = [];
+
+    if (isOnline == 'on') {
+        dataArr = [classId, lectorId, title, start, end, description]
+    }
+    else {
+        dataArr = [classId, lectorId, title, start, end, address, description]
+    }
+
 
     let files = document.getElementById('files').files;
+
+    let resultOnline = isOnline == 'on' ? true : false;
 
     let data = new FormData();
     data.append('classId', classId);
@@ -71,6 +90,7 @@ function create(e) {
     data.append('start', start);
     data.append('end', end);
     data.append('address', address);
+    data.append('isOnline', resultOnline);
     data.append('description', description);
 
     for (let i = 0; i < files.length; i++) {
@@ -338,6 +358,9 @@ function openModal(event) {
                 //update event content
                 let value = event.parent().attr('data-content');
 
+                let displayAddress = data.meeting.isOnline == true ? 'none' : 'block';
+                let displayRoom = data.meeting.isOnline == true ? 'block' : 'none';
+
 
                 modalBody.find('.event-info').html(`<div>
                                                     <h4>Материали</h4>
@@ -348,14 +371,17 @@ function openModal(event) {
                                                     <div style="margin-top: 0.5rem; margin-left: 1rem;font-weight: 400;">
                                                         ${data.meeting.description}
                                                     </div>
-                                                    <h4 style="margin-top: 2rem;">Адрес</h4>
-                                                    <div style="margin-top: 0.5rem; margin-left: 1rem;font-weight: 400;">
+                                                    <h4 style="margin-top: 2rem;display: ${displayAddress}">Адрес</h4>
+                                                    <div style="margin-top: 0.5rem; margin-left: 1rem;font-weight: 400;display: ${displayAddress}">
                                                         ${data.meeting.address}
                                                     </div>
                                                     <h4 style="margin-top: 10px">Лектор</h4>
                                                     <div class="img-div">
                                                         <img class="image--cover" src="${data.meeting.lector.profilePictureUrl}"></img>
                                                         <div style="margin-left: 1rem;font-weight: 400;">${data.meeting.lector.name}</div>
+                                                    </div>
+                                                    <div style="display: ${displayRoom}">
+                                                        <a href="/"><button class="bn632-hover bn26">Създай стая</button></a>
                                                     </div>
                                                    
                                                  </div>`);

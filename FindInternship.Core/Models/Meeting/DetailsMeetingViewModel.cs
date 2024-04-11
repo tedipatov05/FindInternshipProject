@@ -18,7 +18,9 @@ namespace FindInternship.Core.Models.Meeting
 
         public string Description { get; set; } = null!;
 
-        public string Address { get; set; } = null!;
+        public string? Address { get; set; } 
+
+        public bool IsOnline { get; set; }
 
         public string Class {  get; set; } = null!;
 

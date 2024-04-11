@@ -101,7 +101,11 @@
     @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
     <script src="https://kit.fontawesome.com/b9403dda92.js" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @if (User.IsInRole("Teacher"))
+    {
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    }
 
 
 

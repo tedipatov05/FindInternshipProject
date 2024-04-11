@@ -118,7 +118,7 @@ namespace FindInternship.Web.Controllers
 
         [HttpPost]
         [Route("Meeting/Create")]
-        public async Task<IActionResult> Create(string classId, string lectorId, string title, DateTime start, DateTime end, string address, string description, List<IFormFile> files)
+        public async Task<IActionResult> Create(string classId, string lectorId, string title, DateTime start, DateTime end, string? address, string description,bool isOnline, List<IFormFile> files)
         {
             string userId = User.GetId()!;
 
@@ -164,6 +164,7 @@ namespace FindInternship.Web.Controllers
                     Address = address,
                     LectorId = lectorId,
                     Description = description,
+                    IsOnline = isOnline,
                 };
 
                 if (start >= end)

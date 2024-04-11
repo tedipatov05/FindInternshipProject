@@ -22,7 +22,7 @@ namespace FindInternship.Data.Models
         public string Id { get; set; } = null!;
 
         [MaxLength(MeetingAddressMaxLength)]
-        public string Address { get; set; } = null!;
+        public string? Address { get; set; } 
 
         [MaxLength(MeetingTitleMaxLength)]
         public string Title { get; set; } = null!;
@@ -53,6 +53,8 @@ namespace FindInternship.Data.Models
         public string? RoomId { get; set; }
 
         public Room? Room { get; set; }
+
+        public bool IsOnline { get; set; }
 
         public bool IsActive { get; set; }
 

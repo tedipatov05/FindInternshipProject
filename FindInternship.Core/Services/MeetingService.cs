@@ -36,7 +36,7 @@ namespace FindInternship.Core.Services
                 StartTime = model.Start,
                 Description = model.Description,
                 LectorId = model.LectorId,
-
+                IsOnline = model.IsOnline,
             };
 
             await repo.AddAsync(meeting);
@@ -280,6 +280,7 @@ namespace FindInternship.Core.Services
                     Name = m.Name,
                     Url = m.DocumentUrl
                 }).ToList(),
+                IsOnline = meeting.IsOnline,
             };
 
             return model;
