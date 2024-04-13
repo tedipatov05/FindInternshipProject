@@ -373,7 +373,13 @@ namespace FindInternship.Web.Controllers
 
 
             bool isMeetingExists = await meetingService.IsExistsByIdAsync(id!);
+            if (!isMeetingExists)
+            {
+                TempData[ErrorMessage] = "Тази среща не съществува";
+                return new JsonResult(new { isExists = false });
+            }
 
+            bool isMeetingHaveRoom = await meetingService.IsMeetingAlreadyHaveRoomAsync(id);
             if (isCompany)
             {
                 string? companyId = await companyService.GetCompanyIdAsync(userId!);
@@ -383,29 +389,19 @@ namespace FindInternship.Web.Controllers
                     TempData[ErrorMessage] = "Тази среща не е в твоя график";
                     return new JsonResult(new { isExists = false });
                 }
-                if (!isMeetingExists)
-                {
-                    TempData[ErrorMessage] = "Тази среща не съществува";
-                    return new JsonResult(new { isExists = false });
-                }
-
+                
                 var meeting = await meetingService.GetDetailsForMeetingAsync(id);
 
-                return new JsonResult(new { meeting, isExists = true, isCompany });
+                return new JsonResult(new { meeting, isExists = true, isCompany, isHaveRoom = isMeetingHaveRoom });
 
 
             }
             else if (isTeacher || isStudent)
             {
-                if (!isMeetingExists)
-                {
-                    TempData[ErrorMessage] = "Тази среща не съществува";
-                    return new JsonResult(new { isExists = false });
-                }
-
+                
                 var meeting = await meetingService.GetDetailsForMeetingAsync(id);
 
-                return new JsonResult(new { meeting, isExists = true, isCompany = false });
+                return new JsonResult(new { meeting, isExists = true, isCompany = false, isHaveRoom = isMeetingHaveRoom });
             }
 
             return new JsonResult(new { isExists = isMeetingExists});

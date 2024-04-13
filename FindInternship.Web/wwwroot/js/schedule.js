@@ -136,7 +136,9 @@ jQuery(document).ready(function ($) {
                     let value = event.parent().attr('data-content');
 
                     let displayAddress = data.meeting.isOnline == true ? 'none' : 'block';
-                    let displayRoom = data.meeting.isOnline == true ? 'block' : 'none';
+                    let displayJoin = data.isHaveRoom == true ? 'block' : 'none';
+                    let displayRoom = data.meeting.isOnline == true && data.isHaveRoom==false ? 'block' : 'none';
+
 
                     self.modalBody.find('.event-info').html(`<div>
                                                     <h4>Материали</h4>
@@ -157,6 +159,9 @@ jQuery(document).ready(function ($) {
                                                     </div>
                                                     <div style="display: ${displayRoom}">
                                                         <a onclick="createDailyRoom('${eventName.split(' - ')[0].trim()}', '${meetingId}')"><button class="bn632-hover bn26">Създай стая</button></a>
+                                                    </div>
+                                                    <div style="display: ${displayJoin}">
+                                                        <a><button class="bn632-hover bn26">Присъедини се</button></a>
                                                     </div>
                                                    
                                                  </div>`);

@@ -66,6 +66,7 @@ namespace FindInternship.Web.Controllers
 
             return new JsonResult(new { Success = true, result = model, meetingId, });
         }
+
        
     }
 }

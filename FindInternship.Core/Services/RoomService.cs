@@ -2,6 +2,7 @@
 using FindInternship.Core.Models.Room;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,11 @@ namespace FindInternship.Core.Services
                 Privacy = model.Privacy,
                 MeetingId = meetingId,
             };
+
+            var meeting = await repo.All<Meeting>()
+                .FirstOrDefaultAsync(x => x.Id == meetingId);
+
+            meeting!.RoomId = room.Id;
 
             await repo.AddAsync(room);
             await repo.SaveChangesAsync();
