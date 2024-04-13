@@ -13,7 +13,6 @@ namespace FindInternship.Data.Models
     {
         public Room()
         {
-            this.Participants = new HashSet<RoomParticipant>();
             this.IsActive = true;
         }
 
@@ -34,6 +33,5 @@ namespace FindInternship.Data.Models
 
         public bool IsActive { get; set; }
 
-        public ICollection<RoomParticipant> Participants { get; set; }
     }
 }

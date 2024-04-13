@@ -51,6 +51,8 @@ namespace FindInternship.Data
 
         public DbSet<Lector> Lectors { get; set; } = null!;
 
+        public DbSet<Room> Rooms { get; set; } = null!;
+
         public DbSet<School> Schools { get; set; } = null!;
         public DbSet<CompanyAbility> Technologies { get; set; } = null!;
 
@@ -106,9 +108,6 @@ namespace FindInternship.Data
                 .HasOne(d => d.Request)
                 .WithMany(s => s.Documents)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<RoomParticipant>()
-                .HasKey(rp => new { rp.RoomId, rp.UserId });
 
 
             builder.Entity<Lector>()

@@ -62,13 +62,22 @@ namespace FindInternship.Web
 
             builder.Services.AddCors(options =>
             {
-                options.AddDefaultPolicy(
+                options.AddPolicy("MyPolicy",
                     builder =>
                     {
+                        builder.WithOrigins("https://api.daily.co/v1/rooms")
+                            .AllowAnyHeader()
+                            .WithMethods("GET", "POST", "PUT", "DELETE")
+                            .AllowCredentials();
+
                         builder.WithOrigins("https://localhost:7256")
                             .AllowAnyHeader()
                             .WithMethods("GET", "POST", "PUT")
                             .AllowCredentials();
+
+                        //builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+
                     });
             });
 
@@ -105,6 +114,7 @@ namespace FindInternship.Web
                 app.UseHsts();
             }
 
+            app.UseCors("MyPolicy");
             app.UseCors();
 
             app.UseHttpsRedirection();

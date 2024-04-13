@@ -297,5 +297,18 @@ namespace FindInternship.Core.Services
 
             return isExists;
         }
+
+        public async Task<bool> IsMeetingAlreadyHaveRoomAsync(string meetingId)
+        {
+            var meeting = await repo.All<Meeting>()
+                .FirstOrDefaultAsync(m => m.Id == meetingId);
+
+            if(meeting == null)
+            {
+                return false;
+            }
+
+            return meeting.RoomId != null;
+        }
     }
 }

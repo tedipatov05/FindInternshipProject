@@ -128,7 +128,7 @@ jQuery(document).ready(function ($) {
                     self.modalHeader.find('.event-date').text(event.find('.event-date').text());
                     if (data.isCompany) {
 
-                        self.modalHeader.find('.d-flex').html(`<div class="mt-4" style="display: flex; z-index:3; "><a href="/Meeting/Delete/${meetingId}" class="btn btn-danger" style="font-size: large;margin-right: 1rem;">Delete</a><a href="/Meeting/Edit/${meetingId}" class="btn btn-warning"  style="font-size: large">Edit</a></div>`)
+                        self.modalHeader.find('.d-flex').html(`<div class="mt-4" style="display: flex; z-index:3; "><a href="/Meeting/Delete/${meetingId}" class="btn btn-danger" style="font-size: large;margin-right: 1rem;">Delete</a><a href="/Meeting/Edit/${meetingId}" class="btn btn-warning" style="font-size: large">Edit</a></div>`)
                     }
                     self.modal.attr('data-event', event.parent().attr('data-event'));
 
@@ -156,15 +156,11 @@ jQuery(document).ready(function ($) {
                                                         <div style="margin-left: 1rem;font-weight: 400;">${data.meeting.lector.name}</div>
                                                     </div>
                                                     <div style="display: ${displayRoom}">
-                                                        <a href="/"><button class="bn632-hover bn26">Създай стая</button></a>
+                                                        <a onclick="createDailyRoom('${eventName.split(' - ')[0].trim()}', '${meetingId}')"><button class="bn632-hover bn26">Създай стая</button></a>
                                                     </div>
                                                    
                                                  </div>`);
 
-
-                    
-
-    
 
                     for (let material of data.meeting.materials) {
                         let a = document.createElement('a');

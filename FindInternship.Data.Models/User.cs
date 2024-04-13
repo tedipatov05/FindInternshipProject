@@ -15,7 +15,6 @@ namespace FindInternship.Data.Models
             this.IsApproved = true;
             this.UserGroups = new HashSet<UserGroup>();
             this.ChatMessages = new HashSet<ChatMessage>();
-            this.Rooms = new HashSet<RoomParticipant>();
             
         }
 
@@ -48,7 +47,6 @@ namespace FindInternship.Data.Models
 
         public virtual ICollection<ChatMessage> ChatMessages { get; set; }
 
-        public ICollection<RoomParticipant> Rooms { get; set; }
 
     }
 }

@@ -32,6 +32,8 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> IsExistsByIdAsync(string meetingId);
 
+        Task<bool> IsMeetingAlreadyHaveRoomAsync(string meetingId);
+
         Task<DetailsMeetingViewModel?> GetDetailsForMeetingAsync(string meetingId);
 
 
