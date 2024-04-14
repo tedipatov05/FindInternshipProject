@@ -74,6 +74,7 @@ namespace FindInternship.Core.Services
                     Title = m.Title,
                     Description = m.Description,
                     Lector = m.Lector.Name,
+                    IsOnline = m.IsOnline,
                     Materials = m.Materials.Select(m => new MaterialViewModel()
                     {
                         Name = m.Name,
@@ -131,6 +132,7 @@ namespace FindInternship.Core.Services
                     Title = m.Title,
                     CompanyId = m.CompanyId,
                     Description = m.Description,
+                    IsOnline = m.IsOnline,
                 })
                 .FirstOrDefaultAsync();
 

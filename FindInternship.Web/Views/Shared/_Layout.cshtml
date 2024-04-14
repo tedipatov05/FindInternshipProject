@@ -72,7 +72,7 @@
                     var result = await teacherService.GetTeacherCompanyInternsAsync(User.GetId()!);
 
                    
-                    <div class="section-dropdown-2" style="margin-left: 20rem;width: 20%;margin-top: 11rem;display:none">
+                    <div class="section-dropdown-2" style="margin-left: 20rem;width: 20%;margin-top: 13.5rem;display:none">
                         @foreach (var intern in result)
                         {
                             <li class="nav-item"><a class="nav-link scrollto" asp-controller="Meeting" asp-action="All" asp-route-groupId="@intern.Id">@intern.Name</a></li>

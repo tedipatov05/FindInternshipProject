@@ -40,13 +40,11 @@ jQuery(document).ready(function ($) {
 
     schedule.prototype.scheduleReset = function () {
         if (!this.element.hasClass('js-full')) {
-            //in this case you are on a desktop version (first load or resize from mobile)
             this.eventSlotHeight = this.eventsGroup.eq(0).children('.top-info').outerHeight();
             this.element.addClass('js-full');
             this.placeEvents();
             this.element.hasClass('modal-is-open') && this.checkEventModal();
         } else if (this.element.hasClass('modal-is-open')) {
-            //on a mobile version with modal open - need to resize/move modal window
             this.checkEventModal('desktop');
             this.element.removeClass('loading');
         } else {
@@ -137,10 +135,10 @@ jQuery(document).ready(function ($) {
 
                     let displayAddress = data.meeting.isOnline == true ? 'none' : 'block';
                     let displayJoin = data.isHaveRoom == true ? 'block' : 'none';
-                    let displayRoom = data.meeting.isOnline == true && data.isHaveRoom==false ? 'block' : 'none';
+                    let displayRoom = data.meeting.isOnline == true && data.isHaveRoom==false && data.isCompany ? 'block' : 'none';
 
 
-                    self.modalBody.find('.event-info').html(`<div>
+                    self.modalBody.find('.event-info').html(`<div class="mt-4">
                                                     <h4>Материали</h4>
                                                     <div style="margin-top: 1rem;" id="materials">
                                                     </div> 

@@ -53,8 +53,8 @@ else
 </div>
 
 
-<div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display:none;width: 750px; position: absolute;height: 812px;
-padding-top: 40px;overflow: hidden;" id="meeting-form">
+<div class="c-event__creator c-calendar__style js-event__creator isVisible" style="display:none;width: 750px; position: absolute;height: fit-content;
+padding-top: 40px;overflow: hidden;margin-top: 3rem;" id="meeting-form">
 
     <h2 class="text-light text-center">Създай среща</h2>
 
@@ -112,7 +112,7 @@ padding-top: 40px;overflow: hidden;" id="meeting-form">
             <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
         </div>
         <div class="input-group" id="address">
-            <input type="text" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+            <input type="text" required="" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;">
             <label class="user-label">Адрес</label>
             <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>

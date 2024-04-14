@@ -28,9 +28,11 @@ function edit(e) {
 
     let { title, start, end, address, description } = Object.fromEntries(data);
 
-    let dataArr = [title, start, end, address, description]
+    let dataArr = [title, start, end, description]
 
     let files = document.getElementById('files').files;
+
+    let isOnlineResult = document.getElementById('isOnline').value == 'value' ? true : false;
 
     let validationSpans = document.getElementsByClassName('text-danger');
 
@@ -52,6 +54,7 @@ function edit(e) {
         data.append('address', address);
         data.append('description', description);
         data.append('companyId', companyId);
+        data.append('isOnline', isOnlineResult);
         for (let i = 0; i < files.length; i++) {
             data.append('files', files[i]);
         }

@@ -55,9 +55,11 @@ function toUnicode(str) {
 document.getElementById('check').addEventListener('change', function () {
     if (this.checked) {
         document.getElementById('address').style.display = "none";
+        document.getElementById('address').firstElementChild.removeAttribute('required');
     }
     else {
         document.getElementById('address').style.display = "flex";
+        document.getElementById('address').firstElementChild.setAttribute('required', 'required');
     }
 });
 
@@ -192,7 +194,7 @@ connection.on("ReceiveDelete", function (meetingId) {
 
     var divMeeting = document.getElementById(`${meetingId}`);
 
-    divMeeting.parentNode.removeChild(divMeeting.parentNode);
+    divMeeting.parentNode.parentNode.removeChild(divMeeting.parentNode);
 
 });
 
@@ -209,6 +211,8 @@ connection.on("ReceiveEditedMeeting", async function (meetingId, receivers) {
     catch (err) {
         console.error(err);
     }
+    initEvent(meetingId);
+    placeEvents();
 
 });
 
@@ -236,7 +240,7 @@ connection.on("ReceiveMeeting", function (meeting, id) {
     li.setAttribute('data-end', meeting.endHour);
     li.setAttribute('data-content', meeting.title);
     li.setAttribute('data-event', 'event-1');
-    li.setAttribute('id', id);
+    //li.setAttribute('id', id);
 
     li.innerHTML = `<a href="#0" id="${id}">
                         <em class="event-name mt-2">${meeting.title} </em>
@@ -257,6 +261,7 @@ document.getElementById('addEvent').addEventListener('submit', create);
 
 let animating = false;
 
+
 function initEvent(id) {
     let self = $('#schedule');
     let modal = $('.event-modal')
@@ -265,24 +270,26 @@ function initEvent(id) {
 
     singleEvents.each(function () {
 
-        var durationLabel = '<span class="event-date">' + $(this).data('start') + ' - ' + $(this).data('end') + '</span>';
-        $(this).children('a').prepend($(durationLabel));
+        var durationLabel = '<span class="event-date">' + $(this).parent().data('start') + ' - ' + $(this).parent().data('end') + '</span>';
+        if($(this).has('span').length == 0)
+            $(this).prepend($(durationLabel));
 
 
-        $(this).on('click', 'a', function (event) {
+
+        $(this).on('click', function (event) {
             event.preventDefault();
             if (!animating) openModal($(this));
         });
     });
 
 
-    modal.on('click', '.close', function (event) {
-        event.preventDefault();
-        if (!animating) closeModal(eventsGroup.find('.selected-event'));
-    });
-    self.on('click', '.cover-layer', function (event) {
-        if (!animating && self.hasClass('modal-is-open')) closeModal(eventsGroup.find('.selected-event'));
-    });
+    //modal.on('click', '.close', function (event) {
+    //    event.preventDefault();
+    //    if (!animating) closeModal(eventsGroup.find('.selected-event'));
+    //});
+    //self.on('click', '.cover-layer', function (event) {
+    //    if (!animating && self.hasClass('modal-is-open')) closeModal(eventsGroup.find('.selected-event'));
+    //});
 };
 
 function placeEvents() {
@@ -322,8 +329,6 @@ function openModal(event) {
     let modalMaxWidth = 800;
     let modalMaxHeight = 480;
 
-
-    
     animating = true;
 
     let meetingId = event.attr('id');
@@ -359,11 +364,11 @@ function openModal(event) {
                 let value = event.parent().attr('data-content');
 
                 let displayAddress = data.meeting.isOnline == true ? 'none' : 'block';
-                let displayRoom = data.meeting.isOnline == true ? 'block' : 'none';
-                let displayJoin = data.meeting.isHaveRoom == true ? 'block' : 'none'
+                let displayJoin = data.isHaveRoom == true ? 'block' : 'none';
+                let displayRoom = data.meeting.isOnline == true && data.isHaveRoom == false && data.isCompany ? 'block' : 'none';
 
 
-                modalBody.find('.event-info').html(`<div>
+                modalBody.find('.event-info').html(`<div class="mt-4">
                                                     <h4>Материали</h4>
                                                     <div style="margin-top: 1rem;" id="materials">
                                                        
@@ -484,59 +489,59 @@ function openModal(event) {
 
 };
 
-function closeModal(event) {
-    let self = $('#schedule');
-    let modal = $('.event-modal')
-    let modalHeaderBg = modal.find('.header-bg');
-    let modalHeader = modal.find('.header');
-    let modalBody = modal.find('.body');
-    let modalBodyBg = modal.find('.body-bg');
+//function closeModal(event) {
+//    let self = $('#schedule');
+//    let modal = $('.event-modal')
+//    let modalHeaderBg = modal.find('.header-bg');
+//    let modalHeader = modal.find('.header');
+//    let modalBody = modal.find('.body');
+//    let modalBodyBg = modal.find('.body-bg');
 
-    document.getElementById('materials').innerHTML = '';
-
-
-    animating = true;
-
-    var eventTop = event.offset().top - $(window).scrollTop(),
-        eventLeft = event.offset().left,
-        eventHeight = event.innerHeight(),
-        eventWidth = event.innerWidth();
-
-    var modalTop = Number(modal.css('top').replace('px', '')),
-        modalLeft = Number(modal.css('left').replace('px', ''));
-
-    var modalTranslateX = eventLeft - modalLeft,
-        modalTranslateY = eventTop - modalTop;
-
-    self.element.removeClass('animation-completed modal-is-open');
-
-    modal.css({
-        width: eventWidth + 'px',
-        height: eventHeight + 'px'
-    });
-    transformElement(modal, 'translateX(' + modalTranslateX + 'px) translateY(' + modalTranslateY + 'px)');
-
-    transformElement(modalBodyBg, 'scaleX(0) scaleY(1)');
-    transformElement(modalHeaderBg, 'scaleY(1)');
-
-    modalHeaderBg.one(transitionEnd, function () {
-        modalHeaderBg.off(transitionEnd);
-        modal.addClass('no-transition');
-        setTimeout(function () {
-           modal.add(modalHeader).add(modalBody).add(modalHeaderBg).add(modalBodyBg).attr('style', '');
-        }, 10);
-        setTimeout(function () {
-            self.modal.removeClass('no-transition');
-        }, 20);
-
-        animating = false;
-        self.removeClass('content-loaded');
-        event.removeClass('selected-event');
-    });
+//    document.getElementById('materials').innerHTML = '';
 
 
-    if (!transitionsSupported) modal.add(modalHeaderBg).trigger(transitionEnd);
-}
+//    animating = true;
+
+//    var eventTop = event.offset().top - $(window).scrollTop(),
+//        eventLeft = event.offset().left,
+//        eventHeight = event.innerHeight(),
+//        eventWidth = event.innerWidth();
+
+//    var modalTop = Number(modal.css('top').replace('px', '')),
+//        modalLeft = Number(modal.css('left').replace('px', ''));
+
+//    var modalTranslateX = eventLeft - modalLeft,
+//        modalTranslateY = eventTop - modalTop;
+
+//    self.element.removeClass('animation-completed modal-is-open');
+
+//    modal.css({
+//        width: eventWidth + 'px',
+//        height: eventHeight + 'px'
+//    });
+//    transformElement(modal, 'translateX(' + modalTranslateX + 'px) translateY(' + modalTranslateY + 'px)');
+
+//    transformElement(modalBodyBg, 'scaleX(0) scaleY(1)');
+//    transformElement(modalHeaderBg, 'scaleY(1)');
+
+//    modalHeaderBg.one(transitionEnd, function () {
+//        modalHeaderBg.off(transitionEnd);
+//        modal.addClass('no-transition');
+//        setTimeout(function () {
+//           modal.add(modalHeader).add(modalBody).add(modalHeaderBg).add(modalBodyBg).attr('style', '');
+//        }, 10);
+//        setTimeout(function () {
+//            self.modal.removeClass('no-transition');
+//        }, 20);
+
+//        animating = false;
+//        self.removeClass('content-loaded');
+//        event.removeClass('selected-event');
+//    });
+
+
+//    if (!transitionsSupported) modal.add(modalHeaderBg).trigger(transitionEnd);
+//}
 
 function getScheduleTimestamp(time) {
 

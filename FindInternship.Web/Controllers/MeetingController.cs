@@ -236,7 +236,7 @@ namespace FindInternship.Web.Controllers
         [HttpPost]
         [Route("Meeting/Edit/{id}")]
         public async Task<IActionResult> Edit([FromRoute] string id, string title, DateTime start, DateTime end,
-            string address, string companyId, string description, List<IFormFile> files)
+            string? address, string companyId, string description, bool isOnline ,List<IFormFile> files)
         {
             string userId = User.GetId()!;
             bool isCompany = await companyService.IsCompanyAsync(userId);
@@ -270,13 +270,6 @@ namespace FindInternship.Web.Controllers
                 Title = title,
                 Description = description,
             };
-
-            //bool isExistsInCompany = await meetingService.IsMeetingExistsInCompanyAsync(start, end, companyId!, "");
-            //if (isExistsInCompany && (DateTime.Compare(meetingOld!.Start, model.Start) != 0 || DateTime.Compare(meetingOld.End, model.End) != 0))
-            //{
-            //    return new JsonResult(new { isExists = true });
-            //}
-
 
             await meetingService.EditMeetingAsync(id, model);
 

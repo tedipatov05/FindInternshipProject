@@ -65,17 +65,19 @@ namespace FindInternship.Web
                 options.AddPolicy("MyPolicy",
                     builder =>
                     {
+                        builder.WithOrigins("https://localhost:7256")
+                           .AllowAnyHeader()
+                           .WithMethods("GET", "POST", "PUT")
+                           .AllowCredentials();
+
                         builder.WithOrigins("https://api.daily.co/v1/rooms")
                             .AllowAnyHeader()
                             .WithMethods("GET", "POST", "PUT", "DELETE")
                             .AllowCredentials();
 
-                        builder.WithOrigins("https://localhost:7256")
-                            .AllowAnyHeader()
-                            .WithMethods("GET", "POST", "PUT")
-                            .AllowCredentials();
+                       
 
-                        //builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                        
 
 
                     });

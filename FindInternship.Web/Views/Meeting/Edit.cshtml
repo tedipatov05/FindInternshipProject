@@ -1,10 +1,16 @@
 ﻿@model FindInternship.Core.Models.Meeting.FormMeetingViewModel
 
+@{
+    string display = Model.IsOnline == false ? "block" : "none";
+}
+
 <div class="form-holder" style="display: flex; justify-content: center;">
     <div class="c-event__creator c-calendar__style js-event__creator isVisible" style="width: 750px; position: relative;height: fit-content;
 padding-top: 40px; transform: none;top:0;left:0;" id="meeting-form">
 
         <h2 class="text-light text-center">Промени среща</h2>
+
+        <input type="hidden" value="@Model.IsOnline" id="isOnline" />
 
         <form class="requires-validation" id="editEvent">
 
@@ -28,12 +34,15 @@ padding-top: 40px; transform: none;top:0;left:0;" id="meeting-form">
                 <label class="user-label" id="label-end">Краен час</label>
                 <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
             </div>
-            <div class="input-group">
-                <input type="text" required="" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+
+            <div class="input-group" style="display: @display">
+                <input type="text" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;" value="@Model.Address">
                 <label class="user-label">Адрес</label>
                 <span class="text-danger" id="addressValidation" style="display:none;font-weight: bold;">Това поле е задължително</span>
             </div>
+
+
             <div class="input-group">
                 <input type="text" required="" name="description" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;height: 5rem;" value="@Model.Description">
@@ -43,7 +52,7 @@ padding-top: 40px; transform: none;top:0;left:0;" id="meeting-form">
 
             <div class="form-group file-area">
                 <label for="images" style="color: white">Ресурси</label>
-                <input type="file" name="files" id="files"  multiple="multiple" />
+                <input type="file" name="files" id="files" multiple="multiple" />
                 <div class="file-dummy" id="files-container">
                     @foreach (var material in Model.Materials)
                     {

@@ -36,11 +36,15 @@ padding-top: 40px; transform: none;top:0;left:0;" id="meeting-form">
                 border-bottom-right-radius: 1rem;" value="@Model.End">
                 <label class="user-label" id="label-end">Краен час</label>
             </div>
-            <div class="input-group">
-                <input type="text" required="" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+            @if (!Model.IsOnline)
+            {
+                <div class="input-group">
+                    <input type="text" required="" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;" value="@Model.Address">
-                <label class="user-label">Адрес</label>
-            </div>
+                    <label class="user-label">Адрес</label>
+                </div>
+            }
+
             <div class="input-group">
                 <input type="text" required="" name="description" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;height: 5rem;" value="@Model.Description">
@@ -49,7 +53,7 @@ padding-top: 40px; transform: none;top:0;left:0;" id="meeting-form">
 
             <div class="form-group file-area">
                 <label for="images" style="color: white">Ресурси</label>
-                
+
                 <div class="file-dummy" id="files-container">
                     @foreach (var material in Model.Materials)
                     {

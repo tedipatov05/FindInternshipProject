@@ -24,6 +24,8 @@ namespace FindInternship.Core.Models.Meeting
         public string Description { get; set; } = null!;
 
         public string Lector { get; set; } = null!;
+
+        public bool IsOnline { get; set; }
         public ICollection<MaterialViewModel> Materials { get; set; }
 
 
