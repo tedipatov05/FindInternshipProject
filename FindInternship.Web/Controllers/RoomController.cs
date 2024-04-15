@@ -12,11 +12,14 @@ namespace FindInternship.Web.Controllers
         private readonly IRoomService roomService;
         private readonly ICompanyService companyService;
         private readonly IMeetingService meetingService;
-        public RoomController(IRoomService roomService, ICompanyService companyService, IMeetingService meetingService)
+        private readonly ITeacherService teacherService;
+
+        public RoomController(IRoomService roomService, ICompanyService companyService, IMeetingService meetingService, ITeacherService teacherService)
         {
             this.roomService = roomService;
             this.companyService = companyService;
             this.meetingService = meetingService;
+            this.teacherService = teacherService;
         }
 
         [HttpPost]
@@ -65,6 +68,46 @@ namespace FindInternship.Web.Controllers
 
 
             return new JsonResult(new { Success = true, result = model, meetingId, });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> JoinRoom(string meetingId)
+        {
+            var userId = User.GetId();
+            bool isTeacher = await teacherService.IsTeacherAsync(userId!);
+            if (isTeacher)
+            {
+                TempData[ErrorMessage] = "Учителя не може да присъства на практиката";
+                return RedirectToAction("All", "Meeting");
+            }
+
+            bool isMeetingExists = await meetingService.IsExistsByIdAsync(meetingId);
+            if (!isMeetingExists)
+            {
+                TempData[ErrorMessage] = "Тази среща не съществува";
+                return RedirectToAction("All", "Meeting");
+            }
+
+            bool isMeetingHaveRoom = await meetingService.IsMeetingAlreadyHaveRoomAsync(meetingId);
+            if (!isMeetingHaveRoom)
+            {
+                TempData[ErrorMessage] = "Тази среща няма стая";
+                return RedirectToAction("All", "Meeting");
+            }
+
+            var roomName = await roomService.GetMeetingRoomNameByIdAsync(meetingId);
+            var userName = User.GetUsername();
+
+            var model = new JoinRoomViewModel()
+            {
+                RoomName = roomName!,
+                ParticipantName = userName!,
+            };
+
+
+
+            return View(model);
+            
         }
 
        

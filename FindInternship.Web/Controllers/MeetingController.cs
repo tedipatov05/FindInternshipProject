@@ -385,7 +385,7 @@ namespace FindInternship.Web.Controllers
                 
                 var meeting = await meetingService.GetDetailsForMeetingAsync(id);
 
-                return new JsonResult(new { meeting, isExists = true, isCompany, isHaveRoom = isMeetingHaveRoom });
+                return new JsonResult(new { meeting, isExists = true, isCompany, isHaveRoom = isMeetingHaveRoom, isTeacher=false });
 
 
             }
@@ -394,7 +394,7 @@ namespace FindInternship.Web.Controllers
                 
                 var meeting = await meetingService.GetDetailsForMeetingAsync(id);
 
-                return new JsonResult(new { meeting, isExists = true, isCompany = false, isHaveRoom = isMeetingHaveRoom });
+                return new JsonResult(new { meeting, isExists = true, isCompany = false, isHaveRoom = isMeetingHaveRoom, isTeacher });
             }
 
             return new JsonResult(new { isExists = isMeetingExists});

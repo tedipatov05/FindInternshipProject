@@ -3,6 +3,10 @@ async function createDailyRoom(name, meetingId) {
     name = name.slice(0, name.length - 4).trim();
     name = name.replaceAll(' ', '-');
 
+    document.getElementById('createRoom-div').style.display = 'none';
+    document.getElementById('join-div').style.display = 'block';
+
+
     const options = {
         name: name, 
         privacy: 'public',

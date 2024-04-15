@@ -10,5 +10,7 @@ namespace FindInternship.Core.Contracts
     public interface IRoomService
     {
         public Task CreateRoomAsync(string meetingId, CreateRoomViewModel model);
+
+        public Task<string?> GetMeetingRoomNameByIdAsync(string meetingId);
     }
 }

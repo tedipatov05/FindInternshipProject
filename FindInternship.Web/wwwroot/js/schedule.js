@@ -134,7 +134,7 @@ jQuery(document).ready(function ($) {
                     let value = event.parent().attr('data-content');
 
                     let displayAddress = data.meeting.isOnline == true ? 'none' : 'block';
-                    let displayJoin = data.isHaveRoom == true ? 'block' : 'none';
+                    let displayJoin = data.isHaveRoom == true && data.isTeacher == false ? 'block' : 'none';
                     let displayRoom = data.meeting.isOnline == true && data.isHaveRoom==false && data.isCompany ? 'block' : 'none';
 
 
@@ -155,11 +155,11 @@ jQuery(document).ready(function ($) {
                                                         <img class="image--cover" src="${data.meeting.lector.profilePictureUrl}"></img>
                                                         <div style="margin-left: 1rem;font-weight: 400;">${data.meeting.lector.name}</div>
                                                     </div>
-                                                    <div style="display: ${displayRoom}">
+                                                    <div id="createRoom-div" style="display: ${displayRoom}">
                                                         <a onclick="createDailyRoom('${eventName.split(' - ')[0].trim()}', '${meetingId}')"><button class="bn632-hover bn26">Създай стая</button></a>
                                                     </div>
-                                                    <div style="display: ${displayJoin}">
-                                                        <a><button class="bn632-hover bn26">Присъедини се</button></a>
+                                                    <div id="join-div" style="display: ${displayJoin}">
+                                                        <a href="/Room/JoinRoom?meetingId=${meetingId}"><button class="bn632-hover bn26">Присъедини се</button></a>
                                                     </div>
                                                    
                                                  </div>`);

@@ -37,5 +37,21 @@ namespace FindInternship.Core.Services
             await repo.AddAsync(room);
             await repo.SaveChangesAsync();
         }
+
+        public async Task<string?> GetMeetingRoomNameByIdAsync(string meetingId)
+        {
+            var meeting = await repo.All<Meeting>()
+                .Where(m => m.Id == meetingId)
+                .Include(m => m.Room)
+                .FirstOrDefaultAsync();
+
+            if(meeting == null)
+            {
+                return null;
+            }
+
+            return meeting!.Room!.Name;
+
+        }
     }
 }
