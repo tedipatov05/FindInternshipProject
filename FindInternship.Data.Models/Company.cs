@@ -49,6 +49,8 @@ namespace FindInternship.Data.Models
         public ICollection<Lector> Lectors { get; set; }
 
         public ICollection<CompanyInterns> CompanyInterns { get; set; }
+
+        public ICollection<Post> Posts { get; set; }
              
 
     }

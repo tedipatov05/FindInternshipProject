@@ -58,6 +58,12 @@ namespace FindInternship.Data
 
         public DbSet<CompanyInterns> CompanyInterns { get; set; } = null!;
 
+        public DbSet<Post> Posts { get; set; } = null!;
+
+        public DbSet<Photo> Photos {  get; set; } = null!; 
+
+        public DbSet<PostsPhotos> PostsPhotos {  get; set; } = null!; 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
@@ -124,6 +130,19 @@ namespace FindInternship.Data
                 .HasOne(c => c.Teacher)
                 .WithMany(t => t.Groups)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<PostsPhotos>()
+                .HasOne(p => p.Post)
+                .WithMany(p => p.PostsPhotos)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<PostsPhotos>()
+                .HasOne(p => p.Photo)
+                .WithMany(p => p.PostsPhotos)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<PostsPhotos>()
+                .HasKey(key => new { key.PostId, key.PhotoId });
 
 
             if (seedDb)

@@ -129,6 +129,15 @@ namespace FindInternship.Common
             public const int NameMinLength = 3;
         }
 
+        public static class PostConstants
+        {
+            public const int PostTopicMaxLength = 100;
+            public const int PostTopicMinLength = 3;
+
+            public const int PostContentMaxLength = 10000;
+            public const int PostContentMinLength = 4;
+        }
+
         
     }
 }
