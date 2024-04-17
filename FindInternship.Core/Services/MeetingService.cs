@@ -159,6 +159,7 @@ namespace FindInternship.Core.Services
             meeting.Title = model.Title;
             meeting.EndTime = model.End;
             meeting.StartTime = model.Start;
+            meeting.Description = model.Description;
 
             await repo.SaveChangesAsync();
         }

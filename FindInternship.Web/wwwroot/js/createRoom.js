@@ -13,8 +13,7 @@ async function createDailyRoom(name, meetingId) {
         properties: {
             start_video_off: true, 
             start_audio_off: true, 
-            //eject_at_room_exp: true, 
-            //eject_after_elapsed: 3600, 
+            
         }
     };
 

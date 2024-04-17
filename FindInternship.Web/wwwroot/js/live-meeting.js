@@ -458,4 +458,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     });
+
+    document.getElementById('participants-btn').addEventListener('click', function () {
+        let participants = Object.values(dailyCallManager.call.participants());
+        let names = []
+        participants.forEach(p => names.push(p.user_name));
+
+        console.log(names);
+        
+    });
 });
