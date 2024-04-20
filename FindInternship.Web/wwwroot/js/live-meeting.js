@@ -51,7 +51,7 @@ class DailyCallManager {
         console.log(`Successfully joined: ${this.currentRoomUrl}`);
 
 
-        this.updateAndDisplayParticipantCount();
+        //this.updateAndDisplayParticipantCount();
 
 
         document.getElementById('leave-btn').disabled = false;
@@ -113,7 +113,7 @@ class DailyCallManager {
 
         document.getElementById(`video-container-${participantId}`)?.remove();
 
-        this.updateAndDisplayParticipantCount();
+        //this.updateAndDisplayParticipantCount();
     }
 
     handleParticipantJoinedOrUpdated(event) {
@@ -122,7 +122,7 @@ class DailyCallManager {
         const isLocal = participant.local;
         const tracks = participant.tracks;
 
-        this.updateAndDisplayParticipantCount();
+        //this.updateAndDisplayParticipantCount();
 
         if (!document.getElementById(`video-container-${participantId}`)) {
 
@@ -182,55 +182,83 @@ class DailyCallManager {
 
             document.getElementById('join-btn').disabled = true;
             document.getElementById('actions').style.display = 'flex';
-           
+            document.getElementById('chat-holder').style.display = 'block';
 
             await this.call.join(joinOptions);
             let name = document.getElementById('participant-name').value;
 
             await this.call.setUserName(name);
-           
+
         } catch (e) {
             console.error('Join failed:', e);
         }
     }
 
+  
 
     createVideoContainer(participantId, name) {
 
         const videoContainer = document.createElement('div');
         videoContainer.id = `video-container-${participantId}`;
         videoContainer.className = 'video-participant';
-        if (document.getElementById('videos').children.length == 1) {
-            videoContainer.style = 'background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;width:100%;height:100%;background-position: center;border-radius: 16px;';
-            document.getElementById('videos').insertBefore(videoContainer, document.getElementById('side-videos'));
-            const sessionIdOverlay = document.createElement('div');
-            sessionIdOverlay.className = 'name-tag';
-            sessionIdOverlay.textContent = name;
-            videoContainer.appendChild(sessionIdOverlay);
 
-            const videoEl = document.createElement('video');
-            videoEl.className = 'video-element';
-            videoEl.style = ""
-            videoContainer.appendChild(videoEl);
-
+        if (document.getElementById('videos').children.length == 0) {
+            videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;width:100%;height:100%`;
         } else {
-            document.getElementById('videos').style.width = '100%'
-            let top = document.getElementById('side-videos').children.length == 0 ? 0 : 0.5
-            document.getElementById('side-videos').style.width = '30%';
-            document.getElementById('videos').firstElementChild.style.width = "60%";
+            videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 1rem;width: 33.3%;height: 43%`;
 
-            videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;width:100%;margin-top: ${top}rem;background-position: center;border-radius: 12px;`;
-            document.getElementById('side-videos').appendChild(videoContainer);
-            const sessionIdOverlay = document.createElement('div');
-            sessionIdOverlay.className = 'name-tag';
-            sessionIdOverlay.textContent = name;
-            videoContainer.appendChild(sessionIdOverlay);
 
-            const videoEl = document.createElement('video');
-            videoEl.className = 'video-element';
-            videoEl.style = ""
-            videoContainer.appendChild(videoEl);
+            Array.from(document.getElementsByClassName('video-participant')).forEach(e => {
+                e.style = 'background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;width: 33.3%;height: 43%'
+            });
+
         }
+
+
+
+
+        let participantActions = document.createElement('div');
+        participantActions.classList.add('participant-actions');
+        let maximizeBtn = document.createElement('button');
+        maximizeBtn.classList.add('maximize-participant-btn');
+        participantActions.appendChild(maximizeBtn);
+        videoContainer.appendChild(participantActions);
+        maximizeBtn.addEventListener('click', function (e) {
+            document.getElementById('videos').removeChild(e.target.parentNode.parentNode);
+            document.getElementById('videos').insertBefore(e.target.parentNode.parentNode, document.getElementById('videos').firstChild);
+            
+
+
+            if (e.target.parentNode.parentNode.style.width == '33.3%') {
+                e.target.parentNode.parentNode.style.width = '100%';
+                e.target.parentNode.parentNode.style.height = '100%';
+                e.target.parentNode.parentNode.style.marginLeft = '0';
+
+            } else {
+                e.target.parentNode.parentNode.style.width = '33.3%';
+                e.target.parentNode.parentNode.style.height = '43%'
+                e.target.parentNode.parentNode.style.marginRight = '1rem';
+            }
+
+        });
+
+
+
+        const user = document.createElement('a');
+        user.classList.add('name-tag');
+        user.textContent = name;
+        videoContainer.appendChild(user);
+        const videoEl = document.createElement('video');
+        videoEl.className = 'video-element';
+        videoEl.style = ""
+        videoContainer.appendChild(videoEl);
+        videoEl.addEventListener('click', function () {
+            maximizeBtn.click();
+        });
+
+        document.getElementById('videos').appendChild(videoContainer);
+
+       
 
     }
 
@@ -332,11 +360,11 @@ class DailyCallManager {
             let videoStatus = this.call.localVideo() ? 'On' : 'Off';
 
             if (videoStatus == 'On') {
-                document.getElementById('toggle-camera').style.backgroundImage = 'url(../img/camera-enabled.jpg)';
+                document.getElementById('toggle-camera').style.backgroundImage = 'url(/img/camera-enabled.jpg)';
 
             }
             else {
-                document.getElementById('toggle-camera').style.backgroundImage = 'url(../img/camera-disabled.jpg)';
+                document.getElementById('toggle-camera').style.backgroundImage = 'url(/img/camera-disabled.jpg)';
             }
 
 
@@ -344,10 +372,10 @@ class DailyCallManager {
             let audioStatus = this.call.localAudio() ? 'On' : 'Off';
 
             if (audioStatus == 'On') {
-                document.getElementById('toggle-mic').style.backgroundImage = 'url(../img/mic-icon.png)'
+                document.getElementById('toggle-mic').style.backgroundImage = 'url(/img/mic-icon.png)'
 
             } else {
-                document.getElementById('toggle-mic').style.backgroundImage = 'url(../img/mic-icon-disabled.png)'
+                document.getElementById('toggle-mic').style.backgroundImage = 'url(/img/mic-icon-disabled.png)'
 
             }
 
@@ -408,14 +436,14 @@ class DailyCallManager {
     }
 
 
-    updateAndDisplayParticipantCount() {
-        const participantCount =
-            this.call.participantCounts().present +
-            this.call.participantCounts().hidden;
-        document.getElementById(
-            'participant-count'
-        ).textContent = `Participants: ${participantCount}`;
-    }
+    // updateAndDisplayParticipantCount() {
+    //     const participantCount =
+    //         this.call.participantCounts().present +
+    //         this.call.participantCounts().hidden;
+    //     document.getElementById(
+    //         'participant-count'
+    //     ).textContent = `Participants: ${participantCount}`;
+    // }
 
 
     async leave() {
@@ -452,19 +480,49 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('meeting-form').style.display = 'block';
         document.getElementById('video-controls').style.display = 'none';
         document.getElementById('actions').style.display = 'none';
+        document.getElementById('chat-holder').style.display = 'none';
         dailyCallManager.leave();
+
         let url = new URL(window.location);
-        window.location = url.origin + '/Meeting/All'
-
-
+        window.location = `${url.origin}/Meeting/All`
     });
 
     document.getElementById('participants-btn').addEventListener('click', function () {
-        let participants = Object.values(dailyCallManager.call.participants());
-        let names = []
-        participants.forEach(p => names.push(p.user_name));
-
-        console.log(names);
-        
-    });
+        let result = dailyCallManager.call.participants()
+        let arr = Object.values(result);
+        console.log(arr);
+    })
 });
+
+// APPEND VIDEOS FUNCTIONALITY
+
+// if (document.getElementById('videos').children.length == 1) {
+//     videoContainer.style = 'background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;width:100%;height:100%;';
+//     document.getElementById('videos').insertBefore(videoContainer, document.getElementById('side-videos'));
+//     const sessionIdOverlay = document.createElement('div');
+//     sessionIdOverlay.className = 'session-id-overlay';
+//     sessionIdOverlay.textContent = name;
+//     videoContainer.appendChild(sessionIdOverlay);
+
+//     const videoEl = document.createElement('video');
+//     videoEl.className = 'video-element';
+//     videoEl.style = ""
+//     videoContainer.appendChild(videoEl);
+
+// } else {
+//     let top = document.getElementById('side-videos').children.length == 0 ? 0 : 0.5
+//     document.getElementById('side-videos').style.width = '30%';
+//     document.getElementById('videos').firstElementChild.style.width = "60%";
+
+//     videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;width:100%;margin-top: ${top}rem;`;
+//     document.getElementById('side-videos').appendChild(videoContainer);
+//     const sessionIdOverlay = document.createElement('div');
+//     sessionIdOverlay.className = 'session-id-overlay';
+//     sessionIdOverlay.textContent = name;
+//     videoContainer.appendChild(sessionIdOverlay);
+
+//     const videoEl = document.createElement('video');
+//     videoEl.className = 'video-element';
+//     videoEl.style = ""
+//     videoContainer.appendChild(videoEl);
+// }

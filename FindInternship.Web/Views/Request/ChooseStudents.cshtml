@@ -6,16 +6,6 @@
         <div class="report-container">
             <div class="report-header">
                 <h1 class="recent-Articles">Потребители</h1>
-                @* <form method="get">
-                <div class="searchbar">
-                <input asp-for="@Model.SearchString" type="text" placeholder="Търси">
-                <button class="searchbtn">
-                <img src="~/img/searchIcon.png" class="icn srchicn" alt="search-icon">
-                </button>
-                </div>
-
-                </form> *@
-
             </div>
             <form method="post" enctype="multipart/form-data">
 
@@ -60,9 +50,6 @@
                                     <h3 class="t-op-nextlvl ml-40">@user.RegisteredOn</h3>
                                     <div style="display: flex; flex-direction: row; margin-bottom: 0.5rem;">
                                         <a id="@user.Id" class="t-op-nextlvl label-tag" style="text-decoration: none; margin-bottom: 10px;">Вземи на практика</a>
-
-                                        @*   <img src="~/img/check-mark.png" width="20" height="20"/>
-                                <span style="margin-left: 0.4rem;">Избран</span> *@
                                     </div>
                                 </div>
                                 <hr>

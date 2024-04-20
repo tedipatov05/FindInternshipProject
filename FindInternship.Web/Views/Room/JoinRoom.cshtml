@@ -2,30 +2,23 @@
 @model JoinRoomViewModel
 
 <div class="app-container">
-    <button class="mode-switch" style="margin-top: 6rem;">
-
+    <button class="mode-switch">
         <svg class="sun" fill="none" stroke="#fbb046" stroke-linecap="round" stroke-linejoin="round"
              stroke-width="2" class="feather feather-sun" viewBox="0 0 24 24">
             <defs />
             <circle cx="12" cy="12" r="5" />
             <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
         </svg>
-
+      
         <svg class="moon" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"
              stroke-width="2" class="feather feather-moon" viewBox="0 0 24 24">
             <defs />
             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
         </svg>
-
     </button>
 
-
-
     <div class="app-main">
-        <div class="video-call-wrapper" id="videos" style="width: 80%;">
-
-            <div id="side-videos" style="display: flex; flex-direction: column;">
-            </div>
+        <div class="video-call-wrapper" id="videos">
         </div>
         <div class="c-event__creator c-calendar__style js-event__creator isVisible"
              style="width: 750px; position: absolute;height: fit-content;padding-top: 40px" id="meeting-form">
@@ -42,13 +35,13 @@
             <form class="requires-validation" id="addEvent">
 
                 <div class="input-group">
-                    <input id="room-name" value="@Model.RoomName" type="text" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+                    <input value="@Model.RoomName" id="room-name" type="text" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;">
                     <label class="user-label">Room name</label>
 
                 </div>
                 <div class="input-group">
-                    <input id="participant-name" value="@Model.ParticipantName" type="text" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
+                    <input value="@Model.ParticipantName" id="participant-name" type="text" name="address" autocomplete="off" class="input" style="border-top-right-radius: 1rem;
                 border-bottom-right-radius: 1rem;">
                     <label class="user-label">Name</label>
 
@@ -62,7 +55,7 @@
         </div>
 
         <div class="controls" id="video-controls"
-             style="display: none;flex-direction: row;justify-content: space-between;width: auto;">
+             style="display: none;flex-direction: row;justify-content: space-between;width: auto;margin-top:1.5rem;">
             <select id="camera-selector">
                 <option value="" disabled selected>Select a camera</option>
             </select>
@@ -71,18 +64,121 @@
             </select>
         </div>
 
-
-
-
-
-
-        <div class="video-call-actions" id="actions" style="margin-bottom:7rem;display: none;">
+        <div class="video-call-actions" id="actions" style="display: none;">
             <button class="video-action-button mic" id="toggle-mic" disabled="true"></button>
             <button class="video-action-button camera" id="toggle-camera" disabled="true"></button>
             <button class="video-action-button maximize" id="participants-btn"></button>
             <button class="video-action-button endcall" id="leave-btn" disabled>Leave</button>
 
         </div>
+    </div>
+    <div class="right-side" id="chat-holder" style="display: none;">
+        <div class="chat-container">
+            <div class="chat-header">
+                <button class="chat-header-button">
+                    Live Chat
+                </button>
+            </div>
+            <div class="chat-area" id="message-holder">
+                <div class="message-wrapper">
+                    <div class="profile-picture">
+                        <img src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
+                             alt="pp">
+                    </div>
+                    <div class="message-content">
+                        <p class="name">Ryan Patrick</p>
+                        <div class="message">Helloo team!😍</div>
+                    </div>
+                </div>
+                <div class="message-wrapper">
+                    <div class="profile-picture">
+                        <img src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
+                             alt="pp">
+                    </div>
+                    <div class="message-content">
+                        <p class="name">Andy Will</p>
+                        <div class="message">Hello! Can you hear me?🤯 <a class="mention"></a></div>
+                    </div>
+                </div>
+                <div class="message-wrapper">
+                    <div class="profile-picture">
+                        <img src="https://images.unsplash.com/photo-1600207438283-a5de6d9df13e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
+                             alt="pp">
+                    </div>
+                    <div class="message-content">
+                        <p class="name">Jessica Bell</p>
+                        <div class="message">Hi team! Let's get started it.</div>
+                    </div>
+                </div>
+                <div class="message-wrapper reverse">
+                    <div class="profile-picture">
+                        <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+                             alt="pp">
+                    </div>
+                    <div class="message-content">
+                        <p class="name">Emmy Lou</p>
+                        <div class="message">Good morning!🌈</div>
+                    </div>
+                </div>
+
+                <div class="message-wrapper">
+                    <div class="profile-picture">
+                        <img src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
+                             alt="pp">
+                    </div>
+                    <div class="message-content">
+                        <p class="name">Ryan Patrick</p>
+                        <div class="message">Hi team!❤️</div>
+                        <div class="message">I downloaded the file <a class="mention"></a></div>
+                    </div>
+                </div>
+                <div class="message-wrapper reverse">
+                    <div class="profile-picture">
+                        <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+                             alt="pp">
+                    </div>
+                    <div class="message-content">
+                        <p class="name">Emmy Lou</p>
+                        <div class="message">Woooww! Awesome❤️</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="chat-typing-area-wrapper" style="position: relative;">
+                <div class="chat-typing-area">
+                    <input type="text" placeholder="Type your meesage..." id="chat-input" class="chat-input"
+                           style="border: none;">
+                    <button class="send-button" id="send-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-send" viewBox="0 0 24 24">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="participants">
+            <div class="participant profile-picture">
+                <img src="https://images.unsplash.com/photo-1576110397661-64a019d88a98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
+                     alt="pp">
+            </div>
+            <div class="participant profile-picture">
+                <img src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
+                     alt="pp">
+            </div>
+            <div class="participant profile-picture">
+                <img src="https://images.unsplash.com/photo-1600207438283-a5de6d9df13e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
+                     alt="pp">
+            </div>
+            <div class="participant profile-picture">
+                <img src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
+                     alt="pp">
+            </div>
+            <div class="participant-more">2+</div>
+        </div>
+
     </div>
 </div>
 
