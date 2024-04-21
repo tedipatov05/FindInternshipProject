@@ -18,6 +18,21 @@ namespace FindInternship.Core.Services
         {
             this.repo = repo;
         }
+
+        public async Task CreateMessageToRoomAsync(string message, string roomId, string senderUsername, string senderProfilePicture)
+        {
+            var messageModel = new RoomMessage()
+            {
+                Content = message,
+                RoomId = roomId,
+                SenderName = senderUsername,
+                SenderProfilePicture = senderProfilePicture,
+            };
+
+            await repo.AddAsync(messageModel);
+            await repo.SaveChangesAsync();
+        }
+
         public async Task CreateRoomAsync(string meetingId, CreateRoomViewModel model)
         {
             Room room = new Room()
@@ -52,6 +67,37 @@ namespace FindInternship.Core.Services
 
             return meeting!.Room!.Name;
 
+        }
+
+        public async Task<string> GetRoomIdByMeetingIdAsync(string meetingId)
+        {
+            var room = await repo.All<Room>()
+                .Where(r => r.MeetingId == meetingId)
+                .FirstOrDefaultAsync();
+
+            if(room == null)
+            {
+                return null;
+            }
+
+            return room.Id;
+        }
+
+        public async Task<List<RoomMessageViewModel>> GetRoomMessagesByRoomNameAsync(string roomName)
+        {
+            var roomMessages = await repo.All<RoomMessage>()
+                .Include(rm => rm.Room)
+                .Where(r => r.Room.Name == roomName)
+                .OrderBy(r => r.SendedOn)
+                .Select(r => new RoomMessageViewModel()
+                {
+                    Content = r.Content, 
+                    SenderName = r.SenderName, 
+                    SenderProfilePicture = r.SenderProfilePicture,
+                })
+                .ToListAsync();
+
+            return roomMessages;
         }
     }
 }

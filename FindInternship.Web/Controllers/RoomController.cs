@@ -106,6 +106,8 @@ namespace FindInternship.Web.Controllers
                 ParticipantName = userName!,
             };
 
+            model.RoomMessages = await roomService.GetRoomMessagesByRoomNameAsync(roomName!);
+
 
 
             return View(model);
@@ -116,14 +118,7 @@ namespace FindInternship.Web.Controllers
         [Route("/Room/Participants/{usernames}")]
         public async Task<IActionResult> Participants([FromRoute]IList<string> usernames)
         {
-            //foreach(var username in usernames)
-            //{
-            //    bool isExists = await userService.IsExistsByUsernameAsync(username);
-            //    if (!isExists)
-            //    {
-            //        return new JsonResult(new { IsExists = false });
-            //    }
-            //}
+            
             
             var result = await userService.GetParticipantsProfilePictureAsync(usernames[0].Split(',').ToList());
 

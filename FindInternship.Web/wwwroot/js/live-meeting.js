@@ -1,26 +1,4 @@
 
-
-var connection = new signalR.HubConnectionBuilder()
-    .withUrl("/roomHub")
-    .build();
-
-async function start() {
-    try {
-        await connection.start();
-        console.log("SignalR Connected.");
-    } catch (err) {
-        console.log(err);
-        setTimeout(start, 5000);
-    }
-};
-
-connection.onclose(async () => {
-    await start();
-})
-
-start();
-
-
 const switchMode = document.querySelector('button.mode-switch'),
     body = document.querySelector('body');
 
@@ -258,7 +236,7 @@ class DailyCallManager {
         if (document.getElementById('videos').children.length == 0) {
             videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;width:100%;height:100%`;
         } else {
-            videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 1rem;width: 33.3%;height: 43%`;
+            videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;width: 33.3%;height: 43%`;
 
 
             Array.from(document.getElementsByClassName('video-participant')).forEach(e => {
@@ -285,12 +263,12 @@ class DailyCallManager {
             if (e.target.parentNode.parentNode.style.width == '33.3%') {
                 e.target.parentNode.parentNode.style.width = '100%';
                 e.target.parentNode.parentNode.style.height = '100%';
-                e.target.parentNode.parentNode.style.marginLeft = '0';
+                //e.target.parentNode.parentNode.style.marginLeft = '0';
 
             } else {
                 e.target.parentNode.parentNode.style.width = '33.3%';
                 e.target.parentNode.parentNode.style.height = '43%'
-                e.target.parentNode.parentNode.style.marginRight = '1rem';
+               /* e.target.parentNode.parentNode.style.marginRight = '1rem';*/
             }
 
         });
@@ -587,7 +565,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 participantDiv.classList.add('participant');
                                 participantDiv.classList.add('profile-picture');
                                 let img = document.createElement('img');
-                                img.src = data.result[i];
+                                if (data.result[i] == '' || data.result[i] == null) {
+
+                                    img.src = '../img/blank-profile-picture.png';
+                                }
+                                else {
+                                    img.src = data.result[i];
+                                }
                                 participantDiv.appendChild(img);
                                 participantsContainer.appendChild(participantDiv);
                             }
@@ -609,20 +593,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
 });
 
-connection.on('ReceiveNewParticipant', function (newParticipantUsername, image, count) {
-
-    let participantsContainer = document.getElementById('participants');
-    if (participantsContainer.children.length == 5) {
-        document.getElementById('participants-more').value = `${count - 4}+`
-    } else {
-        let participantDiv = document.createElement('div');
-        participantDiv.classList.add('participant');
-        participantDiv.classList.add('profile-picture');
-        let img = document.createElement('img');
-        img.src = image;
-        participantDiv.appendChild(img);
-        participantsContainer.appendChild(participantDiv);
-    }
-
-});
 

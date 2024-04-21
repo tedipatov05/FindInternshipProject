@@ -17,6 +17,8 @@
         </svg>
     </button>
 
+    <input type="hidden" value="@User.GetUsername()" id="sender-username"/>
+
     <div class="app-main">
         <div class="video-call-wrapper" id="videos">
         </div>
@@ -56,10 +58,10 @@
 
         <div class="controls" id="video-controls"
              style="display: none;flex-direction: row;justify-content: space-between;width: auto;margin-top:1.5rem;">
-            <select id="camera-selector">
+            <select id="camera-selector" style="width: fit-content;">
                 <option value="" disabled selected>Select a camera</option>
             </select>
-            <select id="mic-selector" style="margin-left: 1rem;">
+            <select id="mic-selector" style="margin-left: 1rem;width: fit-content;">
                 <option value="" disabled selected>Select a microphone</option>
             </select>
         </div>
@@ -80,69 +82,23 @@
                 </button>
             </div>
             <div class="chat-area" id="message-holder">
-                <div class="message-wrapper">
-                    <div class="profile-picture">
-                        <img src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
-                             alt="pp">
-                    </div>
-                    <div class="message-content">
-                        <p class="name">Ryan Patrick</p>
-                        <div class="message">Helloo team!😍</div>
-                    </div>
-                </div>
-                <div class="message-wrapper">
-                    <div class="profile-picture">
-                        <img src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-                             alt="pp">
-                    </div>
-                    <div class="message-content">
-                        <p class="name">Andy Will</p>
-                        <div class="message">Hello! Can you hear me?🤯 <a class="mention"></a></div>
-                    </div>
-                </div>
-                <div class="message-wrapper">
-                    <div class="profile-picture">
-                        <img src="https://images.unsplash.com/photo-1600207438283-a5de6d9df13e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
-                             alt="pp">
-                    </div>
-                    <div class="message-content">
-                        <p class="name">Jessica Bell</p>
-                        <div class="message">Hi team! Let's get started it.</div>
-                    </div>
-                </div>
-                <div class="message-wrapper reverse">
-                    <div class="profile-picture">
-                        <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-                             alt="pp">
-                    </div>
-                    <div class="message-content">
-                        <p class="name">Emmy Lou</p>
-                        <div class="message">Good morning!🌈</div>
-                    </div>
-                </div>
 
-                <div class="message-wrapper">
-                    <div class="profile-picture">
-                        <img src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
-                             alt="pp">
-                    </div>
-                    <div class="message-content">
-                        <p class="name">Ryan Patrick</p>
-                        <div class="message">Hi team!❤️</div>
-                        <div class="message">I downloaded the file <a class="mention"></a></div>
-                    </div>
-                </div>
-                <div class="message-wrapper reverse">
-                    <div class="profile-picture">
-                        <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-                             alt="pp">
-                    </div>
-                    <div class="message-content">
-                        <p class="name">Emmy Lou</p>
-                        <div class="message">Woooww! Awesome❤️</div>
-                    </div>
-                </div>
+                @foreach(var message in Model.RoomMessages)
+                {
+                    string cl = message.SenderName == User.GetUsername() ? "reverse" : "";
 
+                    <div class="message-wrapper @cl">
+                        <div class="profile-picture">
+                            <img src="@message.SenderProfilePicture"
+                                 alt="pp">
+                        </div>
+                        <div class="message-content">
+                            <p class="name">@message.SenderName</p>
+                            <div class="message">@message.Content</div>
+                        </div>
+                    </div>
+                }
+                
             </div>
             <div class="chat-typing-area-wrapper" style="position: relative;">
                 <div class="chat-typing-area">
@@ -160,23 +116,7 @@
 
         </div>
         <div class="participants" id="participants" style="display: none;">
-           @*  <div class="participant profile-picture">
-                <img src="https://images.unsplash.com/photo-1576110397661-64a019d88a98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
-                     alt="pp">
-            </div>
-            <div class="participant profile-picture">
-                <img src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-                     alt="pp">
-            </div>
-            <div class="participant profile-picture">
-                <img src="https://images.unsplash.com/photo-1600207438283-a5de6d9df13e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
-                     alt="pp">
-            </div>
-            <div class="participant profile-picture">
-                <img src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
-                     alt="pp">
-            </div> *@
-            @* <div class="participant-more" id="participants-more" style="display:none;">2+</div> *@
+           
         </div>
 
     </div>
@@ -186,6 +126,7 @@
     <script src="https://unpkg.com/%40daily-co/daily-js" asp-append-version="true"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/live-meeting.js" asp-append-version="true"></script>
+    <script src="~/js/live-meeting-chat.js" asp-append-version="true"></script>
     @* <script src="~/js/joinRoom-form.js" asp-append-version="true"></script> *@
 
 }

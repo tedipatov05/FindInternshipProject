@@ -138,6 +138,12 @@ namespace FindInternship.Common
             public const int PostContentMinLength = 4;
         }
 
+        public static class RoomMessageConstants
+        {
+            public const int RoomMessageMaxLength = 2000;
+            public const int RoomMessageMinLength = 1;
+        }
+
         
     }
 }

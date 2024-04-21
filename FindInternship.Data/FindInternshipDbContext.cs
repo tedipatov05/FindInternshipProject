@@ -62,7 +62,9 @@ namespace FindInternship.Data
 
         public DbSet<Photo> Photos {  get; set; } = null!; 
 
-        public DbSet<PostsPhotos> PostsPhotos {  get; set; } = null!; 
+        public DbSet<PostsPhotos> PostsPhotos {  get; set; } = null!;
+
+        public DbSet<RoomMessage> RoomMessages { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -14,6 +14,7 @@ namespace FindInternship.Data.Models
         public Room()
         {
             this.IsActive = true;
+            this.RoomMessages = new HashSet<RoomMessage>();
         }
 
         [Key]
@@ -32,6 +33,8 @@ namespace FindInternship.Data.Models
         public Meeting Meeting { get; set; } = null!;
 
         public bool IsActive { get; set; }
+
+        public ICollection<RoomMessage> RoomMessages { get; set; }
 
     }
 }

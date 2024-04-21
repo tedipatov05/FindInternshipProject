@@ -12,5 +12,12 @@ namespace FindInternship.Core.Contracts
         public Task CreateRoomAsync(string meetingId, CreateRoomViewModel model);
 
         public Task<string?> GetMeetingRoomNameByIdAsync(string meetingId);
+
+        public Task CreateMessageToRoomAsync(string message, string roomId, string senderUsername, string senderProfilePicture);
+
+        public Task<string> GetRoomIdByMeetingIdAsync(string meetingId);
+
+        public Task<List<RoomMessageViewModel>> GetRoomMessagesByRoomNameAsync(string roomName);
+
     }
 }
