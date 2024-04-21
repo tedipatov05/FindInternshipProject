@@ -13,13 +13,15 @@ namespace FindInternship.Web.Controllers
         private readonly ICompanyService companyService;
         private readonly IMeetingService meetingService;
         private readonly ITeacherService teacherService;
+        private readonly IUserService userService;
 
-        public RoomController(IRoomService roomService, ICompanyService companyService, IMeetingService meetingService, ITeacherService teacherService)
+        public RoomController(IRoomService roomService, ICompanyService companyService, IMeetingService meetingService, ITeacherService teacherService, IUserService userService)
         {
             this.roomService = roomService;
             this.companyService = companyService;
             this.meetingService = meetingService;
             this.teacherService = teacherService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -110,7 +112,24 @@ namespace FindInternship.Web.Controllers
             
         }
 
-        
+        [HttpGet]
+        [Route("/Room/Participants/{usernames}")]
+        public async Task<IActionResult> Participants([FromRoute]IList<string> usernames)
+        {
+            //foreach(var username in usernames)
+            //{
+            //    bool isExists = await userService.IsExistsByUsernameAsync(username);
+            //    if (!isExists)
+            //    {
+            //        return new JsonResult(new { IsExists = false });
+            //    }
+            //}
+            
+            var result = await userService.GetParticipantsProfilePictureAsync(usernames[0].Split(',').ToList());
+
+            return new JsonResult(new { result, IsExists = true });
+        }
+
 
        
     }

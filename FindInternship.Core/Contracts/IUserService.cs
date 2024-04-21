@@ -18,7 +18,11 @@ namespace FindInternship.Core.Contracts
 
         Task<bool> IsExistsByUsernameAsync(string username);
 
+        Task<string> GetUserProfilePictureByUsernameAsync(string username);
+
         Task<int> GetUsersCountAsync();
+
+        Task<List<string>> GetParticipantsProfilePictureAsync(List<string> usernames);
 
         Task<List<UserViewModel>> GetFilteredUsersAsync(UsersQueryModel model, string adminId);
 

@@ -75,11 +75,6 @@ namespace FindInternship.Web
                             .WithMethods("GET", "POST", "PUT", "DELETE")
                             .AllowCredentials();
 
-                       
-
-                        
-
-
                     });
             });
 
@@ -103,6 +98,7 @@ namespace FindInternship.Web
             app.MapHub<RequestHub>("/requestHub");
             app.MapHub<MeetingHub>("/meetingHub");
             app.MapHub<PrivateChatHub>("/privateChatHub");
+            app.MapHub<RoomHub>("/roomHub");
 
             // Configure the HTTP request pipeline. 
             if (app.Environment.IsDevelopment())

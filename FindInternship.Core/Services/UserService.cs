@@ -130,5 +130,24 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
 
         }
+
+        public async Task<string> GetUserProfilePictureByUsernameAsync(string username)
+        {
+            var result = await repo.All<User>()
+                .FirstOrDefaultAsync(u => u.UserName ==  username);
+
+            return result!.ProfilePictureUrl == null ? "../img/blank-profile-picture.png" : result.ProfilePictureUrl;
+           
+        }
+
+        public async Task<List<string>> GetParticipantsProfilePictureAsync(List<string> usernames)
+        {
+            var users = await repo.All<User>()
+                .Where(u => usernames.Contains(u.UserName))
+                .Select(u => u.ProfilePictureUrl)
+                .ToListAsync();
+
+            return users!;
+        }
     }
 }

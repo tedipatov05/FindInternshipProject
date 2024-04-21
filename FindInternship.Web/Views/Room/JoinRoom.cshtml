@@ -159,8 +159,8 @@
             </div>
 
         </div>
-        <div class="participants">
-            <div class="participant profile-picture">
+        <div class="participants" id="participants" style="display: none;">
+           @*  <div class="participant profile-picture">
                 <img src="https://images.unsplash.com/photo-1576110397661-64a019d88a98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
                      alt="pp">
             </div>
@@ -175,8 +175,8 @@
             <div class="participant profile-picture">
                 <img src="https://images.unsplash.com/photo-1581824283135-0666cf353f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1276&q=80"
                      alt="pp">
-            </div>
-            <div class="participant-more">2+</div>
+            </div> *@
+            @* <div class="participant-more" id="participants-more" style="display:none;">2+</div> *@
         </div>
 
     </div>
@@ -184,6 +184,7 @@
 
 @section Scripts {
     <script src="https://unpkg.com/%40daily-co/daily-js" asp-append-version="true"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/live-meeting.js" asp-append-version="true"></script>
     @* <script src="~/js/joinRoom-form.js" asp-append-version="true"></script> *@
 

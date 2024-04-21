@@ -1,4 +1,26 @@
 
+
+var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/roomHub")
+    .build();
+
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
+
+connection.onclose(async () => {
+    await start();
+})
+
+start();
+
+
 const switchMode = document.querySelector('button.mode-switch'),
     body = document.querySelector('body');
 
@@ -124,6 +146,9 @@ class DailyCallManager {
 
         //this.updateAndDisplayParticipantCount();
 
+        let name = document.getElementById('participant-name').value;
+
+
         if (!document.getElementById(`video-container-${participantId}`)) {
 
 
@@ -185,16 +210,44 @@ class DailyCallManager {
             document.getElementById('chat-holder').style.display = 'block';
 
             await this.call.join(joinOptions);
-            let name = document.getElementById('participant-name').value;
 
+            let name = document.getElementById('participant-name').value;
             await this.call.setUserName(name);
+
+            //let oldParticipants = [];
+            //const participants = this.call.participants();
+            //for (const participant in participants) {
+            //    oldParticipants.push(participants[participant].user_name)
+            //}
+
+
+
+
 
         } catch (e) {
             console.error('Join failed:', e);
         }
     }
 
-  
+
+
+
+    //let count = oldParticipantsUsernames.length + 1;
+    //let participantsContainer = document.getElementById('participants');
+    //if (participantsContainer.children.length == 5) {
+    //    document.getElementById('participants-more').value = `${count - 4}+`
+    //} else {
+    //    let participantDiv = document.createElement('div');
+    //    participantDiv.classList.add('participant');
+    //    participantDiv.classList.add('profile-picture');
+    //    let img = document.createElement('img');
+    //    img.src = image;
+    //    participantDiv.appendChild(img);
+    //    participantsContainer.insertBefore(document.getElementById('participants-more'), participantDiv);
+    //}
+
+
+
 
     createVideoContainer(participantId, name) {
 
@@ -226,7 +279,7 @@ class DailyCallManager {
         maximizeBtn.addEventListener('click', function (e) {
             document.getElementById('videos').removeChild(e.target.parentNode.parentNode);
             document.getElementById('videos').insertBefore(e.target.parentNode.parentNode, document.getElementById('videos').firstChild);
-            
+
 
 
             if (e.target.parentNode.parentNode.style.width == '33.3%') {
@@ -258,7 +311,7 @@ class DailyCallManager {
 
         document.getElementById('videos').appendChild(videoContainer);
 
-       
+
 
     }
 
@@ -488,41 +541,88 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     document.getElementById('participants-btn').addEventListener('click', function () {
-        let result = dailyCallManager.call.participants()
-        let arr = Object.values(result);
-        console.log(arr);
+        let participantsContainer = document.getElementById('participants');
+
+        if (participantsContainer.style.display == 'none') {
+            let usernames = [];
+            const participants = Object.values(dailyCallManager.call.participants());
+            for (let participant of participants) {
+                usernames.push(participant.user_name.toString())
+            }
+
+            let t = $("input[name='__RequestVerificationToken']").val();
+
+            $.ajax({
+                url: `/Room/Participants/${usernames}`,
+                method: "GET",
+                dataType: 'json',
+                headers: {
+                    "RequestVerificationToken": t
+                },
+                success: function (data) {
+
+
+                    if (data.isExists) {
+
+                        if (data.result.length > 4) {
+                            for (let i = 0; i < 4; i++) {
+                                let participantDiv = document.createElement('div');
+                                participantDiv.classList.add('participant');
+                                participantDiv.classList.add('profile-picture');
+                                let img = document.createElement('img');
+                                img.src = data.result[i];
+                                participantDiv.appendChild(img);
+                                participantsContainer.appendChild(participantDiv);
+                            }
+                            let more = document.createElement('div');
+                            more.classList.add('participant-more');
+                            more.value = `${data.result.length - 4}+`;
+                            participantsContainer.appendChild(more);
+
+
+                        }
+                        else {
+                            for (let i = 0; i < data.result.length; i++) {
+                                let participantDiv = document.createElement('div');
+                                participantDiv.classList.add('participant');
+                                participantDiv.classList.add('profile-picture');
+                                let img = document.createElement('img');
+                                img.src = data.result[i];
+                                participantDiv.appendChild(img);
+                                participantsContainer.appendChild(participantDiv);
+                            }
+                        }
+
+                        participantsContainer.style.display = 'flex';
+                    }
+
+                }
+
+            });
+        } else {
+            participantsContainer.style.display = 'none';
+            participantsContainer.innerHTML = '';
+        }
+        
+
+        
     })
 });
 
-// APPEND VIDEOS FUNCTIONALITY
+connection.on('ReceiveNewParticipant', function (newParticipantUsername, image, count) {
 
-// if (document.getElementById('videos').children.length == 1) {
-//     videoContainer.style = 'background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;width:100%;height:100%;';
-//     document.getElementById('videos').insertBefore(videoContainer, document.getElementById('side-videos'));
-//     const sessionIdOverlay = document.createElement('div');
-//     sessionIdOverlay.className = 'session-id-overlay';
-//     sessionIdOverlay.textContent = name;
-//     videoContainer.appendChild(sessionIdOverlay);
+    let participantsContainer = document.getElementById('participants');
+    if (participantsContainer.children.length == 5) {
+        document.getElementById('participants-more').value = `${count - 4}+`
+    } else {
+        let participantDiv = document.createElement('div');
+        participantDiv.classList.add('participant');
+        participantDiv.classList.add('profile-picture');
+        let img = document.createElement('img');
+        img.src = image;
+        participantDiv.appendChild(img);
+        participantsContainer.appendChild(participantDiv);
+    }
 
-//     const videoEl = document.createElement('video');
-//     videoEl.className = 'video-element';
-//     videoEl.style = ""
-//     videoContainer.appendChild(videoEl);
+});
 
-// } else {
-//     let top = document.getElementById('side-videos').children.length == 0 ? 0 : 0.5
-//     document.getElementById('side-videos').style.width = '30%';
-//     document.getElementById('videos').firstElementChild.style.width = "60%";
-
-//     videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;width:100%;margin-top: ${top}rem;`;
-//     document.getElementById('side-videos').appendChild(videoContainer);
-//     const sessionIdOverlay = document.createElement('div');
-//     sessionIdOverlay.className = 'session-id-overlay';
-//     sessionIdOverlay.textContent = name;
-//     videoContainer.appendChild(sessionIdOverlay);
-
-//     const videoEl = document.createElement('video');
-//     videoEl.className = 'video-element';
-//     videoEl.style = ""
-//     videoContainer.appendChild(videoEl);
-// }
