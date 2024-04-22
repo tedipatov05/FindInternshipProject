@@ -1,10 +1,48 @@
-﻿
+﻿@using FindInternship.Core.Models.Blog;
 
-<div class="container">
-	<div class="row">
-		<p>helooo</p>
-	</div>
-</div>
+@model List<PostViewModel>
+
+<section class="header">
+    <div class="text-header">
+        <h1>Find Internship News</h1>
+    </div>
+    <div class="categories">
+        <h2>Най-актуалните новини в ИТ сферата</h2>
+    </div>
+</section>
+
+
+<section class="posts">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="well blog">
+                <a href="#">
+                    <div class="date primary">
+                        <span class="blog-date">Oct</span>
+                        <span class="blog-number">8</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                            <div class="image">
+                                <img src="~/img/counts-img.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <div class="blog-details">
+                                <h2>Post title 1</h2>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique libero et est iaculis, id placerat nisi luctus. Aenean volutpat risus non fermentum feugiat. Etiam facilisis arcu ante, sed molestie diam mollis vel...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
 
 
 @section Styles {
