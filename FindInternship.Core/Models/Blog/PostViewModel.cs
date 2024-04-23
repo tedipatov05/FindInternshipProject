@@ -20,6 +20,6 @@ namespace FindInternship.Core.Models.Blog
         public DateTime CreatedOn { get; set; }
         public string CompanyName { get; set; } = null!;
         public string HeadImageUrl { get; set; } = null!;
-        public List<string> CarouselPhotosUrls { get; set; } = null!;
+        public List<string> CarouselPhotosUrls { get; set; } 
     }
 }

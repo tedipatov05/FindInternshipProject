@@ -203,6 +203,17 @@ namespace FindInternship.Test.UnitTest
             context.Meetings.Add(meeting);
         }
 
+        public static void SeedCompanyInterns(FindInternshipDbContext context)
+        {
+            var companyIntern = new CompanyInterns()
+            {
+                Id = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de",
+                Name = "12 Б - companyTest",
+                CompanyId = "eb8fc718-655e-4d32-9a0a-d905fa3956e7",
+                TeacherId = "28a172eb-6e0d-43ed-9a42-fb28025e1659",
+            };
+        }
+
         public static void SeedRequest(FindInternshipDbContext context)
         {
             var request = new Request()

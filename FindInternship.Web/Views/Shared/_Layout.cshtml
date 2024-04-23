@@ -36,7 +36,7 @@
                     Меню
                     <i class="uil uil-arrow-down"></i>
                 </label>
-                <div class="section-dropdown" style="margin-top:1rem; margin-left: 3rem;">
+                <div class="section-dropdown" style="margin-top:1rem; margin-left: 3rem;width: 17%">
                     <li class="nav-item"><a class="nav-link scrollto active" asp-controller="Home" asp-action="Index">Начало</a></li>
                     <li class="nav-item"><a class="nav-link scrollto" asp-area="" asp-controller="Home" asp-action="Contact">Контакт</a></li>
                     <li class="nav-item"><a class="nav-link scrollto" asp-area="" asp-controller="Blog" asp-action="BlogHome">Блог</a></li>
@@ -72,7 +72,7 @@
                     var result = await teacherService.GetTeacherCompanyInternsAsync(User.GetId()!);
 
                    
-                    <div class="section-dropdown-2" style="margin-left: 20rem;width: 20%;margin-top: 13.5rem;display:none">
+                    <div class="section-dropdown-2" style="margin-left: 20rem;width: 20%;margin-top: 14.3rem;display:none">
                         @foreach (var intern in result)
                         {
                             <li class="nav-item"><a class="nav-link scrollto" asp-controller="Meeting" asp-action="All" asp-route-groupId="@intern.Id">@intern.Name</a></li>
