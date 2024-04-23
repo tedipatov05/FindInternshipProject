@@ -3,48 +3,59 @@
 @model List<PostViewModel>
 
 <section class="header">
-    <div class="text-header">
-        <h1>Find Internship News</h1>
-    </div>
-    <div class="categories">
-        <h2>Най-актуалните новини в ИТ сферата</h2>
-    </div>
+	<div class="text-header">
+		<h1>Find Internship News</h1>
+	</div>
+	<div class="categories">
+		<h2>Най-актуалните новини в ИТ сферата</h2>
+	</div>
 </section>
 
 
+
 <section class="posts">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="well blog">
-                <a href="#">
-                    <div class="date primary">
-                        <span class="blog-date">Oct</span>
-                        <span class="blog-number">8</span>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                            <div class="image">
-                                <img src="~/img/counts-img.jpg" alt="">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                            <div class="blog-details">
-                                <h2>Post title 1</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tristique libero et est iaculis, id placerat nisi luctus. Aenean volutpat risus non fermentum feugiat. Etiam facilisis arcu ante, sed molestie diam mollis vel...
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		@{
+			if (Model.Count == 0)
+			{
+				<p class="empty">Няма налични публикации</p>
+			}
+			else
+			{
+
+				foreach (var post in Model)
+				{
+
+					<div class="card">
+						<div class="card__header">
+						<img src="https://source.unsplash.com/600x400/?computer" alt="card__image" class="card__image" width="600">
+					    </div>
+					    <div class="card__body">
+						<span class="tag tag-blue">Technology</span>
+						<h4>@post.Topic</h4>
+						<p>@post.Content</p>
+					    </div>
+					    <div class="card__footer">
+						    <div class="user">
+							<img src="https://i.pravatar.cc/40?img=1" alt="user__image" class="user__image">
+							<div class="user__info">
+								<h5>@post.CompanyName</h5>
+								<small>@post.CreatedOn</small>
+							</div>
+						</div>
+					</div>
+				</div>
+				}
+			}
+		}
+
+
+	</div>
 
 </section>
 
 
 
 @section Styles {
-<link rel="stylesheet" href="~/css/blog.css"  asp-append-version="true"/>
+	<link rel="stylesheet" href="~/css/blog.css" asp-append-version="true" />
 }

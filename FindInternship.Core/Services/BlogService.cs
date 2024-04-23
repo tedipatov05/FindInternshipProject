@@ -44,6 +44,7 @@ namespace FindInternship.Core.Services
                     Topic = p.Topic,
                     Content = p.Content,
                     CreatedOn = p.CreatedOn,
+                    CompanyName = p.Company.User.Name,
                 })
                 .ToListAsync();
 
