@@ -10,10 +10,11 @@ namespace FindInternship.Core.Models.Blog
 {
     public class PostViewModel
     {
-        public string Topic { get; set; }
-        public string Content { get; set; }
-        public DateTime CreatedOn { get; set; } 
-        public string HeadImageUrl { get; set; }
-        public List<string> CarouselPhotosUrls { get;set; }
+        public string Id { get; set; } = null!;
+        public string Topic { get; set; } = null!;
+        public string Content { get; set; } = null!;
+        public DateTime CreatedOn { get; set; }
+        public string HeadImageUrl { get; set; } = null!;
+        public List<string> CarouselPhotosUrls { get; set; } = null!;
     }
 }

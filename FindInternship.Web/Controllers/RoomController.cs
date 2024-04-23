@@ -108,8 +108,6 @@ namespace FindInternship.Web.Controllers
 
             model.RoomMessages = await roomService.GetRoomMessagesByRoomNameAsync(roomName!);
 
-
-
             return View(model);
             
         }

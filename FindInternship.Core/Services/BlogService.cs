@@ -40,12 +40,18 @@ namespace FindInternship.Core.Services
             var posts = await repo.All<Post>()
                 .Select(p => new PostViewModel()
                 {
+                    Id = p.Id,
                     Topic = p.Topic,
                     Content = p.Content,
                     CreatedOn = p.CreatedOn,
-                    //CarouselPhotosUrls = GetAllPostPhotosAsync(p.Id)
                 })
                 .ToListAsync();
+
+            foreach(var post in posts)
+            {
+                post.CarouselPhotosUrls = await GetAllPostPhotosAsync(post.Id);
+
+            }
 
             return posts;
         }

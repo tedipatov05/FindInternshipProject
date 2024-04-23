@@ -233,19 +233,21 @@ class DailyCallManager {
         videoContainer.id = `video-container-${participantId}`;
         videoContainer.className = 'video-participant';
 
+        let participants = document.getElementsByClassName('video-participant').length;
+
+        let widthDivider = participants > 2 ? 3 : 2;
+
         if (document.getElementById('videos').children.length == 0) {
             videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;width:100%;height:100%`;
         } else {
             videoContainer.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;width: 33.3%;height: 43%`;
 
-
             Array.from(document.getElementsByClassName('video-participant')).forEach(e => {
-                e.style = 'background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;width: 33.3%;height: 43%'
+                
+                e.style = `background-image: url(/img/no-camera.jpg); background-repeat: no-repeat;background-size: cover;background-position: center;width: 33.3%;height: 43%`
             });
 
         }
-
-
 
 
         let participantActions = document.createElement('div');
@@ -467,16 +469,6 @@ class DailyCallManager {
     }
 
 
-    // updateAndDisplayParticipantCount() {
-    //     const participantCount =
-    //         this.call.participantCounts().present +
-    //         this.call.participantCounts().hidden;
-    //     document.getElementById(
-    //         'participant-count'
-    //     ).textContent = `Participants: ${participantCount}`;
-    // }
-
-
     async leave() {
         try {
             await this.call.leave();
@@ -506,6 +498,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             //     document.getElementById('join-token').value.trim() || null;
             await dailyCallManager.joinRoom(roomName, null);
         });
+
+    
 
     document.getElementById('leave-btn').addEventListener('click', function () {
         document.getElementById('meeting-form').style.display = 'block';
@@ -592,5 +586,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         
     })
 });
-
-
