@@ -70,23 +70,12 @@ namespace FindInternship.Core.Services
                 .Include(c => c.Students)
                 .FirstOrDefaultAsync(c => c.Id == companyInterns);
 
-            var studentIds = companyInternStudents.Students.Select(s => s.UserId).ToList();
+            if(companyInternStudents == null)
+            {
+                return new List<string>();
+            }
 
-
-            //var company = await repo.All<Company>()
-            //    .Include(c => c.CompanyInterns)
-            //    .FirstOrDefaultAsync(c => c.Id == companyId);
-
-            //if (company == null)
-            //{
-            //    return new List<string>();
-            //}
-
-            //var studentIds = new List<string>();
-            //foreach (var interns in company.CompanyInterns)
-            //{
-            //    studentIds.AddRange(interns.Students.Select(s => s.UserId));
-            //}
+            var studentIds = companyInternStudents!.Students.Select(s => s.UserId).ToList();
 
 
             return studentIds;

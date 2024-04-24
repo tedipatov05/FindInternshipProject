@@ -33,6 +33,7 @@ namespace FindInternship.Test.UnitTest
             SeedGroup(context);
             SeedUserGroups(context);
             SeedLectors(context);
+            SeedCompanyInterns(context);
 
             context.SaveChanges();
         }
@@ -193,7 +194,7 @@ namespace FindInternship.Test.UnitTest
                 StartTime = DateTime.UtcNow,
                 EndTime = DateTime.UtcNow.AddHours(3),
                 CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
-                //ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                CompanyInternsId = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de",
                 Description = "Test Description", 
                 LectorId = "724ebe11-96f9-4dfb-b255-da3041d887d5",
                 IsActive = true
@@ -209,9 +210,12 @@ namespace FindInternship.Test.UnitTest
             {
                 Id = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de",
                 Name = "12 Б - companyTest",
-                CompanyId = "eb8fc718-655e-4d32-9a0a-d905fa3956e7",
-                TeacherId = "28a172eb-6e0d-43ed-9a42-fb28025e1659",
+                CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
+                TeacherId = "17cd4d78-a621-4bf3-a4a4-9d7d3af085d2",
+                IsActive = true
             };
+
+            context.CompanyInterns.Add(companyIntern);
         }
 
         public static void SeedRequest(FindInternshipDbContext context)
@@ -276,7 +280,8 @@ namespace FindInternship.Test.UnitTest
             {
                 Id = "4d152c78-9dbb-470c-aaf0-65a62a1dd2a0",
                 UserId = "bae65efa-6885-4144-9786-0719b0e2ebc4",
-                ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697", 
+                ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                CompanyInternsId = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de"
             };
 
             context.Students.Add(student);
