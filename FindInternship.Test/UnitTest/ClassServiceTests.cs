@@ -77,7 +77,7 @@ namespace FindInternship.Test.UnitTest
 
             var result = await classService.GetClassIdByStudentUserIdAsync(studentUserId);
 
-            string expected = "90bd5987-e991-4dfd-be1a-a57464b9d697";
+            string expected = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de";
 
             Assert.That(result, Is.EqualTo(expected));
 
@@ -123,7 +123,7 @@ namespace FindInternship.Test.UnitTest
 
             var result = await classService.GetClassIdsByCompanyUserIdAsync(companyUserId);
 
-            var expected = new List<string>() { "90bd5987-e991-4dfd-be1a-a57464b9d697" };
+            var expected = new List<string>() { "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de" };
 
             CollectionAssert.AreEquivalent(expected, result);
 
@@ -152,8 +152,8 @@ namespace FindInternship.Test.UnitTest
             {
                 new ClassViewModel()
                 {
-                    Id = "90bd5987-e991-4dfd-be1a-a57464b9d697",
-                    Name = "12 Б",
+                    Id = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de",
+                    Name = "12 Б - companyTest",
                     School = "ППМГ Никола Обрешков",
                     Teacher = "Учител Учителов",
                     Students = 1,

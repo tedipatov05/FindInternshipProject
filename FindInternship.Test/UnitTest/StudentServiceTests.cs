@@ -117,7 +117,7 @@ namespace FindInternship.Test.UnitTest
         }
 
         [Test]
-        [TestCase("7493d4c1-251f-4e9a-aaba-c11d5c4da798", "90bd5987-e991-4dfd-be1a-a57464b9d697")]
+        [TestCase("7493d4c1-251f-4e9a-aaba-c11d5c4da798", "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de")]
         public async Task GetStudentCompanyIdsAsyncShouldRetunrCorrectResult(string companyId, string classId)
         {
             var result = await studentService.GetStudentCompanyIdsAsync(companyId, classId);
@@ -129,7 +129,7 @@ namespace FindInternship.Test.UnitTest
         }
 
         [Test]
-        [TestCase("7493d4c1-251f-4e9a-aaba-c11d5c4da798", "28a172eb-6e0d-43ed-9a42-fb28025e1659")]
+        [TestCase("7493d4c1-251f-4e9a-aaba-c11d5c4da798", "724ebe11-96f9-4dfb-b255-da3041d887d5")]
         [TestCase("17cd4d78-a621-4bf3-a4a4-9d7d3af085d2", "some if")]
         [TestCase("7cd4d78-a621-4bf3-a4a4-9d7d3af085d2", "f4jvberuuv")]
         public async Task GetStudentCompanyIdsShouldReturnEmptyCollection(string companyId, string classId)
