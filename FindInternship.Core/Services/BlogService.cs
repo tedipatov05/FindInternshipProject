@@ -45,6 +45,7 @@ namespace FindInternship.Core.Services
                     Content = p.Content,
                     CreatedOn = p.CreatedOn,
                     CompanyName = p.Company.User.Name,
+                    CompanyProfilePictureUrl = p.Company.User.ProfilePictureUrl,
                 })
                 .ToListAsync();
 
