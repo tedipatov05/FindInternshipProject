@@ -254,6 +254,11 @@ namespace FindInternship.Core.Services
                 .Where(s => s.Id == studentId)
                 .FirstOrDefaultAsync();
 
+            if(student == null)
+            {
+                return null;
+            }
+
             return student!.CompanyInternsId == null ? null : student!.CompanyInternsId;
         }
     }

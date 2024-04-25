@@ -156,6 +156,11 @@ namespace FindInternship.Core.Services
                 .Include(t => t.Groups)
                 .FirstOrDefaultAsync();
 
+            if(teacher == null)
+            {
+                return new List<CompanyInternsViewModel>();
+            }
+
             var companyInterns = teacher.Groups
                 .Select(g => new CompanyInternsViewModel()
                 {
@@ -168,15 +173,6 @@ namespace FindInternship.Core.Services
 
         }
 
-        //public async Task<bool> IsTeacherClassHaveCompanyAsync(string userId)
-        //{
-        //    var teacher = await repo.All<Teacher>()
-        //        .Include(t => t.Class)
-        //        .FirstOrDefaultAsync(t => t.UserId == userId);
-
-        //    if(teacher == null) return false;
-
-        //    return teacher.Class?.CompanyId != null;
-        //}
+       
     }
 }
