@@ -38,6 +38,26 @@ namespace FindInternship.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task<PostViewModel> GetPostAsync(string postId)
+        {
+            var post = await repo.All<Post>()
+                .Select(p => new PostViewModel()
+                {
+                    Id = p.Id,
+                    Topic = p.Topic,
+                    Content = p.Content,
+                    CreatedOn = p.CreatedOn,
+                    CompanyName = p.Company.User.Name,
+                    CompanyProfilePictureUrl = p.Company.User.ProfilePictureUrl
+                    
+                })
+                 .FirstOrDefaultAsync(p => p.Id == postId);
+
+			post.CarouselPhotosUrls = await GetAllPostPhotosAsync(post.Id);
+
+			return post;
+		}
+
         public async Task<List<PostViewModel>> GetAllPostAsync()
         {
             var posts = await repo.All<Post>()
@@ -70,6 +90,12 @@ namespace FindInternship.Core.Services
 
             return urls;
 
+        }
+
+        public async Task<bool> IsPostExistById(string postId)
+        {
+            bool result = await repo.All<Post>().AnyAsync(p => p.Id == postId);
+            return result;
         }
     }
 }

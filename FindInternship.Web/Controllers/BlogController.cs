@@ -1,8 +1,10 @@
 ﻿using FindInternship.Core.Contracts;
 using FindInternship.Core.Models.Blog;
 using FindInternship.Core.Services;
+using FindInternship.Data.Models;
 using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using static FindInternship.Common.NotificationConstants;
 
 namespace FindInternship.Web.Controllers
 {
@@ -52,6 +54,20 @@ namespace FindInternship.Web.Controllers
             var posts = await blogService.GetAllPostAsync();
 
             return View(posts);
+        }
+
+        public async Task<IActionResult> PostDetails(string postId)
+        {
+            bool exist = await blogService.IsPostExistById(postId);
+            if(!exist)
+            {
+                TempData[ErrorMessage] = "Този пост не съществува.";
+                return RedirectToAction("BlogHome");
+            }
+
+            var model = blogService.GetPostAsync(postId);
+
+            return View();
         }
     }
 }

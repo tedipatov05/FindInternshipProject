@@ -13,5 +13,8 @@ namespace FindInternship.Core.Contracts
 
          Task<List<string>> GetAllPostPhotosAsync(string postId);
          Task CreatePostAsync(CreatePostFormModel model, string companyId);
-    }
+        Task<bool> IsPostExistById(string postId);
+        Task<PostViewModel> GetPostAsync(string postId);
+
+	}
 }

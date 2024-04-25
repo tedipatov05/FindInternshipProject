@@ -126,7 +126,16 @@ else
 								</div>
 								<div class="content">
 									<ul>
-										<li>
+										@foreach(var post in Model.Take(6).ToList())
+											{
+												<li>
+													<a href="post-details.html">
+														<h5>@post.Topic</h5>
+														<span>@post.CreatedOn</span>
+													</a>
+												</li>
+											}
+											@*<li>
 											<a href="post-details.html">
 												<h5>Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
 												<span>May 31, 2020</span>
@@ -161,7 +170,7 @@ else
 												<h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
 												<span>May 14, 2020</span>
 											</a>
-										</li>
+										</li>*@
 									</ul>
 								</div>
 							</div>
