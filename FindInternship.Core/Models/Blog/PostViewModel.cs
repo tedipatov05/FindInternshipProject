@@ -14,6 +14,7 @@ namespace FindInternship.Core.Models.Blog
         public PostViewModel()
         {
             CarouselPhotosUrls = new List<string>();
+            Posts = new();
         }
         public string Id { get; set; } = null!;
         public string Topic { get; set; } = null!;
@@ -23,5 +24,6 @@ namespace FindInternship.Core.Models.Blog
         public string CompanyProfilePictureUrl { get; set; }
         public string HeadImageUrl { get; set; } = null!;
         public List<string> CarouselPhotosUrls { get; set; } 
+        public List<PostViewModel> Posts { get; set; }
     }
 }

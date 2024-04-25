@@ -65,9 +65,10 @@ namespace FindInternship.Web.Controllers
                 return RedirectToAction("BlogHome");
             }
 
-            var model = blogService.GetPostAsync(postId);
+            var model = await blogService.GetPostAsync(postId);
+            model.Posts = await blogService.GetAllPostAsync();
 
-            return View();
+            return View(model);
         }
     }
 }
