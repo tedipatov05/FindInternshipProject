@@ -9,9 +9,9 @@ namespace FindInternship.Core.Contracts
 {
     public interface IBlogService
     {
-        Task<List<PostViewModel>> GetAllPostAsync();
+         Task<List<PostViewModel>> GetAllPostAsync();
 
-        Task<List<string>> GetAllPostPhotosAsync(string postId);
-        Task CreatePost(PostViewModel model, string companyId);
+         Task<List<string>> GetAllPostPhotosAsync(string postId);
+         Task CreatePostAsync(CreatePostFormModel model, string companyId);
     }
 }

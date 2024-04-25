@@ -2,6 +2,7 @@
 using FindInternship.Core.Models.Blog;
 using FindInternship.Data.Models;
 using FindInternship.Data.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,7 +22,9 @@ namespace FindInternship.Core.Services
             this.repo = repo;
         }
 
-        public async Task CreatePost(PostViewModel model, string companyId)
+		
+
+		public async Task CreatePostAsync(CreatePostFormModel model, string companyId)
         {
             var post = new Post()
             {

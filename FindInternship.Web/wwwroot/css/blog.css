@@ -56,6 +56,8 @@ h1, h2, h3, h4, h5, h6 {
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url(../img/bg-home.jpg);
+    background-color: gray;
+    background-blend-mode: multiply;
 }
 
     .page-heading .text-content h4 {
@@ -439,6 +441,25 @@ ul.page-numbers {
 
     .sidebar .search {
         margin-top: 0px;
+    }
+
+.sidebar-heading {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.add-post {
+    border: 2px solid black;
+    border-radius: 5px;
+    color: black;
+    padding: 5px;
+    height: fit-content;
+}
+
+    .add-post:hover{
+        color:white;
+        background-color:black;
+
     }
 
     .sidebar .sidebar-heading h2 {

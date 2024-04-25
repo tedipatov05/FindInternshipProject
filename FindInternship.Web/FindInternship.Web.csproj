@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Blog\CreatePost.cshtml" />
     <Content Remove="wwwroot\js\editMeeting.js" />
     <Content Remove="wwwroot\js\home.js" />
     <Content Remove="wwwroot\js\upload.js" />
@@ -18,10 +17,6 @@
     <_ContentIncludedByDefault Remove="wwwroot\js\editMeeting.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\home.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\upload.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Views\Blog\CreatePost.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

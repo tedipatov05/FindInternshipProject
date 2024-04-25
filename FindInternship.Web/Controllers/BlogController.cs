@@ -1,16 +1,50 @@
 ﻿using FindInternship.Core.Contracts;
+using FindInternship.Core.Models.Blog;
 using FindInternship.Core.Services;
+using FindInternship.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindInternship.Web.Controllers
 {
     public class BlogController : Controller
     {
-        IBlogService blogService ;
+        private readonly IBlogService blogService ;
+		private readonly IUserService userService;
+		private readonly ICompanyService companyService ;
 
-        public BlogController(IBlogService blogService)
+		public BlogController(IBlogService blogService, IUserService userService, ICompanyService companyService)
+		{
+			this.blogService = blogService;
+			this.userService = userService;
+			this.companyService = companyService;
+		}
+
+
+        [HttpPost]
+        [Route("Blog/CreatePost")]
+        public async Task<IActionResult> CreatePost(string topic, string content, List<IFormFile> photos)
         {
-            this.blogService = blogService;
+            string userId = User.GetId();
+
+            string? companyId = await companyService.GetCompanyIdAsync(userId);
+
+            if(companyId == null)
+            {
+
+            }
+
+            var model = new CreatePostFormModel()
+            {
+                Topic = topic,
+                Content = content,
+                CreatedOn = DateTime.Now,
+                HeadImage = photos[0],
+                CarouselPhotos = photos.Skip(1).ToList(),
+            };
+
+            await blogService.CreatePostAsync(model, companyId);
+
+            return new JsonResult(new { model});
         }
 
         public async Task<IActionResult> BlogHome()
