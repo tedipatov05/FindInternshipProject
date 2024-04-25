@@ -17,6 +17,7 @@ using FindInternship.Data.Models;
 using System.Diagnostics.Metrics;
 using FindInternship.Data.Models.Enums;
 using System.Globalization;
+using FindInternship.Core.Models.CompanyInterns;
 
 namespace FindInternship.Test.UnitTest
 {
@@ -300,26 +301,125 @@ namespace FindInternship.Test.UnitTest
             });
         }
 
-        //[Test]
-        //public async Task IsTeacherClassHaveCompanyAsyncShouldReturnTrue()
-        //{
-        //    string teacherUserId = "28a172eb-6e0d-43ed-9a42-fb28025e1659";
+        [Test]
+        public async Task GetTeacherUserIdByCompanyInternIdAsyncShouldReturnCorrectResult()
+        {
+            string companyInternId = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de";
 
-        //    var result = await teacherService.IsTeacherClassHaveCompanyAsync(teacherUserId);
+            var result = await teacherService.GetTeacherUserIdByCompanyInternIdAsync(companyInternId);
 
-        //    Assert.That(result, Is.True);
-        //}
+            string expectedResult = "28a172eb-6e0d-43ed-9a42-fb28025e1659";
 
-        //[Test]
-        //[TestCase("someId")]
-        //[TestCase("bae65efa-6885-4144-9786-0719b0e2ebc4")]
-        //[TestCase("eb8fc718-655e-4d32-9a0a-d905fa3956e7")]
-        //[TestCase(null)]
-        //public async Task IsTeacherClassHaveCompanyAsyncShouldReturnFalse(string teacherUserId)
-        //{
-        //    var result = await teacherService.IsTeacherClassHaveCompanyAsync(teacherUserId);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
 
-        //    Assert.That(result, Is.False);
-        //}
+        [Test]
+        [TestCase("if")]
+        [TestCase("28a172eb-6e0d-43ed-9a42-fb28025e1659")]
+        [TestCase("wfnwiebuewrf")]
+        public async Task GetTeacherUserIdByCompanyInternIdAsyncShouldReturnNull(string companyInternId)
+        {
+            var result = await teacherService.GetTeacherUserIdByCompanyInternIdAsync(companyInternId);
+
+            Assert.That(result, Is.Null);
+
+        }
+
+        [Test]
+        public async Task IsAllStudentsHaveGroupInCompanyAsyncShouldReturnTrue()
+        {
+            string teacherUserId = "28a172eb-6e0d-43ed-9a42-fb28025e1659";
+
+            var result = await teacherService.IsAllStudentsHaveGroupInCompanyAsync(teacherUserId);
+
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        [TestCase("if")]
+        [TestCase("28a172eb-6e0-43ed-9a42-fb289")]
+        [TestCase("wfnwiebuewrf")]
+        public async Task IsAllStudentsHaveGroupInCompanyAsyncShouldReturnFalse(string teacherUserId)
+        {
+            var result = await teacherService.IsAllStudentsHaveGroupInCompanyAsync(teacherUserId);
+
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public async Task IsAllStudentsHaveGroupInCompanyAsyncShouldReturnFalseWithNewStudent()
+        {
+            var user = new User()
+            {
+
+                Id = "9741281f-f3f7-480b-a066-85770a3bce6e",
+                UserName = "newStudentTest",
+                NormalizedUserName = "NEWSTUDENTTEST",
+                Email = "newStudent@abv.bg",
+                NormalizedEmail = "NEWSTUDENT@ABV.BG",
+                PhoneNumber = "0887654569",
+                Name = "Нов Ученик",
+                City = "Казанлък",
+                Country = "България",
+                Address = "ул. Ал. Стамболийски 28 ет.2 ап.8",
+                Gender = Gender.Мъж.ToString(),
+                RegisteredOn = DateTime.UtcNow,
+                BirthDate = DateTime.ParseExact("2006-02-08 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                ProfilePictureUrl = null,
+                IsApproved = true,
+                IsActive = true
+
+            };
+
+            await repo.AddAsync(user);
+
+            var student = new Student()
+            {
+                Id = "4e352493-cdaa-4633-b84a-84bab2f2acf0",
+                UserId = user.Id,
+                ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                CompanyInternsId = null
+            };
+            await repo.AddAsync(student);
+            await repo.SaveChangesAsync();
+
+            string teacherUserId = "28a172eb-6e0d-43ed-9a42-fb28025e1659";
+
+            var result = await teacherService.IsAllStudentsHaveGroupInCompanyAsync(teacherUserId);
+
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public async Task GetTeacherCompanyInternsAsyncShouldReturnCorrectResult()
+        {
+            string teacherUserId = "28a172eb-6e0d-43ed-9a42-fb28025e1659";
+
+            var result = await teacherService.GetTeacherCompanyInternsAsync(teacherUserId);
+
+            var expectedResult = new List<CompanyInternsViewModel>()
+            {
+                new CompanyInternsViewModel()
+                {
+                    Id = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de",
+                    Name = "12 Б - Фирма",
+                }
+
+            };
+        }
+
+        [Test]
+        [TestCase("if")]
+        [TestCase("28a172eb-6e0-43ed-9a42-fb289")]
+        [TestCase("wfnwiebuewrf")]
+        public async Task GetTeacherCompanyInternsAsyncShouldReturnEmptyCollection(string teacherUserId)
+        {
+            var result = await teacherService.GetTeacherCompanyInternsAsync(teacherUserId);
+
+            CollectionAssert.IsEmpty(result);
+        }
+
+
+
     }
 }

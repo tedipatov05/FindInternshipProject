@@ -209,7 +209,7 @@ namespace FindInternship.Test.UnitTest
             var companyIntern = new CompanyInterns()
             {
                 Id = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de",
-                Name = "12 Б - companyTest",
+                Name = "12 Б - Фирма",
                 CompanyId = "7493d4c1-251f-4e9a-aaba-c11d5c4da798",
                 TeacherId = "17cd4d78-a621-4bf3-a4a4-9d7d3af085d2",
                 IsActive = true

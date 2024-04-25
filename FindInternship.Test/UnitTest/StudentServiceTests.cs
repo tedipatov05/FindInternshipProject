@@ -14,6 +14,7 @@ using FindInternship.Data.Models;
 using FindInternship.Core.Models.Student;
 using FindInternship.Data.Models.Enums;
 using System.Globalization;
+using FindInternship.Core.Models.Users;
 
 namespace FindInternship.Test.UnitTest
 {
@@ -275,6 +276,221 @@ namespace FindInternship.Test.UnitTest
             Assert.True(expectedResult);
 
         }
+
+        [Test]
+        public async Task GetFilteredStudentsAsyncShouldReturnCorrectResult()
+        {
+            string classId = "90bd5987-e991-4dfd-be1a-a57464b9d697";
+
+            var result = await studentService.GetFilteredStudentsAsync(classId);
+
+            var expectedResult = new List<UserViewModel>()
+            {
+                new UserViewModel
+                {
+                    Id = "4d152c78-9dbb-470c-aaf0-65a62a1dd2a0",
+                    Name = "Студент Студентов",
+                    Email = "studentStudentov@abv.bg",
+                    ProfilePictureUrl = null,
+                    IsApproved = true
+
+                }
+            };
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Id, Is.EqualTo(expectedResult[0].Id));
+                Assert.That(result[0].Name, Is.EqualTo(expectedResult[0].Name));
+                Assert.That(result[0].Email, Is.EqualTo(expectedResult[0].Email));
+                Assert.That(result[0].ProfilePictureUrl, Is.EqualTo(null));
+
+
+            }); 
+        }
+
+        [Test]
+        [TestCase("7493d4c1-251f-4e9a-aaba-c11d5c4da798")]
+        [TestCase("28a172eb-6e0d-43ed-9a42-fb28025e1659")]
+        [TestCase("17cd4d78-a621-4bf3-a4a4-9d7d3af085d2")]
+
+        public async Task GetFilteredStudentsAsyncShouldReturnEmptyCollection(string classId)
+        {
+            var result = await studentService.GetFilteredStudentsAsync(classId);
+
+            CollectionAssert.IsEmpty(result);
+
+        }
+
+        [Test]
+        public async Task GetStudentsForChooseAsyncShouldReturnEmptyCollection()
+        {
+            string requestId = "bf13bfe6-b1be-4dc8-b8e8-2a0e3ff2af4a";
+
+            var result = await studentService.GetStudentsForChooseAsync(requestId);
+
+            CollectionAssert.IsEmpty(result);
+        }
+
+        [Test]
+        public async Task GetStudentsForChooseAsyncShouldReturnCorrectResult()
+        {
+            var user = new User()
+            {
+
+                Id = "9741281f-f3f7-480b-a066-85770a3bce6e",
+                UserName = "newStudentTest",
+                NormalizedUserName = "NEWSTUDENTTEST",
+                Email = "newStudent@abv.bg",
+                NormalizedEmail = "NEWSTUDENT@ABV.BG",
+                PhoneNumber = "0887654569",
+                Name = "Нов Ученик",
+                City = "Казанлък",
+                Country = "България",
+                Address = "ул. Ал. Стамболийски 28 ет.2 ап.8",
+                Gender = Gender.Мъж.ToString(),
+                RegisteredOn = DateTime.UtcNow,
+                BirthDate = DateTime.ParseExact("2006-02-08 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                ProfilePictureUrl = null,
+                IsApproved = true,
+                IsActive = true
+
+            };
+
+            await repo.AddAsync(user);
+
+            var student = new Student()
+            {
+                Id = "4e352493-cdaa-4633-b84a-84bab2f2acf0",
+                UserId = user.Id,
+                ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                CompanyInternsId = null
+            };
+            await repo.AddAsync(student);
+            await repo.SaveChangesAsync();
+
+            string requestId = "bf13bfe6-b1be-4dc8-b8e8-2a0e3ff2af4a";
+
+            var result = await studentService.GetStudentsForChooseAsync(requestId);
+
+            var expectedResult = new List<UserViewModel>()
+            {
+                new UserViewModel()
+                {
+                    Id = "4e352493-cdaa-4633-b84a-84bab2f2acf0",
+                    Name = "Нов Ученик",
+                    Email = "newStudent@abv.bg",
+                    ProfilePictureUrl = null,
+                    IsApproved = true,
+
+                }
+            };
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Id, Is.EqualTo(expectedResult[0].Id));
+                Assert.That(result[0].Name, Is.EqualTo(expectedResult[0].Name));
+                Assert.That(result[0].Email, Is.EqualTo(expectedResult[0].Email));
+            });
+
+        }
+
+        [Test]
+        public async Task AddStudentToCompanyIternsAsync()
+        {
+            var user = new User()
+            {
+
+                Id = "9741281f-f3f7-480b-a066-85770a3bce6e",
+                UserName = "newStudentTest",
+                NormalizedUserName = "NEWSTUDENTTEST",
+                Email = "newStudent@abv.bg",
+                NormalizedEmail = "NEWSTUDENT@ABV.BG",
+                PhoneNumber = "0887654569",
+                Name = "Нов Ученик",
+                City = "Казанлък",
+                Country = "България",
+                Address = "ул. Ал. Стамболийски 28 ет.2 ап.8",
+                Gender = Gender.Мъж.ToString(),
+                RegisteredOn = DateTime.UtcNow,
+                BirthDate = DateTime.ParseExact("2006-02-08 11:20", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                ProfilePictureUrl = null,
+                IsApproved = true,
+                IsActive = true
+
+            };
+
+            await repo.AddAsync(user);
+
+            var student = new Student()
+            {
+                Id = "4e352493-cdaa-4633-b84a-84bab2f2acf0",
+                UserId = user.Id,
+                ClassId = "90bd5987-e991-4dfd-be1a-a57464b9d697",
+                CompanyInternsId = null
+            };
+            await repo.AddAsync(student);
+            await repo.SaveChangesAsync();
+
+
+            List<string> studentIds = new List<string>() { student.Id };
+            string companyUserId = "eb8fc718-655e-4d32-9a0a-d905fa3956e7";
+
+            await studentService.AddStudentToCompanyIternsAsync(studentIds, companyUserId);
+
+            var expectedResult = await repo.All<CompanyInterns>()
+                .Include(c => c.Company)
+                .Where(c => c.Company.UserId == companyUserId)
+                .Include(c => c.Students)
+                .FirstOrDefaultAsync();
+
+            Assert.That(expectedResult.Students.Count, Is.EqualTo(2));
+        }
+
+        [Test]
+        public async Task IsAllStudentsExistsAsyncShouldReturnTrue()
+        {
+            var students = new List<string>() { "4d152c78-9dbb-470c-aaf0-65a62a1dd2a0" };
+            var result = await studentService.IsAllStudentsExistsAsync(students);
+
+
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        [TestCase("ajax", "arssad" )]
+        [TestCase("ajax", "4d152c78-9dbb-470c-aaf0-65a62a1dd2a0")]
+        public async Task IsAllStudentsExistsAsyncShouldReturnFalse(params string[] students)
+        {
+            var result = await studentService.IsAllStudentsExistsAsync(students.ToList());
+
+
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public async Task GetStudentGroupIdAsyncShouldReturnCorrectResult()
+        {
+            string studentId = "4d152c78-9dbb-470c-aaf0-65a62a1dd2a0";
+
+            var result = await studentService.GetStudentGroupIdAsync(studentId);
+
+            var expectedResult = "b2d1e4fd-5f48-4519-8c0d-4de8e8a408de";
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [TestCase("id")]
+        [TestCase("b2d1e4fd-5f48-4519-8c0d-4de8e8a408de")]
+        [TestCase("qreofvnjibqwjbvf")]
+        public async Task GetStudentGroupIdAsyncShouldReturnNull(string studentId)
+        {
+            var result = await studentService.GetStudentGroupIdAsync(studentId);
+
+            Assert.That(result, Is.Null);
+        }
+
+
 
     }
 }

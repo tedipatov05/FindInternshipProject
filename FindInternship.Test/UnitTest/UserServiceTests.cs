@@ -260,5 +260,31 @@ namespace FindInternship.Test.UnitTest
                 Assert.That(user1.Id, Is.EqualTo(userViewModel1!.Id));
             });
         }
+
+        [Test]
+        [TestCase("companyTest")]
+        [TestCase("teacherTest")]
+        [TestCase("studentTest")]
+        public async Task GetUserProfilePictureByUsernameAsyncShouldReturnCorrectResult(string userName)
+        {
+            var result = await userService.GetUserProfilePictureByUsernameAsync(userName);
+
+            string expectedResult = "../img/blank-profile-picture.png";
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public async Task GetParticipantsProfilePictureAsyncShouldReturnCorrectResult()
+        {
+            var list = new List<string>() { "companyTest", "teacherTest", "studentTest" };
+
+            var result = await userService.GetParticipantsProfilePictureAsync(list);
+
+            CollectionAssert.AreEqual(result, new List<string>() { null, null, null});
+
+        }
+
+
     }
 }
