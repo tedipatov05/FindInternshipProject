@@ -16,10 +16,12 @@ namespace FindInternship.Core.Services
     public class BlogService : IBlogService
     {
         private IRepository repo;
+        private readonly IImageService imageService;
 
-        public BlogService(IRepository repo)
+        public BlogService(IRepository repo, IImageService imageService)
         {
             this.repo = repo;
+            this.imageService = imageService;
         }
 
 		
@@ -34,6 +36,19 @@ namespace FindInternship.Core.Services
                 CreatedOn = model.CreatedOn
             };
 
+            var photos = new List<Photo>();
+
+            foreach(var image in model.CarouselPhotos)
+            {
+                var photo = new Photo();
+                photo.PhotoUrl = await imageService.UploadImageAsync(image, "projectImages", image.FileName);
+                photo.PostId = post.Id;
+                photos.Add(photo);
+
+
+            }
+
+            await repo.AddRangeAsync(photos);
             await repo.AddAsync(post);
             await repo.SaveChangesAsync();
         }
@@ -49,7 +64,7 @@ namespace FindInternship.Core.Services
                     CreatedOn = p.CreatedOn,
                     CompanyName = p.Company.User.Name,
                     CompanyProfilePictureUrl = p.Company.User.ProfilePictureUrl
-                    
+
                 })
                  .FirstOrDefaultAsync(p => p.Id == postId);
 
@@ -58,9 +73,11 @@ namespace FindInternship.Core.Services
 			return post;
 		}
 
-        public async Task<List<PostViewModel>> GetAllPostAsync()
+        public async Task<List<PostViewModel>> GetAllPostAsync(int skipCount)
         {
             var posts = await repo.All<Post>()
+                .Skip(skipCount)
+                .Take(8)
                 .Select(p => new PostViewModel()
                 {
                     Id = p.Id,
@@ -70,11 +87,13 @@ namespace FindInternship.Core.Services
                     CompanyName = p.Company.User.Name,
                     CompanyProfilePictureUrl = p.Company.User.ProfilePictureUrl,
                 })
+                .OrderByDescending(p => p.CreatedOn)
                 .ToListAsync();
 
             foreach(var post in posts)
             {
                 post.CarouselPhotosUrls = await GetAllPostPhotosAsync(post.Id);
+                post.HeadImageUrl = post.CarouselPhotosUrls.FirstOrDefault()!;
 
             }
 
@@ -83,9 +102,9 @@ namespace FindInternship.Core.Services
 
         public async Task<List<string>> GetAllPostPhotosAsync(string postId)
         {
-            var urls = await repo.All<PostsPhotos>()
+            var urls = await repo.All<Photo>()
                 .Where(pp => pp.PostId == postId)
-                .Select(pp => pp.Photo.PhotoUrl)
+                .Select(pp => pp.PhotoUrl)
                 .ToListAsync();
 
             return urls;
@@ -96,6 +115,13 @@ namespace FindInternship.Core.Services
         {
             bool result = await repo.All<Post>().AnyAsync(p => p.Id == postId);
             return result;
+        }
+
+        public async Task<int> AllPostsCountAsync()
+        {
+            var count = await repo.All<Post>().CountAsync();
+
+            return count;
         }
     }
 }

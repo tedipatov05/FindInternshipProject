@@ -32,7 +32,7 @@ namespace FindInternship.Web.Controllers
 
             if(companyId == null)
             {
-
+                return new JsonResult(new {isCompany = false});
             }
 
             var model = new CreatePostFormModel()
@@ -40,20 +40,26 @@ namespace FindInternship.Web.Controllers
                 Topic = topic,
                 Content = content,
                 CreatedOn = DateTime.Now,
-                HeadImage = photos[0],
-                CarouselPhotos = photos.Skip(1).ToList(),
+                CarouselPhotos = photos.ToList(),
             };
 
             await blogService.CreatePostAsync(model, companyId);
 
-            return new JsonResult(new { model});
+            return new JsonResult(new { isCompany = true, model });
         }
 
-        public async Task<IActionResult> BlogHome()
+        public async Task<IActionResult> BlogHome(int skipCount = 0)
         {
-            var posts = await blogService.GetAllPostAsync();
+            var posts = await blogService.GetAllPostAsync(skipCount);
+            var totalPostsCount = await blogService.AllPostsCountAsync();
 
-            return View(posts);
+            var model = new BlogViewModel()
+            {
+                Posts = posts,
+                PagesCount = totalPostsCount % 8 != 0 ? totalPostsCount / 8 + 1 : totalPostsCount / 8
+            };
+
+            return View(model);
         }
 
         public async Task<IActionResult> PostDetails(string postId)
@@ -66,7 +72,7 @@ namespace FindInternship.Web.Controllers
             }
 
             var model = await blogService.GetPostAsync(postId);
-            model.Posts = await blogService.GetAllPostAsync();
+            model.Posts = await blogService.GetAllPostAsync(0);
 
             return View(model);
         }

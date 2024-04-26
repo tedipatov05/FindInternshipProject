@@ -15,8 +15,8 @@ namespace FindInternship.Data.Models
         public Post()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.PostsPhotos = new HashSet<PostsPhotos>();
-            this.CreatedOn = DateTime.Now;
+            this.Photos = new HashSet<Photo>();
+            
         }
 
         [Key]
@@ -32,6 +32,6 @@ namespace FindInternship.Data.Models
         [ForeignKey(nameof(Company))]
         public string CompanyId { get; set; } = null!;
         public Company Company { get; set; } = null!;
-        public ICollection<PostsPhotos> PostsPhotos { get; set;}
+       public ICollection<Photo> Photos { get;}
     }
 }
