@@ -76,6 +76,7 @@ namespace FindInternship.Core.Services
         public async Task<List<PostViewModel>> GetAllPostAsync(int skipCount)
         {
             var posts = await repo.All<Post>()
+                .OrderByDescending(p => p.CreatedOn)
                 .Skip(skipCount)
                 .Take(8)
                 .Select(p => new PostViewModel()
@@ -87,7 +88,6 @@ namespace FindInternship.Core.Services
                     CompanyName = p.Company.User.Name,
                     CompanyProfilePictureUrl = p.Company.User.ProfilePictureUrl,
                 })
-                .OrderByDescending(p => p.CreatedOn)
                 .ToListAsync();
 
             foreach(var post in posts)

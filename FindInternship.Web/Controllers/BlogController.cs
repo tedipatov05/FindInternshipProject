@@ -56,7 +56,8 @@ namespace FindInternship.Web.Controllers
             var model = new BlogViewModel()
             {
                 Posts = posts,
-                PagesCount = totalPostsCount % 8 != 0 ? totalPostsCount / 8 + 1 : totalPostsCount / 8
+                PagesCount = totalPostsCount % 8 != 0 ? totalPostsCount / 8 + 1 : totalPostsCount / 8, 
+                SkipCount = skipCount
             };
 
             return View(model);

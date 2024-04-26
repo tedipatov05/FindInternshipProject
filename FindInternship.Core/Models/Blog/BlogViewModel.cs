@@ -12,6 +12,7 @@ namespace FindInternship.Core.Models.Blog
         {
             this.Posts = new List<PostViewModel>();
             this.PostsPerPage = 8;
+            
         }
 
         public List<PostViewModel> Posts { get; set; }
@@ -19,6 +20,8 @@ namespace FindInternship.Core.Models.Blog
         public int PagesCount { get; set; }
 
         public int PostsPerPage { get; set; }
+
+        public int SkipCount { get; set; }
 
 
     }
