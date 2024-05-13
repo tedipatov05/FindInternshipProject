@@ -33,6 +33,10 @@ document.getElementById('files').addEventListener('input', function () {
 
 });
 
+document.getElementById('content').addEventListener('input', function () {
+    document.getElementById('description-label').style = 'transform: translateY(-50%) scale(0.8);background-color: #212121;padding: 0 .2em;color: #2196f3;';
+})
+
 addButtonElement.addEventListener('click', (e) => {
     e.preventDefault();
 
@@ -61,6 +65,11 @@ addButtonElement.addEventListener('click', (e) => {
         headers: {
             "RequestVerificationToken": token
         },
+        beforeSend: function () {
+            document.getElementsByTagName('button')[9].click();
+            document.getElementById('load').style.display = 'block';
+            document.getElementById('posts').style.display = 'none';
+        },
         success: function (data) {
             if (!data.isCompany) {
                 toastr.error(`Трябва да си фирма, за да добавяш постове`);
@@ -68,6 +77,9 @@ addButtonElement.addEventListener('click', (e) => {
             else {
                 
             }
+
+            document.getElementById('load').style.display = 'none';
+            document.getElementById('posts').style.display = 'flex';
 
             window.location = url.origin + '/Blog/BlogHome'
             
