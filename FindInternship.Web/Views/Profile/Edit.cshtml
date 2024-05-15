@@ -42,14 +42,14 @@
                         </div>
 
                         <div class="form-group" style="padding-top:0.5em;">
-                            <label for="profilePicture">Качи профилна снимка</label>
+                            <label for="profilePicture" class="mb-2">Качи профилна снимка</label>
                             <input asp-for="ProfilePicture" accept="image/gif, image/jpeg, image/png" class="text-white" id="profilePicture">
                             <span asp-validation-for="ProfilePicture" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <img alt="Uploaded Image" placeholder="Upload Profile Picture" accept="image/gif, image/jpeg, image/png" style="display:none;">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <button class="btn btn-primary btn-block" type="submit">Промени</button>
                         </div>
                         <br>

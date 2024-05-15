@@ -5,7 +5,7 @@
 
 @{
     var date = new DateOnly(DateTime.Now.Year - 14, 1, 1);
-    ViewData["Title"] = "Регистрация";
+    ViewData["Title"] = "Регистрация за ученик";
 }
 
 <div class="form-body">
@@ -14,9 +14,9 @@
             <div class="form-content">
                 <div class="form-items">
                     <form class="requires-validation" id="registerForm" method="post" enctype="multipart/form-data">
-                        <h2 class="text-center"><strong>@ViewData["Title"]</strong></h2>
+                        <h2 class="text-center mt-2"><strong>@ViewData["Title"]</strong></h2>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="picture-holder mt-3 mb-3">
+                        <div class="picture-holder mt-4 mb-3">
                             <div class="img-container">
                                 <img id="preview_img" class="img-holder" src="~/img/blank-profile-picture.png"
                                      alt="Current profile photo" />
