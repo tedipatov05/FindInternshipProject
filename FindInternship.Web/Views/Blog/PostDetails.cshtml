@@ -81,7 +81,7 @@
                                         @foreach (var post in Model.Posts.OrderBy(p => p.CreatedOn).Take(6).ToList())
                                         {
                                             <li>
-                                                <a href="post-details.html">
+                                                <a asp-action="PostDetails" asp-route-postId="@post.Id" asp-controller="Blog">
                                                     <h5>@post.Topic</h5>
                                                     <span>@post.CreatedOn</span>
                                                 </a>
