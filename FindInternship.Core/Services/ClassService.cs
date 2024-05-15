@@ -50,6 +50,8 @@ namespace FindInternship.Core.Services
             return user!.CompanyInternsId!;
         }
 
+        
+
         public async Task<string?> GetClassIdByTeacherUserIdAsync(string userId)
         {
             var user = await repo.All<Teacher>()
@@ -327,6 +329,32 @@ namespace FindInternship.Core.Services
             }
 
             return clModel.Students.Any(s => s.CompanyInternsId == null);
+        }
+
+        public async Task<string?> GetStudentClassIdByStudentUserIdAsync(string userId)
+        {
+            var user = await repo.All<Student>()
+                .FirstOrDefaultAsync(t => t.UserId == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user!.ClassId!;
+        }
+
+        public async Task<string?> GetTeacherClassIdByTeacherUserIdAsync(string userId)
+        {
+            var user = await repo.All<Teacher>()
+                .FirstOrDefaultAsync(t => t.UserId == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user!.ClassId!;
         }
     }
 }

@@ -76,9 +76,10 @@ namespace FindInternship.Web.Controllers
             }
             else if (isTeacher)
             {
-                string? classId = await classService.GetClassIdByTeacherUserIdAsync(userId);
+                string? classId = await classService.GetTeacherClassIdByTeacherUserIdAsync(userId);
                 var users = await privateChatService.GetTeacherUsersToChatAsync(classId!, userId);
                 var companies = await privateChatService.GetTeacherCompaniesToChatAsync(userId);
+                
                 users.AddRange(companies);
 
                 users = users
@@ -90,20 +91,32 @@ namespace FindInternship.Web.Controllers
             }
             else if (isStudent)
             {
-                string? classId = await classService.GetClassIdByStudentUserIdAsync(userId);
+                string? classId = await classService.GetStudentClassIdByStudentUserIdAsync(userId);
                 var users = await privateChatService.GetUsersToChatAsync(classId!, userId);
                 var studentTeacher = await privateChatService.GetTeacherToChatAsync(classId!, userId);
                 var company = await privateChatService.GetCompanyToChatAsync(classId!, userId);
-                users.Add(studentTeacher);
-                if(company != null)
+                if(studentTeacher != null)
+                {
+                    users.Add(studentTeacher);
+                }
+                if (company != null)
                 {
                     users.Add(company);
                 }
 
-                users = users
+                if(users.Count > 0)
+                {
+                    users = users
                     .OrderByDescending(u => u.LastMessageToUser != null)
                     .ThenByDescending(u => u.LastMessageToUser?.SendedOn)
                     .ToList();
+                }
+                else
+                {
+                    users = new List<UsersToChatViewModel>();
+                }
+
+                
 
                 return View(users);
 
