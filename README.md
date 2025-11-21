@@ -22,7 +22,7 @@ practice teacher.
 
 ## Authors
 
-- [@tedipatov](https://www.github.com/tedipatov05)
+- [@tedipatov05](https://www.github.com/tedipatov05)
 
 
 ## Badges
